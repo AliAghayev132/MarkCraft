@@ -1,0 +1,405 @@
+/*
+ * MarkCraft design tokens.
+ *
+ * Single source of truth for every colour, dimension and motion value in the
+ * application. Components reference tokens only — a literal hex or px value in
+ * a component file is a bug, because it is the thing that cannot be themed.
+ *
+ * Layering model (light and dark alike):
+ *   app      the window backdrop, behind everything
+ *   sunken   inset regions: sidebar, gutters, code blocks
+ *   surface  the primary content plane
+ *   raised   floating UI: menus, popovers, modals, toasts
+ */
+
+:root {
+  /* ── Neutral ramp (light) ───────────────────────────────────────────────── */
+  --mc-bg-app: #eceef2;
+  --mc-bg-sunken: #f2f4f7;
+  --mc-bg-surface: #ffffff;
+  --mc-bg-raised: #ffffff;
+  --mc-bg-inset: #f6f7f9;
+
+  --mc-bg-hover: rgba(15, 23, 42, 0.045);
+  --mc-bg-active: rgba(15, 23, 42, 0.08);
+  --mc-bg-selected: rgba(79, 92, 214, 0.1);
+  --mc-bg-selected-muted: rgba(79, 92, 214, 0.06);
+  --mc-bg-overlay: rgba(17, 21, 30, 0.42);
+
+  --mc-text-primary: #171b23;
+  --mc-text-secondary: #4d5665;
+  --mc-text-tertiary: #7a8494;
+  --mc-text-disabled: #a8b0bd;
+  --mc-text-inverse: #ffffff;
+  --mc-text-on-accent: #ffffff;
+
+  --mc-border-subtle: rgba(15, 23, 42, 0.06);
+  --mc-border: rgba(15, 23, 42, 0.11);
+  --mc-border-strong: rgba(15, 23, 42, 0.2);
+
+  /* ── Semantic ───────────────────────────────────────────────────────────── */
+  --mc-success: #14804a;
+  --mc-success-bg: rgba(20, 128, 74, 0.1);
+  --mc-warning: #a55f00;
+  --mc-warning-bg: rgba(165, 95, 0, 0.11);
+  --mc-danger: #c1372c;
+  --mc-danger-bg: rgba(193, 55, 44, 0.1);
+  --mc-danger-hover: #a72c22;
+  --mc-info: #1e5fb4;
+  --mc-info-bg: rgba(30, 95, 180, 0.1);
+
+  /* Unsaved-changes dot, external-change marker, conflict marker. */
+  --mc-dot-dirty: #d38b1c;
+  --mc-dot-conflict: #c1372c;
+
+  /* ── Editor surfaces ────────────────────────────────────────────────────── */
+  --mc-editor-bg: #ffffff;
+  --mc-editor-gutter: #f7f8fa;
+  --mc-editor-gutter-text: #a2abba;
+  --mc-editor-active-line: rgba(79, 92, 214, 0.045);
+  --mc-editor-selection: rgba(79, 92, 214, 0.2);
+  --mc-editor-cursor: #2b3242;
+  --mc-editor-match: rgba(214, 168, 32, 0.35);
+  --mc-editor-match-active: rgba(214, 130, 32, 0.55);
+
+  /* Markdown / code syntax */
+  --mc-syn-heading: #1f3e8c;
+  --mc-syn-emphasis: #6b3fa0;
+  --mc-syn-link: #0b6b8f;
+  --mc-syn-code: #a1442a;
+  --mc-syn-quote: #5b6472;
+  --mc-syn-keyword: #8250df;
+  --mc-syn-string: #1a7f37;
+  --mc-syn-number: #bc4c00;
+  --mc-syn-comment: #8a9199;
+  --mc-syn-function: #0550ae;
+  --mc-syn-type: #0b7285;
+  --mc-syn-variable: #953800;
+  --mc-syn-punctuation: #6b7280;
+
+  /* ── Accent (overridden per [data-accent]) ──────────────────────────────── */
+  --mc-accent: #4f5cd6;
+  --mc-accent-hover: #4450c4;
+  --mc-accent-active: #3a45ad;
+  --mc-accent-subtle: rgba(79, 92, 214, 0.12);
+  --mc-accent-border: rgba(79, 92, 214, 0.4);
+  --mc-focus-ring: rgba(79, 92, 214, 0.45);
+
+  /* ── Spacing (4px base) ─────────────────────────────────────────────────── */
+  --mc-space-0: 0;
+  --mc-space-1: 2px;
+  --mc-space-2: 4px;
+  --mc-space-3: 6px;
+  --mc-space-4: 8px;
+  --mc-space-5: 12px;
+  --mc-space-6: 16px;
+  --mc-space-7: 20px;
+  --mc-space-8: 24px;
+  --mc-space-9: 32px;
+  --mc-space-10: 40px;
+  --mc-space-11: 56px;
+  --mc-space-12: 72px;
+
+  /* ── Radius ─────────────────────────────────────────────────────────────── */
+  --mc-radius-xs: 3px;
+  --mc-radius-sm: 5px;
+  --mc-radius-md: 7px;
+  --mc-radius-lg: 10px;
+  --mc-radius-xl: 14px;
+  --mc-radius-pill: 999px;
+
+  /* ── Elevation ──────────────────────────────────────────────────────────── */
+  --mc-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --mc-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.05);
+  --mc-shadow-md: 0 8px 22px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+  --mc-shadow-lg: 0 18px 48px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08);
+  --mc-shadow-focus: 0 0 0 3px var(--mc-focus-ring);
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --mc-font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Text', 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --mc-font-mono: 'Cascadia Code', 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono',
+    monospace;
+  --mc-font-prose: 'Segoe UI Variable Display', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Georgia, serif;
+
+  --mc-text-xs: 11px;
+  --mc-text-sm: 12px;
+  --mc-text-base: 13px;
+  --mc-text-md: 14px;
+  --mc-text-lg: 16px;
+  --mc-text-xl: 20px;
+  --mc-text-2xl: 26px;
+  --mc-text-3xl: 34px;
+
+  --mc-weight-normal: 400;
+  --mc-weight-medium: 500;
+  --mc-weight-semibold: 600;
+  --mc-weight-bold: 700;
+
+  --mc-leading-tight: 1.25;
+  --mc-leading-normal: 1.5;
+  --mc-leading-relaxed: 1.7;
+
+  /* ── Control geometry ───────────────────────────────────────────────────── */
+  --mc-control-height-sm: 24px;
+  --mc-control-height-md: 30px;
+  --mc-control-height-lg: 36px;
+  --mc-titlebar-height: 38px;
+  --mc-tabbar-height: 36px;
+  --mc-toolbar-height: 38px;
+  --mc-statusbar-height: 24px;
+  --mc-sidebar-min-width: 180px;
+  --mc-sidebar-max-width: 520px;
+
+  /* ── Motion ─────────────────────────────────────────────────────────────── */
+  --mc-ease-out: cubic-bezier(0.22, 0.85, 0.34, 1);
+  --mc-ease-in-out: cubic-bezier(0.5, 0, 0.2, 1);
+  --mc-duration-instant: 70ms;
+  --mc-duration-fast: 120ms;
+  --mc-duration-normal: 180ms;
+  --mc-duration-slow: 280ms;
+  --mc-transition-colors: color var(--mc-duration-fast) var(--mc-ease-out),
+    background-color var(--mc-duration-fast) var(--mc-ease-out),
+    border-color var(--mc-duration-fast) var(--mc-ease-out);
+
+  /* ── Stacking ───────────────────────────────────────────────────────────── */
+  --mc-z-base: 0;
+  --mc-z-sticky: 10;
+  --mc-z-titlebar: 20;
+  --mc-z-drag-handle: 30;
+  --mc-z-modal-backdrop: 300;
+  --mc-z-modal: 310;
+  --mc-z-palette: 400;
+
+  /*
+   * Menus, popovers and tooltips sit *above* the surfaces they belong to,
+   * modals included. They are always spawned from something already on
+   * screen, so there is no arrangement in which one should be hidden behind
+   * it — and a Select inside the settings screen opening underneath it was
+   * exactly that bug.
+   */
+  --mc-z-dropdown: 500;
+  --mc-z-context-menu: 510;
+  --mc-z-tooltip: 600;
+  --mc-z-toast: 700;
+
+  color-scheme: light;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Dark theme
+ * ─────────────────────────────────────────────────────────────────────────── */
+:root[data-theme='dark'] {
+  --mc-bg-app: #0e1015;
+  --mc-bg-sunken: #14171e;
+  --mc-bg-surface: #191d25;
+  --mc-bg-raised: #212630;
+  --mc-bg-inset: #12151b;
+
+  --mc-bg-hover: rgba(255, 255, 255, 0.055);
+  --mc-bg-active: rgba(255, 255, 255, 0.09);
+  --mc-bg-selected: rgba(126, 138, 255, 0.16);
+  --mc-bg-selected-muted: rgba(126, 138, 255, 0.09);
+  --mc-bg-overlay: rgba(4, 6, 10, 0.62);
+
+  --mc-text-primary: #e7eaf1;
+  --mc-text-secondary: #a7b0c0;
+  --mc-text-tertiary: #767f8f;
+  --mc-text-disabled: #545c6a;
+  --mc-text-inverse: #0e1015;
+  --mc-text-on-accent: #ffffff;
+
+  --mc-border-subtle: rgba(255, 255, 255, 0.05);
+  --mc-border: rgba(255, 255, 255, 0.1);
+  --mc-border-strong: rgba(255, 255, 255, 0.19);
+
+  --mc-success: #4ec98a;
+  --mc-success-bg: rgba(78, 201, 138, 0.14);
+  --mc-warning: #e0a34a;
+  --mc-warning-bg: rgba(224, 163, 74, 0.14);
+  --mc-danger: #f2837a;
+  --mc-danger-bg: rgba(242, 131, 122, 0.14);
+  --mc-danger-hover: #e5695f;
+  --mc-info: #74a9f5;
+  --mc-info-bg: rgba(116, 169, 245, 0.14);
+
+  --mc-dot-dirty: #e0a34a;
+  --mc-dot-conflict: #f2837a;
+
+  --mc-editor-bg: #191d25;
+  --mc-editor-gutter: #171a21;
+  --mc-editor-gutter-text: #5c6474;
+  --mc-editor-active-line: rgba(126, 138, 255, 0.07);
+  --mc-editor-selection: rgba(126, 138, 255, 0.26);
+  --mc-editor-cursor: #dfe4ee;
+  --mc-editor-match: rgba(224, 178, 74, 0.3);
+  --mc-editor-match-active: rgba(240, 168, 60, 0.5);
+
+  --mc-syn-heading: #8fb0ff;
+  --mc-syn-emphasis: #d0a6f5;
+  --mc-syn-link: #79cbe8;
+  --mc-syn-code: #f0a37e;
+  --mc-syn-quote: #98a2b3;
+  --mc-syn-keyword: #c792ea;
+  --mc-syn-string: #a5d6a7;
+  --mc-syn-number: #f0a37e;
+  --mc-syn-comment: #6f7a8c;
+  --mc-syn-function: #82aaff;
+  --mc-syn-type: #89ddff;
+  --mc-syn-variable: #ffcb6b;
+  --mc-syn-punctuation: #98a2b3;
+
+  --mc-accent: #7e8aff;
+  --mc-accent-hover: #8f99ff;
+  --mc-accent-active: #6a76f0;
+  --mc-accent-subtle: rgba(126, 138, 255, 0.16);
+  --mc-accent-border: rgba(126, 138, 255, 0.45);
+  --mc-focus-ring: rgba(126, 138, 255, 0.5);
+
+  --mc-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --mc-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --mc-shadow-md: 0 10px 26px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --mc-shadow-lg: 0 22px 56px rgba(0, 0, 0, 0.6), 0 6px 14px rgba(0, 0, 0, 0.4);
+
+  color-scheme: dark;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Accents. Each block overrides only the accent family, so a user's accent
+ * choice is orthogonal to their light/dark choice.
+ * ─────────────────────────────────────────────────────────────────────────── */
+:root[data-accent='blue'] {
+  --mc-accent: #2f6fd0;
+  --mc-accent-hover: #2963bd;
+  --mc-accent-active: #2456a6;
+  --mc-accent-subtle: rgba(47, 111, 208, 0.12);
+  --mc-accent-border: rgba(47, 111, 208, 0.4);
+  --mc-focus-ring: rgba(47, 111, 208, 0.45);
+}
+:root[data-theme='dark'][data-accent='blue'] {
+  --mc-accent: #5c9dff;
+  --mc-accent-hover: #74acff;
+  --mc-accent-active: #4a8ae8;
+  --mc-accent-subtle: rgba(92, 157, 255, 0.16);
+  --mc-accent-border: rgba(92, 157, 255, 0.45);
+  --mc-focus-ring: rgba(92, 157, 255, 0.5);
+}
+
+:root[data-accent='teal'] {
+  --mc-accent: #0f7f78;
+  --mc-accent-hover: #0d6f69;
+  --mc-accent-active: #0b605a;
+  --mc-accent-subtle: rgba(15, 127, 120, 0.12);
+  --mc-accent-border: rgba(15, 127, 120, 0.4);
+  --mc-focus-ring: rgba(15, 127, 120, 0.45);
+}
+:root[data-theme='dark'][data-accent='teal'] {
+  --mc-accent: #3bbfb2;
+  --mc-accent-hover: #4ecfc2;
+  --mc-accent-active: #31a89d;
+  --mc-accent-subtle: rgba(59, 191, 178, 0.16);
+  --mc-accent-border: rgba(59, 191, 178, 0.45);
+  --mc-focus-ring: rgba(59, 191, 178, 0.5);
+}
+
+:root[data-accent='violet'] {
+  --mc-accent: #7c3fd4;
+  --mc-accent-hover: #6f37c2;
+  --mc-accent-active: #6130ab;
+  --mc-accent-subtle: rgba(124, 63, 212, 0.12);
+  --mc-accent-border: rgba(124, 63, 212, 0.4);
+  --mc-focus-ring: rgba(124, 63, 212, 0.45);
+}
+:root[data-theme='dark'][data-accent='violet'] {
+  --mc-accent: #a97bf0;
+  --mc-accent-hover: #b98cf7;
+  --mc-accent-active: #9868dd;
+  --mc-accent-subtle: rgba(169, 123, 240, 0.16);
+  --mc-accent-border: rgba(169, 123, 240, 0.45);
+  --mc-focus-ring: rgba(169, 123, 240, 0.5);
+}
+
+:root[data-accent='amber'] {
+  --mc-accent: #b26a00;
+  --mc-accent-hover: #9d5d00;
+  --mc-accent-active: #874f00;
+  --mc-accent-subtle: rgba(178, 106, 0, 0.13);
+  --mc-accent-border: rgba(178, 106, 0, 0.4);
+  --mc-focus-ring: rgba(178, 106, 0, 0.45);
+}
+:root[data-theme='dark'][data-accent='amber'] {
+  --mc-accent: #e5a13c;
+  --mc-accent-hover: #f0b155;
+  --mc-accent-active: #d08f2c;
+  --mc-accent-subtle: rgba(229, 161, 60, 0.16);
+  --mc-accent-border: rgba(229, 161, 60, 0.45);
+  --mc-focus-ring: rgba(229, 161, 60, 0.5);
+  --mc-text-on-accent: #241a05;
+}
+
+:root[data-accent='rose'] {
+  --mc-accent: #c03060;
+  --mc-accent-hover: #ab2a55;
+  --mc-accent-active: #952349;
+  --mc-accent-subtle: rgba(192, 48, 96, 0.12);
+  --mc-accent-border: rgba(192, 48, 96, 0.4);
+  --mc-focus-ring: rgba(192, 48, 96, 0.45);
+}
+:root[data-theme='dark'][data-accent='rose'] {
+  --mc-accent: #ef7ba1;
+  --mc-accent-hover: #f78fb0;
+  --mc-accent-active: #dc678d;
+  --mc-accent-subtle: rgba(239, 123, 161, 0.16);
+  --mc-accent-border: rgba(239, 123, 161, 0.45);
+  --mc-focus-ring: rgba(239, 123, 161, 0.5);
+}
+
+:root[data-accent='graphite'] {
+  --mc-accent: #414855;
+  --mc-accent-hover: #363c47;
+  --mc-accent-active: #2b303a;
+  --mc-accent-subtle: rgba(65, 72, 85, 0.1);
+  --mc-accent-border: rgba(65, 72, 85, 0.35);
+  --mc-focus-ring: rgba(65, 72, 85, 0.4);
+}
+:root[data-theme='dark'][data-accent='graphite'] {
+  --mc-accent: #99a3b5;
+  --mc-accent-hover: #aab3c3;
+  --mc-accent-active: #8792a5;
+  --mc-accent-subtle: rgba(153, 163, 181, 0.14);
+  --mc-accent-border: rgba(153, 163, 181, 0.4);
+  --mc-focus-ring: rgba(153, 163, 181, 0.45);
+  --mc-text-on-accent: #12151b;
+}
+
+/* ── Compact density: tighten controls without touching component code ────── */
+:root[data-density='compact'] {
+  --mc-control-height-sm: 22px;
+  --mc-control-height-md: 26px;
+  --mc-control-height-lg: 32px;
+  --mc-titlebar-height: 34px;
+  --mc-tabbar-height: 32px;
+  --mc-toolbar-height: 34px;
+  --mc-statusbar-height: 22px;
+  --mc-space-5: 10px;
+  --mc-space-6: 14px;
+}
+
+/* ── Motion preference ───────────────────────────────────────────────────── */
+:root[data-reduce-motion='true'],
+:root[data-reduce-motion='true'] * {
+  --mc-duration-instant: 0ms;
+  --mc-duration-fast: 0ms;
+  --mc-duration-normal: 0ms;
+  --mc-duration-slow: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mc-duration-instant: 0ms;
+    --mc-duration-fast: 0ms;
+    --mc-duration-normal: 0ms;
+    --mc-duration-slow: 0ms;
+  }
+}

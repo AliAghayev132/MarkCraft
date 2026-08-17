@@ -1,0 +1,10 @@
+/** `@features/documents`. */
+export * from './ExternalChangeBanner'
+export * from './RecoveryPrompt'
+export * from './document-close'
+export * from './document-context'
+export * from './document-open'
+export * from './document-save'
+export * from './document-sync'
+export * from './types'
+export * from './useAutosave'

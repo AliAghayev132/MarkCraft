@@ -1,0 +1,1452 @@
+{
+  "$meta": {
+    "code": "ru",
+    "name": "Russian",
+    "nativeName": "Русский",
+    "direction": "ltr",
+    "authors": [
+      "MarkCraft"
+    ]
+  },
+  "app": {
+    "name": "MarkCraft",
+    "tagline": "Настольная среда для сосредоточенной работы с Markdown.",
+    "untitled": "Без имени"
+  },
+  "common": {
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "rename": "Переименовать",
+    "duplicate": "Дублировать",
+    "copy": "Копировать",
+    "cut": "Вырезать",
+    "paste": "Вставить",
+    "close": "Закрыть",
+    "open": "Открыть",
+    "create": "Создать",
+    "remove": "Убрать",
+    "reset": "Сбросить",
+    "done": "Готово",
+    "retry": "Повторить",
+    "dismiss": "Закрыть",
+    "refresh": "Обновить",
+    "loading": "Загрузка…",
+    "search": "Поиск",
+    "clear": "Очистить",
+    "go": "Перейти",
+    "insert": "Вставить",
+    "browse": "Обзор…",
+    "optional": "Необязательно",
+    "name": "Имя",
+    "file": "Файл",
+    "folder": "Папка",
+    "expand": "Развернуть",
+    "goBack": "Назад",
+    "words_one": "{{count}} слово",
+    "words_few": "{{count}} слова",
+    "words_many": "{{count}} слов",
+    "words_other": "{{count}} слова",
+    "results_one": "{{count}} результат",
+    "results_few": "{{count}} результата",
+    "results_many": "{{count}} результатов",
+    "results_other": "{{count}} результата",
+    "matches_one": "{{count}} совпадение",
+    "matches_few": "{{count}} совпадения",
+    "matches_many": "{{count}} совпадений",
+    "matches_other": "{{count}} совпадения",
+    "files_one": "{{count}} файл",
+    "files_few": "{{count}} файла",
+    "files_many": "{{count}} файлов",
+    "files_other": "{{count}} файла",
+    "items_one": "{{count}} элемент",
+    "items_few": "{{count}} элемента",
+    "items_many": "{{count}} элементов",
+    "items_other": "{{count}} элемента",
+    "documents_one": "{{count}} документ",
+    "documents_few": "{{count}} документа",
+    "documents_many": "{{count}} документов",
+    "documents_other": "{{count}} документа",
+    "occurrences_one": "{{count}} вхождение",
+    "occurrences_few": "{{count}} вхождения",
+    "occurrences_many": "{{count}} вхождений",
+    "occurrences_other": "{{count}} вхождения",
+    "characters_one": "{{count}} символ",
+    "characters_few": "{{count}} символа",
+    "characters_many": "{{count}} символов",
+    "characters_other": "{{count}} символа",
+    "apply": "Применить"
+  },
+  "time": {
+    "justNow": "только что",
+    "minutesAgo": "{{count}} мин назад",
+    "hoursAgo_one": "{{count}} час назад",
+    "hoursAgo_few": "{{count}} часа назад",
+    "hoursAgo_many": "{{count}} часов назад",
+    "hoursAgo_other": "{{count}} часа назад",
+    "yesterday": "Вчера",
+    "daysAgo": "{{count}} дн. назад",
+    "never": "—"
+  },
+  "titleBar": {
+    "minimize": "Свернуть",
+    "maximize": "Развернуть",
+    "restore": "Восстановить",
+    "close": "Закрыть",
+    "unsavedChanges": "Несохранённые изменения",
+    "notSaved": "Ещё не сохранён"
+  },
+  "tabs": {
+    "region": "Открытые документы",
+    "newDocument": "Новый документ",
+    "close": "Закрыть {{name}}",
+    "closeUnsaved": "Закрыть {{name}} (есть несохранённые изменения)",
+    "changedOnDisk": "Изменён на диске",
+    "deletedOnDisk": "Удалён с диска",
+    "menu": {
+      "label": "Действия с вкладкой",
+      "close": "Закрыть",
+      "closeOthers": "Закрыть остальные",
+      "closeAll": "Закрыть все",
+      "reopen": "Вернуть закрытую вкладку",
+      "save": "Сохранить",
+      "saveAs": "Сохранить как…",
+      "copyPath": "Копировать путь",
+      "reveal": "Показать в проводнике"
+    }
+  },
+  "sidebar": {
+    "views": "Разделы боковой панели",
+    "explorer": "Файлы",
+    "search": "Поиск",
+    "recent": "Недавние и закреплённые",
+    "settings": "Настройки",
+    "resize": "Изменить ширину панели",
+    "outline": "Структура",
+    "trash": "Удалённые"
+  },
+  "explorer": {
+    "files": "Файлы рабочей папки",
+    "filter": "Фильтр файлов…",
+    "filterLabel": "Фильтровать файлы рабочей папки",
+    "newFile": "Новый файл",
+    "newFolder": "Новая папка",
+    "sort": "Сортировка",
+    "moreOptions": "Другие параметры",
+    "showHidden": "Показывать скрытые файлы",
+    "collapseAll": "Свернуть все папки",
+    "changeFolder": "Открыть другую папку…",
+    "sortBy": {
+      "name": "Имя",
+      "modified": "Дата изменения",
+      "size": "Размер",
+      "kind": "Тип",
+      "ascending": "По возрастанию",
+      "descending": "По убыванию"
+    },
+    "menu": {
+      "workspace": "Действия с рабочей папкой",
+      "newMarkdownFile": "Новый файл Markdown",
+      "newFolder": "Новая папка",
+      "rename": "Переименовать…",
+      "copyPath": "Копировать путь",
+      "pin": "Закрепить в избранном",
+      "deleteMany": "Удалить {{count}} элементов",
+      "iconAndColour": "Значок и цвет…"
+    },
+    "empty": {
+      "noFolderTitle": "Папка не открыта",
+      "noFolderDescription": "Откройте папку, чтобы работать с её файлами Markdown.",
+      "openFolder": "Открыть папку…",
+      "noMatchesTitle": "Совпадений нет",
+      "noMatchesDescription": "В этой рабочей папке ничего не соответствует «{{query}}».",
+      "emptyTitle": "Папка пуста",
+      "emptyDescription": "Создайте первый файл Markdown, чтобы начать."
+    },
+    "row": {
+      "file": "Файл",
+      "folder": "Папка",
+      "position": "строка {{index}}"
+    },
+    "closeFolder": "Закрыть папку",
+    "workspaceMenu": "Рабочая папка",
+    "noFolder": "Папка не выбрана"
+  },
+  "recent": {
+    "pinned": "Закреплённые",
+    "documents": "Недавние документы",
+    "folders": "Недавние папки",
+    "clearDocuments": "Очистить недавние документы",
+    "clearFolders": "Очистить недавние папки",
+    "unpin": "Открепить {{name}}",
+    "removeFromRecent": "Убрать {{name}} из недавних",
+    "pinToTop": "Закрепить сверху",
+    "removeFromPinned": "Убрать из закреплённых",
+    "emptyTitle": "Пока пусто",
+    "emptyDescription": "Открытые документы появятся здесь для быстрого доступа."
+  },
+  "welcome": {
+    "newDocument": "Новый документ",
+    "openFile": "Открыть файл…",
+    "openFolder": "Открыть папку…",
+    "emptyTitle": "Документов пока нет",
+    "emptyDescription": "Создайте новый документ или откройте папку с существующим проектом."
+  },
+  "editor": {
+    "rendered": "Отрендеренный документ",
+    "startWriting": "Начните писать…",
+    "fallbackTitle": "Этот вид не удалось отобразить",
+    "fallbackDescription": "Текст документа не затронут — он сохранён полностью.",
+    "switchToSource": "Перейти к исходному Markdown",
+    "resizePanes": "Изменить размер редактора и предпросмотра",
+    "largeDocumentTitle": "Это большой документ",
+    "largeDocumentBody": "Визуальный редактор отображает документ целиком, поэтому при {{size}} КБ он может подтормаживать. Исходный вид Markdown отображает только видимую часть и остаётся быстрым при любом размере.",
+    "largeDocumentAction": "Всё равно открыть в визуальном редакторе",
+    "lossyNotice": "В документе есть {{constructs}}. Визуальный редактор сохраняет их как встроенный HTML — для полного контроля правьте исходный Markdown.",
+    "lossy": {
+      "footnotes": "сноски",
+      "linkDefinitions": "определения ссылок",
+      "frontMatter": "front matter",
+      "rawHtml": "блоки чистого HTML",
+      "math": "формульные блоки"
+    }
+  },
+  "toolbar": {
+    "label": "Форматирование",
+    "undo": "Отменить",
+    "redo": "Повторить",
+    "heading1": "Заголовок 1",
+    "heading2": "Заголовок 2",
+    "heading3": "Заголовок 3",
+    "bold": "Полужирный",
+    "italic": "Курсив",
+    "underline": "Подчёркнутый",
+    "strikethrough": "Зачёркнутый",
+    "inlineCode": "Код в строке",
+    "bulletList": "Маркированный список",
+    "numberedList": "Нумерованный список",
+    "taskList": "Список задач",
+    "blockquote": "Цитата",
+    "insertLink": "Вставить ссылку",
+    "insertImage": "Вставить изображение",
+    "insertTable": "Вставить таблицу",
+    "codeBlock": "Блок кода",
+    "horizontalRule": "Горизонтальная линия"
+  },
+  "status": {
+    "noDocument": "Нет открытых документов",
+    "cursorPosition": "Позиция курсора",
+    "lineColumn": "Стр {{line}}, Кол {{column}}",
+    "selected": "выделено: {{count}}",
+    "readingTime": "чтение {{time}}",
+    "statsTooltip": "{{characters}} символов · без пробелов {{withoutSpaces}} · абзацев {{paragraphs}}",
+    "viewMode": "Режим просмотра",
+    "modes": {
+      "rich": "Визуальный редактор",
+      "source": "Исходный Markdown",
+      "split": "Разделённый вид",
+      "preview": "Только предпросмотр"
+    },
+    "goal": "{{words}} / {{goal}} слов"
+  },
+  "find": {
+    "label": "Поиск и замена",
+    "find": "Найти",
+    "replace": "Заменить",
+    "replaceWith": "Заменить на",
+    "replaceAll": "Все",
+    "showReplace": "Показать замену",
+    "hideReplace": "Скрыть замену",
+    "matchCase": "Учитывать регистр",
+    "matchWholeWord": "Слово целиком",
+    "useRegex": "Регулярное выражение",
+    "nextMatch": "Следующее совпадение",
+    "previousMatch": "Предыдущее совпадение",
+    "closeFind": "Закрыть поиск"
+  },
+  "search": {
+    "placeholder": "Поиск по рабочей папке",
+    "label": "Поиск по всей рабочей папке",
+    "replacePlaceholder": "Заменить на",
+    "fileFilters": "Включаемые / исключаемые файлы",
+    "includePlaceholder": "Включить, напр. *.md, docs/**",
+    "excludePlaceholder": "Исключить, напр. drafts/**",
+    "includeLabel": "Включаемые файлы",
+    "excludeLabel": "Исключаемые файлы",
+    "searching": "Поиск…",
+    "noResults": "Ничего не найдено",
+    "prompt": "Начните вводить для поиска",
+    "resultsIn": "{{results}} в {{files}}",
+    "truncated": " · показаны только первые совпадения",
+    "moreMatches": "Остальные совпадения не показаны",
+    "noResultsDescription": "В этой рабочей папке ничего не найдено по запросу «{{query}}».",
+    "noFolderTitle": "Папка не открыта",
+    "noFolderDescription": "Для поиска нужна открытая папка. Поиск в текущем документе — Ctrl+F.",
+    "replaceConfirmTitle": "Заменить в {{files}}?",
+    "replaceConfirmBody": "{{occurrences}} «{{query}}» будет заменено на «{{replacement}}». Файлы, изменённые на диске после поиска, будут пропущены.",
+    "replaceConfirmAction": "Заменить все",
+    "replaced": "Заменено: {{occurrences}}",
+    "replacedDetail": "в {{files}}",
+    "replacedSkipped": "пропущено: {{count}}",
+    "replaceFailed": "Не удалось выполнить замену"
+  },
+  "palette": {
+    "label": "Палитра команд",
+    "placeholder": "Введите команду…",
+    "searchLabel": "Поиск команд",
+    "noResults": "Подходящих команд нет",
+    "commands_one": "{{count}} команда",
+    "commands_few": "{{count}} команды",
+    "commands_many": "{{count}} команд",
+    "commands_other": "{{count}} команды",
+    "navigate": "для навигации",
+    "run": "для выполнения",
+    "dismiss": "для закрытия"
+  },
+  "commands": {
+    "categories": {
+      "File": "Файл",
+      "Edit": "Правка",
+      "Format": "Формат",
+      "View": "Вид",
+      "Insert": "Вставка",
+      "Workspace": "Рабочая папка",
+      "Application": "Приложение"
+    },
+    "file.new": "Новый документ",
+    "file.open": "Открыть документ…",
+    "file.openFolder": "Открыть папку…",
+    "file.save": "Сохранить",
+    "file.saveAs": "Сохранить как…",
+    "file.saveAll": "Сохранить все",
+    "file.revert": "Вернуть сохранённую версию",
+    "file.print": "Печать…",
+    "file.export": "Экспорт…",
+    "file.share": "Поделиться…",
+    "tab.close": "Закрыть вкладку",
+    "tab.closeOthers": "Закрыть другие вкладки",
+    "tab.closeAll": "Закрыть все вкладки",
+    "tab.reopen": "Вернуть закрытую вкладку",
+    "tab.next": "Следующая вкладка",
+    "tab.previous": "Предыдущая вкладка",
+    "edit.undo": "Отменить",
+    "edit.redo": "Повторить",
+    "edit.find": "Найти в документе",
+    "edit.replace": "Заменить в документе",
+    "edit.findInFiles": "Поиск по рабочей папке",
+    "edit.goToLine": "Перейти к строке…",
+    "format.bold": "Полужирный",
+    "format.italic": "Курсив",
+    "format.underline": "Подчёркнутый",
+    "format.strikethrough": "Зачёркнутый",
+    "format.code": "Код в строке",
+    "format.codeBlock": "Блок кода",
+    "format.quote": "Цитата",
+    "format.bulletList": "Маркированный список",
+    "format.orderedList": "Нумерованный список",
+    "format.taskList": "Список задач",
+    "format.paragraph": "Абзац",
+    "format.heading1": "Заголовок 1",
+    "format.heading2": "Заголовок 2",
+    "format.heading3": "Заголовок 3",
+    "format.heading4": "Заголовок 4",
+    "format.heading5": "Заголовок 5",
+    "format.heading6": "Заголовок 6",
+    "insert.link": "Вставить ссылку…",
+    "insert.image": "Вставить изображение…",
+    "insert.table": "Вставить таблицу…",
+    "insert.horizontalRule": "Вставить горизонтальную линию",
+    "view.rich": "Перейти в визуальный редактор",
+    "view.source": "Перейти к исходному Markdown",
+    "view.split": "Разделённый вид",
+    "view.preview": "Предпросмотр",
+    "view.cycleMode": "Сменить режим просмотра",
+    "view.toggleSidebar": "Показать/скрыть боковую панель",
+    "view.toggleToolbar": "Показать/скрыть панель форматирования",
+    "view.toggleStatusBar": "Показать/скрыть строку состояния",
+    "view.toggleTheme": "Светлая / тёмная тема",
+    "view.explorer": "Показать файлы",
+    "workspace.refresh": "Обновить рабочую папку",
+    "app.commandPalette": "Палитра команд",
+    "app.settings": "Настройки",
+    "app.shortcuts": "Сочетания клавиш",
+    "view.zoomIn": "Увеличить интерфейс",
+    "view.zoomOut": "Уменьшить интерфейс",
+    "view.zoomReset": "Сбросить масштаб интерфейса",
+    "view.readingMode": "Режим чтения",
+    "view.outline": "Показать структуру",
+    "view.statistics": "Статистика документа",
+    "file.newFromTemplate": "Создать по шаблону…",
+    "file.history": "История версий",
+    "insert.emoji": "Вставить эмодзи",
+    "view.present": "Презентация",
+    "tools.open": "Инструменты разработчика",
+    "view.links": "Ссылки и граф",
+    "view.website": "Просмотр как сайт",
+    "document.clean": "Очистить форматирование",
+    "insert.codeLanguage": "Задать язык блока кода",
+    "edit.pasteAsMarkdown": "Вставить как Markdown",
+    "ai.review": "Проверить документ с помощью ИИ",
+    "view.book": "Книга",
+    "view.study": "Учёба",
+    "view.canvas": "Холст",
+    "document.lock": "Заблокировать или разблокировать документ",
+    "tools.http": "HTTP-запрос"
+  },
+  "dialogs": {
+    "goToLine": {
+      "title": "Перейти к строке",
+      "label": "Номер строки (1–{{total}})",
+      "invalidNumber": "Введите целое число.",
+      "outOfRange": "В документе {{total}} строк."
+    },
+    "unsavedTitle": "Сохранить изменения перед закрытием?",
+    "unsavedSingle": "В «{{name}}» есть несохранённые изменения. Если не сохранить, правки будут потеряны.",
+    "unsavedMultiple": "В {{count}} документах есть несохранённые изменения. Если не сохранить, правки будут потеряны.",
+    "dontSave": "Не сохранять",
+    "saveAll": "Сохранить все",
+    "deleteTitle": "Удалить {{target}}?",
+    "deleteTrash": "Элементы будут перемещены в корзину. Оттуда их можно восстановить.",
+    "deletePermanent": "Это нельзя отменить. Элементы будут удалены с диска безвозвратно.",
+    "moveToTrash": "Переместить в корзину",
+    "deleteForever": "Удалить безвозвратно",
+    "newFileTitle": "Новый файл Markdown",
+    "newFolderTitle": "Новая папка",
+    "renameFile": "Переименовать файл",
+    "renameFolder": "Переименовать папку",
+    "nameExists": "Элемент с таким именем уже существует.",
+    "revertTitle": "Отменить несохранённые изменения?",
+    "revertBody": "«{{name}}» будет восстановлен до версии на диске. Это нельзя отменить.",
+    "revertAction": "Вернуть",
+    "conflictTitle": "«{{name}}» изменён на диске",
+    "conflictBody": "Другая программа изменила этот файл после того, как вы его открыли. Сохранение сейчас удалит эти изменения.",
+    "conflictSaveCopy": "Сохранить копию…",
+    "conflictReload": "Отбросить моё, перезагрузить",
+    "conflictOverwrite": "Перезаписать на диске"
+  },
+  "insert": {
+    "link": {
+      "title": "Вставить ссылку",
+      "text": "Текст ссылки",
+      "textHint": "Оставьте пустым, чтобы показать сам URL.",
+      "textPlaceholder": "Документация MarkCraft",
+      "url": "URL",
+      "urlPlaceholder": "https://example.com или ./notes.md",
+      "linkTitle": "Заголовок",
+      "titleHint": "Необязательная подсказка при наведении."
+    },
+    "image": {
+      "title": "Вставить изображение",
+      "image": "Изображение",
+      "hintRelative": "Локальные изображения копируются рядом с документом и подключаются относительным путём.",
+      "hintUnsaved": "Сначала сохраните документ, чтобы использовать относительные пути.",
+      "placeholder": "./images/diagram.png или https://…",
+      "alt": "Альтернативный текст",
+      "altHint": "Описывает изображение для программ чтения с экрана и при ошибке загрузки.",
+      "altPlaceholder": "Схема архитектуры",
+      "imageTitle": "Заголовок",
+      "addFailed": "Не удалось добавить изображение"
+    },
+    "table": {
+      "title": "Вставить таблицу",
+      "columns": "Столбцы",
+      "rows": "Строки данных",
+      "headerRow": "Добавить строку заголовка",
+      "headerHint": "Таблицы GitHub-Flavored Markdown всегда отображают первую строку как заголовок.",
+      "alignment": "Выравнивание столбцов",
+      "alignmentFor": "Выравнивание столбца {{index}}",
+      "left": "По левому краю",
+      "center": "По центру",
+      "right": "По правому краю",
+      "preview": "Предпросмотр",
+      "columnLabel": "Столбец {{index}}"
+    }
+  },
+  "output": {
+    "export": {
+      "title": "Экспорт документа",
+      "format": "Формат",
+      "exportAs": "Экспортировать как {{format}}",
+      "md": "Markdown",
+      "mdDescription": "Документ в точности как написан, в каноническом виде.",
+      "html": "HTML",
+      "htmlDescription": "Одна самодостаточная страница со встроенными стилями и изображениями.",
+      "pdf": "PDF",
+      "pdfDescription": "Разбит на страницы для печати, с учётом разрывов.",
+      "appearance": "Оформление",
+      "light": "Светлое",
+      "dark": "Тёмное",
+      "embedImages": "Встроить изображения",
+      "embedImagesHint": "Создаёт один самодостаточный файл. Отключите, чтобы сохранить относительные ссылки.",
+      "includeStyles": "Включить стили",
+      "includeStylesHint": "Без стилей результат — простой неформатированный HTML.",
+      "pageSize": "Размер страницы",
+      "margins": "Поля",
+      "marginsDefault": "По умолчанию",
+      "marginsMinimum": "Минимальные",
+      "marginsNone": "Без полей",
+      "landscape": "Альбомная ориентация",
+      "headerFooter": "Добавить колонтитул и номера страниц",
+      "printBackground": "Печатать фоновые цвета",
+      "printBackgroundHint": "Нужно, чтобы блоки кода и заливка таблиц были видны.",
+      "succeeded": "Экспортировано как {{format}}",
+      "showInFolder": "Показать в папке",
+      "failed": "Не удалось экспортировать"
+    },
+    "share": {
+      "title": "Поделиться документом",
+      "exportInstead": "Экспортировать вместо этого…",
+      "saveFirst": "Сначала сохраните документ.",
+      "copyMarkdown": "Копировать как Markdown",
+      "copyMarkdownDescription": "Исходный текст, готовый для вставки в репозиторий или чат.",
+      "copyHtml": "Копировать как форматированный текст",
+      "copyHtmlDescription": "Форматированный HTML для вставки в почту и текстовые редакторы.",
+      "copyPath": "Копировать путь к файлу",
+      "copyPathDescription": "Полный путь к этому документу на диске.",
+      "reveal": "Показать в проводнике",
+      "revealDescription": "Открывает папку с выделенным файлом.",
+      "email": "Отправить по почте",
+      "emailDescription": "Открывает почтовый клиент с документом в теле письма.",
+      "system": "Системное меню «Поделиться»",
+      "systemDescription": "Передать файл другому приложению. Только macOS.",
+      "failed": "Не удалось поделиться"
+    },
+    "print": {
+      "failed": "Не удалось напечатать"
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "sections": "Разделы настроек",
+    "resetSection": "Сбросить этот раздел",
+    "resetSectionTitle": "Сбросить настройки раздела «{{section}}»?",
+    "resetSectionBody": "Эти параметры вернутся к значениям по умолчанию. Другие разделы не изменятся.",
+    "resetAll": "Сбросить все настройки",
+    "resetAllTitle": "Сбросить все настройки?",
+    "resetAllBody": "Все параметры вернутся к значениям по умолчанию. Документы не затрагиваются.",
+    "resetAllHint": "Сброс возвращает все параметры к значениям по умолчанию. Документы не затрагиваются.",
+    "resetEverything": "Сбросить всё",
+    "nav": {
+      "editor": "Редактор",
+      "appearance": "Оформление",
+      "markdown": "Markdown",
+      "files": "Файлы",
+      "language": "Язык",
+      "keyboard": "Клавиатура",
+      "about": "О программе",
+      "icons": "Значки",
+      "ai": "ИИ"
+    },
+    "editor": {
+      "fontFamily": "Шрифт",
+      "fontSize": "Размер шрифта",
+      "lineHeight": "Межстрочный интервал",
+      "tabSize": "Размер табуляции",
+      "insertSpaces": "Вставлять пробелы вместо табуляции",
+      "wordWrap": "Переносить длинные строки",
+      "lineNumbers": "Показывать номера строк",
+      "highlightActiveLine": "Подсвечивать текущую строку",
+      "bracketMatching": "Подсвечивать и закрывать скобки",
+      "autoIndent": "Автоматический отступ",
+      "spellCheck": "Проверять орфографию",
+      "customFont": "Свой (из файла настроек)"
+    },
+    "appearance": {
+      "theme": "Тема",
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "system": "Системная",
+      "accent": "Акцентный цвет",
+      "density": "Плотность",
+      "comfortable": "Свободная",
+      "compact": "Компактная",
+      "showSidebar": "Показывать боковую панель",
+      "showToolbar": "Показывать панель форматирования",
+      "showStatusBar": "Показывать строку состояния",
+      "reduceMotion": "Уменьшить анимацию",
+      "accents": {
+        "indigo": "Индиго",
+        "blue": "Синий",
+        "teal": "Бирюзовый",
+        "violet": "Фиолетовый",
+        "amber": "Янтарный",
+        "rose": "Розовый",
+        "graphite": "Графит"
+      },
+      "uiScale": "Размер интерфейса",
+      "uiScaleHint": "Масштабирует боковую панель, вкладки и этот экран. Ctrl + и Ctrl - делают то же самое. Размер текста в редакторе задаётся отдельно.",
+      "splashScreen": "Показывать экран запуска",
+      "startupSound": "Звук при запуске",
+      "startupHint": "Оба параметра вступят в силу при следующем запуске.",
+      "palette": "Палитра",
+      "paletteHint": "Заменяет серые тона. Акцентный цвет выше по-прежнему применяется поверх.",
+      "palettes": {
+        "nord": "Nord",
+        "solarized": "Solarized",
+        "gruvbox": "Gruvbox",
+        "rosePine": "Rosé Pine",
+        "sepia": "Sepia",
+        "default": "MarkCraft",
+        "highContrast": "Высокий контраст"
+      },
+      "customColors": "Свои цвета",
+      "customColorsHint": "Переопределите отдельные цвета. Они важнее темы и палитры.",
+      "resetColor": "Сбросить этот цвет",
+      "resetAllColors": "Сбросить все цвета",
+      "noOverrides": "Ничего не изменено",
+      "overrideCount": "Изменено: {{count}}",
+      "tokens": {
+        "bg-app": "Фон окна",
+        "bg-surface": "Фон панели",
+        "bg-raised": "Приподнятая поверхность",
+        "bg-sunken": "Утопленная поверхность",
+        "text-primary": "Текст",
+        "text-secondary": "Второстепенный текст",
+        "border": "Границы",
+        "accent": "Акцент",
+        "accent-hover": "Акцент (наведение)",
+        "success": "Успех",
+        "warning": "Предупреждение",
+        "danger": "Опасность"
+      },
+      "toolbarItems": "Панель форматирования",
+      "toolbarItemsHint": "Выберите, какие кнопки показывать и в каком порядке.",
+      "moveUp": "Вверх",
+      "moveDown": "Вниз",
+      "resetToolbar": "Сбросить",
+      "toolbarDefault": "Используется стандартный порядок",
+      "toolbarCount": "Показано кнопок: {{count}}"
+    },
+    "markdown": {
+      "defaultView": "Вид по умолчанию",
+      "gfm": "GitHub-Flavored Markdown",
+      "syncScroll": "Синхронизировать прокрутку в разделённом виде",
+      "codeHighlighting": "Подсвечивать блоки кода в предпросмотре",
+      "styleNote": "Эти параметры определяют, как MarkCraft записывает Markdown. Они показаны здесь потому, что визуальный редактор приводит документы к этому стилю при сохранении.",
+      "bullet": "Маркер списка",
+      "emphasis": "Знак курсива",
+      "strong": "Знак полужирного",
+      "imageHandling": "Обработка изображений",
+      "imageRelative": "Копировать рядом с документом",
+      "imageAbsolute": "Ссылаться на исходное место",
+      "imageFolder": "Папка изображений",
+      "imageFolderLabel": "Имя папки изображений"
+    },
+    "files": {
+      "autoSave": "Автосохранение",
+      "autoSaveOff": "Выключено",
+      "autoSaveOffDescription": "Сохраняйте вручную через Ctrl+S.",
+      "autoSaveDelay": "С задержкой",
+      "autoSaveDelayDescription": "Сохраняет, когда вы перестаёте печатать.",
+      "autoSaveFocus": "При потере фокуса окна",
+      "autoSaveFocusDescription": "Сохраняет при переключении на другое окно.",
+      "autoSaveDelayLabel": "Задержка автосохранения",
+      "recovery": "Вести журнал восстановления",
+      "watchExternal": "Отслеживать изменения от других программ",
+      "confirmDelete": "Подтверждать удаление файлов",
+      "showHidden": "Показывать скрытые файлы в списке",
+      "lineEndings": "Концы строк",
+      "eolAuto": "Сохранять как в файле",
+      "eolLf": "LF (Unix)",
+      "eolCrlf": "CRLF (Windows)",
+      "recentLimit": "Хранить недавних документов",
+      "showSettingsFile": "Показать файл настроек",
+      "markdownOnly": "Показывать только файлы Markdown",
+      "markdownOnlyHint": "Папки показываются всегда. Отключите, чтобы видеть все файлы рабочей папки.",
+      "trashLimit": "Сколько удалённых хранить",
+      "trashLimitHint": "Сколько удалённых документов хранить, прежде чем самые старые исчезнут навсегда. 0 — хранить все.",
+      "trashUnlimited": "Без ограничения",
+      "historyLimit": "Версий на документ",
+      "historyLimitHint": "Сколько сохранённых версий хранить для каждого документа. Каждая — полная копия текста. 0 — отключить историю.",
+      "historyOff": "Выключено"
+    },
+    "language": {
+      "interfaceLanguage": "Язык интерфейса",
+      "interfaceHint": "Применяется ко всему приложению сразу.",
+      "systemDefault": "Как в системе",
+      "installed": "Установленные языки",
+      "addTitle": "Добавить язык",
+      "addDescription": "Положите файл перевода в папку языков и перезагрузите список. Начните с существующего файла — любой пропущенный ключ берётся из английского.",
+      "openFolder": "Открыть папку языков",
+      "exportTemplate": "Экспортировать шаблон…",
+      "templateSaved": "Шаблон сохранён",
+      "reload": "Перезагрузить языки",
+      "reloaded": "Языки перезагружены",
+      "custom": "Пользовательский",
+      "builtIn": "Встроенный",
+      "coverage": "переведено {{percent}}%"
+    },
+    "keyboard": {
+      "filter": "Фильтр команд или клавиш…",
+      "filterLabel": "Фильтровать сочетания",
+      "resetAll": "Сбросить все",
+      "conflictNotice": "Некоторые сочетания назначены нескольким командам. Срабатывает первое совпадение.",
+      "table": "Сочетания клавиш",
+      "unassigned": "Не назначено",
+      "pressKeys": "Нажмите сочетание клавиш…",
+      "recording": "Запись нового сочетания для «{{command}}»",
+      "change": "Изменить сочетание для «{{command}}»",
+      "unbind": "Снять назначение с «{{command}}»",
+      "restore": "Вернуть значение по умолчанию для «{{command}}»"
+    },
+    "about": {
+      "description": "Профессиональный настольный редактор Markdown. Работает офлайн: написанное вами не покидает этот компьютер.",
+      "electron": "Electron",
+      "chromium": "Chromium",
+      "node": "Node",
+      "platform": "Платформа",
+      "dataFolder": "Папка данных"
+    },
+    "search": {
+      "placeholder": "Поиск по настройкам…",
+      "label": "Поиск по настройкам",
+      "noResults": "Ничего не найдено по запросу «{{query}}»",
+      "noResultsHint": "Попробуйте другое слово или просмотрите разделы слева.",
+      "matchCount": "{{count}} совпадение",
+      "matchCountPlural": "{{count}} совпадений",
+      "clear": "Очистить поиск"
+    },
+    "ai": {
+      "enabled": "Использовать ИИ-ассистента",
+      "enabledHint": "Выключено, пока вы не подключите своего провайдера. MarkCraft не содержит ни ключа, ни адреса по умолчанию.",
+      "confirm": "Спрашивать перед отправкой",
+      "confirmHint": "Показывать текст и инструкцию до того, как что-либо покинет компьютер.",
+      "active": "Активная модель",
+      "activeHint": "Какое сохранённое подключение используют кнопки ассистента.",
+      "noProfiles": "Модели ещё не добавлены",
+      "houseStyle": "Правила стиля",
+      "houseStyleHint": "Добавляется к каждому запросу — терминология, тон, всё, что модель должна соблюдать всегда.",
+      "houseStylePlaceholder": "например, не использовать восклицательные знаки",
+      "models": "Подключения",
+      "addModel": "Добавить модель",
+      "emptyHint": "Добавьте подключение, чтобы начать. Подойдёт всё, что говорит на API OpenAI, Anthropic или Gemini, включая локальные Ollama и LM Studio.",
+      "provider": "Провайдер",
+      "model": "Модель",
+      "name": "Название",
+      "baseUrl": "Адрес",
+      "baseUrlHint": "Меняйте только ради прокси, шлюза или собственного сервера.",
+      "apiKey": "API-ключ",
+      "keyHint": "Хранится в зашифрованном виде для этой учётной записи, никогда в settings.json.",
+      "keyStored": "Ключ сохранён. Введите новый, чтобы заменить.",
+      "keyPlaceholder": "Вставьте ключ и щёлкните мимо",
+      "forgetKey": "Забыть сохранённый ключ",
+      "getKey": "Получить ключ",
+      "test": "Проверить",
+      "loadModels": "Загрузить модели",
+      "use": "Использовать эту",
+      "noEncryption": "Эта система не может шифровать сохранённые данные, поэтому API-ключи не будут сохранены.",
+      "maxTokens": "Предел ответа",
+      "maxTokensHint": "Максимальная длина ответа. Уменьшите, если провайдер сообщает о нехватке кредитов.",
+      "temperature": "Температура",
+      "temperatureHint": "Ниже — буквальнее, выше — изобретательнее. Для правки подходит 0.4."
+    }
+  },
+  "recovery": {
+    "title": "Восстановить несохранённую работу",
+    "description": "MarkCraft закрылся, когда в {{documents}} были несохранённые изменения. Они сохранены в журнале восстановления.",
+    "discardAll": "Отбросить все",
+    "recoverSelected": "Восстановить выбранное",
+    "selectedCount": "выбрано {{selected}} из {{total}}",
+    "neverSaved": "Никогда не сохранялся",
+    "editedAt": "изменён {{time}}",
+    "recovered": "Восстановлено: {{documents}}",
+    "recoveredHint": "Просмотрите изменения и сохраните те, что хотите оставить."
+  },
+  "external": {
+    "deletedTitle": "Этот файл удалён с диска.",
+    "deletedDetail": "Ваша версия по-прежнему открыта здесь. Сохраните её, чтобы записать файл обратно.",
+    "saveToRestore": "Сохранить для восстановления",
+    "changedTitle": "Файл изменён вне MarkCraft.",
+    "changedDetail": "Здесь есть несохранённые правки, поэтому ничего не заменено.",
+    "keepMine": "Оставить мои изменения",
+    "reload": "Перезагрузить с диска"
+  },
+  "notifications": {
+    "saved": "Сохранено",
+    "savedOverwrite": "Внешние изменения в {{name}} перезаписаны",
+    "savedCount": "Сохранено: {{documents}}",
+    "reverted": "Возвращено",
+    "reloaded": "Перезагружено",
+    "reloadedDetail": "{{name}} изменён на диске",
+    "pathCopied": "Путь скопирован",
+    "markdownCopied": "Markdown скопирован в буфер обмена",
+    "htmlCopied": "HTML скопирован в буфер обмена",
+    "revealed": "Показано в проводнике",
+    "openingMail": "Открывается почтовый клиент",
+    "pinned": "Закреплено",
+    "unpinned": "Откреплено",
+    "deleted": "Удалено «{{name}}»",
+    "deletedMany": "Удалено элементов: {{count}}",
+    "movedToTrash": "Перемещено в корзину",
+    "duplicated": "Дублировано как «{{name}}»",
+    "cutItems": "Вырезано: {{items}}",
+    "copiedItems": "Скопировано: {{items}}",
+    "workspaceRefreshed": "Рабочая папка обновлена",
+    "nothingToReopen": "Нечего возвращать",
+    "fileGoneTitle": "Файл больше не существует",
+    "fileGoneAction": "Убрать из недавних",
+    "skippedFiles": "Пропущено файлов: {{count}}",
+    "skippedFilesDetail": "Открывать можно только документы Markdown и текстовые файлы."
+  },
+  "errors": {
+    "boundaryTitle": "Что-то пошло не так",
+    "boundaryScoped": "В компоненте «{{scope}}» произошла непредвиденная ошибка.",
+    "boundaryGeneric": "В MarkCraft произошла непредвиденная ошибка.",
+    "boundaryBody": "Открытые документы всё ещё в памяти — перезагрузка обычно их восстанавливает, а несохранённая работа хранится в журнале восстановления.",
+    "technicalDetails": "Технические подробности",
+    "reload": "Перезагрузить MarkCraft",
+    "scopes": {
+      "editor": "редактор",
+      "preview": "предпросмотр",
+      "sidebar": "боковая панель",
+      "richEditor": "визуальный редактор",
+      "application": "приложение"
+    },
+    "openFailed": "Не удалось открыть файл",
+    "saveFailed": "Не удалось сохранить файл",
+    "reloadFailed": "Не удалось перезагрузить файл",
+    "createFileFailed": "Не удалось создать файл",
+    "createFolderFailed": "Не удалось создать папку",
+    "renameFailed": "Не удалось переименовать",
+    "deleteFailed": "Не удалось удалить",
+    "duplicateFailed": "Не удалось дублировать",
+    "pasteFailed": "Не удалось вставить",
+    "moveFailed": "Не удалось переместить",
+    "readFolderFailed": "Не удалось прочитать папку",
+    "openFolderFailed": "Не удалось открыть папку",
+    "folderIntoItself": "Нельзя переместить папку внутрь себя",
+    "pasteIntoItself": "Нельзя вставить папку внутрь себя",
+    "codes": {
+      "ENOENT": "Файл не найден",
+      "EACCES": "Доступ запрещён",
+      "EPERM": "Операция не разрешена",
+      "EBUSY": "Файл используется",
+      "EEXIST": "Уже существует",
+      "EISDIR": "Это папка",
+      "ENOTDIR": "Это не папка",
+      "ENOTEMPTY": "Папка не пуста",
+      "ENOSPC": "Нет места на диске",
+      "FORBIDDEN_PATH": "Расположение вне рабочей папки",
+      "TOO_LARGE": "Файл слишком большой",
+      "NOT_MARKDOWN": "Неподдерживаемый тип файла",
+      "CANCELLED": "Отменено",
+      "CONFLICT": "Файл изменён на диске",
+      "INVALID_ARGUMENT": "Некорректный запрос",
+      "UNSUPPORTED": "Не поддерживается",
+      "UNKNOWN": "Что-то пошло не так"
+    }
+  },
+  "view": {
+    "zoomToast": "Масштаб интерфейса {{percent}}%"
+  },
+  "icons": {
+    "dialogTitle": "Значок и цвет",
+    "applyTo": "Применить к",
+    "colour": "Цвет",
+    "icon": "Значок",
+    "defaultColour": "Цвет по умолчанию",
+    "defaultIcon": "Значок по умолчанию",
+    "reset": "Убрать настройку",
+    "importHint": "Свои SVG-файлы добавляются в разделе Настройки > Значки.",
+    "description": "Задайте свой значок и цвет для файла, папки или целого типа файлов. Побеждает самое точное правило: эта конкретная папка важнее всех папок с таким именем, а те — важнее всех файлов такого типа.",
+    "rulesTitle": "Правила",
+    "noRules": "Правил пока нет",
+    "noRulesHint": "Щёлкните правой кнопкой по файлу или папке и выберите «Значок и цвет…».",
+    "addRule": "Добавить правило",
+    "addRuleHint": "По типу файла (md) или по имени (drafts).",
+    "choose": "Выбрать…",
+    "customTitle": "Свои значки",
+    "customHint": "Импортированные SVG появляются в выборе рядом со встроенными.",
+    "import": "Импорт SVG…",
+    "openFolder": "Открыть папку значков",
+    "reload": "Обновить",
+    "reloaded": "Значки обновлены",
+    "imported": "Добавлен {{count}} значок",
+    "importedPlural": "Добавлено значков: {{count}}",
+    "removeIconTitle": "Удалить «{{name}}»?",
+    "removeIconBody": "Файл будет удалён из папки значков.",
+    "removeIconInUse": "Это правило использует данный значок. После удаления оно вернётся к значку по умолчанию.",
+    "scope": {
+      "thisOne": "Только это",
+      "sameName": "С именем «{{name}}»",
+      "sameType": "Все файлы .{{ext}}"
+    },
+    "match": {
+      "path": "Только это",
+      "name": "Имя",
+      "extension": "Тип"
+    }
+  },
+  "reader": {
+    "edit": "Редактировать",
+    "stats": "{{words}} слов · {{minutes}} мин чтения",
+    "title": "Чтение"
+  },
+  "outline": {
+    "title": "Структура",
+    "filter": "Фильтр заголовков…",
+    "empty": "Заголовков пока нет",
+    "emptyHint": "Добавленные заголовки появятся здесь; щелчок переходит к ним.",
+    "noMatches": "Ничего не найдено по «{{query}}»",
+    "noDocument": "Нет открытого документа",
+    "noDocumentHint": "Откройте файл Markdown, чтобы увидеть его структуру."
+  },
+  "stats": {
+    "title": "Статистика документа",
+    "words": "Слов",
+    "characters": "Символов",
+    "charactersNoSpaces": "Символов без пробелов",
+    "sentences": "Предложений",
+    "paragraphs": "Абзацев",
+    "headings": "Заголовков",
+    "lines": "Строк",
+    "readingTime": "Время чтения",
+    "minutes": "{{count}} мин",
+    "goalTitle": "Цель по словам",
+    "goalHint": "Задайте цель — строка состояния покажет, насколько документ к ней близок.",
+    "goalProgress": "{{words}} из {{goal}} слов",
+    "goalRemaining": "осталось {{count}}",
+    "goalReached": "Достигнуто",
+    "goalCustom": "Своё…",
+    "goalClear": "Убрать цель",
+    "links": "Ссылки",
+    "images": "Изображения",
+    "codeBlocks": "Блоки кода",
+    "tasks": "Задачи",
+    "tasksDone": "{{done}} из {{total}} выполнено",
+    "problems": "Проблемы",
+    "noProblems": "Исправлять нечего.",
+    "danglingAnchor": "Строка {{line}}: «{{target}}» не соответствует ни одному заголовку",
+    "duplicateHeading": "Два заголовка делят якорь «{{slug}}»"
+  },
+  "preview": {
+    "diagramLoading": "Отрисовка диаграммы…",
+    "diagramFailed": "Не удалось построить диаграмму",
+    "copyCode": "Копировать код",
+    "copied": "Скопировано",
+    "runCode": "Выполнить этот блок",
+    "runFinished": "код {{code}} · {{ms}} мс",
+    "runTimedOut": "остановлено по таймауту"
+  },
+  "session": {
+    "restored": "Открыт {{count}} документ",
+    "restoredPlural": "Открыто документов: {{count}}",
+    "startFresh": "Начать с чистого листа"
+  },
+  "table": {
+    "title": "Таблица",
+    "addRow": "Добавить строку ниже",
+    "deleteRow": "Удалить строку",
+    "addColumn": "Добавить столбец справа",
+    "deleteColumn": "Удалить столбец",
+    "toggleHeader": "Строка заголовка",
+    "deleteTable": "Удалить таблицу"
+  },
+  "templates": {
+    "title": "Создать по шаблону",
+    "description": "Заготовка, а не готовый документ.",
+    "blank": {
+      "title": "Пустой документ",
+      "description": "Пустой файл."
+    },
+    "note": {
+      "title": "Заметка на сегодня",
+      "description": "Заголовок с датой, можно писать."
+    },
+    "meeting": {
+      "title": "Протокол встречи",
+      "description": "Участники, повестка, заметки и задачи.",
+      "heading": "Протокол встречи",
+      "date": "Дата",
+      "attendees": "Участники",
+      "agenda": "Повестка",
+      "notes": "Заметки",
+      "actions": "Задачи"
+    },
+    "article": {
+      "title": "Статья",
+      "description": "Front matter, заголовок и первый раздел.",
+      "heading": "Заголовок",
+      "intro": "Одно предложение о том, про что это.",
+      "section": "Первый раздел"
+    },
+    "todo": {
+      "title": "Список задач",
+      "description": "Задачи, разделённые на сейчас и потом.",
+      "heading": "Задачи",
+      "today": "Сегодня",
+      "later": "Потом"
+    }
+  },
+  "ai": {
+    "menu": "Ассистент",
+    "working": "Работает…",
+    "send": "Отправить",
+    "retry": "Повторить",
+    "replace": "Заменить",
+    "insertBelow": "Вставить ниже",
+    "copied": "Скопировано в буфер обмена",
+    "applied": "Применено к документу",
+    "failed": "Запрос не удался.",
+    "scopeSelection": "выделенный текст",
+    "scopeDocument": "весь документ",
+    "subtitle": "Работа над: {{scope}} — модель {{model}}.",
+    "confirmNotice": "Этот текст будет отправлен подключённому вами провайдеру. Чтобы пропускать этот шаг, отключите «Спрашивать перед отправкой» в настройках.",
+    "customNotice": "Опишите, что нужно сделать. Ниже — текст, который будет отправлен.",
+    "instructionPlaceholder": "например, перепиши это списком",
+    "nothingToWorkOn": "Нет текста для работы",
+    "nothingToWorkOnDetail": "Сначала откройте документ или выделите текст.",
+    "movedOnTitle": "Документ изменился",
+    "movedOnDetail": "Текста больше нет на прежнем месте, поэтому замена не выполнена. Скопируйте ответ.",
+    "keySaved": "API-ключ сохранён",
+    "keyFailed": "Не удалось сохранить ключ",
+    "testOk": "Соединение работает",
+    "testFailed": "Соединение не удалось",
+    "modelsLoaded": "Загружено моделей: {{count}}",
+    "modelsFailed": "Не удалось загрузить список моделей",
+    "action": {
+      "polish": "Причесать текст",
+      "elaborate": "Добавить деталей",
+      "summarize": "Кратко изложить",
+      "custom": "Своя инструкция…",
+      "review": "Проверить этот документ"
+    }
+  },
+  "trash": {
+    "title": "Удалённые",
+    "clear": "Очистить",
+    "restore": "Восстановить",
+    "purge": "Удалить навсегда",
+    "restored": "Восстановлено",
+    "restoreFailed": "Не удалось восстановить",
+    "purgeTitle": "Удалить навсегда?",
+    "purgeBody": "«{{name}}» исчезнет безвозвратно. Это нельзя отменить.",
+    "purgeConfirm": "Удалить навсегда",
+    "clearTitle": "Очистить список удалённых?",
+    "clearBody": "Все элементы ({{count}}) исчезнут безвозвратно. Это нельзя отменить.",
+    "clearConfirm": "Очистить",
+    "emptyTitle": "Ничего не удалено",
+    "emptyBody": "Удалённые документы хранятся здесь, чтобы их можно было вернуть.",
+    "limit": "Хранятся последние {{count}}. Изменить можно в Настройках → Файлы.",
+    "noLimit": "Хранится всё. Изменить можно в Настройках → Файлы."
+  },
+  "whatsNew": {
+    "title": "Что нового",
+    "subtitle": "MarkCraft {{version}}",
+    "dismiss": "Понятно",
+    "open": "Что нового",
+    "kind": {
+      "new": "Новое",
+      "improved": "Улучшено",
+      "fixed": "Исправлено"
+    },
+    "notes": {
+      "ai": {
+        "title": "Подключите своего ИИ-ассистента",
+        "body": "Подключите OpenRouter, OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Together, xAI или Fireworks — либо локальные Ollama и LM Studio. Причесать текст, добавить деталей, кратко изложить или своя инструкция — для выделения или всего документа. По умолчанию выключено, без ключа и без нашего адреса; ключи шифруются под вашей учётной записью ОС и никогда не попадают в settings.json. Перед отправкой вам показывают, что именно будет отправлено."
+      },
+      "trash": {
+        "title": "Удалённые документы можно вернуть",
+        "body": "Удаление теперь ведёт в список внутри MarkCraft, а не сразу в системную корзину: видно, что удалено, вернуть можно одним щелчком, а можно удалить навсегда. По умолчанию хранятся последние 30 — измените или снимите ограничение в Настройках → Файлы."
+      },
+      "palettes": {
+        "title": "Шесть именованных палитр",
+        "body": "Nord, Solarized, Gruvbox, Rosé Pine, Sepia и вариант с высоким контрастом, у каждой светлая и тёмная форма. Палитра заменяет только серые тона, поэтому ваш акцентный цвет по-прежнему применяется поверх."
+      },
+      "customColors": {
+        "title": "Задайте отдельные цвета сами",
+        "body": "Двенадцать цветов — окно, панели, текст, границы, акцент и цвета состояний — переопределяются и сбрасываются по одному, а палитра выбора встроена в приложение, а не взята из диалога операционной системы."
+      },
+      "exportPng": {
+        "title": "Экспорт в изображение",
+        "body": "Весь документ одним высоким PNG — можно вставить в переписку или в слайд. Страница сначала растягивается до высоты документа, чтобы ничего ниже сгиба не потерялось незаметно."
+      },
+      "exportJson": {
+        "title": "Экспорт в JSON",
+        "body": "Метаданные, front matter, структура, счётчики слов, Markdown и разобранное дерево документа — то самое дерево, с которым работает сам редактор, так что скрипт видит ровно то же, что MarkCraft."
+      },
+      "share": {
+        "title": "«Поделиться» и «Экспорт» — в заголовке окна",
+        "body": "Раньше и то и другое было доступно только из палитры команд, а там их никто не ищет."
+      },
+      "previewLatency": {
+        "title": "Предпросмотр успевает за набором",
+        "body": "Раньше он ждал паузы, и правая часть могла не двигаться целое предложение. Теперь есть предел того, насколько он может отстать, как быстро бы вы ни печатали."
+      },
+      "recentOpensFolder": {
+        "title": "Недавние и закреплённые файлы открывают свою папку",
+        "body": "При выборе запомненного документа открывается и папка, в которой он лежит, поэтому в навигаторе видны его соседи, а не что-то постороннее."
+      },
+      "lastFolder": {
+        "title": "Открытая папка открывается снова",
+        "body": "Запись о последней рабочей папке уходила не в тот слот: и папка терялась, и сохранённые вкладки этой папки перезаписывались пустой сессией. Исправлено и то и другое — после перезапуска вы там же, где были."
+      },
+      "listContinuation": {
+        "title": "Enter продолжает список",
+        "body": "Две раскладки одновременно занимали Enter, и простая всегда побеждала, поэтому Enter в списке завершал его вместо перехода к следующему пункту."
+      },
+      "toolbarCaret": {
+        "title": "Курсор встаёт после маркера с панели",
+        "body": "Заголовок или список на пустой строке оставлял курсор слева от только что вставленного маркера, и следующий символ оказывался вне его."
+      },
+      "modalLayering": {
+        "title": "Выпадающие списки в настройках видны",
+        "body": "Меню, всплывающие панели и подсказки теперь рисуются поверх поверхности, которой принадлежат. Список выбора, открывавшийся за окном настроек, был видимым симптомом."
+      },
+      "languageTemplate": {
+        "title": "«Экспорт шаблона…» работает",
+        "body": "Он запрашивал файл с именем, которое загрузчик языков не принимает, и получал отказ. Теперь стартовый файл называется по коду языка, который в нём указан."
+      },
+      "present": {
+        "title": "Презентация прямо из документа",
+        "body": "F5 превращает открытый документ в слайды. Строка, содержащая только ---, — это разрыв слайда, поэтому документ, написанный для чтения, уже презентуется осмысленно. Стрелки, Page Up/Down, Home и End перелистывают; Escape выходит. Слайды рендерятся тем же конвейером, что и предпросмотр, так что таблица или диаграмма выглядят одинаково."
+      },
+      "slashBlocks": {
+        "title": "Введите / чтобы вставить блок",
+        "body": "Слэш в начале строки или после пробела открывает меню из четырнадцати блоков — заголовки, списки, списки задач, цитаты, код, выноски, таблицы, ссылки, изображения, эмодзи и разделители. Продолжайте печатать, чтобы сузить список; Enter или Tab вставляет. Меню не появляется внутри путей, URL и слов вроде and/or. Совпадает и английское название, и ваш язык — работают и /heading, и /заголовок."
+      },
+      "devTools": {
+        "title": "Инструменты разработчика, офлайн",
+        "body": "Форматирование JSON, JSON↔YAML, Base64, экранирование URL, разбор JWT, метки времени, тестер регулярных выражений и UUID — по Ctrl+Alt+T. Всё работает локально, и в этом смысл: вставляемый текст обычно токен, конфиг или данные клиента, а привычку вставлять такое на веб-страницу стоит оставить."
+      },
+      "links": {
+        "title": "Посмотрите, как связаны ваши документы",
+        "body": "Ctrl+Alt+L сканирует папку и рисует связи между документами; ниже перечислено, что ссылается на открытый документ, а каждая битая ссылка указана с файлом и строкой. [[Вики-ссылки]] находятся по имени файла из любой папки; при совпадении имён догадка не делается, а сообщается."
+      },
+      "website": {
+        "title": "Читайте документ на ширине телефона",
+        "body": "Ctrl+Alt+W показывает документ как страницу шириной 390, 768 и 1280 пикселей — настоящая рамка такой ширины, а не уменьшенная картинка, поэтому текст переносится и таблицы выходят за край ровно так, как увидит читатель."
+      },
+      "imageEditor": {
+        "title": "Обрежьте и сожмите перед вставкой",
+        "body": "При выборе локального изображения теперь предлагаются обрезка, качество и максимальная ширина, а итоговый размер показывается, пока вы решаете. Сжатие перекодирует в WebP и сохраняет прозрачность — скриншот со скруглённым углом это переживёт."
+      },
+      "exportWordProcessor": {
+        "title": "Экспорт в Word и в rich text",
+        "body": "Два новых формата: .docx для Word, Pages или Google Docs и .rtf для всего остального, что читает форматированный текст. Заголовки, списки, чекбоксы, цитаты и код переносятся, а оба формата строятся из одного и того же прочтения документа, поэтому расходиться не могут."
+      },
+      "callouts": {
+        "title": "Выноски",
+        "body": "Цитата, начинающаяся с > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING] или [!CAUTION], отображается цветной выноской — и в редакторе, и во всех экспортах."
+      },
+      "emoji": {
+        "title": "Выбор эмодзи",
+        "body": "Ctrl+Alt+M, панель инструментов или /emoji. Поиск по названию, часто используемые остаются наверху."
+      },
+      "headingIds": {
+        "title": "У заголовков появляются свои ссылки",
+        "body": "Каждому заголовку присваивается якорь по правилам GitHub, поэтому [](#раздел) работает и ссылка внутрь документа ведёт куда нужно. Нелатинские заголовки обрабатываются корректно."
+      },
+      "codeCopy": {
+        "title": "Копирование блока кода в один клик",
+        "body": "Блоки кода теперь показывают язык и кнопку копирования, которая копирует исходный текст, а не то, что нарисовала подсветка."
+      },
+      "lintAndAudit": {
+        "title": "Найдите ошибку раньше остальных",
+        "body": "Панель статистики теперь сообщает о битых внутренних ссылках, повторяющихся якорях заголовков и девяти проблемах Markdown, которые действительно отображаются неправильно — заголовок без пробела после решётки, незакрытый блок кода, изображение без alt-текста."
+      },
+      "toolbarCustom": {
+        "title": "Выберите, что на панели инструментов",
+        "body": "В настройках можно выбрать, какие инструменты показывать и в каком порядке."
+      },
+      "dropAnything": {
+        "title": "Перетащите в редактор что угодно",
+        "body": "Изображения вставляются, Markdown и текстовые файлы открываются, на всё остальное ставится относительная ссылка."
+      },
+      "startupSize": {
+        "title": "Быстрее до первой отрисовки",
+        "body": "Собственные зависимости Markdown-конвейера загружались при старте вместе с оболочкой. Перенос их туда, где они действительно нужны, убрал 330 кБ из первой отрисовки."
+      },
+      "functionKeys": {
+        "title": "Функциональные клавиши работают во время набора",
+        "body": "Сочетание без модификатора отдавалось текстовому полю в фокусе, из-за чего F5 был недоступен из редактора — единственного места, где его нажимают. Функциональные клавиши не могут ввести символ, поэтому теперь доходят до своей команды. Режим презентации также корректно забирает фокус, и нажатия во время показа больше не попадают в документ."
+      },
+      "book": {
+        "title": "Папка может быть книгой",
+        "body": "Добавьте SUMMARY.md со списком глав в виде вложенных ссылок — и Ctrl+Alt+K прочитает папку как одно произведение: главы по порядку, отсутствующие отмечены, а «Открыть как один документ» объединит их, сдвинув заголовки каждой главы на её глубину. Это формат, который уже используют mdBook и GitBook."
+      },
+      "study": {
+        "title": "Повторяйте по своим же заметкам",
+        "body": "Напишите в строке «Термин :: значение» либо вопрос, строку только с ? и ответ — и заметка становится карточкой. Сессия показывает по одной и планирует следующую встречу; карточка узнаётся по собственному тексту, поэтому переписывание вокруг неё не стирает историю."
+      },
+      "canvas": {
+        "title": "Холст",
+        "body": "Бесконечная поверхность карточек и связей между ними, сохраняется как JSON Canvas — открытый формат Obsidian, поэтому холст отсюда открывается там и наоборот. Карточки отображают Markdown, а панорама и масштаб остаются плавными и на сотне карточек."
+      },
+      "httpTester": {
+        "title": "Отправьте HTTP-запрос",
+        "body": "Для API, о котором написан технический документ. Метод, адрес, заголовки, тело; статус, время и отформатированный ответ. Принимаются только http:// и https:// — проверка повторяется на каждом редиректе — куки и учётные данные не передаются, и запрос уходит только по нажатию кнопки."
+      },
+      "runCode": {
+        "title": "Выполните блок кода",
+        "body": "Кнопка Run у любого блока на языке, установленном на этой машине — JavaScript, Python, Ruby, PHP, Go, shell, PowerShell. Вывод появляется под самим блоком. Песочницы нет, и MarkCraft её не обещает: код выполняется с вашими правами, ровно как если бы вы сохранили его и запустили сами, и никогда не запускается сам."
+      },
+      "lock": {
+        "title": "Заблокируйте документ",
+        "body": "Отключает правку открытого документа — защита от случайной клавиши в том, что завершено, согласовано или принадлежит другому. Проверяется и при сохранении, поэтому автосохранение и «сохранить всё» тоже это учитывают."
+      },
+      "streak": {
+        "title": "Серия письма",
+        "body": "Панель статистики теперь считает дни, когда вы писали, и показывает четыре недели квадратами. Серия, закончившаяся вчера, сегодня ещё жива: тот, кто не начал с утра, ничего не сломал. В записи только дата и число, никогда имя файла."
+      },
+      "pasteMarkdown": {
+        "title": "Вставляйте веб-страницы как Markdown",
+        "body": "Преобразует форматированный текст из буфера тем же конвейером, что и предпросмотр, — заголовки, списки, таблицы и код сохраняются, а навигация, баннер и подвал страницы нет. Отдельная команда, а не перехват Ctrl+V, который делал бы разное в зависимости от скопированного."
+      },
+      "codeLanguage": {
+        "title": "Задайте язык блока кода",
+        "body": "Из палитры команд, когда курсор в любом месте блока — в том числе ещё не закрытого, а это как раз тот момент, когда язык и нужен. Список берётся из таблицы самой подсветки, поэтому не предлагается язык, который нечем раскрасить."
+      },
+      "cleanUp": {
+        "title": "Очистите форматирование",
+        "body": "Исправляет четыре проблемы с однозначным ответом: заголовок, прижатый к решёткам, табуляции, лишние пробелы в конце, незакрытый блок. Остальные пять не трогает — придумать alt-текст или выбрать язык значило бы править смысл, а не форму."
+      },
+      "aiReview": {
+        "title": "Попросите ИИ проверить, а не переписать",
+        "body": "Пятое действие ИИ, которое возвращает замечания, а не документ: структура, не отвечающая содержанию, пропущенные разделы, необъяснённые утверждения, заголовки, не говорящие о том, что за ними. Орфографию и грамматику оставляет тому, кто их и так проверяет."
+      },
+      "quietLog": {
+        "title": "Тише в журнале",
+        "body": "Открытие холста или панели книги в папке, где нет ни того ни другого, больше не пишет в журнал ошибку о совершенно рутинной вещи. Журнал, полный рутинных ошибок, никто не читает."
+      }
+    }
+  },
+  "history": {
+    "title": "История версий",
+    "restore": "Восстановить эту версию",
+    "restoreTitle": "Восстановить эту версию?",
+    "restoreBody": "Текст в редакторе будет заменён этой версией. На диск ничего не пишется, пока вы не сохраните, так что можно отменить или закрыть без сохранения.",
+    "restored": "Версия восстановлена",
+    "restoredDetail": "Сохраните, чтобы оставить, или отмените, чтобы вернуться.",
+    "forget": "Забыть эту версию",
+    "comparedToNow": "В сравнении с редактором",
+    "identical": "Идентично",
+    "hiddenLines": "Без изменений: {{count}} строк",
+    "emptyTitle": "Версий пока нет",
+    "emptyBody": "Версия записывается при каждом сохранении этого документа.",
+    "unsavedTitle": "Ещё не сохранён",
+    "unsavedBody": "Сохраните документ один раз, и его версии начнут записываться."
+  },
+  "emoji": {
+    "title": "Эмодзи",
+    "hint": "Вставляется сам символ, а не :shortcode:.",
+    "search": "Поиск эмодзи…",
+    "empty": "Ничего не найдено.",
+    "groups": {
+      "all": "Все",
+      "common": "Основные",
+      "people": "Люди",
+      "objects": "Предметы",
+      "symbols": "Символы",
+      "nature": "Природа"
+    }
+  },
+  "drop": {
+    "saveFirstTitle": "Сначала сохраните документ",
+    "saveFirstBody": "Перетащенные файлы копируются рядом с документом, поэтому ему нужно место на диске.",
+    "failed": "Не удалось добавить {{name}}"
+  },
+  "lint": {
+    "line": "Строка {{line}} · {{rule}}: {{message}}",
+    "rules": {
+      "MD001": "Уровень заголовка прыгает с {{from}} на {{to}}",
+      "MD009": "Пробелы в конце строки",
+      "MD010": "Символ табуляции",
+      "MD018": "Нет пробела после # — это не отрисуется как заголовок",
+      "MD025": "Второй заголовок первого уровня",
+      "MD040": "У блока кода не указан язык",
+      "MD042": "У ссылки нет адреса",
+      "MD045": "У изображения нет alt-текста",
+      "MD046": "Незакрытый блок кода"
+    }
+  },
+  "present": {
+    "title": "Презентация",
+    "next": "Следующий слайд",
+    "previous": "Предыдущий слайд",
+    "empty": "Нечего показывать. Разделяйте слайды строкой только из ---."
+  },
+  "slash": {
+    "title": "Вставить блок",
+    "blocks": {
+      "heading1": "Заголовок 1",
+      "heading2": "Заголовок 2",
+      "heading3": "Заголовок 3",
+      "bulletList": "Маркированный список",
+      "orderedList": "Нумерованный список",
+      "taskList": "Список задач",
+      "quote": "Цитата",
+      "codeBlock": "Блок кода",
+      "callout": "Выноска",
+      "table": "Таблица",
+      "link": "Ссылка",
+      "image": "Изображение",
+      "emoji": "Эмодзи",
+      "horizontalRule": "Разделитель"
+    }
+  },
+  "devtools": {
+    "title": "Инструменты разработчика",
+    "copy": "Копировать результат",
+    "copied": "Скопировано в буфер обмена",
+    "input": "Ввод",
+    "output": "Результат",
+    "inputHint": "Вставьте текст сюда",
+    "pattern": "Шаблон",
+    "flags": "Флаги",
+    "generate": "Создать новый",
+    "noMatches": "Совпадений нет.",
+    "tools": {
+      "json": "JSON",
+      "base64": "Base64",
+      "url": "URL",
+      "jwt": "JWT",
+      "timestamp": "Метка времени",
+      "regex": "Regex",
+      "uuid": "UUID",
+      "yaml": "YAML"
+    },
+    "forward": {
+      "json": "Форматировать",
+      "base64": "Кодировать",
+      "url": "Кодировать",
+      "yaml": "JSON → YAML"
+    },
+    "back": {
+      "json": "Сжать",
+      "base64": "Декодировать",
+      "url": "Декодировать",
+      "yaml": "YAML → JSON"
+    },
+    "errors": {
+      "json": "Это не корректный JSON.",
+      "base64": "Это не корректный текст Base64.",
+      "url": "Это не корректная escape-последовательность.",
+      "jwt": "Это не читаемый JWT — токен состоит из трёх частей, разделённых точками.",
+      "timestamp": "Это не дата и не метка времени Unix.",
+      "regex": "Этот шаблон не является корректным регулярным выражением.",
+      "yaml": "Это не корректный YAML."
+    }
+  },
+  "links": {
+    "title": "Ссылки и граф",
+    "summary": "{{files}} документов, {{links}} ссылок",
+    "scanning": "Сканирование рабочей папки…",
+    "empty": "В этой папке пока нет документов Markdown.",
+    "mapLabel": "Карта документов и ссылок между ними",
+    "backlinks": "Обратные ссылки",
+    "backlinksFor": "Что ссылается на {{name}}",
+    "noBacklinks": "Сюда пока ничего не ссылается.",
+    "broken": "Битые ссылки",
+    "brokenLine": "{{target}} — из {{file}}, строка {{line}}"
+  },
+  "website": {
+    "title": "Просмотр как сайт",
+    "zoomIn": "Приблизить",
+    "zoomOut": "Отдалить",
+    "devices": {
+      "phone": "Телефон",
+      "tablet": "Планшет",
+      "laptop": "Ноутбук"
+    }
+  },
+  "image": {
+    "title": "Настроить изображение",
+    "apply": "Вставить",
+    "preview": "Предпросмотр изображения",
+    "cropHint": "Проведите по изображению, чтобы обрезать.",
+    "cropSet": "Обрезано по выделенной области.",
+    "cropClear": "Сбросить обрезку",
+    "compress": "Сжать",
+    "compressHint": "Перекодирует в WebP с сохранением прозрачности.",
+    "quality": "Качество — {{percent}}%",
+    "maxWidth": "Максимальная ширина",
+    "original": "Оригинал",
+    "measuring": "Измерение…",
+    "result": "{{width}}×{{height}} · {{size}} ({{delta}})"
+  },
+  "clean": {
+    "action": "Очистить",
+    "done": "Исправлено проблем форматирования: {{count}}",
+    "nothing": "Исправлять нечего — форматирование уже в порядке."
+  },
+  "language": {
+    "title": "Язык блока кода",
+    "current": "Сейчас {{name}}",
+    "clear": "Без языка",
+    "search": "Поиск языков…",
+    "noFence": "Сначала поставьте курсор внутрь блока кода.",
+    "noMatch": "Подходящих языков нет."
+  },
+  "paste": {
+    "noHtml": "В буфере обмена нет форматированного текста для преобразования.",
+    "nothing": "Преобразование дало пустой результат."
+  },
+  "book": {
+    "title": "Книга",
+    "summary": "Глав: {{count}}",
+    "reading": "Чтение оглавления…",
+    "none": "Эта папка не книга",
+    "noneHint": "Добавьте {{name}} со списком глав в виде вложенных ссылок — и они станут одним документом.",
+    "openAsOne": "Открыть как один документ",
+    "opened": "Объединено глав: {{count}}",
+    "missing": "нет",
+    "missingCount": "Глав указано, но не найдено на диске: {{count}}.",
+    "chapterMissing": "Не удалось прочитать {{path}}",
+    "empty": "Все главы пусты."
+  },
+  "study": {
+    "title": "Учёба",
+    "progress": "Просмотрено: {{done}} · осталось: {{left}}",
+    "reveal": "Показать ответ",
+    "reset": "Начать колоду заново",
+    "needsSaving": "Сначала сохраните документ",
+    "noCards": "В этом документе нет карточек",
+    "noCardsHint": "Напишите в строке «Термин :: значение» либо вопрос, строку только с ? и ответ.",
+    "done": "На сегодня ничего не осталось",
+    "doneHint": "Просмотрено карточек: {{count}}.",
+    "grade": {
+      "again": "Снова",
+      "hard": "Трудно",
+      "good": "Хорошо",
+      "easy": "Легко"
+    }
+  },
+  "canvas": {
+    "title": "Холст",
+    "reading": "Открытие холста…",
+    "addCard": "Добавить карточку",
+    "fit": "Вписать в экран",
+    "newCard": "Новая карточка",
+    "saved": "Холст сохранён",
+    "needsFolder": "Сначала откройте папку — холст сохраняется рядом с ней.",
+    "saveFailed": "Не удалось сохранить холст"
+  },
+  "lock": {
+    "locked": "Заблокирован — правка выключена",
+    "lockedShort": "Заблокирован",
+    "cannotSave": "Документ заблокирован. Снимите блокировку, чтобы сохранить."
+  },
+  "streak": {
+    "title": "Серия письма",
+    "current": "дней подряд: {{count}}",
+    "longest": "лучшая {{count}}",
+    "days": "дней с записями: {{count}}",
+    "dayTooltip": "{{day}} — слов: {{count}}"
+  },
+  "http": {
+    "title": "HTTP-запрос",
+    "subtitle": "Отправляется только по нажатию кнопки. Больше здесь ничто не выходит в сеть.",
+    "url": "Адрес",
+    "urlInvalid": "Запросить можно только http:// и https://.",
+    "headers": "Заголовки",
+    "headersHint": "По одному в строке, «Имя: значение». Строки с # игнорируются.",
+    "body": "Тело",
+    "send": "Отправить",
+    "sending": "Отправка…",
+    "truncated": "обрезано",
+    "responseHeaders": "Заголовки ответа",
+    "responseBody": "Тело ответа"
+  }
+}

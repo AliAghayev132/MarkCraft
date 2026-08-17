@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="1024" height="1024">
+  <!--
+    The MarkCraft application icon.
+
+    A document card carrying the MC monogram over three lines of text: the mark
+    says "Markdown document" before it says "MarkCraft", which is the right way
+    round for an icon that will mostly be seen sitting on .md files in a file
+    manager.
+
+    This file is the artwork of record. The in-app component
+    (renderer/components/brand/Logo.tsx) draws the same geometry, so the icon in
+    the taskbar and the mark on the start screen cannot drift apart.
+
+    Strokes are light — 2.6 for the frame, 3 for the letters, 1.7 for the text
+    lines — so the mark reads as drawn rather than stamped. Every stroke is
+    centred on its path, so the clearances that matter are between *painted*
+    edges: the monogram and the text lines share the same optical block, 16.5
+    to 47.7, centred in the frame's interior.
+  -->
+  <rect x="0" y="0" width="64" height="64" rx="15" fill="#ffffff"/>
+
+  <!-- A hairline so the white tile stays defined on a light surface. -->
+  <rect x="0.6" y="0.6" width="62.8" height="62.8" rx="14.5" fill="none"
+        stroke="rgba(16,20,28,0.12)" stroke-width="1.2"/>
+
+  <g stroke="#14171e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- The document frame. -->
+    <rect x="11.5" y="12.5" width="41" height="39" rx="10" stroke-width="2.6"/>
+
+    <!-- MC. Stroked rather than set in a typeface: one weight shared with the
+         frame and the text lines, and identical rendering everywhere. -->
+    <path d="M18.25 31.5 V19 L23.5 26.8 L28.75 19 V31.5" stroke-width="3"/>
+    <path d="M44.41 21.1 A6.2 6.2 0 1 0 44.41 29.4" stroke-width="3"/>
+
+    <!-- Three lines of text, the last one short, as a paragraph ends. -->
+    <path d="M17.5 37.5 H46.5" stroke-width="1.7"/>
+    <path d="M17.5 42 H46.5" stroke-width="1.7"/>
+    <path d="M17.5 46.5 H36.5" stroke-width="1.7"/>
+  </g>
+</svg>

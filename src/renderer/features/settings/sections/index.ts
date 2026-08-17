@@ -1,0 +1,10 @@
+/** `@features/settings/sections`. */
+export * from './AboutSection'
+export * from './AiSection'
+export * from './AppearanceSection'
+export * from './EditorSection'
+export * from './FilesSection'
+export * from './IconsSection'
+export * from './LanguageSection'
+export * from './MarkdownSection'
+export * from './types'

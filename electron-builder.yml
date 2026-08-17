@@ -1,0 +1,107 @@
+appId: com.markcraft.app
+productName: MarkCraft
+copyright: Copyright © 2026 MarkCraft
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - out/**/*
+  - package.json
+  - '!**/*.map'
+  - '!**/{.eslintrc,.editorconfig,.prettierrc}'
+
+# The window icon is read from resources at runtime on Linux, where the desktop
+# entry's icon is not applied to the window itself.
+extraResources:
+  - from: build/icon.png
+    to: icon.png
+
+asar: true
+# The Markdown pipeline and editors are all plain JS, so nothing needs to be
+# unpacked from the archive at runtime.
+asarUnpack: []
+
+# Documents opened from the OS arrive on argv / the `open-file` event and are
+# forwarded to the renderer, which opens them in reading mode (see
+# main/index.ts and features/reader/).
+#
+# Every extension here is one `pathsFromArgv` in main/index.ts accepts —
+# registering an association for a file the app then refuses to open would be
+# worse than not registering it at all.
+#
+# The reverse is not true: `pathsFromArgv` also accepts `.txt`, so one can be
+# opened from the command line or dragged in, but MarkCraft does not put itself
+# forward for the system's plain-text association. That is a claim an editor
+# should be asked to make, not make on its own.
+fileAssociations:
+  - ext: md
+    name: Markdown Document
+    description: Markdown Document
+    role: Editor
+    icon: build/icon.ico
+  - ext: markdown
+    name: Markdown Document
+    description: Markdown Document
+    role: Editor
+    icon: build/icon.ico
+  - ext: mdown
+    name: Markdown Document
+    description: Markdown Document
+    role: Editor
+    icon: build/icon.ico
+  - ext: mkd
+    name: Markdown Document
+    description: Markdown Document
+    role: Editor
+    icon: build/icon.ico
+  - ext: mdx
+    name: MDX Document
+    description: MDX Document
+    role: Editor
+    icon: build/icon.ico
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  # Per-user install registers the associations above under
+  # HKCU\Software\Classes, which is what puts MarkCraft in Explorer's
+  # "Open with" list for .md files.
+  #
+  # Windows 10 and 11 do not let an application make itself the *default*
+  # silently — that has to be the user's choice, in Settings > Apps > Default
+  # apps, or "Open with > Always use this app". This is as far as an installer
+  # is allowed to go, and deliberately so.
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: MarkCraft
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  category: public.app-category.productivity
+  darkModeSupport: true
+  # Hardened runtime without entitlements is enough: the app never loads remote
+  # code and needs no special capabilities.
+  hardenedRuntime: true
+
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Office
+  synopsis: A professional desktop Markdown editor
+  desktop:
+    entry:
+      MimeType: text/markdown;text/x-markdown;
+
+publish: null

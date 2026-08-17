@@ -1,0 +1,178 @@
+@import 'tailwindcss';
+@import './tokens.css';
+@import './palettes.css';
+
+@source '../';
+
+/*
+ * Tailwind theme bridge.
+ *
+ * The design tokens in `tokens.css` remain the single source of truth for every
+ * colour and dimension in the application — theming still works by swapping CSS
+ * custom properties on the root element, with no React re-render involved.
+ *
+ * This block only *exposes* those tokens as Tailwind utilities, so a component
+ * writes `bg-surface` instead of `background-color: var(--mc-bg-surface)`.
+ *
+ * `@theme inline` is what makes this work: the utility emits the underlying
+ * `var(--mc-*)` reference directly rather than copying its value at build time,
+ * so a utility class follows the live theme, accent and density switches exactly
+ * the way the old CSS modules did.
+ */
+@theme inline {
+  /* ── Surfaces ───────────────────────────────────────────────────────────── */
+  --color-app: var(--mc-bg-app);
+  --color-sunken: var(--mc-bg-sunken);
+  --color-surface: var(--mc-bg-surface);
+  --color-raised: var(--mc-bg-raised);
+  --color-inset: var(--mc-bg-inset);
+  --color-hover: var(--mc-bg-hover);
+  --color-active: var(--mc-bg-active);
+  --color-selected: var(--mc-bg-selected);
+  --color-selected-muted: var(--mc-bg-selected-muted);
+  --color-overlay: var(--mc-bg-overlay);
+
+  /* ── Text ───────────────────────────────────────────────────────────────── */
+  --color-ink: var(--mc-text-primary);
+  --color-ink-secondary: var(--mc-text-secondary);
+  --color-ink-tertiary: var(--mc-text-tertiary);
+  --color-ink-disabled: var(--mc-text-disabled);
+  --color-ink-inverse: var(--mc-text-inverse);
+  --color-on-accent: var(--mc-text-on-accent);
+
+  /* ── Lines ──────────────────────────────────────────────────────────────── */
+  --color-line-subtle: var(--mc-border-subtle);
+  --color-line: var(--mc-border);
+  --color-line-strong: var(--mc-border-strong);
+
+  /* ── Accent and semantics ───────────────────────────────────────────────── */
+  --color-accent: var(--mc-accent);
+  --color-accent-hover: var(--mc-accent-hover);
+  --color-accent-active: var(--mc-accent-active);
+  --color-accent-subtle: var(--mc-accent-subtle);
+  --color-accent-line: var(--mc-accent-border);
+
+  --color-success: var(--mc-success);
+  --color-success-bg: var(--mc-success-bg);
+  --color-warning: var(--mc-warning);
+  --color-warning-bg: var(--mc-warning-bg);
+  --color-danger: var(--mc-danger);
+  --color-danger-bg: var(--mc-danger-bg);
+  --color-danger-hover: var(--mc-danger-hover);
+  --color-info: var(--mc-info);
+  --color-info-bg: var(--mc-info-bg);
+
+  --color-dot-dirty: var(--mc-dot-dirty);
+  --color-dot-conflict: var(--mc-dot-conflict);
+
+  /* ── Editor surfaces ────────────────────────────────────────────────────── */
+  --color-editor: var(--mc-editor-bg);
+  --color-editor-gutter: var(--mc-editor-gutter);
+  --color-editor-match: var(--mc-editor-match);
+  --color-editor-selection: var(--mc-editor-selection);
+
+  /* ── Typography ─────────────────────────────────────────────────────────── */
+  --font-ui: var(--mc-font-ui);
+  --font-mono: var(--mc-font-mono);
+  --font-prose: var(--mc-font-prose);
+
+  --text-2xs: var(--mc-text-xs);
+  --text-xs: var(--mc-text-sm);
+  --text-sm: var(--mc-text-base);
+  --text-base: var(--mc-text-md);
+  --text-md: var(--mc-text-lg);
+  --text-lg: var(--mc-text-xl);
+  --text-xl: var(--mc-text-2xl);
+  --text-2xl: var(--mc-text-3xl);
+
+  /* ── Spacing ────────────────────────────────────────────────────────────────
+   * Named rather than numeric, so a density change (which rewrites the
+   * underlying token) moves every consumer at once.
+   * ─────────────────────────────────────────────────────────────────────────*/
+  --spacing-0: var(--mc-space-0);
+  --spacing-px: var(--mc-space-1);
+  --spacing-1: var(--mc-space-2);
+  --spacing-1\.5: var(--mc-space-3);
+  --spacing-2: var(--mc-space-4);
+  --spacing-3: var(--mc-space-5);
+  --spacing-4: var(--mc-space-6);
+  --spacing-5: var(--mc-space-7);
+  --spacing-6: var(--mc-space-8);
+  --spacing-8: var(--mc-space-9);
+  --spacing-10: var(--mc-space-10);
+  --spacing-14: var(--mc-space-11);
+  --spacing-18: var(--mc-space-12);
+
+  /* ── Radius ─────────────────────────────────────────────────────────────── */
+  --radius-xs: var(--mc-radius-xs);
+  --radius-sm: var(--mc-radius-sm);
+  --radius-md: var(--mc-radius-md);
+  --radius-lg: var(--mc-radius-lg);
+  --radius-xl: var(--mc-radius-xl);
+  --radius-full: var(--mc-radius-pill);
+
+  /* ── Elevation ──────────────────────────────────────────────────────────── */
+  --shadow-xs: var(--mc-shadow-xs);
+  --shadow-sm: var(--mc-shadow-sm);
+  --shadow-md: var(--mc-shadow-md);
+  --shadow-lg: var(--mc-shadow-lg);
+  --shadow-focus: var(--mc-shadow-focus);
+
+  /* ── Control geometry ───────────────────────────────────────────────────── */
+  --height-control-sm: var(--mc-control-height-sm);
+  --height-control: var(--mc-control-height-md);
+  --height-control-lg: var(--mc-control-height-lg);
+  --height-titlebar: var(--mc-titlebar-height);
+  --height-tabbar: var(--mc-tabbar-height);
+  --height-toolbar: var(--mc-toolbar-height);
+  --height-statusbar: var(--mc-statusbar-height);
+
+  /* ── Motion ─────────────────────────────────────────────────────────────── */
+  --ease-out: var(--mc-ease-out);
+  --ease-in-out: var(--mc-ease-in-out);
+
+  /* ── Stacking ───────────────────────────────────────────────────────────── */
+  --z-index-sticky: var(--mc-z-sticky);
+  --z-index-titlebar: var(--mc-z-titlebar);
+  --z-index-dropdown: var(--mc-z-dropdown);
+  --z-index-context-menu: var(--mc-z-context-menu);
+  --z-index-modal-backdrop: var(--mc-z-modal-backdrop);
+  --z-index-modal: var(--mc-z-modal);
+  --z-index-palette: var(--mc-z-palette);
+  --z-index-tooltip: var(--mc-z-tooltip);
+  --z-index-toast: var(--mc-z-toast);
+
+  /* ── Animation ──────────────────────────────────────────────────────────── */
+  --animate-fade-in: mc-fade-in var(--mc-duration-fast) var(--mc-ease-out);
+  --animate-scale-in: mc-scale-in var(--mc-duration-normal) var(--mc-ease-out);
+  --animate-slide-up: mc-slide-up var(--mc-duration-normal) var(--mc-ease-out);
+  --animate-slide-down: mc-slide-down var(--mc-duration-fast) var(--mc-ease-out);
+  --animate-spin: mc-spin 620ms linear infinite;
+  --animate-shimmer: mc-shimmer 1.3s ease-in-out infinite;
+}
+
+/*
+ * Custom variants for state that is expressed as a data attribute rather than a
+ * pseudo-class — used by menus, tabs and tree rows for roving focus.
+ */
+@custom-variant data-active (&[data-active]);
+@custom-variant data-selected (&[aria-selected='true']);
+@custom-variant data-pressed (&[aria-pressed='true']);
+@custom-variant data-current (&[aria-current='true']);
+@custom-variant group-hover-within (:is(.group:hover, .group:focus-within) &);
+
+/*
+ * Interface zoom.
+ *
+ * Applied to the chrome — the sidebar and the settings screen — and never to a
+ * document surface, which has its own font-size control. `zoom` rather than a
+ * transform because it is a real layout scale: text reflows and stays crisp,
+ * and nothing needs a compensating size on the container.
+ *
+ * Anything that measures the viewport in real pixels (the sidebar's resize
+ * handle) must stay *outside* an element carrying this class, or its
+ * coordinates would be in scaled units.
+ */
+@utility ui-scaled {
+  zoom: var(--mc-ui-scale, 1);
+}

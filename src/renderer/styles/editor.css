@@ -1,0 +1,34 @@
+/*
+ * CodeMirror host styling.
+ *
+ * The editor's own theme is defined in TypeScript (`features/editor/source/
+ * theme.ts`) because CodeMirror generates scoped class names at runtime. What
+ * remains here is only the host element sizing, which the React wrapper cannot
+ * express with utilities because the `.cm-editor` node is created by CodeMirror
+ * rather than by JSX.
+ */
+
+.mc-source-host {
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--mc-editor-bg);
+}
+
+.mc-source-host .cm-editor {
+  height: 100%;
+}
+
+/*
+ * ProseMirror sets its own inline styles for the drop cursor and gap cursor;
+ * these bring them onto the accent token so they match the rest of the UI.
+ */
+.ProseMirror-gapcursor::after {
+  border-top-color: var(--mc-accent);
+}
+
+.prosemirror-dropcursor-block,
+.prosemirror-dropcursor-inline {
+  background-color: var(--mc-accent) !important;
+}

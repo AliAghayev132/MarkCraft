@@ -1,0 +1,280 @@
+/*
+ * Named palettes.
+ *
+ * `tokens.css` defines the default ramp and the accents; a palette replaces the
+ * *neutral* half of it — backgrounds, text and borders — and leaves the accent
+ * and the semantic colours alone. That split is what lets a palette compose
+ * with the accent picker instead of competing with it: Nord with a rose accent
+ * is a combination the user can actually reach.
+ *
+ * Every palette declares both a light and a dark form, because `data-theme` is
+ * still the thing that decides which one applies. A palette that only looked
+ * right in one mode would silently break "follow the system".
+ */
+
+/* ── Nord ─────────────────────────────────────────────────────────────────── */
+
+:root[data-palette='nord'] {
+  --mc-bg-app: #e3e7ee;
+  --mc-bg-sunken: #eceff4;
+  --mc-bg-surface: #f7f9fc;
+  --mc-bg-raised: #ffffff;
+  --mc-bg-inset: #e8ecf3;
+
+  --mc-bg-hover: rgba(46, 52, 64, 0.05);
+  --mc-bg-active: rgba(46, 52, 64, 0.09);
+
+  --mc-text-primary: #2e3440;
+  --mc-text-secondary: #4c566a;
+  --mc-text-tertiary: #6b7488;
+  --mc-text-disabled: #9aa2b1;
+
+  --mc-border-subtle: rgba(46, 52, 64, 0.07);
+  --mc-border: rgba(46, 52, 64, 0.13);
+  --mc-border-strong: rgba(46, 52, 64, 0.22);
+}
+
+:root[data-theme='dark'][data-palette='nord'] {
+  --mc-bg-app: #242933;
+  --mc-bg-sunken: #2e3440;
+  --mc-bg-surface: #333b4a;
+  --mc-bg-raised: #3b4252;
+  --mc-bg-inset: #2b313c;
+
+  --mc-bg-hover: rgba(216, 222, 233, 0.06);
+  --mc-bg-active: rgba(216, 222, 233, 0.1);
+
+  --mc-text-primary: #eceff4;
+  --mc-text-secondary: #c2cad8;
+  --mc-text-tertiary: #93a0b4;
+  --mc-text-disabled: #6b7488;
+  --mc-text-inverse: #2e3440;
+
+  --mc-border-subtle: rgba(216, 222, 233, 0.06);
+  --mc-border: rgba(216, 222, 233, 0.12);
+  --mc-border-strong: rgba(216, 222, 233, 0.22);
+}
+
+/* ── Solarized ────────────────────────────────────────────────────────────── */
+
+:root[data-palette='solarized'] {
+  --mc-bg-app: #eee8d5;
+  --mc-bg-sunken: #f3eddb;
+  --mc-bg-surface: #fdf6e3;
+  --mc-bg-raised: #fffbf0;
+  --mc-bg-inset: #efe9d7;
+
+  --mc-bg-hover: rgba(88, 110, 117, 0.07);
+  --mc-bg-active: rgba(88, 110, 117, 0.12);
+
+  --mc-text-primary: #073642;
+  --mc-text-secondary: #586e75;
+  --mc-text-tertiary: #839496;
+  --mc-text-disabled: #a6b0ad;
+
+  --mc-border-subtle: rgba(88, 110, 117, 0.1);
+  --mc-border: rgba(88, 110, 117, 0.18);
+  --mc-border-strong: rgba(88, 110, 117, 0.3);
+}
+
+:root[data-theme='dark'][data-palette='solarized'] {
+  --mc-bg-app: #002029;
+  --mc-bg-sunken: #002b36;
+  --mc-bg-surface: #04313d;
+  --mc-bg-raised: #073642;
+  --mc-bg-inset: #002730;
+
+  --mc-bg-hover: rgba(147, 161, 161, 0.08);
+  --mc-bg-active: rgba(147, 161, 161, 0.13);
+
+  --mc-text-primary: #eee8d5;
+  --mc-text-secondary: #93a1a1;
+  --mc-text-tertiary: #7d9095;
+  --mc-text-disabled: #5b7076;
+  --mc-text-inverse: #002b36;
+
+  --mc-border-subtle: rgba(147, 161, 161, 0.08);
+  --mc-border: rgba(147, 161, 161, 0.15);
+  --mc-border-strong: rgba(147, 161, 161, 0.26);
+}
+
+/* ── Gruvbox ──────────────────────────────────────────────────────────────── */
+
+:root[data-palette='gruvbox'] {
+  --mc-bg-app: #ebdbb2;
+  --mc-bg-sunken: #f2e5bc;
+  --mc-bg-surface: #fbf1c7;
+  --mc-bg-raised: #fdf6d3;
+  --mc-bg-inset: #ede0b8;
+
+  --mc-bg-hover: rgba(60, 56, 54, 0.06);
+  --mc-bg-active: rgba(60, 56, 54, 0.11);
+
+  --mc-text-primary: #282828;
+  --mc-text-secondary: #504945;
+  --mc-text-tertiary: #7c6f64;
+  --mc-text-disabled: #a89984;
+
+  --mc-border-subtle: rgba(60, 56, 54, 0.09);
+  --mc-border: rgba(60, 56, 54, 0.16);
+  --mc-border-strong: rgba(60, 56, 54, 0.28);
+}
+
+:root[data-theme='dark'][data-palette='gruvbox'] {
+  --mc-bg-app: #1d2021;
+  --mc-bg-sunken: #282828;
+  --mc-bg-surface: #32302f;
+  --mc-bg-raised: #3c3836;
+  --mc-bg-inset: #242627;
+
+  --mc-bg-hover: rgba(235, 219, 178, 0.06);
+  --mc-bg-active: rgba(235, 219, 178, 0.11);
+
+  --mc-text-primary: #fbf1c7;
+  --mc-text-secondary: #d5c4a1;
+  --mc-text-tertiary: #a89984;
+  --mc-text-disabled: #7c6f64;
+  --mc-text-inverse: #282828;
+
+  --mc-border-subtle: rgba(235, 219, 178, 0.06);
+  --mc-border: rgba(235, 219, 178, 0.12);
+  --mc-border-strong: rgba(235, 219, 178, 0.22);
+}
+
+/* ── Rosé Pine ────────────────────────────────────────────────────────────── */
+
+:root[data-palette='rosePine'] {
+  --mc-bg-app: #f2e9e1;
+  --mc-bg-sunken: #f7efe8;
+  --mc-bg-surface: #faf4ed;
+  --mc-bg-raised: #fffaf3;
+  --mc-bg-inset: #f4ece4;
+
+  --mc-bg-hover: rgba(87, 82, 121, 0.06);
+  --mc-bg-active: rgba(87, 82, 121, 0.1);
+
+  --mc-text-primary: #575279;
+  --mc-text-secondary: #6e6a86;
+  --mc-text-tertiary: #9893a5;
+  --mc-text-disabled: #b5afbd;
+
+  --mc-border-subtle: rgba(87, 82, 121, 0.08);
+  --mc-border: rgba(87, 82, 121, 0.15);
+  --mc-border-strong: rgba(87, 82, 121, 0.26);
+}
+
+:root[data-theme='dark'][data-palette='rosePine'] {
+  --mc-bg-app: #16141f;
+  --mc-bg-sunken: #191724;
+  --mc-bg-surface: #1f1d2e;
+  --mc-bg-raised: #26233a;
+  --mc-bg-inset: #1b1927;
+
+  --mc-bg-hover: rgba(224, 222, 244, 0.06);
+  --mc-bg-active: rgba(224, 222, 244, 0.1);
+
+  --mc-text-primary: #e0def4;
+  --mc-text-secondary: #c5c2de;
+  --mc-text-tertiary: #908caa;
+  --mc-text-disabled: #6e6a86;
+  --mc-text-inverse: #191724;
+
+  --mc-border-subtle: rgba(224, 222, 244, 0.06);
+  --mc-border: rgba(224, 222, 244, 0.12);
+  --mc-border-strong: rgba(224, 222, 244, 0.22);
+}
+
+/* ── Sepia ────────────────────────────────────────────────────────────────── */
+
+:root[data-palette='sepia'] {
+  --mc-bg-app: #e8dcc8;
+  --mc-bg-sunken: #efe5d4;
+  --mc-bg-surface: #f7efe1;
+  --mc-bg-raised: #fdf7ec;
+  --mc-bg-inset: #ebe1cf;
+
+  --mc-bg-hover: rgba(69, 54, 36, 0.06);
+  --mc-bg-active: rgba(69, 54, 36, 0.11);
+
+  --mc-text-primary: #3b2f21;
+  --mc-text-secondary: #5c4c38;
+  --mc-text-tertiary: #857055;
+  --mc-text-disabled: #a89a85;
+
+  --mc-border-subtle: rgba(69, 54, 36, 0.09);
+  --mc-border: rgba(69, 54, 36, 0.16);
+  --mc-border-strong: rgba(69, 54, 36, 0.27);
+}
+
+:root[data-theme='dark'][data-palette='sepia'] {
+  --mc-bg-app: #1a1613;
+  --mc-bg-sunken: #221d18;
+  --mc-bg-surface: #2a241e;
+  --mc-bg-raised: #332c24;
+  --mc-bg-inset: #1f1a16;
+
+  --mc-bg-hover: rgba(240, 226, 202, 0.06);
+  --mc-bg-active: rgba(240, 226, 202, 0.11);
+
+  --mc-text-primary: #f0e2ca;
+  --mc-text-secondary: #cdbb9d;
+  --mc-text-tertiary: #a08f76;
+  --mc-text-disabled: #746553;
+  --mc-text-inverse: #221d18;
+
+  --mc-border-subtle: rgba(240, 226, 202, 0.06);
+  --mc-border: rgba(240, 226, 202, 0.12);
+  --mc-border-strong: rgba(240, 226, 202, 0.22);
+}
+
+/*
+ * ── High contrast ──────────────────────────────────────────────────────────
+ *
+ * Not a taste: an accessibility target. Text sits at or near the maximum
+ * contrast ratio against its background, borders are opaque rather than
+ * translucent, and the hover states are strong enough to be seen without
+ * relying on colour alone.
+ */
+
+:root[data-palette='highContrast'] {
+  --mc-bg-app: #ffffff;
+  --mc-bg-sunken: #ffffff;
+  --mc-bg-surface: #ffffff;
+  --mc-bg-raised: #ffffff;
+  --mc-bg-inset: #f2f2f2;
+
+  --mc-bg-hover: rgba(0, 0, 0, 0.1);
+  --mc-bg-active: rgba(0, 0, 0, 0.18);
+  --mc-bg-overlay: rgba(0, 0, 0, 0.6);
+
+  --mc-text-primary: #000000;
+  --mc-text-secondary: #1a1a1a;
+  --mc-text-tertiary: #333333;
+  --mc-text-disabled: #666666;
+
+  --mc-border-subtle: #767676;
+  --mc-border: #3d3d3d;
+  --mc-border-strong: #000000;
+}
+
+:root[data-theme='dark'][data-palette='highContrast'] {
+  --mc-bg-app: #000000;
+  --mc-bg-sunken: #000000;
+  --mc-bg-surface: #000000;
+  --mc-bg-raised: #0d0d0d;
+  --mc-bg-inset: #141414;
+
+  --mc-bg-hover: rgba(255, 255, 255, 0.16);
+  --mc-bg-active: rgba(255, 255, 255, 0.26);
+  --mc-bg-overlay: rgba(0, 0, 0, 0.78);
+
+  --mc-text-primary: #ffffff;
+  --mc-text-secondary: #ededed;
+  --mc-text-tertiary: #d4d4d4;
+  --mc-text-disabled: #949494;
+  --mc-text-inverse: #000000;
+
+  --mc-border-subtle: #8f8f8f;
+  --mc-border: #c4c4c4;
+  --mc-border-strong: #ffffff;
+}

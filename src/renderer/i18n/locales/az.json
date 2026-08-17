@@ -1,0 +1,1432 @@
+{
+  "$meta": {
+    "code": "az",
+    "name": "Azerbaijani",
+    "nativeName": "Azərbaycan dili",
+    "direction": "ltr",
+    "authors": [
+      "MarkCraft"
+    ]
+  },
+  "app": {
+    "name": "MarkCraft",
+    "tagline": "Markdown yazmaq və redaktə etmək üçün fokuslanmış masaüstü iş sahəsi.",
+    "untitled": "Adsız"
+  },
+  "common": {
+    "cancel": "Ləğv et",
+    "confirm": "Təsdiqlə",
+    "save": "Yadda saxla",
+    "delete": "Sil",
+    "rename": "Adını dəyiş",
+    "duplicate": "Nüsxələ",
+    "copy": "Kopyala",
+    "cut": "Kəs",
+    "paste": "Yapışdır",
+    "close": "Bağla",
+    "open": "Aç",
+    "create": "Yarat",
+    "remove": "Çıxar",
+    "reset": "Sıfırla",
+    "done": "Hazırdır",
+    "retry": "Yenidən cəhd et",
+    "dismiss": "Bağla",
+    "refresh": "Yenilə",
+    "loading": "Yüklənir…",
+    "search": "Axtar",
+    "clear": "Təmizlə",
+    "go": "Keç",
+    "insert": "Əlavə et",
+    "browse": "Gözdən keçir…",
+    "optional": "İstəyə bağlı",
+    "name": "Ad",
+    "file": "Fayl",
+    "folder": "Qovluq",
+    "expand": "Genişləndir",
+    "goBack": "Geri qayıt",
+    "words_one": "{{count}} söz",
+    "words_other": "{{count}} söz",
+    "results_one": "{{count}} nəticə",
+    "results_other": "{{count}} nəticə",
+    "matches_one": "{{count}} uyğunluq",
+    "matches_other": "{{count}} uyğunluq",
+    "files_one": "{{count}} fayl",
+    "files_other": "{{count}} fayl",
+    "items_one": "{{count}} element",
+    "items_other": "{{count}} element",
+    "documents_one": "{{count}} sənəd",
+    "documents_other": "{{count}} sənəd",
+    "occurrences_one": "{{count}} təkrar",
+    "occurrences_other": "{{count}} təkrar",
+    "characters_one": "{{count}} simvol",
+    "characters_other": "{{count}} simvol",
+    "apply": "Tətbiq et"
+  },
+  "time": {
+    "justNow": "indicə",
+    "minutesAgo": "{{count}} dəq əvvəl",
+    "hoursAgo_one": "{{count}} saat əvvəl",
+    "hoursAgo_other": "{{count}} saat əvvəl",
+    "yesterday": "Dünən",
+    "daysAgo": "{{count}} gün əvvəl",
+    "never": "—"
+  },
+  "titleBar": {
+    "minimize": "Kiçilt",
+    "maximize": "Böyüt",
+    "restore": "Bərpa et",
+    "close": "Bağla",
+    "unsavedChanges": "Yadda saxlanmamış dəyişikliklər",
+    "notSaved": "Hələ yadda saxlanmayıb"
+  },
+  "tabs": {
+    "region": "Açıq sənədlər",
+    "newDocument": "Yeni sənəd",
+    "close": "{{name}} bağla",
+    "closeUnsaved": "{{name}} bağla (yadda saxlanmamış dəyişikliklər)",
+    "changedOnDisk": "Diskdə dəyişib",
+    "deletedOnDisk": "Diskdən silinib",
+    "menu": {
+      "label": "Tab əməliyyatları",
+      "close": "Bağla",
+      "closeOthers": "Digərlərini bağla",
+      "closeAll": "Hamısını bağla",
+      "reopen": "Bağlanmış tabı geri aç",
+      "save": "Yadda saxla",
+      "saveAs": "Fərqli saxla…",
+      "copyPath": "Yolu kopyala",
+      "reveal": "Fayl menecerində göstər"
+    }
+  },
+  "sidebar": {
+    "views": "Yan panel görünüşləri",
+    "explorer": "Fayllar",
+    "search": "Axtarış",
+    "recent": "Son və sabitlənmiş",
+    "settings": "Parametrlər",
+    "resize": "Yan panelin ölçüsünü dəyiş",
+    "outline": "Struktur",
+    "trash": "Silinmişlər"
+  },
+  "explorer": {
+    "files": "İş sahəsi faylları",
+    "filter": "Faylları süz…",
+    "filterLabel": "İş sahəsindəki faylları süz",
+    "newFile": "Yeni fayl",
+    "newFolder": "Yeni qovluq",
+    "sort": "Sırala",
+    "moreOptions": "Digər seçimlər",
+    "showHidden": "Gizli faylları göstər",
+    "collapseAll": "Bütün qovluqları yığ",
+    "changeFolder": "Başqa qovluq aç…",
+    "sortBy": {
+      "name": "Ad",
+      "modified": "Dəyişdirilmə tarixi",
+      "size": "Ölçü",
+      "kind": "Növ",
+      "ascending": "Artan",
+      "descending": "Azalan"
+    },
+    "menu": {
+      "workspace": "İş sahəsi əməliyyatları",
+      "newMarkdownFile": "Yeni Markdown faylı",
+      "newFolder": "Yeni qovluq",
+      "rename": "Adını dəyiş…",
+      "copyPath": "Yolu kopyala",
+      "pin": "Sevimlilərə sabitlə",
+      "deleteMany": "{{count}} elementi sil",
+      "iconAndColour": "İkon və rəng…"
+    },
+    "empty": {
+      "noFolderTitle": "Açıq qovluq yoxdur",
+      "noFolderDescription": "Markdown fayllarını idarə etmək üçün bir qovluq açın.",
+      "openFolder": "Qovluq aç…",
+      "noMatchesTitle": "Uyğunluq yoxdur",
+      "noMatchesDescription": "Bu iş sahəsində \"{{query}}\" ilə uyğun heç nə yoxdur.",
+      "emptyTitle": "Qovluq boşdur",
+      "emptyDescription": "Başlamaq üçün ilk Markdown faylınızı yaradın."
+    },
+    "row": {
+      "file": "Fayl",
+      "folder": "Qovluq",
+      "position": "{{index}}-ci sətir"
+    },
+    "closeFolder": "Qovluğu bağla",
+    "workspaceMenu": "İş sahəsi",
+    "noFolder": "Qovluq yoxdur"
+  },
+  "recent": {
+    "pinned": "Sabitlənmiş",
+    "documents": "Son sənədlər",
+    "folders": "Son qovluqlar",
+    "clearDocuments": "Son sənədləri təmizlə",
+    "clearFolders": "Son qovluqları təmizlə",
+    "unpin": "{{name}} sabitləməsini götür",
+    "removeFromRecent": "{{name}} son siyahıdan çıxar",
+    "pinToTop": "Yuxarıya sabitlə",
+    "removeFromPinned": "Sabitlənmişlərdən çıxar",
+    "emptyTitle": "Hələ heç nə yoxdur",
+    "emptyDescription": "Açdığınız sənədlər sürətli giriş üçün burada görünəcək."
+  },
+  "welcome": {
+    "newDocument": "Yeni sənəd",
+    "openFile": "Fayl aç…",
+    "openFolder": "Qovluq aç…",
+    "emptyTitle": "Hələ sənəd yoxdur",
+    "emptyDescription": "Yeni sənəd yaradın və ya mövcud layihəni gözdən keçirmək üçün qovluq açın."
+  },
+  "editor": {
+    "rendered": "Render olunmuş sənəd",
+    "startWriting": "Yazmağa başlayın…",
+    "fallbackTitle": "Bu görünüş render edilə bilmədi",
+    "fallbackDescription": "Sənədin mətni toxunulmazdır — tam şəkildə saxlanılır.",
+    "switchToSource": "Markdown mənbəyinə keç",
+    "resizePanes": "Redaktor və önizləmənin ölçüsünü dəyiş",
+    "largeDocumentTitle": "Bu böyük sənəddir",
+    "largeDocumentBody": "Zəngin redaktor bütün sənədi bir anda render edir, ona görə {{size}} KB-da ləng işləyə bilər. Markdown mənbə görünüşü yalnız ekrandakını render edir və istənilən ölçüdə sürətli qalır.",
+    "largeDocumentAction": "Yenə də zəngin redaktorda aç",
+    "lossyNotice": "Bu sənəddə {{constructs}} var. Zəngin redaktor onları sətiriçi HTML kimi saxlayır — tam nəzarət üçün Markdown mənbəyində redaktə edin.",
+    "lossy": {
+      "footnotes": "haşiyələr",
+      "linkDefinitions": "keçid istinad tərifləri",
+      "frontMatter": "front matter",
+      "rawHtml": "xam HTML blokları",
+      "math": "riyazi bloklar"
+    }
+  },
+  "toolbar": {
+    "label": "Formatlama",
+    "undo": "Geri al",
+    "redo": "Təkrar et",
+    "heading1": "Başlıq 1",
+    "heading2": "Başlıq 2",
+    "heading3": "Başlıq 3",
+    "bold": "Qalın",
+    "italic": "Kursiv",
+    "underline": "Altdan xətt",
+    "strikethrough": "Üstdən xətt",
+    "inlineCode": "Sətiriçi kod",
+    "bulletList": "Nişanlı siyahı",
+    "numberedList": "Nömrəli siyahı",
+    "taskList": "Tapşırıq siyahısı",
+    "blockquote": "Sitat",
+    "insertLink": "Keçid əlavə et",
+    "insertImage": "Şəkil əlavə et",
+    "insertTable": "Cədvəl əlavə et",
+    "codeBlock": "Kod bloku",
+    "horizontalRule": "Üfüqi xətt"
+  },
+  "status": {
+    "noDocument": "Açıq sənəd yoxdur",
+    "cursorPosition": "Kursorun mövqeyi",
+    "lineColumn": "Sət {{line}}, Süt {{column}}",
+    "selected": "{{count}} seçilib",
+    "readingTime": "{{time}} oxu",
+    "statsTooltip": "{{characters}} simvol · boşluqsuz {{withoutSpaces}} · {{paragraphs}} abzas",
+    "viewMode": "Görünüş rejimi",
+    "modes": {
+      "rich": "Zəngin redaktor",
+      "source": "Markdown mənbəyi",
+      "split": "Bölünmüş görünüş",
+      "preview": "Yalnız önizləmə"
+    },
+    "goal": "{{words}} / {{goal}} söz"
+  },
+  "find": {
+    "label": "Tap və əvəz et",
+    "find": "Tap",
+    "replace": "Əvəz et",
+    "replaceWith": "Bununla əvəz et",
+    "replaceAll": "Hamısı",
+    "showReplace": "Əvəzetməni göstər",
+    "hideReplace": "Əvəzetməni gizlət",
+    "matchCase": "Registrə həssas",
+    "matchWholeWord": "Tam söz",
+    "useRegex": "Müntəzəm ifadə işlət",
+    "nextMatch": "Növbəti uyğunluq",
+    "previousMatch": "Əvvəlki uyğunluq",
+    "closeFind": "Axtarışı bağla"
+  },
+  "search": {
+    "placeholder": "İş sahəsində axtar",
+    "label": "Bütün iş sahəsində axtar",
+    "replacePlaceholder": "Bununla əvəz et",
+    "fileFilters": "Daxil ediləcək / xaric ediləcək fayllar",
+    "includePlaceholder": "Daxil et, məs. *.md, docs/**",
+    "excludePlaceholder": "Xaric et, məs. drafts/**",
+    "includeLabel": "Daxil ediləcək fayllar",
+    "excludeLabel": "Xaric ediləcək fayllar",
+    "searching": "Axtarılır…",
+    "noResults": "Nəticə yoxdur",
+    "prompt": "Bu iş sahəsində axtarmaq üçün yazın",
+    "resultsIn": "{{files}} daxilində {{results}}",
+    "truncated": " · yalnız ilk uyğunluqlar göstərilir",
+    "moreMatches": "Digər uyğunluqlar göstərilmir",
+    "noResultsDescription": "Bu iş sahəsində \"{{query}}\" ilə heç nə uyğun gəlmədi.",
+    "noFolderTitle": "Açıq qovluq yoxdur",
+    "noFolderDescription": "İş sahəsi axtarışı üçün açıq qovluq lazımdır. Cari sənəddə axtarmaq üçün Ctrl+F işlədin.",
+    "replaceConfirmTitle": "{{files}} daxilində əvəz edilsin?",
+    "replaceConfirmBody": "\"{{query}}\" ifadəsinin {{occurrences}} \"{{replacement}}\" ilə əvəz olunacaq. Axtarışdan sonra diskdə dəyişmiş fayllar buraxılacaq.",
+    "replaceConfirmAction": "Hamısını əvəz et",
+    "replaced": "{{occurrences}} əvəz olundu",
+    "replacedDetail": "{{files}} daxilində",
+    "replacedSkipped": "{{count}} buraxıldı",
+    "replaceFailed": "Əvəzetmə alınmadı"
+  },
+  "palette": {
+    "label": "Əmr paneli",
+    "placeholder": "Əmr yazın…",
+    "searchLabel": "Əmrləri axtar",
+    "noResults": "Uyğun əmr yoxdur",
+    "commands_one": "{{count}} əmr",
+    "commands_other": "{{count}} əmr",
+    "navigate": "hərəkət üçün",
+    "run": "işə salmaq üçün",
+    "dismiss": "bağlamaq üçün"
+  },
+  "commands": {
+    "categories": {
+      "File": "Fayl",
+      "Edit": "Redaktə",
+      "Format": "Format",
+      "View": "Görünüş",
+      "Insert": "Əlavə et",
+      "Workspace": "İş sahəsi",
+      "Application": "Tətbiq"
+    },
+    "file.new": "Yeni sənəd",
+    "file.open": "Sənəd aç…",
+    "file.openFolder": "Qovluq aç…",
+    "file.save": "Yadda saxla",
+    "file.saveAs": "Fərqli saxla…",
+    "file.saveAll": "Hamısını saxla",
+    "file.revert": "Saxlanmış versiyaya qayıt",
+    "file.print": "Çap et…",
+    "file.export": "İxrac et…",
+    "file.share": "Paylaş…",
+    "tab.close": "Tabı bağla",
+    "tab.closeOthers": "Digər tabları bağla",
+    "tab.closeAll": "Bütün tabları bağla",
+    "tab.reopen": "Bağlanmış tabı geri aç",
+    "tab.next": "Növbəti tab",
+    "tab.previous": "Əvvəlki tab",
+    "edit.undo": "Geri al",
+    "edit.redo": "Təkrar et",
+    "edit.find": "Sənəddə tap",
+    "edit.replace": "Sənəddə əvəz et",
+    "edit.findInFiles": "Bütün iş sahəsində axtar",
+    "edit.goToLine": "Sətrə keç…",
+    "format.bold": "Qalın",
+    "format.italic": "Kursiv",
+    "format.underline": "Altdan xətt",
+    "format.strikethrough": "Üstdən xətt",
+    "format.code": "Sətiriçi kod",
+    "format.codeBlock": "Kod bloku",
+    "format.quote": "Sitat",
+    "format.bulletList": "Nişanlı siyahı",
+    "format.orderedList": "Nömrəli siyahı",
+    "format.taskList": "Tapşırıq siyahısı",
+    "format.paragraph": "Abzas",
+    "format.heading1": "Başlıq 1",
+    "format.heading2": "Başlıq 2",
+    "format.heading3": "Başlıq 3",
+    "format.heading4": "Başlıq 4",
+    "format.heading5": "Başlıq 5",
+    "format.heading6": "Başlıq 6",
+    "insert.link": "Keçid əlavə et…",
+    "insert.image": "Şəkil əlavə et…",
+    "insert.table": "Cədvəl əlavə et…",
+    "insert.horizontalRule": "Üfüqi xətt əlavə et",
+    "view.rich": "Zəngin redaktora keç",
+    "view.source": "Markdown mənbəyinə keç",
+    "view.split": "Bölünmüş görünüşə keç",
+    "view.preview": "Önizləməyə keç",
+    "view.cycleMode": "Görünüş rejimini dəyiş",
+    "view.toggleSidebar": "Yan paneli aç/bağla",
+    "view.toggleToolbar": "Formatlama panelini aç/bağla",
+    "view.toggleStatusBar": "Status panelini aç/bağla",
+    "view.toggleTheme": "İşıqlı / Qaranlıq mövzunu dəyiş",
+    "view.explorer": "Faylları göstər",
+    "workspace.refresh": "İş sahəsini yenilə",
+    "app.commandPalette": "Əmr paneli",
+    "app.settings": "Parametrlər",
+    "app.shortcuts": "Klaviatura qısayolları",
+    "view.zoomIn": "İnterfeysi böyüt",
+    "view.zoomOut": "İnterfeysi kiçilt",
+    "view.zoomReset": "İnterfeys ölçüsünü sıfırla",
+    "view.readingMode": "Oxuma rejimi",
+    "view.outline": "Strukturu göstər",
+    "view.statistics": "Sənəd statistikası",
+    "file.newFromTemplate": "Şablondan yeni…",
+    "file.history": "Versiya tarixçəsi",
+    "insert.emoji": "Emoji əlavə et",
+    "view.present": "Təqdimat",
+    "tools.open": "Tərtibatçı alətləri",
+    "view.links": "Keçidlər və qraf",
+    "view.website": "Vebsayt görünüşü",
+    "document.clean": "Formatlaşdırmanı təmizlə",
+    "insert.codeLanguage": "Kod blokunun dilini seç",
+    "edit.pasteAsMarkdown": "Markdown kimi yapışdır",
+    "ai.review": "Bu sənədi AI ilə nəzərdən keçir",
+    "view.book": "Kitab",
+    "view.study": "Öyrənmə",
+    "view.canvas": "Kanvas",
+    "document.lock": "Bu sənədi kilidlə və ya aç",
+    "tools.http": "HTTP sorğusu"
+  },
+  "dialogs": {
+    "goToLine": {
+      "title": "Sətrə keç",
+      "label": "Sətir nömrəsi (1–{{total}})",
+      "invalidNumber": "Tam ədəd daxil edin.",
+      "outOfRange": "Bu sənəddə {{total}} sətir var."
+    },
+    "unsavedTitle": "Bağlamazdan əvvəl saxlanılsın?",
+    "unsavedSingle": "\"{{name}}\" sənədində yadda saxlanmamış dəyişikliklər var. Saxlamasanız, redaktələriniz itəcək.",
+    "unsavedMultiple": "{{count}} sənəddə yadda saxlanmamış dəyişikliklər var. Saxlamasanız, redaktələriniz itəcək.",
+    "dontSave": "Saxlama",
+    "saveAll": "Hamısını saxla",
+    "deleteTitle": "{{target}} silinsin?",
+    "deleteTrash": "Elementlər səbətə köçürüləcək. Oradan bərpa edə bilərsiniz.",
+    "deletePermanent": "Bunu geri qaytarmaq olmaz. Elementlər diskdən həmişəlik silinəcək.",
+    "moveToTrash": "Səbətə köçür",
+    "deleteForever": "Həmişəlik sil",
+    "newFileTitle": "Yeni Markdown faylı",
+    "newFolderTitle": "Yeni qovluq",
+    "renameFile": "Faylın adını dəyiş",
+    "renameFolder": "Qovluğun adını dəyiş",
+    "nameExists": "Bu adda element artıq mövcuddur.",
+    "revertTitle": "Yadda saxlanmamış dəyişikliklər ləğv edilsin?",
+    "revertBody": "\"{{name}}\" diskdəki versiyaya qaytarılacaq. Bunu geri almaq olmaz.",
+    "revertAction": "Geri qaytar",
+    "conflictTitle": "\"{{name}}\" diskdə dəyişib",
+    "conflictBody": "Siz faylı açdıqdan sonra başqa proqram onu dəyişdirib. İndi saxlamaq həmin dəyişiklikləri siləcək.",
+    "conflictSaveCopy": "Nüsxə kimi saxla…",
+    "conflictReload": "Mənimkini at, yenidən yüklə",
+    "conflictOverwrite": "Diskdəkinin üzərinə yaz"
+  },
+  "insert": {
+    "link": {
+      "title": "Keçid əlavə et",
+      "text": "Keçid mətni",
+      "textHint": "Boş buraxsanız URL özü göstəriləcək.",
+      "textPlaceholder": "MarkCraft sənədləri",
+      "url": "URL",
+      "urlPlaceholder": "https://example.com və ya ./qeydler.md",
+      "linkTitle": "Başlıq",
+      "titleHint": "Üzərinə gələndə görünən istəyə bağlı izah."
+    },
+    "image": {
+      "title": "Şəkil əlavə et",
+      "image": "Şəkil",
+      "hintRelative": "Lokal şəkillər sənədin yanına kopyalanır və nisbi yol ilə bağlanır.",
+      "hintUnsaved": "Nisbi şəkil yollarından istifadə üçün əvvəlcə sənədi saxlayın.",
+      "placeholder": "./images/diaqram.png və ya https://…",
+      "alt": "Alt mətn",
+      "altHint": "Ekran oxuyucuları üçün və şəkil yüklənmədikdə göstərilir.",
+      "altPlaceholder": "Arxitektura diaqramı",
+      "imageTitle": "Başlıq",
+      "addFailed": "Şəkil əlavə edilə bilmədi"
+    },
+    "table": {
+      "title": "Cədvəl əlavə et",
+      "columns": "Sütunlar",
+      "rows": "Məzmun sətirləri",
+      "headerRow": "Başlıq sətri daxil et",
+      "headerHint": "GitHub-Flavored Markdown cədvəlləri ilk sətri həmişə başlıq kimi göstərir.",
+      "alignment": "Sütun düzləndirməsi",
+      "alignmentFor": "{{index}}-ci sütunun düzləndirməsi",
+      "left": "Sola",
+      "center": "Mərkəzə",
+      "right": "Sağa",
+      "preview": "Önizləmə",
+      "columnLabel": "Sütun {{index}}"
+    }
+  },
+  "output": {
+    "export": {
+      "title": "Sənədi ixrac et",
+      "format": "Format",
+      "exportAs": "{{format}} kimi ixrac et",
+      "md": "Markdown",
+      "mdDescription": "Sənəd yazıldığı kimi, kanonik formada.",
+      "html": "HTML",
+      "htmlDescription": "Stillər və şəkillər daxil edilmiş tək müstəqil səhifə.",
+      "pdf": "PDF",
+      "pdfDescription": "Çap üçün səhifələnmiş, səhifə kəsilmələri nəzərə alınmış.",
+      "appearance": "Görünüş",
+      "light": "İşıqlı",
+      "dark": "Qaranlıq",
+      "embedImages": "Şəkilləri daxil et",
+      "embedImagesHint": "Tək müstəqil fayl yaradır. Nisbi şəkil keçidlərini saxlamaq üçün söndürün.",
+      "includeStyles": "Stilləri daxil et",
+      "includeStylesHint": "Stillər olmadan nəticə sadə, formatsız HTML olur.",
+      "pageSize": "Səhifə ölçüsü",
+      "margins": "Kənar boşluqlar",
+      "marginsDefault": "Standart",
+      "marginsMinimum": "Minimum",
+      "marginsNone": "Yoxdur",
+      "landscape": "Üfüqi istiqamət",
+      "headerFooter": "Başlıq və səhifə nömrələri əlavə et",
+      "printBackground": "Fon rənglərini çap et",
+      "printBackgroundHint": "Kod blokları və cədvəl kölgələnməsinin görünməsi üçün lazımdır.",
+      "succeeded": "{{format}} kimi ixrac edildi",
+      "showInFolder": "Qovluqda göstər",
+      "failed": "İxrac alınmadı"
+    },
+    "share": {
+      "title": "Sənədi paylaş",
+      "exportInstead": "Əvəzinə ixrac et…",
+      "saveFirst": "Əvvəlcə sənədi saxlayın.",
+      "copyMarkdown": "Markdown kimi kopyala",
+      "copyMarkdownDescription": "Repozitoriyaya və ya çata yapışdırmaq üçün xam mənbə.",
+      "copyHtml": "Zəngin mətn kimi kopyala",
+      "copyHtmlDescription": "E-poçt və mətn redaktorlarına yapışan formatlanmış HTML.",
+      "copyPath": "Fayl yolunu kopyala",
+      "copyPathDescription": "Bu sənədin diskdəki tam yolu.",
+      "reveal": "Fayl menecerində göstər",
+      "revealDescription": "Bu fayl seçili halda qovluğu açır.",
+      "email": "E-poçtla göndər",
+      "emailDescription": "Sənəd mətn kimi daxil edilmiş halda e-poçt proqramını açır.",
+      "system": "Sistem paylaşımı",
+      "systemDescription": "Faylı başqa tətbiqə ötürür. Yalnız macOS.",
+      "failed": "Paylaşım alınmadı"
+    },
+    "print": {
+      "failed": "Çap alınmadı"
+    }
+  },
+  "settings": {
+    "title": "Parametrlər",
+    "sections": "Parametr bölmələri",
+    "resetSection": "Bu bölməni sıfırla",
+    "resetSectionTitle": "{{section}} parametrləri sıfırlansın?",
+    "resetSectionBody": "Bu seçimlər standart hallarına qayıdacaq. Digər bölmələrə toxunulmayacaq.",
+    "resetAll": "Bütün parametrləri sıfırla",
+    "resetAllTitle": "Bütün parametrlər sıfırlansın?",
+    "resetAllBody": "Hər parametr standart halına qayıdır. Sənədlərinizə toxunulmur.",
+    "resetAllHint": "Sıfırlama hər parametri standart halına qaytarır. Sənədlərinizə toxunulmur.",
+    "resetEverything": "Hər şeyi sıfırla",
+    "nav": {
+      "editor": "Redaktor",
+      "appearance": "Görünüş",
+      "markdown": "Markdown",
+      "files": "Fayllar",
+      "language": "Dil",
+      "keyboard": "Klaviatura",
+      "about": "Haqqında",
+      "icons": "İkonlar",
+      "ai": "AI"
+    },
+    "editor": {
+      "fontFamily": "Şrift ailəsi",
+      "fontSize": "Şrift ölçüsü",
+      "lineHeight": "Sətir hündürlüyü",
+      "tabSize": "Tab ölçüsü",
+      "insertSpaces": "Tab əvəzinə boşluq işlət",
+      "wordWrap": "Uzun sətirləri sındır",
+      "lineNumbers": "Sətir nömrələrini göstər",
+      "highlightActiveLine": "Cari sətri işıqlandır",
+      "bracketMatching": "Mötərizələri uyğunlaşdır və bağla",
+      "autoIndent": "Avtomatik girinti",
+      "spellCheck": "Orfoqrafiyanı yoxla",
+      "customFont": "Xüsusi (ayarlar faylından)"
+    },
+    "appearance": {
+      "theme": "Mövzu",
+      "light": "İşıqlı",
+      "dark": "Qaranlıq",
+      "system": "Sistem",
+      "accent": "Vurğu rəngi",
+      "density": "Sıxlıq",
+      "comfortable": "Rahat",
+      "compact": "Yığcam",
+      "showSidebar": "Yan paneli göstər",
+      "showToolbar": "Formatlama panelini göstər",
+      "showStatusBar": "Status panelini göstər",
+      "reduceMotion": "Animasiyanı azalt",
+      "accents": {
+        "indigo": "İndiqo",
+        "blue": "Mavi",
+        "teal": "Firuzəyi",
+        "violet": "Bənövşəyi",
+        "amber": "Kəhrəba",
+        "rose": "Çəhrayı",
+        "graphite": "Qrafit"
+      },
+      "uiScale": "İnterfeys ölçüsü",
+      "uiScaleHint": "Yan paneli, tabları və bu ekranı böyüdüb-kiçildir. Ctrl + və Ctrl - eyni işi görür. Redaktor mətninin öz ölçüsü Redaktor bölməsindədir.",
+      "splashScreen": "Açılış ekranını göstər",
+      "startupSound": "Açılışda səs çal",
+      "startupHint": "Hər ikisi MarkCraft növbəti dəfə açılanda tətbiq olunur.",
+      "palette": "Palitra",
+      "paletteHint": "Boz tonları əvəz edir. Yuxarıdakı vurğu rəngi yenə üstünə tətbiq olunur.",
+      "palettes": {
+        "nord": "Nord",
+        "solarized": "Solarized",
+        "gruvbox": "Gruvbox",
+        "rosePine": "Rosé Pine",
+        "sepia": "Sepia",
+        "default": "MarkCraft",
+        "highContrast": "Yüksək kontrast"
+      },
+      "customColors": "Fərdi rənglər",
+      "customColorsHint": "Ayrı-ayrı rəngləri dəyişin. Bunlar mövzu və palitradan üstündür.",
+      "resetColor": "Bu rəngi sıfırla",
+      "resetAllColors": "Bütün rəngləri sıfırla",
+      "noOverrides": "Heç nə dəyişdirilməyib",
+      "overrideCount": "{{count}} rəng dəyişdirilib",
+      "tokens": {
+        "bg-app": "Pəncərə fonu",
+        "bg-surface": "Panel fonu",
+        "bg-raised": "Qalxmış səth",
+        "bg-sunken": "Batmış səth",
+        "text-primary": "Mətn",
+        "text-secondary": "İkinci dərəcəli mətn",
+        "border": "Sərhədlər",
+        "accent": "Vurğu",
+        "accent-hover": "Vurğu (üstünə gələndə)",
+        "success": "Uğur",
+        "warning": "Xəbərdarlıq",
+        "danger": "Təhlükə"
+      },
+      "toolbarItems": "Format paneli",
+      "toolbarItemsHint": "Hansı düymələrin və hansı sırada görünəcəyini seçin.",
+      "moveUp": "Yuxarı",
+      "moveDown": "Aşağı",
+      "resetToolbar": "Standarta qaytar",
+      "toolbarDefault": "Standart düzülüş istifadə olunur",
+      "toolbarCount": "{{count}} düymə göstərilir"
+    },
+    "markdown": {
+      "defaultView": "Standart görünüş",
+      "gfm": "GitHub-Flavored Markdown",
+      "syncScroll": "Bölünmüş görünüşdə sürüşməni sinxronlaşdır",
+      "codeHighlighting": "Önizləmədə kod bloklarını işıqlandır",
+      "styleNote": "Bunlar MarkCraft-ın Markdown-u necə yazdığını idarə edir. Burada göründükləri üçün səbəb: zəngin redaktor saxlayarkən sənədləri bu stilə normallaşdırır.",
+      "bullet": "Nişan işarəsi",
+      "emphasis": "Kursiv işarəsi",
+      "strong": "Qalın işarəsi",
+      "imageHandling": "Şəkillərin idarəsi",
+      "imageRelative": "Sənədin yanına kopyala",
+      "imageAbsolute": "Olduğu yerdən bağla",
+      "imageFolder": "Şəkil qovluğu",
+      "imageFolderLabel": "Şəkil qovluğunun adı"
+    },
+    "files": {
+      "autoSave": "Avtosaxlama",
+      "autoSaveOff": "Söndürülüb",
+      "autoSaveOffDescription": "Ctrl+S ilə əl ilə saxlayın.",
+      "autoSaveDelay": "Gecikmə ilə",
+      "autoSaveDelayDescription": "Yazmağı dayandırdıqda saxlayır.",
+      "autoSaveFocus": "Pəncərə fokusu itirəndə",
+      "autoSaveFocusDescription": "Başqa yerə keçdikdə saxlayır.",
+      "autoSaveDelayLabel": "Avtosaxlama gecikməsi",
+      "recovery": "Qəza bərpası jurnalı saxla",
+      "watchExternal": "Digər proqramların dəyişikliklərini aşkarla",
+      "confirmDelete": "Faylları silməzdən əvvəl təsdiq istə",
+      "showHidden": "Fayl siyahısında gizli faylları göstər",
+      "lineEndings": "Sətir sonları",
+      "eolAuto": "Faylın öz formatını saxla",
+      "eolLf": "LF (Unix)",
+      "eolCrlf": "CRLF (Windows)",
+      "recentLimit": "Saxlanılan son sənədlər",
+      "showSettingsFile": "Parametr faylını göstər",
+      "markdownOnly": "Yalnız Markdown fayllarını göstər",
+      "markdownOnlyHint": "Qovluqlar həmişə görünür. Bütün faylları görmək üçün bunu söndürün.",
+      "trashLimit": "Saxlanılan silinmiş sayı",
+      "trashLimitHint": "Ən köhnələri birdəfəlik silinməzdən əvvəl neçə silinmiş sənəd saxlanılsın. Hamısını saxlamaq üçün 0 qoyun.",
+      "trashUnlimited": "Limitsiz",
+      "historyLimit": "Sənəd başına saxlanılan versiya",
+      "historyLimitHint": "Hər sənəd üçün neçə saxlanılmış versiya qalsın. Hər biri mətnin tam nüsxəsidir. Tarixçəni söndürmək üçün 0 qoyun.",
+      "historyOff": "Söndürülüb"
+    },
+    "language": {
+      "interfaceLanguage": "İnterfeys dili",
+      "interfaceHint": "Bütün tətbiqə dərhal tətbiq olunur.",
+      "systemDefault": "Sistem dilinə uyğunlaş",
+      "installed": "Quraşdırılmış dillər",
+      "addTitle": "Dil əlavə et",
+      "addDescription": "Tərcümə faylını dillər qovluğuna atın və yenidən yükləyin. Mövcud fayldan başlayın — buraxılan hər açar İngilis dilinə qayıdır.",
+      "openFolder": "Dillər qovluğunu aç",
+      "exportTemplate": "Şablon ixrac et…",
+      "templateSaved": "Şablon saxlanıldı",
+      "reload": "Dilləri yenidən yüklə",
+      "reloaded": "Dillər yenidən yükləndi",
+      "custom": "Xüsusi",
+      "builtIn": "Daxili",
+      "coverage": "{{percent}}% tərcümə olunub"
+    },
+    "keyboard": {
+      "filter": "Əmr və ya qısayol süz…",
+      "filterLabel": "Qısayolları süz",
+      "resetAll": "Hamısını sıfırla",
+      "conflictNotice": "Bəzi qısayollar birdən çox əmrə təyin olunub. İlk uyğunluq qalib gəlir.",
+      "table": "Klaviatura qısayolları",
+      "unassigned": "Təyin olunmayıb",
+      "pressKeys": "Klaviş kombinasiyasını basın…",
+      "recording": "{{command}} üçün yeni qısayol yazılır",
+      "change": "{{command}} qısayolunu dəyiş",
+      "unbind": "{{command}} qısayolunu sil",
+      "restore": "{{command}} üçün standartı bərpa et"
+    },
+    "about": {
+      "description": "Peşəkar masaüstü Markdown redaktoru. Oflayn-öncəlikli: yazdığınız heç nə bu kompüterdən çıxmır.",
+      "electron": "Electron",
+      "chromium": "Chromium",
+      "node": "Node",
+      "platform": "Platforma",
+      "dataFolder": "Məlumat qovluğu"
+    },
+    "search": {
+      "placeholder": "Parametrlərdə axtar…",
+      "label": "Parametrlərdə axtar",
+      "noResults": "\"{{query}}\" ilə uyğun parametr yoxdur",
+      "noResultsHint": "Başqa söz yoxlayın və ya soldakı bölmələrə baxın.",
+      "matchCount": "{{count}} uyğunluq",
+      "matchCountPlural": "{{count}} uyğunluq",
+      "clear": "Axtarışı təmizlə"
+    },
+    "ai": {
+      "enabled": "AI köməkçisindən istifadə et",
+      "enabledHint": "Öz provayderinizi qoşana qədər söndürülüdür. MarkCraft nə açar, nə də standart ünvanla gəlir.",
+      "confirm": "Göndərmədən əvvəl soruş",
+      "confirmHint": "Mətn bu kompüterdən çıxmadan əvvəl onu və göstərişi göstər.",
+      "active": "Aktiv model",
+      "activeHint": "Köməkçi düymələrinin hansı bağlantıdan istifadə etdiyi.",
+      "noProfiles": "Hələ model əlavə edilməyib",
+      "houseStyle": "Üslub qaydaları",
+      "houseStyleHint": "Hər sorğuya əlavə olunur — terminologiya, ton, modelin həmişə riayət etməli olduğu nə varsa.",
+      "houseStylePlaceholder": "məsələn, nida işarəsi işlətmə",
+      "models": "Bağlantılar",
+      "addModel": "Model əlavə et",
+      "emptyHint": "Başlamaq üçün bağlantı əlavə edin. OpenAI, Anthropic və ya Gemini API-si ilə danışan hər şey işləyir — yerli Ollama və LM Studio daxil.",
+      "provider": "Provayder",
+      "model": "Model",
+      "name": "Ad",
+      "baseUrl": "Ünvan",
+      "baseUrlHint": "Yalnız proxy, şlüz və ya öz serveriniz üçün dəyişdirin.",
+      "apiKey": "API açarı",
+      "keyHint": "Bu hesab üçün şifrələnmiş saxlanılır, heç vaxt settings.json-da deyil.",
+      "keyStored": "Açar saxlanılıb. Əvəz etmək üçün yenisini yazın.",
+      "keyPlaceholder": "Açarı yapışdırın və kənara klikləyin",
+      "forgetKey": "Saxlanılan açarı unut",
+      "getKey": "Açar al",
+      "test": "Yoxla",
+      "loadModels": "Modelləri yüklə",
+      "use": "Bunu işlət",
+      "noEncryption": "Bu sistem saxlanılan məlumatı şifrələyə bilmir, ona görə API açarları saxlanılmayacaq.",
+      "maxTokens": "Cavab limiti",
+      "maxTokensHint": "İcazə verilən ən uzun cavab. Provayder «kredit çatmır» deyirsə, bunu azaldın.",
+      "temperature": "Temperatur",
+      "temperatureHint": "Aşağı — daha hərfi, yuxarı — daha ixtiraçı. Redaktə üçün 0.4 uyğundur."
+    }
+  },
+  "recovery": {
+    "title": "Yadda saxlanmamış işi bərpa et",
+    "description": "MarkCraft {{documents}} yadda saxlanmamış dəyişikliklə bağlandı. Onlar bərpa jurnalında saxlanılıb.",
+    "discardAll": "Hamısını at",
+    "recoverSelected": "Seçilmişləri bərpa et",
+    "selectedCount": "{{total}} -dən {{selected}} seçilib",
+    "neverSaved": "Heç vaxt saxlanmayıb",
+    "editedAt": "{{time}} redaktə olunub",
+    "recovered": "{{documents}} bərpa olundu",
+    "recoveredHint": "Dəyişiklikləri nəzərdən keçirin, sonra saxlamaq istədiklərinizi yadda saxlayın."
+  },
+  "external": {
+    "deletedTitle": "Bu fayl diskdən silinib.",
+    "deletedDetail": "Sizin versiyanız hələ də buradadır. Faylı geri yazmaq üçün saxlayın.",
+    "saveToRestore": "Bərpa üçün saxla",
+    "changedTitle": "Bu fayl MarkCraft-dan kənarda dəyişib.",
+    "changedDetail": "Burada saxlanmamış redaktələriniz var, ona görə heç nə əvəzlənmədi.",
+    "keepMine": "Mənim dəyişikliklərimi saxla",
+    "reload": "Diskdən yenidən yüklə"
+  },
+  "notifications": {
+    "saved": "Saxlanıldı",
+    "savedOverwrite": "{{name}} faylında xarici dəyişikliklərin üzərinə yazıldı",
+    "savedCount": "{{documents}} saxlanıldı",
+    "reverted": "Geri qaytarıldı",
+    "reloaded": "Yenidən yükləndi",
+    "reloadedDetail": "{{name}} diskdə dəyişib",
+    "pathCopied": "Yol kopyalandı",
+    "markdownCopied": "Markdown mübadilə buferinə kopyalandı",
+    "htmlCopied": "HTML mübadilə buferinə kopyalandı",
+    "revealed": "Fayl menecerində göstərildi",
+    "openingMail": "E-poçt proqramınız açılır",
+    "pinned": "Sabitləndi",
+    "unpinned": "Sabitləmə götürüldü",
+    "deleted": "\"{{name}}\" silindi",
+    "deletedMany": "{{count}} element silindi",
+    "movedToTrash": "Səbətə köçürüldü",
+    "duplicated": "\"{{name}}\" kimi nüsxələndi",
+    "cutItems": "{{items}} kəsildi",
+    "copiedItems": "{{items}} kopyalandı",
+    "workspaceRefreshed": "İş sahəsi yeniləndi",
+    "nothingToReopen": "Geri açmaq üçün heç nə yoxdur",
+    "fileGoneTitle": "Fayl artıq mövcud deyil",
+    "fileGoneAction": "Son siyahıdan çıxar",
+    "skippedFiles": "{{count}} fayl buraxıldı",
+    "skippedFilesDetail": "Yalnız Markdown və mətn sənədləri açıla bilər."
+  },
+  "errors": {
+    "boundaryTitle": "Nəsə səhv getdi",
+    "boundaryScoped": "{{scope}} gözlənilməz xəta ilə üzləşdi.",
+    "boundaryGeneric": "MarkCraft gözlənilməz xəta ilə üzləşdi.",
+    "boundaryBody": "Açıq sənədləriniz hələ də yaddaşdadır — yenidən yükləmə adətən onları bərpa edir və yadda saxlanmamış iş bərpa jurnalında qalır.",
+    "technicalDetails": "Texniki təfərrüatlar",
+    "reload": "MarkCraft-ı yenidən yüklə",
+    "scopes": {
+      "editor": "redaktor",
+      "preview": "önizləmə",
+      "sidebar": "yan panel",
+      "richEditor": "zəngin redaktor",
+      "application": "tətbiq"
+    },
+    "openFailed": "Fayl açıla bilmədi",
+    "saveFailed": "Fayl saxlanıla bilmədi",
+    "reloadFailed": "Fayl yenidən yüklənə bilmədi",
+    "createFileFailed": "Fayl yaradıla bilmədi",
+    "createFolderFailed": "Qovluq yaradıla bilmədi",
+    "renameFailed": "Adı dəyişdirilə bilmədi",
+    "deleteFailed": "Silinə bilmədi",
+    "duplicateFailed": "Nüsxələnə bilmədi",
+    "pasteFailed": "Yapışdırıla bilmədi",
+    "moveFailed": "Köçürülə bilmədi",
+    "readFolderFailed": "Qovluq oxuna bilmədi",
+    "openFolderFailed": "Qovluq açıla bilmədi",
+    "folderIntoItself": "Qovluğu öz içinə köçürmək olmaz",
+    "pasteIntoItself": "Qovluğu öz içinə yapışdırmaq olmaz",
+    "codes": {
+      "ENOENT": "Fayl tapılmadı",
+      "EACCES": "İcazə verilmədi",
+      "EPERM": "Əməliyyata icazə yoxdur",
+      "EBUSY": "Fayl istifadədədir",
+      "EEXIST": "Artıq mövcuddur",
+      "EISDIR": "Bu, qovluqdur",
+      "ENOTDIR": "Bu, qovluq deyil",
+      "ENOTEMPTY": "Qovluq boş deyil",
+      "ENOSPC": "Diskdə yer qalmayıb",
+      "FORBIDDEN_PATH": "Yer iş sahəsindən kənardadır",
+      "TOO_LARGE": "Fayl çox böyükdür",
+      "NOT_MARKDOWN": "Dəstəklənməyən fayl növü",
+      "CANCELLED": "Ləğv edildi",
+      "CONFLICT": "Fayl diskdə dəyişib",
+      "INVALID_ARGUMENT": "Yanlış sorğu",
+      "UNSUPPORTED": "Dəstəklənmir",
+      "UNKNOWN": "Nəsə səhv getdi"
+    }
+  },
+  "view": {
+    "zoomToast": "İnterfeys ölçüsü {{percent}}%"
+  },
+  "icons": {
+    "dialogTitle": "İkon və rəng",
+    "applyTo": "Tətbiq et",
+    "colour": "Rəng",
+    "icon": "İkon",
+    "defaultColour": "Standart rəng",
+    "defaultIcon": "Standart ikon",
+    "reset": "Fərdiləşdirməni sil",
+    "importHint": "Öz SVG fayllarınızı Ayarlar > İkonlar bölməsindən əlavə edin.",
+    "description": "Fayla, qovluğa və ya bütöv bir fayl tipinə öz ikon və rəngini ver. Ən dəqiq qayda qalib gəlir: bu konkret qovluq — həmin adlı bütün qovluqlardan, o da həmin tipdəki bütün fayllardan üstündür.",
+    "rulesTitle": "Qaydalar",
+    "noRules": "Hələ qayda yoxdur",
+    "noRulesHint": "Explorer-də fayla və ya qovluğa sağ klikləyib \"İkon və rəng…\" seçin.",
+    "addRule": "Qayda əlavə et",
+    "addRuleHint": "Fayl tipinə (md) və ya ada (drafts) görə.",
+    "choose": "Seç…",
+    "customTitle": "Öz ikonlarınız",
+    "customHint": "Əlavə etdiyiniz SVG faylları seçicidə daxili ikonlarla yanaşı görünür.",
+    "import": "SVG əlavə et…",
+    "openFolder": "İkonlar qovluğunu aç",
+    "reload": "Yenilə",
+    "reloaded": "İkonlar yeniləndi",
+    "imported": "{{count}} ikon əlavə edildi",
+    "importedPlural": "{{count}} ikon əlavə edildi",
+    "removeIconTitle": "\"{{name}}\" silinsin?",
+    "removeIconBody": "Fayl ikonlar qovluğundan silinir.",
+    "removeIconInUse": "Bir qayda bu ikondan istifadə edir. Silsəniz, həmin qayda standart ikona qayıdacaq.",
+    "scope": {
+      "thisOne": "Yalnız bu",
+      "sameName": "\"{{name}}\" adlılar",
+      "sameType": "Bütün .{{ext}} faylları"
+    },
+    "match": {
+      "path": "Yalnız bu",
+      "name": "Ad",
+      "extension": "Tip"
+    }
+  },
+  "reader": {
+    "edit": "Redaktə et",
+    "stats": "{{words}} söz · {{minutes}} dəq oxu",
+    "title": "Oxuma"
+  },
+  "outline": {
+    "title": "Struktur",
+    "filter": "Başlıqları süz…",
+    "empty": "Hələ başlıq yoxdur",
+    "emptyHint": "Əlavə etdiyiniz başlıqlar burada görünəcək, birinə klikləyəndə ora keçir.",
+    "noMatches": "\"{{query}}\" üçün nəticə yoxdur",
+    "noDocument": "Açıq sənəd yoxdur",
+    "noDocumentHint": "Strukturu görmək üçün bir Markdown faylı açın."
+  },
+  "stats": {
+    "title": "Sənəd statistikası",
+    "words": "Sözlər",
+    "characters": "Simvollar",
+    "charactersNoSpaces": "Simvollar, boşluqsuz",
+    "sentences": "Cümlələr",
+    "paragraphs": "Abzaslar",
+    "headings": "Başlıqlar",
+    "lines": "Sətirlər",
+    "readingTime": "Oxuma müddəti",
+    "minutes": "{{count}} dəq",
+    "goalTitle": "Söz hədəfi",
+    "goalHint": "Hədəf təyin edin, status bar sənədin ona nə qədər yaxın olduğunu göstərsin.",
+    "goalProgress": "{{goal}} sözdən {{words}}",
+    "goalRemaining": "{{count}} qalıb",
+    "goalReached": "Çatdı",
+    "goalCustom": "Öz dəyərin…",
+    "goalClear": "Hədəfi sil",
+    "links": "Keçidlər",
+    "images": "Şəkillər",
+    "codeBlocks": "Kod blokları",
+    "tasks": "Tapşırıqlar",
+    "tasksDone": "{{total}} tapşırıqdan {{done}} bitib",
+    "problems": "Problemlər",
+    "noProblems": "Düzəldiləsi bir şey yoxdur.",
+    "danglingAnchor": "{{line}}-cı sətir: «{{target}}» heç bir başlığa uyğun gəlmir",
+    "duplicateHeading": "İki başlıq eyni «{{slug}}» anchor-unu paylaşır"
+  },
+  "preview": {
+    "diagramLoading": "Diaqram çəkilir…",
+    "diagramFailed": "Bu diaqram çəkilə bilmədi",
+    "copyCode": "Kodu kopyala",
+    "copied": "Kopyalandı",
+    "runCode": "Bu bloku işə sal",
+    "runFinished": "çıxış {{code}} · {{ms}} ms",
+    "runTimedOut": "vaxt limitində dayandırıldı"
+  },
+  "session": {
+    "restored": "{{count}} sənəd yenidən açıldı",
+    "restoredPlural": "{{count}} sənəd yenidən açıldı",
+    "startFresh": "Təmiz başla"
+  },
+  "table": {
+    "title": "Cədvəl",
+    "addRow": "Aşağıya sətir əlavə et",
+    "deleteRow": "Sətri sil",
+    "addColumn": "Sağa sütun əlavə et",
+    "deleteColumn": "Sütunu sil",
+    "toggleHeader": "Başlıq sətrini aç/bağla",
+    "deleteTable": "Cədvəli sil"
+  },
+  "templates": {
+    "title": "Şablondan yeni",
+    "description": "Başlanğıc forma, hazır sənəd yox.",
+    "blank": {
+      "title": "Boş sənəd",
+      "description": "Boş fayl."
+    },
+    "note": {
+      "title": "Bugünkü qeyd",
+      "description": "Tarixli başlıq, altında yazmağa hazır."
+    },
+    "meeting": {
+      "title": "İclas qeydləri",
+      "description": "İştirakçılar, gündəlik, qeydlər və tapşırıqlar.",
+      "heading": "İclas qeydləri",
+      "date": "Tarix",
+      "attendees": "İştirakçılar",
+      "agenda": "Gündəlik",
+      "notes": "Qeydlər",
+      "actions": "Tapşırıqlar"
+    },
+    "article": {
+      "title": "Məqalə",
+      "description": "Front matter, başlıq və ilk bölmə.",
+      "heading": "Başlıq",
+      "intro": "Bunun nə haqda olduğunu deyən bir cümlə.",
+      "section": "İlk bölmə"
+    },
+    "todo": {
+      "title": "Tapşırıq siyahısı",
+      "description": "İndi və sonra deyə bölünmüş siyahılar.",
+      "heading": "Görüləcəklər",
+      "today": "Bu gün",
+      "later": "Sonra"
+    }
+  },
+  "ai": {
+    "menu": "Köməkçi",
+    "working": "İşləyir…",
+    "send": "Göndər",
+    "retry": "Yenidən cəhd et",
+    "replace": "Əvəz et",
+    "insertBelow": "Aşağıya əlavə et",
+    "copied": "Mübadilə buferinə köçürüldü",
+    "applied": "Sənədə tətbiq edildi",
+    "failed": "Sorğu alınmadı.",
+    "scopeSelection": "seçilmiş mətn",
+    "scopeDocument": "bütün sənəd",
+    "subtitle": "{{model}} ilə {{scope}} üzərində işlənir.",
+    "confirmNotice": "Bu mətn qoşduğunuz provayderə göndəriləcək. Bu addımı keçmək üçün Parametrlərdə “Göndərmədən əvvəl soruş” seçimini söndürün.",
+    "customNotice": "Nə edilməsini istədiyinizi yazın. Aşağıdakı mətn göndəriləcək.",
+    "instructionPlaceholder": "məsələn, bunu maddələr siyahısı kimi yenidən yaz",
+    "nothingToWorkOn": "İşləmək üçün mətn yoxdur",
+    "nothingToWorkOnDetail": "Əvvəlcə sənəd açın və ya mətn seçin.",
+    "movedOnTitle": "Sənəd dəyişdi",
+    "movedOnDetail": "Mətn əvvəlki yerində deyil, ona görə heç nə əvəz edilmədi. Bunun əvəzinə cavabı kopyalayın.",
+    "keySaved": "API açarı saxlanıldı",
+    "keyFailed": "Açar saxlanıla bilmədi",
+    "testOk": "Bağlantı işləyir",
+    "testFailed": "Bağlantı alınmadı",
+    "modelsLoaded": "{{count}} model yükləndi",
+    "modelsFailed": "Model siyahısı yüklənə bilmədi",
+    "action": {
+      "polish": "Səliqəyə sal",
+      "elaborate": "Detallandır",
+      "summarize": "Xülasə et",
+      "custom": "Öz göstərişin…",
+      "review": "Bu sənədi nəzərdən keçir"
+    }
+  },
+  "trash": {
+    "title": "Silinmişlər",
+    "clear": "Boşalt",
+    "restore": "Bərpa et",
+    "purge": "Birdəfəlik sil",
+    "restored": "Bərpa edildi",
+    "restoreFailed": "Bərpa edilə bilmədi",
+    "purgeTitle": "Birdəfəlik silinsin?",
+    "purgeBody": "«{{name}}» həmişəlik gedəcək. Bunu geri qaytarmaq olmaz.",
+    "purgeConfirm": "Birdəfəlik sil",
+    "clearTitle": "Silinmişlər siyahısı boşaldılsın?",
+    "clearBody": "Hər {{count}} element həmişəlik gedəcək. Bunu geri qaytarmaq olmaz.",
+    "clearConfirm": "Boşalt",
+    "emptyTitle": "Silinən yoxdur",
+    "emptyBody": "Sildiyiniz sənədlər burada saxlanılır ki, geri qaytara biləsiniz.",
+    "limit": "Ən son {{count}} saxlanılır. Parametrlər → Fayllar bölməsində dəyişin.",
+    "noLimit": "Hamısı saxlanılır. Parametrlər → Fayllar bölməsində dəyişin."
+  },
+  "whatsNew": {
+    "title": "Yeniliklər",
+    "subtitle": "MarkCraft {{version}}",
+    "dismiss": "Anladım",
+    "open": "Yeniliklər",
+    "kind": {
+      "new": "Yeni",
+      "improved": "Təkmilləşdi",
+      "fixed": "Düzəldildi"
+    },
+    "notes": {
+      "ai": {
+        "title": "Öz AI köməkçinizi gətirin",
+        "body": "OpenRouter, OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Together, xAI və ya Fireworks qoşun — yaxud yerli Ollama və LM Studio. Seçilmiş mətn və ya bütün sənəd üzərində səliqəyə salın, detallandırın, xülasə edin, ya da öz göstərişinizi verin. Standart olaraq söndürülüdür; nə açar, nə də bizim ünvan ilə gəlir. Açarlar əməliyyat sistemi hesabınız üçün şifrələnir və heç vaxt settings.json-a düşmür. Göndərməzdən əvvəl nə göndərəcəyini sizə göstərir."
+      },
+      "trash": {
+        "title": "Silinənləri geri qaytarmaq olar",
+        "body": "Silmə artıq birbaşa sistem səbətinə yox, MarkCraft-ın öz siyahısına gedir — nə silindiyini görür, bir klikə bərpa edir və ya birdəfəlik silirsiniz. Standart olaraq son 30 saxlanılır; Parametrlər → Fayllar bölməsindən dəyişin və ya limiti tamamilə söndürün."
+      },
+      "palettes": {
+        "title": "Altı adlandırılmış palitra",
+        "body": "Nord, Solarized, Gruvbox, Rosé Pine, Sepia və yüksək kontrast — hər birinin işıqlı və qaranlıq forması var. Palitra yalnız boz tonları əvəz edir, ona görə seçdiyiniz vurğu rəngi yenə üstünə tətbiq olunur."
+      },
+      "customColors": {
+        "title": "Rəngləri özünüz təyin edin",
+        "body": "On iki rəng — pəncərə, panellər, mətn, sərhədlər, vurğu və status rəngləri — ayrı-ayrılıqda dəyişilir və ayrı-ayrılıqda sıfırlanır. Rəng seçici əməliyyat sisteminin dialoqu deyil, proqramın öz komponentidir."
+      },
+      "exportPng": {
+        "title": "Şəkil kimi ixrac",
+        "body": "Bütün sənəd bir uzun PNG — söhbətə və ya slayda yapışdırmağa hazır. Səhifə əvvəlcə sənədin hündürlüyünə qədər böyüdülür ki, aşağıda qalan hissə səssizcə itməsin."
+      },
+      "exportJson": {
+        "title": "JSON kimi ixrac",
+        "body": "Metadata, front matter, struktur, söz sayı, Markdown və emal olunmuş sənəd ağacı — redaktorun özünün işlədiyi eyni ağac, yəni skript MarkCraft-ın gördüyünü olduğu kimi görür."
+      },
+      "share": {
+        "title": "Paylaş və İxrac başlıq panelindədir",
+        "body": "Hər ikisi yalnız əmr paletindən əlçatan idi, insan isə onları orada axtarmır."
+      },
+      "previewLatency": {
+        "title": "Önizləmə yazı ilə ayaqlaşır",
+        "body": "Əvvəl yenilənmək üçün fasilə gözləyirdi, ona görə bütöv bir cümlə yazılana qədər sağ tərəf tərpənmirdi. İndi nə qədər sürətli yazsanız da, onun nə qədər köhnə qala biləcəyinin tavanı var."
+      },
+      "recentOpensFolder": {
+        "title": "Son və pinli fayllar öz qovluğunu açır",
+        "body": "Yadda qalan sənədi seçəndə onun yerləşdiyi qovluq da açılır, yəni explorer əlaqəsiz nəyisə yox, həmin faylın qonşularını göstərir."
+      },
+      "lastFolder": {
+        "title": "Açıq qalan qovluq yenidən açılır",
+        "body": "Son iş sahəsinin qeydi səhv yuvaya yazılırdı — həm qovluq itirilirdi, həm də həmin iş sahəsinin saxlanılmış tabları boş sessiya ilə üstündən yazılırdı. Hər ikisi düzəldildi, yenidən başladanda əvvəlki yerinizdəsiniz."
+      },
+      "listContinuation": {
+        "title": "Enter siyahını davam etdirir",
+        "body": "İki keymap Enter-i eyni anda bağlayırdı və sadə olanı həmişə qazanırdı, ona görə siyahıda Enter növbəti bəndi başlatmaq əvəzinə siyahını bitirirdi."
+      },
+      "toolbarCaret": {
+        "title": "Kursor toolbar markerindən sonra dayanır",
+        "body": "Boş sətirdə başlıq və ya siyahı başlayanda kursor yeni qoyulmuş markerin solunda qalırdı, yəni yazdığınız növbəti şey onun kənarına düşürdü."
+      },
+      "modalLayering": {
+        "title": "Parametrlərdəki açılan siyahılar görünür",
+        "body": "Menyular, popoverlər və tooltiplər artıq aid olduqları səthin üstündə çəkilir. Seçim siyahısının parametrlər pəncərəsinin arxasında açılması bunun görünən əlaməti idi."
+      },
+      "languageTemplate": {
+        "title": "«Şablonu ixrac et» işləyir",
+        "body": "Dil yükləyicisinin qəbul etmədiyi adla fayl istəyirdi və birbaşa rədd edilirdi. Başlanğıc faylı indi öz içindəki dil koduna uyğun adlanır."
+      },
+      "present": {
+        "title": "Sənəddən birbaşa təqdimat",
+        "body": "F5 açıq sənədi slaydlara çevirir. Yalnız --- olan sətir slayd ayırıcısıdır, ona görə oxumaq üçün yazılmış sənəd onsuz da düzgün təqdim olunur. Ox düymələri, Page Up/Down, Home və End keçid edir; Escape çıxır. Slaydlar önizləmə ilə eyni boru xəttindən keçir, ona görə cədvəl və ya diaqram hər ikisində eyni görünür."
+      },
+      "slashBlocks": {
+        "title": "Blok əlavə etmək üçün / yazın",
+        "body": "Sətir başında və ya boşluqdan sonra qoyulan kəsik on dörd blokdan ibarət menyu açır — başlıqlar, siyahılar, tapşırıq siyahıları, sitatlar, kod, qeyd blokları, cədvəllər, keçidlər, şəkillər, emoji və ayırıcılar. Yazmağa davam edin, siyahı daralır; Enter və ya Tab əlavə edir. Fayl yolları, URL-lər və and/or kimi sözlərin içində açılmır. Həm ingilis adı, həm də öz diliniz uyğun gəlir — /heading də, /başlıq da işləyir."
+      },
+      "devTools": {
+        "title": "Tərtibatçı alətləri, oflayn",
+        "body": "JSON səliqəyə salma, JSON↔YAML, Base64, URL kodlama, JWT açma, vaxt möhürü çevirmə, müntəzəm ifadə sınağı və UUID — Ctrl+Alt+T ilə. Hamısı lokal işləyir və məsələ elə bundadır: bura yapışdırdığınız mətn adətən token, konfiqurasiya faylı və ya müştəri məlumatı olur, onları veb səhifəyə yapışdırmaq isə tərk edilməli vərdişdir."
+      },
+      "links": {
+        "title": "Sənədlərinizin necə bağlandığını görün",
+        "body": "Ctrl+Alt+L qovluğu nəzərdən keçirir və sənədlər arasındakı keçidləri çəkir; oxuduğunuz sənədə hansıların keçid verdiyi aşağıda sadalanır, hər qırıq keçid isə faylı və sətri ilə bildirilir. [[Wiki keçidləri]] istənilən qovluqdan fayl adı ilə tapılır; iki eyni ad varsa təxmin edilmir, bildirilir."
+      },
+      "website": {
+        "title": "Sənədinizi telefon enində oxuyun",
+        "body": "Ctrl+Alt+W sənədi 390, 768 və 1280 piksel enində səhifə kimi göstərir — həmin endə əsl çərçivə, kiçildilmiş şəkil deyil, ona görə mətn və cədvəllər oxucuda necə olacaqsa elə davranır."
+      },
+      "imageEditor": {
+        "title": "Əlavə etməzdən əvvəl kəsin və sıxın",
+        "body": "Lokal şəkil seçəndə artıq kəsmə, keyfiyyət və maksimum en təklif olunur, alınacaq ölçü isə siz qərar verərkən göstərilir. Sıxma WebP kimi yenidən kodlayır və şəffaflığı saxlayır — yuvarlaq künclü ekran şəkli salamat qalır."
+      },
+      "exportWordProcessor": {
+        "title": "Word və zəngin mətnə ixrac",
+        "body": "İki yeni format: Word, Pages və ya Google Docs üçün .docx və formatlı mətn oxuyan hər şey üçün .rtf. Başlıqlar, siyahılar, tapşırıq qutuları, sitatlar və kod hamısı keçir; hər ikisi sənədinizin eyni oxunuşundan yaranır, ona görə bir-birindən fərqlənə bilməz."
+      },
+      "callouts": {
+        "title": "Qeyd blokları",
+        "body": "> [!NOTE], [!TIP], [!IMPORTANT], [!WARNING] və ya [!CAUTION] ilə başlayan sitat rəngli qeyd bloku kimi göstərilir — həm redaktorda, həm də bütün ixraclarda."
+      },
+      "emoji": {
+        "title": "Emoji seçici",
+        "body": "Ctrl+Alt+M, alət paneli və ya /emoji. Ada görə axtarın; ən çox işlətdikləriniz yuxarıda saxlanılır."
+      },
+      "headingIds": {
+        "title": "Başlıqların öz keçidi olur",
+        "body": "Hər başlığa GitHub qaydaları ilə lövbər verilir, ona görə [](#bir-bölmə) işləyir və sənədə verilən keçid lazım olan yerə düşür. Qeyri-latın başlıqlar düzgün işlənir."
+      },
+      "codeCopy": {
+        "title": "Kod blokunu bir kliklə kopyalayın",
+        "body": "Kod blokları indi dilini və kopyalama düyməsini göstərir; düymə vurğulayıcının çəkdiyini yox, xam mətni kopyalayır."
+      },
+      "lintAndAudit": {
+        "title": "Səhvi başqası görməmişdən tapın",
+        "body": "Statistika paneli indi qırıq daxili keçidləri, təkrarlanan başlıq lövbərlərini və həqiqətən səhv göstərilən doqquz Markdown probleminı bildirir — hashdan sonra boşluğu olmayan başlıq, bağlanmamış kod bloku, alt mətni olmayan şəkil."
+      },
+      "toolbarCustom": {
+        "title": "Alət panelində nə olduğunu seçin",
+        "body": "Parametrlərdən hansı alətlərin və hansı sıra ilə görünəcəyini seçmək olar."
+      },
+      "dropAnything": {
+        "title": "Redaktora hər şeyi atın",
+        "body": "Şəkillər daxil edilir, Markdown və mətn faylları açılır, qalan hər şeyə nisbi keçid qoyulur."
+      },
+      "startupSize": {
+        "title": "İlk boyaya qədər daha sürətli",
+        "body": "Markdown boru xəttinin öz asılılıqları başlanğıcda qabıqla birlikdə yüklənirdi. Onları həqiqətən lazım olduğu yerə köçürmək ilk boyadan 330 kB çıxardı."
+      },
+      "functionKeys": {
+        "title": "Yazarkən funksiya düymələri işləyir",
+        "body": "Modifikatorsuz qısayol fokusda olan mətn sahəsinə verilirdi, bu isə F5-i redaktordan — yeganə basıldığı yerdən — əlçatmaz edirdi. Funksiya düymələri simvol yaza bilmir, ona görə indi bağlı olduqları əmrə çatır. Təqdimat rejimi də fokusu düzgün alır, yəni təqdimat zamanı basılan düymələr sənədə düşmür."
+      },
+      "book": {
+        "title": "Qovluq kitab ola bilər",
+        "body": "Fəsilləri iç-içə keçid siyahısı kimi sadalayan SUMMARY.md əlavə edin — Ctrl+Alt+K qovluğu bir əsər kimi oxuyur: fəsillər sırayla, itmişlər bildirilir, «Bir sənəd kimi aç» isə onları birləşdirir və hər fəslin başlıqlarını öz dərinliyinə sürüşdürür. Bu, mdBook və GitBook-un onsuz da işlətdiyi formatdır."
+      },
+      "study": {
+        "title": "Artıq yazdığınız qeyddən təkrarlayın",
+        "body": "Bir sətirdə «Termin :: məna» yazın, yaxud sual, yalnız ? olan sətir və cavab — həmin qeyd artıq təkrarlana bilər. Seans bir anda bir kart göstərir və növbəti görüşü planlaşdırır; kart öz mətni ilə tanındığı üçün ətrafı nə qədər yenidən yazılsa da tarixçəsini itirmir."
+      },
+      "canvas": {
+        "title": "Kanvas",
+        "body": "Kartlar və aralarındakı xətlərdən ibarət sonsuz səth, JSON Canvas kimi saxlanılır — Obsidian-ın yazdığı açıq format, ona görə burada qurulan kanvas orada, oradakı isə burada açılır. Kartlar Markdown göstərir; yüz kartda da sürüşdürmə və miqyas hamardır."
+      },
+      "httpTester": {
+        "title": "HTTP sorğusu göndərin",
+        "body": "Texniki sənədin bəhs etdiyi API üçün. Metod, ünvan, başlıqlar, gövdə; status, müddət və səliqələnmiş cavab. Yalnız http:// və https:// qəbul olunur — hər yönləndirmədə yenidən yoxlanır — heç bir kuki və kimlik məlumatı getmir, və yalnız düyməni basanda işə düşür."
+      },
+      "runCode": {
+        "title": "Kod blokunu işə salın",
+        "body": "Bu maşında quraşdırılmış dildə hər çəpərli bloka Run düyməsi — JavaScript, Python, Ruby, PHP, Go, shell, PowerShell. Nəticə blokun öz altında görünür. Sandbox yoxdur və MarkCraft olduğunu iddia etmir: kod sizin öz icazələrinizlə işləyir, blokunu saxlayıb özünüz işə salsaydınız necə olacaqdısa elə — və heç vaxt öz-özünə işə düşmür."
+      },
+      "lock": {
+        "title": "Sənədi kilidləyin",
+        "body": "Oxuduğunuz sənəddə redaktəni bağlayır — bitmiş, təsdiqlənmiş və ya başqasının sənədində təsadüfi düymə basmasına qarşı. Saxlamada da yoxlanılır, ona görə avtosaxlama və «hamısını saxla» da ona hörmət edir."
+      },
+      "streak": {
+        "title": "Yazı seriyası",
+        "body": "Statistika paneli indi yazdığınız günləri sayır, dörd həftəlik kvadratlarla. Dünən bitən seriya bu gün hələ sayılır: səhər başlamamış adam heç nə pozmayıb. Qeyddə tarix və rəqəm var, heç vaxt fayl adı yox."
+      },
+      "pasteMarkdown": {
+        "title": "Veb səhifəni Markdown kimi yapışdırın",
+        "body": "Buferdəki formatlı mətni önizləmənin işlətdiyi eyni boru xəttindən keçirir — başlıqlar, siyahılar, cədvəllər və kod salamat qalır, səhifənin naviqasiyası, banneri və altlığı isə qalmır. Ctrl+V-ni ələ keçirmək əvəzinə ayrıca əmr, çünki o, kopyaladığınızdan asılı olaraq iki fərqli iş görərdi."
+      },
+      "codeLanguage": {
+        "title": "Kod blokunun dilini təyin edin",
+        "body": "Kursor blokun istənilən yerində olarkən əmr palitrasından — hətta hələ bağlamadığınız blokda da, ki bu, ən çox istədiyiniz andır. Siyahı vurğulayıcının öz cədvəlindən gəlir, ona görə rənglənə bilməyən dil təklif olunmur."
+      },
+      "cleanUp": {
+        "title": "Formatlaşdırmanı təmizləyin",
+        "body": "Cavabı birmənalı olan dörd problemi düzəldir: hashlara yapışmış başlıq, tablar, artıq boşluqlar, bağlanmamış blok. Qalan beşinə toxunulmur — alt mətn uydurmaq və ya dil seçmək formanı yox, mənanı dəyişmək olardı."
+      },
+      "aiReview": {
+        "title": "AI-dən yenidən yazmağı yox, rəy istəyin",
+        "body": "Sənəd qaytarmaq əvəzinə tapıntı bildirən beşinci AI hərəkəti: məzmuna uyğun gəlməyən struktur, çatışmayan bölmələr, izahsız qalmış iddialar, ardından gələni bildirməyən başlıqlar. Orfoqrafiya və qrammatika onları onsuz da yoxlayana buraxılır."
+      },
+      "quietLog": {
+        "title": "Daha sakit loq",
+        "body": "Kanvası və ya kitab panelini hər ikisi olmayan qovluqda açmaq artıq tamamilə adi bir şey üçün loga xəta yazmır. Müntəzəm xətalarla dolu loq oxunmayan loqdur."
+      }
+    }
+  },
+  "history": {
+    "title": "Versiya tarixçəsi",
+    "restore": "Bu versiyanı bərpa et",
+    "restoreTitle": "Bu versiya bərpa edilsin?",
+    "restoreBody": "Redaktordakı mətn bu versiya ilə əvəz olunur. Siz saxlayana qədər diskə heç nə yazılmır — geri ala və ya saxlamadan bağlaya bilərsiniz.",
+    "restored": "Versiya bərpa edildi",
+    "restoredDetail": "Saxlamaqla təsdiqləyin, geri almaqla ləğv edin.",
+    "forget": "Bu versiyanı unut",
+    "comparedToNow": "Redaktorla müqayisədə",
+    "identical": "Eynidir",
+    "hiddenLines": "{{count}} dəyişməyən sətir",
+    "emptyTitle": "Hələ versiya yoxdur",
+    "emptyBody": "Bu sənədi hər saxlayanda bir versiya qeyd olunur.",
+    "unsavedTitle": "Hələ saxlanılmayıb",
+    "unsavedBody": "Sənədi bir dəfə saxlayın, versiyaları qeyd olunmağa başlasın."
+  },
+  "emoji": {
+    "title": "Emoji",
+    "hint": "Simvolun özü kimi əlavə olunur, :shortcode: kimi yox.",
+    "search": "Emoji axtar…",
+    "empty": "Uyğun gələn yoxdur.",
+    "groups": {
+      "all": "Hamısı",
+      "common": "Ümumi",
+      "people": "İnsanlar",
+      "objects": "Əşyalar",
+      "symbols": "Simvollar",
+      "nature": "Təbiət"
+    }
+  },
+  "drop": {
+    "saveFirstTitle": "Əvvəlcə sənədi saxlayın",
+    "saveFirstBody": "Atılan fayllar sənədin yanına kopyalanır, ona görə sənədin yeri olmalıdır.",
+    "failed": "{{name}} əlavə edilə bilmədi"
+  },
+  "lint": {
+    "line": "{{line}}-cı sətir · {{rule}}: {{message}}",
+    "rules": {
+      "MD001": "Başlıq səviyyəsi {{from}}-dən {{to}}-ə tullanır",
+      "MD009": "Sətir sonunda artıq boşluq",
+      "MD010": "Tab simvolu",
+      "MD018": "#-dan sonra boşluq yoxdur — bu başlıq kimi göstərilməyəcək",
+      "MD025": "İkinci birinci səviyyəli başlıq",
+      "MD040": "Kod blokunun dili göstərilməyib",
+      "MD042": "Keçidin hədəfi yoxdur",
+      "MD045": "Şəklin alt mətni yoxdur",
+      "MD046": "Bağlanmamış kod bloku"
+    }
+  },
+  "present": {
+    "title": "Təqdimat",
+    "next": "Növbəti slayd",
+    "previous": "Əvvəlki slayd",
+    "empty": "Təqdim ediləsi bir şey yoxdur. Slaydları yalnız --- olan sətirlə ayırın."
+  },
+  "slash": {
+    "title": "Blok əlavə et",
+    "blocks": {
+      "heading1": "Başlıq 1",
+      "heading2": "Başlıq 2",
+      "heading3": "Başlıq 3",
+      "bulletList": "Nöqtəli siyahı",
+      "orderedList": "Nömrəli siyahı",
+      "taskList": "Tapşırıq siyahısı",
+      "quote": "Sitat",
+      "codeBlock": "Kod bloku",
+      "callout": "Qeyd bloku",
+      "table": "Cədvəl",
+      "link": "Keçid",
+      "image": "Şəkil",
+      "emoji": "Emoji",
+      "horizontalRule": "Ayırıcı"
+    }
+  },
+  "devtools": {
+    "title": "Tərtibatçı alətləri",
+    "copy": "Nəticəni kopyala",
+    "copied": "Mübadilə buferinə kopyalandı",
+    "input": "Giriş",
+    "output": "Nəticə",
+    "inputHint": "Mətni bura yapışdırın",
+    "pattern": "Şablon",
+    "flags": "Bayraqlar",
+    "generate": "Yenisini yarat",
+    "noMatches": "Uyğunluq yoxdur.",
+    "tools": {
+      "json": "JSON",
+      "base64": "Base64",
+      "url": "URL",
+      "jwt": "JWT",
+      "timestamp": "Vaxt möhürü",
+      "regex": "Regex",
+      "uuid": "UUID",
+      "yaml": "YAML"
+    },
+    "forward": {
+      "json": "Səliqəyə sal",
+      "base64": "Kodla",
+      "url": "Kodla",
+      "yaml": "JSON → YAML"
+    },
+    "back": {
+      "json": "Sıxlaşdır",
+      "base64": "Kodu aç",
+      "url": "Kodu aç",
+      "yaml": "YAML → JSON"
+    },
+    "errors": {
+      "json": "Bu düzgün JSON deyil.",
+      "base64": "Bu düzgün Base64 mətni deyil.",
+      "url": "Bu düzgün kodlanmış ardıcıllıq deyil.",
+      "jwt": "Bu oxunaqlı JWT deyil — token nöqtə ilə ayrılmış üç hissədən ibarətdir.",
+      "timestamp": "Bu tarix və ya Unix vaxt möhürü deyil.",
+      "regex": "Bu şablon düzgün müntəzəm ifadə deyil.",
+      "yaml": "Bu düzgün YAML deyil."
+    }
+  },
+  "links": {
+    "title": "Keçidlər və qraf",
+    "summary": "{{files}} sənəd, {{links}} keçid",
+    "scanning": "İş sahəsi nəzərdən keçirilir…",
+    "empty": "Bu qovluqda hələ Markdown sənədi yoxdur.",
+    "mapLabel": "Sənədlərin və aralarındakı keçidlərin xəritəsi",
+    "backlinks": "Geriyə keçidlər",
+    "backlinksFor": "{{name}} sənədinə nə keçid verir",
+    "noBacklinks": "Hələ bura heç nə keçid vermir.",
+    "broken": "Qırıq keçidlər",
+    "brokenLine": "{{target}} — {{file}}, sətir {{line}}"
+  },
+  "website": {
+    "title": "Vebsayt görünüşü",
+    "zoomIn": "Yaxınlaşdır",
+    "zoomOut": "Uzaqlaşdır",
+    "devices": {
+      "phone": "Telefon",
+      "tablet": "Planşet",
+      "laptop": "Noutbuk"
+    }
+  },
+  "image": {
+    "title": "Şəkli tənzimlə",
+    "apply": "Əlavə et",
+    "preview": "Şəkil önizləməsi",
+    "cropHint": "Kəsmək üçün şəklin üzərində sürüşdürün.",
+    "cropSet": "Seçilmiş sahəyə kəsildi.",
+    "cropClear": "Kəsməni ləğv et",
+    "compress": "Sıxışdır",
+    "compressHint": "WebP kimi yenidən kodlanır, şəffaflıq saxlanılır.",
+    "quality": "Keyfiyyət — {{percent}}%",
+    "maxWidth": "Maksimum en",
+    "original": "Orijinal",
+    "measuring": "Ölçülür…",
+    "result": "{{width}}×{{height}} · {{size}} ({{delta}})"
+  },
+  "clean": {
+    "action": "Təmizlə",
+    "done": "{{count}} formatlaşdırma problemi düzəldildi",
+    "nothing": "Düzəldiləcək bir şey yoxdur — formatlaşdırma onsuz da təmizdir."
+  },
+  "language": {
+    "title": "Kod blokunun dili",
+    "current": "Hazırda {{name}}",
+    "clear": "Dilsiz",
+    "search": "Dilləri axtar…",
+    "noFence": "Əvvəlcə kursoru kod blokunun içinə qoyun.",
+    "noMatch": "Uyğun dil yoxdur."
+  },
+  "paste": {
+    "noHtml": "Mübadilə buferində çevriləcək formatlı mətn yoxdur.",
+    "nothing": "Çevrilmə boş nəticə verdi."
+  },
+  "book": {
+    "title": "Kitab",
+    "summary": "{{count}} fəsil",
+    "reading": "Məzmun oxunur…",
+    "none": "Bu qovluq kitab deyil",
+    "noneHint": "Fəsilləri iç-içə keçid siyahısı kimi sadalayan {{name}} əlavə edin — onlar bir sənəd olacaq.",
+    "openAsOne": "Bir sənəd kimi aç",
+    "opened": "{{count}} fəsil yeni sənəddə birləşdirildi",
+    "missing": "yoxdur",
+    "missingCount": "{{count}} fəsil sadalanıb, amma diskdə tapılmadı.",
+    "chapterMissing": "{{path}} oxuna bilmədi",
+    "empty": "Fəsillərin hamısı boşdur."
+  },
+  "study": {
+    "title": "Öyrənmə",
+    "progress": "{{done}} baxıldı · {{left}} qalıb",
+    "reveal": "Cavabı göstər",
+    "reset": "Dəstəni yenidən başlat",
+    "needsSaving": "Əvvəlcə sənədi saxlayın",
+    "noCards": "Bu sənəddə kart yoxdur",
+    "noCardsHint": "Bir sətirdə «Termin :: məna» yazın, yaxud sual, yalnız ? olan sətir və cavab.",
+    "done": "Bu gün üçün heç nə qalmadı",
+    "doneHint": "{{count}} karta baxdınız.",
+    "grade": {
+      "again": "Yenidən",
+      "hard": "Çətin",
+      "good": "Yaxşı",
+      "easy": "Asan"
+    }
+  },
+  "canvas": {
+    "title": "Kanvas",
+    "reading": "Kanvas açılır…",
+    "addCard": "Kart əlavə et",
+    "fit": "Ekrana sığdır",
+    "newCard": "Yeni kart",
+    "saved": "Kanvas saxlanıldı",
+    "needsFolder": "Əvvəlcə qovluq açın — kanvas onun yanında saxlanılır.",
+    "saveFailed": "Kanvas saxlanıla bilmədi"
+  },
+  "lock": {
+    "locked": "Kilidli — redaktə bağlıdır",
+    "lockedShort": "Kilidli",
+    "cannotSave": "Bu sənəd kilidlidir. Saxlamaq üçün kilidi açın."
+  },
+  "streak": {
+    "title": "Yazı seriyası",
+    "current": "ardıcıl {{count}} gün",
+    "longest": "ən yaxşı {{count}}",
+    "days": "{{count}} gün yazılıb",
+    "dayTooltip": "{{day}} — {{count}} söz"
+  },
+  "http": {
+    "title": "HTTP sorğusu",
+    "subtitle": "Yalnız düyməni basanda göndərilir. Buradakı başqa heç nə şəbəkəyə çıxmır.",
+    "url": "Ünvan",
+    "urlInvalid": "Yalnız http:// və https:// sorğulana bilər.",
+    "headers": "Başlıqlar",
+    "headersHint": "Sətirdə bir dənə, «Ad: dəyər» şəklində. # ilə başlayan sətirlər nəzərə alınmır.",
+    "body": "Gövdə",
+    "send": "Göndər",
+    "sending": "Göndərilir…",
+    "truncated": "kəsilib",
+    "responseHeaders": "Cavab başlıqları",
+    "responseBody": "Cavab gövdəsi"
+  }
+}

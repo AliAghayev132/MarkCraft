@@ -1,0 +1,627 @@
+/*
+ * Rendered-document typography.
+ *
+ * This is the one part of the application that cannot be expressed with utility
+ * classes: the elements here are generated from Markdown at runtime — by the
+ * preview pipeline and by ProseMirror — so there is no JSX call site to put a
+ * className on. Element selectors are the only way to reach them.
+ *
+ * Shared by the preview and the rich editor through `.mc-document`, so a
+ * heading looks identical whether it is being read or edited.
+ *
+ * Deliberately separate from the paged stylesheet used for print and PDF export
+ * (main/services/document-template.ts): this one is themeable and tuned for a
+ * screen, that one is tuned for paper.
+ */
+
+.mc-document {
+  max-width: 46em;
+  margin: 0 auto;
+  padding: var(--mc-space-8) var(--mc-space-8) 45vh;
+  font-size: calc(var(--mc-editor-font-size, 14px) + 1px);
+  line-height: var(--mc-leading-relaxed);
+  color: var(--mc-text-primary);
+  word-wrap: break-word;
+  outline: none;
+}
+
+/* ── Headings ─────────────────────────────────────────────────────────────── */
+.mc-document h1,
+.mc-document h2,
+.mc-document h3,
+.mc-document h4,
+.mc-document h5,
+.mc-document h6 {
+  margin: 1.7em 0 0.6em;
+  font-weight: var(--mc-weight-semibold);
+  line-height: var(--mc-leading-tight);
+  scroll-margin-top: var(--mc-space-6);
+}
+
+.mc-document > :first-child {
+  margin-top: 0;
+}
+
+.mc-document h1 {
+  font-size: 1.95em;
+  letter-spacing: -0.02em;
+}
+
+.mc-document h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.24em;
+  border-bottom: 1px solid var(--mc-border-subtle);
+}
+
+.mc-document h3 {
+  font-size: 1.22em;
+}
+
+.mc-document h4 {
+  font-size: 1.06em;
+}
+
+.mc-document h5,
+.mc-document h6 {
+  font-size: 1em;
+  color: var(--mc-text-secondary);
+}
+
+/* ── Blocks ───────────────────────────────────────────────────────────────── */
+.mc-document p,
+.mc-document ul,
+.mc-document ol,
+.mc-document blockquote,
+.mc-document table,
+.mc-document pre,
+.mc-document figure,
+.mc-document dl {
+  margin: 0 0 1.05em;
+}
+
+.mc-document ul,
+.mc-document ol {
+  padding-left: 1.6em;
+  list-style: revert;
+}
+
+.mc-document ul {
+  list-style-type: disc;
+}
+
+.mc-document ul ul {
+  list-style-type: circle;
+}
+
+.mc-document li {
+  margin: 0.22em 0;
+}
+
+.mc-document li > ul,
+.mc-document li > ol {
+  margin: 0.22em 0;
+}
+
+.mc-document li p {
+  margin: 0;
+}
+
+.mc-document li::marker {
+  color: var(--mc-text-tertiary);
+}
+
+.mc-document blockquote {
+  margin-left: 0;
+  padding: 0.55em 1.1em;
+  border-left: 3px solid var(--mc-accent-border);
+  background: var(--mc-bg-inset);
+  border-radius: 0 var(--mc-radius-sm) var(--mc-radius-sm) 0;
+  color: var(--mc-text-secondary);
+}
+
+.mc-document blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.mc-document hr {
+  margin: 2.2em 0;
+  border: none;
+  border-top: 1px solid var(--mc-border);
+}
+
+/* ── Task lists ───────────────────────────────────────────────────────────── */
+.mc-document li:has(> input[type='checkbox']),
+.mc-document ul[data-type='taskList'] li {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.mc-document li:has(> input[type='checkbox']) {
+  margin-left: -1.35em;
+}
+
+.mc-document ul[data-type='taskList'] {
+  list-style: none;
+  padding-left: 0.2em;
+}
+
+.mc-document ul[data-type='taskList'] li > label {
+  flex: none;
+  margin-top: 0.25em;
+}
+
+.mc-document input[type='checkbox'] {
+  accent-color: var(--mc-accent);
+  width: 13px;
+  height: 13px;
+  flex: none;
+  margin: 0;
+  position: relative;
+  top: 1px;
+}
+
+/* ── Inline ───────────────────────────────────────────────────────────────── */
+.mc-document a {
+  color: var(--mc-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.mc-document a:hover {
+  border-bottom-color: var(--mc-accent-border);
+}
+
+.mc-document strong {
+  font-weight: var(--mc-weight-bold);
+}
+
+.mc-document del {
+  color: var(--mc-text-tertiary);
+}
+
+.mc-document mark {
+  background: var(--mc-warning-bg);
+  color: inherit;
+  padding: 0 0.16em;
+  border-radius: 2px;
+}
+
+.mc-document kbd {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--mc-border);
+  border-bottom-width: 2px;
+  border-radius: var(--mc-radius-xs);
+  background: var(--mc-bg-inset);
+  font-size: 0.85em;
+}
+
+.mc-document abbr {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ── Code ─────────────────────────────────────────────────────────────────── */
+.mc-document code {
+  font-family: var(--mc-font-mono);
+  font-size: 0.87em;
+}
+
+.mc-document :not(pre) > code {
+  padding: 0.13em 0.36em;
+  background: var(--mc-bg-inset);
+  border: 1px solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-xs);
+  color: var(--mc-syn-code);
+  word-break: break-word;
+}
+
+.mc-document pre {
+  padding: var(--mc-space-5) var(--mc-space-6);
+  background: var(--mc-bg-inset);
+  border: 1px solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-md);
+  overflow-x: auto;
+  line-height: 1.58;
+}
+
+.mc-document pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--mc-text-primary);
+  font-size: 0.86em;
+}
+
+/* ── Tables ───────────────────────────────────────────────────────────────── */
+.mc-document table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.mc-document th,
+.mc-document td {
+  padding: 0.44em 0.72em;
+  border: 1px solid var(--mc-border);
+  text-align: left;
+  vertical-align: top;
+  position: relative;
+}
+
+.mc-document th {
+  background: var(--mc-bg-inset);
+  font-weight: var(--mc-weight-semibold);
+}
+
+.mc-document tbody tr:nth-child(even) {
+  background: var(--mc-bg-sunken);
+}
+
+/* ProseMirror table selection and column resizing. */
+.mc-document .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--mc-accent-subtle);
+  pointer-events: none;
+}
+
+.mc-document .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--mc-accent);
+  pointer-events: none;
+}
+
+/* ── Media ────────────────────────────────────────────────────────────────── */
+.mc-document img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-bg-inset);
+}
+
+.mc-document img.ProseMirror-selectednode {
+  outline: 2px solid var(--mc-accent);
+}
+
+.mc-document figure {
+  text-align: center;
+}
+
+.mc-document figcaption {
+  margin-top: var(--mc-space-3);
+  font-size: 0.88em;
+  color: var(--mc-text-tertiary);
+}
+
+/* ── Footnotes and details ────────────────────────────────────────────────── */
+.mc-document .footnotes {
+  margin-top: 2.6em;
+  padding-top: var(--mc-space-5);
+  border-top: 1px solid var(--mc-border-subtle);
+  font-size: 0.92em;
+  color: var(--mc-text-secondary);
+}
+
+.mc-document sup a {
+  padding: 0 0.15em;
+  font-size: 0.8em;
+}
+
+.mc-document details {
+  margin-bottom: 1.05em;
+  padding: var(--mc-space-4) var(--mc-space-5);
+  background: var(--mc-bg-inset);
+  border: 1px solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-md);
+}
+
+.mc-document summary {
+  font-weight: var(--mc-weight-medium);
+  cursor: default;
+}
+
+/* ── Editor placeholder ───────────────────────────────────────────────────── */
+.mc-document p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--mc-text-tertiary);
+}
+
+/* ── Syntax tokens (highlight.js class names) ─────────────────────────────── */
+.mc-document .hljs-comment,
+.mc-document .hljs-quote {
+  color: var(--mc-syn-comment);
+  font-style: italic;
+}
+
+.mc-document .hljs-keyword,
+.mc-document .hljs-selector-tag,
+.mc-document .hljs-literal,
+.mc-document .hljs-doctag {
+  color: var(--mc-syn-keyword);
+}
+
+.mc-document .hljs-string,
+.mc-document .hljs-regexp,
+.mc-document .hljs-addition {
+  color: var(--mc-syn-string);
+}
+
+.mc-document .hljs-number,
+.mc-document .hljs-symbol,
+.mc-document .hljs-bullet {
+  color: var(--mc-syn-number);
+}
+
+.mc-document .hljs-title,
+.mc-document .hljs-section,
+.mc-document .hljs-name {
+  color: var(--mc-syn-function);
+}
+
+.mc-document .hljs-attr,
+.mc-document .hljs-attribute,
+.mc-document .hljs-variable,
+.mc-document .hljs-template-variable {
+  color: var(--mc-syn-variable);
+}
+
+.mc-document .hljs-type,
+.mc-document .hljs-built_in {
+  color: var(--mc-syn-type);
+}
+
+.mc-document .hljs-meta,
+.mc-document .hljs-punctuation {
+  color: var(--mc-syn-punctuation);
+}
+
+.mc-document .hljs-deletion {
+  color: var(--mc-danger);
+}
+
+.mc-document .hljs-emphasis {
+  font-style: italic;
+}
+
+.mc-document .hljs-strong {
+  font-weight: var(--mc-weight-bold);
+}
+
+/*
+ * Mermaid diagrams.
+ *
+ * Mermaid's own theme arrives as a `<style>` block inside the SVG, which the
+ * converter drops — no third-party CSS is ever injected into this document.
+ * The diagram is styled here instead, from the same tokens as everything else,
+ * so it follows the user's theme and accent rather than carrying Mermaid's
+ * palette around.
+ */
+.mc-mermaid svg {
+  max-width: 100%;
+  height: auto;
+  font-family: var(--mc-font-ui);
+}
+
+.mc-mermaid .node rect,
+.mc-mermaid .node circle,
+.mc-mermaid .node ellipse,
+.mc-mermaid .node polygon,
+.mc-mermaid .node path {
+  fill: var(--mc-bg-raised);
+  stroke: var(--mc-accent);
+  stroke-width: 1.4px;
+}
+
+.mc-mermaid .cluster rect {
+  fill: var(--mc-bg-sunken);
+  stroke: var(--mc-border);
+}
+
+.mc-mermaid .label,
+.mc-mermaid text,
+.mc-mermaid .nodeLabel,
+.mc-mermaid .edgeLabel {
+  fill: var(--mc-text-primary);
+  color: var(--mc-text-primary);
+  font-size: 13px;
+}
+
+.mc-mermaid .edgeLabel rect,
+.mc-mermaid .edgeLabel .label-container {
+  fill: var(--mc-bg-surface);
+}
+
+.mc-mermaid .edgePath .path,
+.mc-mermaid .flowchart-link,
+.mc-mermaid line,
+.mc-mermaid .messageLine0,
+.mc-mermaid .messageLine1 {
+  stroke: var(--mc-text-tertiary);
+  stroke-width: 1.4px;
+  fill: none;
+}
+
+.mc-mermaid marker path,
+.mc-mermaid .marker {
+  fill: var(--mc-text-tertiary);
+  stroke: var(--mc-text-tertiary);
+}
+
+/* Sequence and state diagrams reuse different class names for the same ideas. */
+.mc-mermaid .actor,
+.mc-mermaid .labelBox,
+.mc-mermaid .stateGroup rect {
+  fill: var(--mc-bg-raised);
+  stroke: var(--mc-accent);
+}
+
+.mc-mermaid .titleText {
+  fill: var(--mc-text-primary);
+  font-weight: 600;
+}
+
+/*
+ * ── Callouts ────────────────────────────────────────────────────────────────
+ *
+ * `> [!NOTE]` and its four siblings. Styled from the semantic tokens rather
+ * than fixed colours, so a callout follows the theme and every palette — and
+ * the glyph is a CSS pseudo-element, which is what lets an exported HTML page
+ * carry the callout without any of our JavaScript.
+ */
+
+.mc-document .mc-callout {
+  border-left: 3px solid var(--mc-callout-accent);
+  background: var(--mc-callout-bg);
+  border-radius: var(--mc-radius-md);
+  padding: 0.75rem 1rem;
+  margin-block: 1rem;
+  color: var(--mc-text-primary);
+  font-style: normal;
+}
+
+.mc-document .mc-callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  font-size: 0.875em;
+  letter-spacing: 0.01em;
+  color: var(--mc-callout-accent);
+}
+
+.mc-document .mc-callout-title::before {
+  content: var(--mc-callout-glyph);
+  font-size: 1em;
+  line-height: 1;
+}
+
+.mc-document .mc-callout > :last-child {
+  margin-bottom: 0;
+}
+
+.mc-document .mc-callout-note {
+  --mc-callout-accent: var(--mc-info);
+  --mc-callout-bg: var(--mc-info-bg);
+  --mc-callout-glyph: 'ℹ';
+}
+
+.mc-document .mc-callout-tip {
+  --mc-callout-accent: var(--mc-success);
+  --mc-callout-bg: var(--mc-success-bg);
+  --mc-callout-glyph: '✦';
+}
+
+.mc-document .mc-callout-important {
+  --mc-callout-accent: var(--mc-accent);
+  --mc-callout-bg: var(--mc-bg-selected-muted);
+  --mc-callout-glyph: '❕';
+}
+
+.mc-document .mc-callout-warning {
+  --mc-callout-accent: var(--mc-warning);
+  --mc-callout-bg: var(--mc-warning-bg);
+  --mc-callout-glyph: '⚠';
+}
+
+.mc-document .mc-callout-caution {
+  --mc-callout-accent: var(--mc-danger);
+  --mc-callout-bg: var(--mc-danger-bg);
+  --mc-callout-glyph: '⛔';
+}
+
+/*
+ * ── Presentation ────────────────────────────────────────────────────────────
+ *
+ * A slide is the same document, read from across a room: the type scales up and
+ * the first heading is centred, but the rules that decide how Markdown looks
+ * stay in one place rather than being restated here.
+ */
+
+.mc-document.mc-slide {
+  font-size: 1.35rem;
+  line-height: 1.65;
+}
+
+.mc-document.mc-slide h1 {
+  font-size: 2.6em;
+  text-align: center;
+  margin-block: 0.2em 0.6em;
+}
+
+.mc-document.mc-slide h2 {
+  font-size: 1.9em;
+}
+
+.mc-document.mc-slide pre,
+.mc-document.mc-slide table {
+  font-size: 0.72em;
+}
+
+.mc-document.mc-slide img {
+  max-height: 55vh;
+  margin-inline: auto;
+}
+
+/*
+ * ── Canvas cards ────────────────────────────────────────────────────────────
+ *
+ * A card is a small window onto a document, so its typography is scaled down
+ * rather than redefined — a heading on a card should still read as a heading.
+ */
+.mc-canvas-card {
+  font-size: 0.8125rem;
+}
+
+.mc-canvas-card > :first-child { margin-top: 0; }
+.mc-canvas-card > :last-child { margin-bottom: 0; }
+
+.mc-canvas-card h1,
+.mc-canvas-card h2,
+.mc-canvas-card h3 {
+  font-size: 1rem;
+  margin-block: 0.25em;
+}
+
+/*
+ * ── Code block output ───────────────────────────────────────────────────────
+ *
+ * Attached under the block it came from rather than in a panel elsewhere: the
+ * question "what did this print" is about *this* block, and an output pane
+ * shared between blocks makes that ambiguous the moment there are two.
+ */
+.mc-run-output {
+  border-top: 1px dashed var(--mc-line);
+  padding: 0.5rem 0.75rem 0.65rem;
+  font-size: 0.8125rem;
+}
+
+.mc-run-meta {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--mc-ink-tertiary);
+  margin-bottom: 0.35rem;
+}
+
+.mc-run-output[data-failed='true'] .mc-run-meta { color: var(--mc-danger); }
+
+.mc-run-output pre {
+  margin: 0;
+  padding: 0;
+  background: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mc-run-error { color: var(--mc-danger); }

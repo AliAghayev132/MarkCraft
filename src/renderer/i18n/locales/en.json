@@ -1,0 +1,1432 @@
+{
+  "$meta": {
+    "code": "en",
+    "name": "English",
+    "nativeName": "English",
+    "direction": "ltr",
+    "authors": [
+      "MarkCraft"
+    ]
+  },
+  "app": {
+    "name": "MarkCraft",
+    "tagline": "A focused desktop workspace for writing and editing Markdown.",
+    "untitled": "Untitled"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "rename": "Rename",
+    "duplicate": "Duplicate",
+    "copy": "Copy",
+    "cut": "Cut",
+    "paste": "Paste",
+    "close": "Close",
+    "open": "Open",
+    "create": "Create",
+    "remove": "Remove",
+    "reset": "Reset",
+    "done": "Done",
+    "retry": "Try again",
+    "dismiss": "Dismiss",
+    "refresh": "Refresh",
+    "loading": "Loading…",
+    "search": "Search",
+    "clear": "Clear",
+    "go": "Go",
+    "insert": "Insert",
+    "browse": "Browse…",
+    "optional": "Optional",
+    "name": "Name",
+    "file": "File",
+    "folder": "Folder",
+    "expand": "Expand",
+    "goBack": "Go back",
+    "words_one": "{{count}} word",
+    "words_other": "{{count}} words",
+    "results_one": "{{count}} result",
+    "results_other": "{{count}} results",
+    "matches_one": "{{count}} match",
+    "matches_other": "{{count}} matches",
+    "files_one": "{{count}} file",
+    "files_other": "{{count}} files",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items",
+    "documents_one": "{{count}} document",
+    "documents_other": "{{count}} documents",
+    "occurrences_one": "{{count}} occurrence",
+    "occurrences_other": "{{count}} occurrences",
+    "characters_one": "{{count}} character",
+    "characters_other": "{{count}} characters",
+    "apply": "Apply"
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo_one": "{{count}} hour ago",
+    "hoursAgo_other": "{{count}} hours ago",
+    "yesterday": "Yesterday",
+    "daysAgo": "{{count}} days ago",
+    "never": "—"
+  },
+  "titleBar": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore",
+    "close": "Close",
+    "unsavedChanges": "Unsaved changes",
+    "notSaved": "Not saved yet"
+  },
+  "tabs": {
+    "region": "Open documents",
+    "newDocument": "New document",
+    "close": "Close {{name}}",
+    "closeUnsaved": "Close {{name}} (unsaved changes)",
+    "changedOnDisk": "Changed on disk",
+    "deletedOnDisk": "Deleted on disk",
+    "menu": {
+      "label": "Tab actions",
+      "close": "Close",
+      "closeOthers": "Close Others",
+      "closeAll": "Close All",
+      "reopen": "Reopen Closed Tab",
+      "save": "Save",
+      "saveAs": "Save As…",
+      "copyPath": "Copy Path",
+      "reveal": "Reveal in File Explorer"
+    }
+  },
+  "sidebar": {
+    "views": "Sidebar views",
+    "explorer": "Explorer",
+    "search": "Search",
+    "recent": "Recent & pinned",
+    "settings": "Settings",
+    "resize": "Resize sidebar",
+    "outline": "Outline",
+    "trash": "Deleted"
+  },
+  "explorer": {
+    "files": "Workspace files",
+    "filter": "Filter files…",
+    "filterLabel": "Filter files in workspace",
+    "newFile": "New file",
+    "newFolder": "New folder",
+    "sort": "Sort",
+    "moreOptions": "More options",
+    "showHidden": "Show hidden files",
+    "collapseAll": "Collapse all folders",
+    "changeFolder": "Open a different folder…",
+    "sortBy": {
+      "name": "Name",
+      "modified": "Date modified",
+      "size": "Size",
+      "kind": "Type",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "menu": {
+      "workspace": "Workspace actions",
+      "newMarkdownFile": "New Markdown File",
+      "newFolder": "New Folder",
+      "rename": "Rename…",
+      "copyPath": "Copy Path",
+      "pin": "Pin to Favourites",
+      "deleteMany": "Delete {{count}} items",
+      "iconAndColour": "Icon and colour…"
+    },
+    "empty": {
+      "noFolderTitle": "No folder open",
+      "noFolderDescription": "Open a folder to browse and manage its Markdown files.",
+      "openFolder": "Open Folder…",
+      "noMatchesTitle": "No matches",
+      "noMatchesDescription": "Nothing in this workspace matches \"{{query}}\".",
+      "emptyTitle": "Folder is empty",
+      "emptyDescription": "Create your first Markdown file to get started."
+    },
+    "row": {
+      "file": "File",
+      "folder": "Folder",
+      "position": "row {{index}}"
+    },
+    "closeFolder": "Close folder",
+    "workspaceMenu": "Workspace",
+    "noFolder": "No folder"
+  },
+  "recent": {
+    "pinned": "Pinned",
+    "documents": "Recent documents",
+    "folders": "Recent folders",
+    "clearDocuments": "Clear recent documents",
+    "clearFolders": "Clear recent folders",
+    "unpin": "Unpin {{name}}",
+    "removeFromRecent": "Remove {{name}} from recent",
+    "pinToTop": "Pin to top",
+    "removeFromPinned": "Remove from pinned",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Documents you open will appear here for quick access."
+  },
+  "welcome": {
+    "newDocument": "New Document",
+    "openFile": "Open File…",
+    "openFolder": "Open Folder…",
+    "emptyTitle": "No documents yet",
+    "emptyDescription": "Create a new document, or open a folder to browse an existing project."
+  },
+  "editor": {
+    "rendered": "Rendered document",
+    "startWriting": "Start writing…",
+    "fallbackTitle": "This view could not be rendered",
+    "fallbackDescription": "Your document text is unaffected — it is still held in full.",
+    "switchToSource": "Switch to Markdown source",
+    "resizePanes": "Resize editor and preview",
+    "largeDocumentTitle": "This is a large document",
+    "largeDocumentBody": "The rich editor renders the entire document at once, so it may feel sluggish at {{size}} KB. The Markdown source view renders only what is on screen and stays fast at any size.",
+    "largeDocumentAction": "Open in rich editor anyway",
+    "lossyNotice": "This document contains {{constructs}}. The rich editor preserves them as inline HTML — edit in Markdown source for full control.",
+    "lossy": {
+      "footnotes": "footnotes",
+      "linkDefinitions": "link reference definitions",
+      "frontMatter": "front matter",
+      "rawHtml": "raw HTML blocks",
+      "math": "math blocks"
+    }
+  },
+  "toolbar": {
+    "label": "Formatting",
+    "undo": "Undo",
+    "redo": "Redo",
+    "heading1": "Heading 1",
+    "heading2": "Heading 2",
+    "heading3": "Heading 3",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "inlineCode": "Inline code",
+    "bulletList": "Bullet list",
+    "numberedList": "Numbered list",
+    "taskList": "Task list",
+    "blockquote": "Blockquote",
+    "insertLink": "Insert link",
+    "insertImage": "Insert image",
+    "insertTable": "Insert table",
+    "codeBlock": "Code block",
+    "horizontalRule": "Horizontal rule"
+  },
+  "status": {
+    "noDocument": "No document open",
+    "cursorPosition": "Cursor position",
+    "lineColumn": "Ln {{line}}, Col {{column}}",
+    "selected": "{{count}} selected",
+    "readingTime": "{{time}} read",
+    "statsTooltip": "{{characters}} characters · {{withoutSpaces}} without spaces · {{paragraphs}} paragraphs",
+    "viewMode": "View mode",
+    "modes": {
+      "rich": "Rich editor",
+      "source": "Markdown source",
+      "split": "Split view",
+      "preview": "Preview only"
+    },
+    "goal": "{{words}} / {{goal}} words"
+  },
+  "find": {
+    "label": "Find and replace",
+    "find": "Find",
+    "replace": "Replace",
+    "replaceWith": "Replace with",
+    "replaceAll": "All",
+    "showReplace": "Show replace",
+    "hideReplace": "Hide replace",
+    "matchCase": "Match case",
+    "matchWholeWord": "Match whole word",
+    "useRegex": "Use regular expression",
+    "nextMatch": "Next match",
+    "previousMatch": "Previous match",
+    "closeFind": "Close find"
+  },
+  "search": {
+    "placeholder": "Search workspace",
+    "label": "Search across workspace",
+    "replacePlaceholder": "Replace with",
+    "fileFilters": "Files to include / exclude",
+    "includePlaceholder": "Include, e.g. *.md, docs/**",
+    "excludePlaceholder": "Exclude, e.g. drafts/**",
+    "includeLabel": "Files to include",
+    "excludeLabel": "Files to exclude",
+    "searching": "Searching…",
+    "noResults": "No results",
+    "prompt": "Type to search this workspace",
+    "resultsIn": "{{results}} in {{files}}",
+    "truncated": " · showing first matches only",
+    "moreMatches": "More matches not shown",
+    "noResultsDescription": "Nothing matched \"{{query}}\" in this workspace.",
+    "noFolderTitle": "No folder open",
+    "noFolderDescription": "Workspace search needs an open folder. Search within the current document with Ctrl+F.",
+    "replaceConfirmTitle": "Replace in {{files}}?",
+    "replaceConfirmBody": "{{occurrences}} of \"{{query}}\" will be replaced with \"{{replacement}}\". Files that changed on disk since the search will be skipped.",
+    "replaceConfirmAction": "Replace All",
+    "replaced": "Replaced {{occurrences}}",
+    "replacedDetail": "across {{files}}",
+    "replacedSkipped": "{{count}} skipped",
+    "replaceFailed": "Replace failed"
+  },
+  "palette": {
+    "label": "Command palette",
+    "placeholder": "Type a command…",
+    "searchLabel": "Search commands",
+    "noResults": "No matching commands",
+    "commands_one": "{{count}} command",
+    "commands_other": "{{count}} commands",
+    "navigate": "to navigate",
+    "run": "to run",
+    "dismiss": "to dismiss"
+  },
+  "commands": {
+    "categories": {
+      "File": "File",
+      "Edit": "Edit",
+      "Format": "Format",
+      "View": "View",
+      "Insert": "Insert",
+      "Workspace": "Workspace",
+      "Application": "Application"
+    },
+    "file.new": "New Document",
+    "file.open": "Open Document…",
+    "file.openFolder": "Open Folder…",
+    "file.save": "Save",
+    "file.saveAs": "Save As…",
+    "file.saveAll": "Save All",
+    "file.revert": "Revert to Saved",
+    "file.print": "Print…",
+    "file.export": "Export…",
+    "file.share": "Share…",
+    "tab.close": "Close Tab",
+    "tab.closeOthers": "Close Other Tabs",
+    "tab.closeAll": "Close All Tabs",
+    "tab.reopen": "Reopen Closed Tab",
+    "tab.next": "Next Tab",
+    "tab.previous": "Previous Tab",
+    "edit.undo": "Undo",
+    "edit.redo": "Redo",
+    "edit.find": "Find in Document",
+    "edit.replace": "Replace in Document",
+    "edit.findInFiles": "Search Across Workspace",
+    "edit.goToLine": "Go to Line…",
+    "format.bold": "Bold",
+    "format.italic": "Italic",
+    "format.underline": "Underline",
+    "format.strikethrough": "Strikethrough",
+    "format.code": "Inline Code",
+    "format.codeBlock": "Code Block",
+    "format.quote": "Blockquote",
+    "format.bulletList": "Bullet List",
+    "format.orderedList": "Numbered List",
+    "format.taskList": "Task List",
+    "format.paragraph": "Paragraph",
+    "format.heading1": "Heading 1",
+    "format.heading2": "Heading 2",
+    "format.heading3": "Heading 3",
+    "format.heading4": "Heading 4",
+    "format.heading5": "Heading 5",
+    "format.heading6": "Heading 6",
+    "insert.link": "Insert Link…",
+    "insert.image": "Insert Image…",
+    "insert.table": "Insert Table…",
+    "insert.horizontalRule": "Insert Horizontal Rule",
+    "view.rich": "Switch to Rich Editor",
+    "view.source": "Switch to Markdown Source",
+    "view.split": "Switch to Split View",
+    "view.preview": "Switch to Preview",
+    "view.cycleMode": "Cycle View Mode",
+    "view.toggleSidebar": "Toggle Sidebar",
+    "view.toggleToolbar": "Toggle Formatting Toolbar",
+    "view.toggleStatusBar": "Toggle Status Bar",
+    "view.toggleTheme": "Toggle Light / Dark Theme",
+    "view.explorer": "Show Explorer",
+    "workspace.refresh": "Refresh Workspace",
+    "app.commandPalette": "Command Palette",
+    "app.settings": "Settings",
+    "app.shortcuts": "Keyboard Shortcuts",
+    "view.zoomIn": "Zoom Interface In",
+    "view.zoomOut": "Zoom Interface Out",
+    "view.zoomReset": "Reset Interface Zoom",
+    "view.readingMode": "Reading Mode",
+    "view.outline": "Show Outline",
+    "view.statistics": "Document Statistics",
+    "file.newFromTemplate": "New from Template…",
+    "file.history": "Version history",
+    "insert.emoji": "Insert emoji",
+    "view.present": "Present",
+    "tools.open": "Developer tools",
+    "view.links": "Links and graph",
+    "view.website": "Website preview",
+    "document.clean": "Clean up formatting",
+    "insert.codeLanguage": "Set code block language",
+    "edit.pasteAsMarkdown": "Paste as Markdown",
+    "ai.review": "Review this document with AI",
+    "view.book": "Book",
+    "view.study": "Study",
+    "view.canvas": "Canvas",
+    "document.lock": "Lock or unlock this document",
+    "tools.http": "HTTP request"
+  },
+  "dialogs": {
+    "goToLine": {
+      "title": "Go to line",
+      "label": "Line number (1–{{total}})",
+      "invalidNumber": "Enter a whole number.",
+      "outOfRange": "This document has {{total}} lines."
+    },
+    "unsavedTitle": "Save changes before closing?",
+    "unsavedSingle": "\"{{name}}\" has unsaved changes. If you don't save, your edits will be lost.",
+    "unsavedMultiple": "{{count}} documents have unsaved changes. If you don't save, your edits will be lost.",
+    "dontSave": "Don't Save",
+    "saveAll": "Save All",
+    "deleteTitle": "Delete {{target}}?",
+    "deleteTrash": "The items will be moved to the recycle bin. You can restore them from there.",
+    "deletePermanent": "This cannot be undone. The items will be permanently removed from disk.",
+    "moveToTrash": "Move to Recycle Bin",
+    "deleteForever": "Delete Permanently",
+    "newFileTitle": "New Markdown file",
+    "newFolderTitle": "New folder",
+    "renameFile": "Rename file",
+    "renameFolder": "Rename folder",
+    "nameExists": "An item with that name already exists here.",
+    "revertTitle": "Discard unsaved changes?",
+    "revertBody": "\"{{name}}\" will be restored to the version on disk. This cannot be undone.",
+    "revertAction": "Revert",
+    "conflictTitle": "\"{{name}}\" changed on disk",
+    "conflictBody": "Another program modified this file after you opened it. Saving now would discard those changes.",
+    "conflictSaveCopy": "Save a copy…",
+    "conflictReload": "Discard mine, reload",
+    "conflictOverwrite": "Overwrite on disk"
+  },
+  "insert": {
+    "link": {
+      "title": "Insert link",
+      "text": "Link text",
+      "textHint": "Leave empty to show the URL itself.",
+      "textPlaceholder": "MarkCraft documentation",
+      "url": "URL",
+      "urlPlaceholder": "https://example.com or ./notes.md",
+      "linkTitle": "Title",
+      "titleHint": "Optional tooltip shown on hover."
+    },
+    "image": {
+      "title": "Insert image",
+      "image": "Image",
+      "hintRelative": "Local images are copied next to the document and linked relatively.",
+      "hintUnsaved": "Save the document first to use relative image paths.",
+      "placeholder": "./images/diagram.png or https://…",
+      "alt": "Alt text",
+      "altHint": "Describes the image for screen readers and when it fails to load.",
+      "altPlaceholder": "Architecture diagram",
+      "imageTitle": "Title",
+      "addFailed": "Could not add the image"
+    },
+    "table": {
+      "title": "Insert table",
+      "columns": "Columns",
+      "rows": "Body rows",
+      "headerRow": "Include a header row",
+      "headerHint": "GitHub-Flavored Markdown tables always render their first row as a header.",
+      "alignment": "Column alignment",
+      "alignmentFor": "Alignment for column {{index}}",
+      "left": "Left",
+      "center": "Center",
+      "right": "Right",
+      "preview": "Preview",
+      "columnLabel": "Column {{index}}"
+    }
+  },
+  "output": {
+    "export": {
+      "title": "Export document",
+      "format": "Format",
+      "exportAs": "Export as {{format}}",
+      "md": "Markdown",
+      "mdDescription": "The document exactly as written, in its canonical form.",
+      "html": "HTML",
+      "htmlDescription": "A single self-contained page with styles and images embedded.",
+      "pdf": "PDF",
+      "pdfDescription": "Paginated for print, with page breaks respected.",
+      "appearance": "Appearance",
+      "light": "Light",
+      "dark": "Dark",
+      "embedImages": "Embed images",
+      "embedImagesHint": "Produces one self-contained file. Turn off to keep relative image links.",
+      "includeStyles": "Include styles",
+      "includeStylesHint": "Without styles the output is plain, unformatted HTML.",
+      "pageSize": "Page size",
+      "margins": "Margins",
+      "marginsDefault": "Default",
+      "marginsMinimum": "Minimum",
+      "marginsNone": "None",
+      "landscape": "Landscape orientation",
+      "headerFooter": "Add header and page numbers",
+      "printBackground": "Print background colours",
+      "printBackgroundHint": "Needed for code blocks and table shading to appear.",
+      "succeeded": "Exported as {{format}}",
+      "showInFolder": "Show in folder",
+      "failed": "Export failed"
+    },
+    "share": {
+      "title": "Share document",
+      "exportInstead": "Export instead…",
+      "saveFirst": "Save the document first.",
+      "copyMarkdown": "Copy as Markdown",
+      "copyMarkdownDescription": "The raw source, ready to paste into a repository or chat.",
+      "copyHtml": "Copy as rich text",
+      "copyHtmlDescription": "Formatted HTML that pastes into email and word processors.",
+      "copyPath": "Copy file path",
+      "copyPathDescription": "The full path to this document on disk.",
+      "reveal": "Show in file manager",
+      "revealDescription": "Open the containing folder with this file selected.",
+      "email": "Send by email",
+      "emailDescription": "Opens your mail client with the document as the message body.",
+      "system": "System share sheet",
+      "systemDescription": "Hand the file to another application. macOS only.",
+      "failed": "Share failed"
+    },
+    "print": {
+      "failed": "Print failed"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "sections": "Settings sections",
+    "resetSection": "Reset this section",
+    "resetSectionTitle": "Reset {{section}} settings?",
+    "resetSectionBody": "These options will return to their defaults. Other sections are unaffected.",
+    "resetAll": "Reset all settings",
+    "resetAllTitle": "Reset all settings?",
+    "resetAllBody": "Every preference returns to its default. Your documents are untouched.",
+    "resetAllHint": "Resetting returns every preference to its default. Your documents are not touched.",
+    "resetEverything": "Reset everything",
+    "nav": {
+      "editor": "Editor",
+      "appearance": "Appearance",
+      "markdown": "Markdown",
+      "files": "Files",
+      "language": "Language",
+      "keyboard": "Keyboard",
+      "about": "About",
+      "icons": "Icons",
+      "ai": "AI"
+    },
+    "editor": {
+      "fontFamily": "Font family",
+      "fontSize": "Font size",
+      "lineHeight": "Line height",
+      "tabSize": "Tab size",
+      "insertSpaces": "Insert spaces instead of tabs",
+      "wordWrap": "Wrap long lines",
+      "lineNumbers": "Show line numbers",
+      "highlightActiveLine": "Highlight the current line",
+      "bracketMatching": "Match and close brackets",
+      "autoIndent": "Automatic indentation",
+      "spellCheck": "Check spelling",
+      "customFont": "Custom (from settings file)"
+    },
+    "appearance": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "accent": "Accent colour",
+      "density": "Density",
+      "comfortable": "Comfortable",
+      "compact": "Compact",
+      "showSidebar": "Show sidebar",
+      "showToolbar": "Show formatting toolbar",
+      "showStatusBar": "Show status bar",
+      "reduceMotion": "Reduce motion",
+      "accents": {
+        "indigo": "Indigo",
+        "blue": "Blue",
+        "teal": "Teal",
+        "violet": "Violet",
+        "amber": "Amber",
+        "rose": "Rose",
+        "graphite": "Graphite"
+      },
+      "uiScale": "Interface size",
+      "uiScaleHint": "Scales the sidebar, tabs and this screen. Ctrl/Cmd + and Ctrl/Cmd - do the same. Editor text has its own size under Editor.",
+      "splashScreen": "Show the launch screen",
+      "startupSound": "Play a sound on launch",
+      "startupHint": "Both apply the next time MarkCraft starts.",
+      "palette": "Palette",
+      "paletteHint": "Replaces the greys. The accent above still applies on top.",
+      "palettes": {
+        "nord": "Nord",
+        "solarized": "Solarized",
+        "gruvbox": "Gruvbox",
+        "rosePine": "Rosé Pine",
+        "sepia": "Sepia",
+        "default": "MarkCraft",
+        "highContrast": "High contrast"
+      },
+      "customColors": "Custom colours",
+      "customColorsHint": "Override individual colours. These win over the theme and the palette.",
+      "resetColor": "Reset this colour",
+      "resetAllColors": "Reset all colours",
+      "noOverrides": "Nothing overridden",
+      "overrideCount": "{{count}} overridden",
+      "tokens": {
+        "bg-app": "Window background",
+        "bg-surface": "Panel background",
+        "bg-raised": "Raised surface",
+        "bg-sunken": "Sunken surface",
+        "text-primary": "Text",
+        "text-secondary": "Secondary text",
+        "border": "Borders",
+        "accent": "Accent",
+        "accent-hover": "Accent (hover)",
+        "success": "Success",
+        "warning": "Warning",
+        "danger": "Danger"
+      },
+      "toolbarItems": "Formatting toolbar",
+      "toolbarItemsHint": "Choose which buttons appear and in what order.",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "resetToolbar": "Reset to default",
+      "toolbarDefault": "Using the default arrangement",
+      "toolbarCount": "{{count}} buttons shown"
+    },
+    "markdown": {
+      "defaultView": "Default view",
+      "gfm": "GitHub-Flavored Markdown",
+      "syncScroll": "Synchronise scrolling in split view",
+      "codeHighlighting": "Highlight code blocks in the preview",
+      "styleNote": "These control how MarkCraft writes Markdown. They are visible here because the rich editor normalises documents to this style when it saves them.",
+      "bullet": "Bullet marker",
+      "emphasis": "Emphasis marker",
+      "strong": "Strong marker",
+      "imageHandling": "Image handling",
+      "imageRelative": "Copy next to document",
+      "imageAbsolute": "Link where it is",
+      "imageFolder": "Image folder",
+      "imageFolderLabel": "Image folder name"
+    },
+    "files": {
+      "autoSave": "Autosave",
+      "autoSaveOff": "Off",
+      "autoSaveOffDescription": "Save manually with Ctrl+S.",
+      "autoSaveDelay": "After a delay",
+      "autoSaveDelayDescription": "Saves once you stop typing.",
+      "autoSaveFocus": "When the window loses focus",
+      "autoSaveFocusDescription": "Saves when you switch away.",
+      "autoSaveDelayLabel": "Autosave delay",
+      "recovery": "Keep a crash-recovery journal",
+      "watchExternal": "Detect changes made by other programs",
+      "confirmDelete": "Confirm before deleting files",
+      "showHidden": "Show hidden files in the explorer",
+      "lineEndings": "Line endings",
+      "eolAuto": "Preserve the file's own",
+      "eolLf": "LF (Unix)",
+      "eolCrlf": "CRLF (Windows)",
+      "recentLimit": "Recent documents kept",
+      "showSettingsFile": "Show settings file",
+      "markdownOnly": "Show only Markdown files",
+      "markdownOnlyHint": "Folders are always shown. Turn this off to browse every file in the workspace.",
+      "trashLimit": "Deleted items kept",
+      "trashLimitHint": "How many deleted documents to keep before the oldest are removed for good. Set to 0 to keep them all.",
+      "trashUnlimited": "Unlimited",
+      "historyLimit": "Versions kept per document",
+      "historyLimitHint": "How many saved versions to keep for each document. Each one is a full copy of the text. Set to 0 to turn history off.",
+      "historyOff": "Off"
+    },
+    "language": {
+      "interfaceLanguage": "Interface language",
+      "interfaceHint": "Applies immediately to the whole application.",
+      "systemDefault": "Match system language",
+      "installed": "Installed languages",
+      "addTitle": "Add a language",
+      "addDescription": "Drop a translation file into the languages folder and reload. Start from an existing file — every key it omits falls back to English.",
+      "openFolder": "Open languages folder",
+      "exportTemplate": "Export template…",
+      "templateSaved": "Template saved",
+      "reload": "Reload languages",
+      "reloaded": "Languages reloaded",
+      "custom": "Custom",
+      "builtIn": "Built-in",
+      "coverage": "{{percent}}% translated"
+    },
+    "keyboard": {
+      "filter": "Filter commands or keys…",
+      "filterLabel": "Filter shortcuts",
+      "resetAll": "Reset all",
+      "conflictNotice": "Some shortcuts are assigned to more than one command. The first match wins.",
+      "table": "Keyboard shortcuts",
+      "unassigned": "Unassigned",
+      "pressKeys": "Press a key combination…",
+      "recording": "Recording new shortcut for {{command}}",
+      "change": "Change shortcut for {{command}}",
+      "unbind": "Unbind {{command}}",
+      "restore": "Restore default for {{command}}"
+    },
+    "about": {
+      "description": "A professional desktop Markdown editor. Offline-first: nothing you write leaves this machine.",
+      "electron": "Electron",
+      "chromium": "Chromium",
+      "node": "Node",
+      "platform": "Platform",
+      "dataFolder": "Data folder"
+    },
+    "search": {
+      "placeholder": "Search settings…",
+      "label": "Search settings",
+      "noResults": "No settings match \"{{query}}\"",
+      "noResultsHint": "Try a different word, or browse the sections on the left.",
+      "matchCount": "{{count}} match",
+      "matchCountPlural": "{{count}} matches",
+      "clear": "Clear search"
+    },
+    "ai": {
+      "enabled": "Use an AI assistant",
+      "enabledHint": "Off until you connect a provider of your own. MarkCraft ships no key and no default endpoint.",
+      "confirm": "Ask before sending",
+      "confirmHint": "Show the text and the instruction before anything leaves this machine.",
+      "active": "Active model",
+      "activeHint": "Which saved connection the assistant buttons use.",
+      "noProfiles": "No models added yet",
+      "houseStyle": "House style",
+      "houseStyleHint": "Added to every request — terminology, tone, anything the model should always respect.",
+      "houseStylePlaceholder": "e.g. British spelling; never use exclamation marks",
+      "models": "Connections",
+      "addModel": "Add a model",
+      "emptyHint": "Add a connection to get started. Anything that speaks the OpenAI, Anthropic or Gemini API will work, including a local Ollama or LM Studio.",
+      "provider": "Provider",
+      "model": "Model",
+      "name": "Name",
+      "baseUrl": "Address",
+      "baseUrlHint": "Change this only for a proxy, a gateway or a self-hosted server.",
+      "apiKey": "API key",
+      "keyHint": "Stored encrypted for this account, never in settings.json.",
+      "keyStored": "A key is saved. Type a new one to replace it.",
+      "keyPlaceholder": "Paste the key and click away",
+      "forgetKey": "Forget the saved key",
+      "getKey": "Get a key",
+      "test": "Test",
+      "loadModels": "Load models",
+      "use": "Use this one",
+      "noEncryption": "This system cannot encrypt stored credentials, so API keys will not be saved.",
+      "maxTokens": "Reply limit",
+      "maxTokensHint": "The longest answer to allow. Lower it if the provider says you cannot afford the request.",
+      "temperature": "Temperature",
+      "temperatureHint": "Lower is more literal, higher is more inventive. 0.4 suits editing."
+    }
+  },
+  "recovery": {
+    "title": "Recover unsaved work",
+    "description": "MarkCraft closed with {{documents}} that had unsaved changes. They were kept in the recovery journal.",
+    "discardAll": "Discard All",
+    "recoverSelected": "Recover Selected",
+    "selectedCount": "{{selected}} of {{total}} selected",
+    "neverSaved": "Never saved",
+    "editedAt": "edited {{time}}",
+    "recovered": "Recovered {{documents}}",
+    "recoveredHint": "Review the changes, then save the ones you want to keep."
+  },
+  "external": {
+    "deletedTitle": "This file was deleted on disk.",
+    "deletedDetail": "Your version is still open here. Save it to write the file back.",
+    "saveToRestore": "Save to restore",
+    "changedTitle": "This file changed outside MarkCraft.",
+    "changedDetail": "You have unsaved edits here, so nothing has been replaced.",
+    "keepMine": "Keep my changes",
+    "reload": "Reload from disk"
+  },
+  "notifications": {
+    "saved": "Saved",
+    "savedOverwrite": "Overwrote external changes in {{name}}",
+    "savedCount": "Saved {{documents}}",
+    "reverted": "Reverted",
+    "reloaded": "Reloaded",
+    "reloadedDetail": "{{name}} changed on disk",
+    "pathCopied": "Path copied",
+    "markdownCopied": "Markdown copied to clipboard",
+    "htmlCopied": "HTML copied to clipboard",
+    "revealed": "Revealed in file manager",
+    "openingMail": "Opening your mail client",
+    "pinned": "Pinned",
+    "unpinned": "Unpinned",
+    "deleted": "Deleted \"{{name}}\"",
+    "deletedMany": "Deleted {{count}} items",
+    "movedToTrash": "Moved to the recycle bin",
+    "duplicated": "Duplicated as \"{{name}}\"",
+    "cutItems": "Cut {{items}}",
+    "copiedItems": "Copied {{items}}",
+    "workspaceRefreshed": "Workspace refreshed",
+    "nothingToReopen": "Nothing to reopen",
+    "fileGoneTitle": "File no longer exists",
+    "fileGoneAction": "Remove from recent",
+    "skippedFiles": "Skipped {{count}} files",
+    "skippedFilesDetail": "Only Markdown and text documents can be opened."
+  },
+  "errors": {
+    "boundaryTitle": "Something went wrong",
+    "boundaryScoped": "The {{scope}} hit an unexpected error.",
+    "boundaryGeneric": "MarkCraft hit an unexpected error.",
+    "boundaryBody": "Your open documents are still held in memory — reloading usually recovers them, and any unsaved work is kept in the recovery journal.",
+    "technicalDetails": "Technical details",
+    "reload": "Reload MarkCraft",
+    "scopes": {
+      "editor": "editor",
+      "preview": "preview",
+      "sidebar": "sidebar",
+      "richEditor": "rich editor",
+      "application": "application"
+    },
+    "openFailed": "Unable to open file",
+    "saveFailed": "Unable to save file",
+    "reloadFailed": "Unable to reload file",
+    "createFileFailed": "Unable to create file",
+    "createFolderFailed": "Unable to create folder",
+    "renameFailed": "Unable to rename",
+    "deleteFailed": "Unable to delete",
+    "duplicateFailed": "Unable to duplicate",
+    "pasteFailed": "Unable to paste",
+    "moveFailed": "Unable to move",
+    "readFolderFailed": "Unable to read folder",
+    "openFolderFailed": "Unable to open folder",
+    "folderIntoItself": "Cannot move a folder into itself",
+    "pasteIntoItself": "Cannot paste a folder into itself",
+    "codes": {
+      "ENOENT": "File not found",
+      "EACCES": "Permission denied",
+      "EPERM": "Operation not permitted",
+      "EBUSY": "File is in use",
+      "EEXIST": "Already exists",
+      "EISDIR": "That is a folder",
+      "ENOTDIR": "That is not a folder",
+      "ENOTEMPTY": "Folder is not empty",
+      "ENOSPC": "No space left on device",
+      "FORBIDDEN_PATH": "Location is outside the workspace",
+      "TOO_LARGE": "File is too large",
+      "NOT_MARKDOWN": "Unsupported file type",
+      "CANCELLED": "Cancelled",
+      "CONFLICT": "File changed on disk",
+      "INVALID_ARGUMENT": "Invalid request",
+      "UNSUPPORTED": "Not supported",
+      "UNKNOWN": "Something went wrong"
+    }
+  },
+  "view": {
+    "zoomToast": "Interface zoom {{percent}}%"
+  },
+  "icons": {
+    "dialogTitle": "Icon and colour",
+    "applyTo": "Apply to",
+    "colour": "Colour",
+    "icon": "Icon",
+    "defaultColour": "Default colour",
+    "defaultIcon": "Default icon",
+    "reset": "Remove override",
+    "importHint": "Import your own SVG files under Settings > Icons.",
+    "description": "Give a file, a folder, or a whole file type its own icon and colour. The most specific rule wins: this exact folder beats every folder with that name, which beats every file of that type.",
+    "rulesTitle": "Rules",
+    "noRules": "No rules yet",
+    "noRulesHint": "Right-click a file or folder in the explorer and choose \"Icon and colour…\".",
+    "addRule": "Add a rule",
+    "addRuleHint": "By file type (md) or by name (drafts).",
+    "choose": "Choose…",
+    "customTitle": "Your own icons",
+    "customHint": "SVG files you import appear in the picker alongside the built-in set.",
+    "import": "Import SVG…",
+    "openFolder": "Open icons folder",
+    "reload": "Reload",
+    "reloaded": "Icons reloaded",
+    "imported": "{{count}} icon imported",
+    "importedPlural": "{{count}} icons imported",
+    "removeIconTitle": "Remove \"{{name}}\"?",
+    "removeIconBody": "The file is deleted from the icons folder.",
+    "removeIconInUse": "A rule is using this icon. Deleting it makes that rule fall back to the default icon.",
+    "scope": {
+      "thisOne": "This one",
+      "sameName": "Named \"{{name}}\"",
+      "sameType": "All .{{ext}} files"
+    },
+    "match": {
+      "path": "This one",
+      "name": "Name",
+      "extension": "Type"
+    }
+  },
+  "reader": {
+    "edit": "Edit",
+    "stats": "{{words}} words · {{minutes}} min read",
+    "title": "Reading"
+  },
+  "outline": {
+    "title": "Outline",
+    "filter": "Filter headings…",
+    "empty": "No headings yet",
+    "emptyHint": "Headings you add appear here, and clicking one jumps to it.",
+    "noMatches": "Nothing matches \"{{query}}\"",
+    "noDocument": "No document open",
+    "noDocumentHint": "Open a Markdown file to see its outline."
+  },
+  "stats": {
+    "title": "Document statistics",
+    "words": "Words",
+    "characters": "Characters",
+    "charactersNoSpaces": "Characters, no spaces",
+    "sentences": "Sentences",
+    "paragraphs": "Paragraphs",
+    "headings": "Headings",
+    "lines": "Lines",
+    "readingTime": "Reading time",
+    "minutes": "{{count}} min",
+    "goalTitle": "Word goal",
+    "goalHint": "Set a target and the status bar tracks how close this document is.",
+    "goalProgress": "{{words}} of {{goal}} words",
+    "goalRemaining": "{{count}} to go",
+    "goalReached": "Reached",
+    "goalCustom": "Custom…",
+    "goalClear": "Remove goal",
+    "links": "Links",
+    "images": "Images",
+    "codeBlocks": "Code blocks",
+    "tasks": "Tasks",
+    "tasksDone": "{{done}} of {{total}} done",
+    "problems": "Problems",
+    "noProblems": "Nothing to fix.",
+    "danglingAnchor": "Line {{line}}: “{{target}}” matches no heading",
+    "duplicateHeading": "Two headings share the anchor “{{slug}}”"
+  },
+  "preview": {
+    "diagramLoading": "Rendering diagram…",
+    "diagramFailed": "This diagram could not be drawn",
+    "copyCode": "Copy code",
+    "copied": "Copied",
+    "runCode": "Run this block",
+    "runFinished": "exit {{code}} · {{ms}} ms",
+    "runTimedOut": "stopped at the time limit"
+  },
+  "session": {
+    "restored": "Reopened {{count}} document",
+    "restoredPlural": "Reopened {{count}} documents",
+    "startFresh": "Start fresh"
+  },
+  "table": {
+    "title": "Table",
+    "addRow": "Add row below",
+    "deleteRow": "Delete row",
+    "addColumn": "Add column after",
+    "deleteColumn": "Delete column",
+    "toggleHeader": "Toggle header row",
+    "deleteTable": "Delete table"
+  },
+  "templates": {
+    "title": "New from template",
+    "description": "A starting shape, not a finished document.",
+    "blank": {
+      "title": "Blank document",
+      "description": "An empty file."
+    },
+    "note": {
+      "title": "Today's note",
+      "description": "Dated heading, ready to write under."
+    },
+    "meeting": {
+      "title": "Meeting notes",
+      "description": "Attendees, agenda, notes and actions.",
+      "heading": "Meeting notes",
+      "date": "Date",
+      "attendees": "Attendees",
+      "agenda": "Agenda",
+      "notes": "Notes",
+      "actions": "Actions"
+    },
+    "article": {
+      "title": "Article",
+      "description": "Front matter, a title and a first section.",
+      "heading": "Title",
+      "intro": "A sentence that says what this is about.",
+      "section": "First section"
+    },
+    "todo": {
+      "title": "To-do list",
+      "description": "Task lists split into now and later.",
+      "heading": "To do",
+      "today": "Today",
+      "later": "Later"
+    }
+  },
+  "ai": {
+    "menu": "Assistant",
+    "working": "Working…",
+    "send": "Send",
+    "retry": "Try again",
+    "replace": "Replace",
+    "insertBelow": "Insert below",
+    "copied": "Copied to the clipboard",
+    "applied": "Applied to the document",
+    "failed": "The request failed.",
+    "scopeSelection": "the selection",
+    "scopeDocument": "the whole document",
+    "subtitle": "Working on {{scope}} with {{model}}.",
+    "confirmNotice": "This text will be sent to the provider you connected. Turn off “Ask before sending” in Settings to skip this step.",
+    "customNotice": "Describe what you want done. The text below is what will be sent.",
+    "instructionPlaceholder": "e.g. rewrite this as a bulleted list",
+    "nothingToWorkOn": "Nothing to work on",
+    "nothingToWorkOnDetail": "Open a document, or select some text first.",
+    "movedOnTitle": "The document changed",
+    "movedOnDetail": "The text is no longer where it was, so nothing was replaced. Copy the answer instead.",
+    "keySaved": "API key saved",
+    "keyFailed": "The key could not be saved",
+    "testOk": "The connection works",
+    "testFailed": "The connection failed",
+    "modelsLoaded": "Loaded {{count}} models",
+    "modelsFailed": "The model list could not be loaded",
+    "action": {
+      "polish": "Tidy up",
+      "elaborate": "Add detail",
+      "summarize": "Summarise",
+      "custom": "Custom instruction…",
+      "review": "Review this document"
+    }
+  },
+  "trash": {
+    "title": "Deleted",
+    "clear": "Empty",
+    "restore": "Restore",
+    "purge": "Delete permanently",
+    "restored": "Restored",
+    "restoreFailed": "It could not be restored",
+    "purgeTitle": "Delete permanently?",
+    "purgeBody": "“{{name}}” will be gone for good. This cannot be undone.",
+    "purgeConfirm": "Delete permanently",
+    "clearTitle": "Empty the deleted list?",
+    "clearBody": "All {{count}} items will be gone for good. This cannot be undone.",
+    "clearConfirm": "Empty",
+    "emptyTitle": "Nothing deleted",
+    "emptyBody": "Documents you delete are kept here, so you can put them back.",
+    "limit": "Keeping the {{count}} most recent. Change it in Settings → Files.",
+    "noLimit": "Keeping everything. Change it in Settings → Files."
+  },
+  "whatsNew": {
+    "title": "What's new",
+    "subtitle": "MarkCraft {{version}}",
+    "dismiss": "Got it",
+    "open": "What's new",
+    "kind": {
+      "new": "New",
+      "improved": "Improved",
+      "fixed": "Fixed"
+    },
+    "notes": {
+      "ai": {
+        "title": "Bring your own AI assistant",
+        "body": "Connect OpenRouter, OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Together, xAI or Fireworks — or a local Ollama or LM Studio. Tidy up, add detail, summarise, or give your own instruction, on the selection or the whole document. Off by default, with no key and no endpoint of ours; keys are encrypted per operating-system account and never touch settings.json. It shows you what it is about to send before it sends it."
+      },
+      "trash": {
+        "title": "Deleted documents you can get back",
+        "body": "Deletes now go to a list inside MarkCraft instead of straight to the system recycle bin, so you can see what went, restore it in one click, or delete it for good. Keeps the 30 most recent by default — change it, or turn the limit off entirely, under Settings → Files."
+      },
+      "palettes": {
+        "title": "Six named palettes",
+        "body": "Nord, Solarized, Gruvbox, Rosé Pine, Sepia and a high-contrast option, each with a light and a dark form. A palette replaces the greys only, so your accent colour still applies on top of it."
+      },
+      "customColors": {
+        "title": "Set individual colours yourself",
+        "body": "Twelve colours — window, panels, text, borders, accent and the status colours — can be overridden one at a time and reset one at a time, with a colour picker built into the app rather than the operating system dialog."
+      },
+      "exportPng": {
+        "title": "Export as an image",
+        "body": "The whole document as one tall PNG, ready to paste into a chat or a slide. The page is grown to the document height first, so nothing below the fold is quietly missing."
+      },
+      "exportJson": {
+        "title": "Export as JSON",
+        "body": "Metadata, front matter, the outline, word counts, the Markdown and the parsed document tree — the same tree the editor itself works from, so a script sees exactly what MarkCraft sees."
+      },
+      "share": {
+        "title": "Share and Export are on the title bar",
+        "body": "Both were reachable only from the command palette, which is not where anyone looks for them."
+      },
+      "previewLatency": {
+        "title": "The preview keeps pace with typing",
+        "body": "It used to wait for a pause before updating, so a whole sentence could go by before the right-hand side moved. There is now a ceiling on how stale it can get, however fast you type."
+      },
+      "recentOpensFolder": {
+        "title": "Recent and pinned files open their folder",
+        "body": "Choosing a remembered document now opens the folder it lives in, so the explorer shows its neighbours instead of something unrelated."
+      },
+      "lastFolder": {
+        "title": "The folder you had open reopens",
+        "body": "The record of the last workspace was being written to the wrong slot, which both lost the folder and overwrote that workspace’s saved tabs with an empty session. Both are fixed, so a restart puts you back where you were."
+      },
+      "listContinuation": {
+        "title": "Enter continues a list",
+        "body": "Two keymaps both bound Enter and the plain one always won, so pressing Enter in a list simply ended it instead of starting the next item."
+      },
+      "toolbarCaret": {
+        "title": "The cursor lands after a toolbar marker",
+        "body": "Starting a heading or a list on an empty line left the caret to the left of the marker it had just inserted, so the next thing you typed fell outside it."
+      },
+      "modalLayering": {
+        "title": "Dropdowns inside Settings are visible",
+        "body": "Menus, popovers and tooltips now paint above the surface they belong to. A select list opening behind the settings window was the visible symptom."
+      },
+      "languageTemplate": {
+        "title": "“Export template…” works",
+        "body": "It asked for a file named after nothing the language loader accepts and was refused outright. The starter file is now named after the language code it contains."
+      },
+      "present": {
+        "title": "Present straight from the document",
+        "body": "F5 turns the open document into a deck. A line containing only --- is a slide break, so a document written for reading already presents sensibly. Arrow keys, Page Up/Down, Home and End move; Escape leaves. Slides render through the same pipeline as the preview, so a table or a diagram looks the same in both."
+      },
+      "slashBlocks": {
+        "title": "Type / to insert a block",
+        "body": "A slash at the start of a line or after a space opens a menu of fourteen blocks — headings, lists, task lists, quotes, code, callouts, tables, links, images, emoji and dividers. Keep typing to narrow it; Enter or Tab inserts. It stays out of the way inside file paths, URLs and words like and/or. Both the English name and your own language match, so /heading and /başlıq both work."
+      },
+      "devTools": {
+        "title": "Developer tools, offline",
+        "body": "JSON formatting, JSON↔YAML, Base64, URL escaping, JWT decoding, timestamp conversion, a regular-expression tester and UUIDs — under Ctrl+Alt+T. All of it runs locally, which is the point: the text you paste in is usually a token, a config file or a customer’s payload, and pasting those into a web page is a habit worth breaking."
+      },
+      "links": {
+        "title": "See how your documents connect",
+        "body": "Ctrl+Alt+L scans the folder and draws the links between your documents, with the backlinks for whatever you are reading listed underneath and every broken link reported with its file and line. [[Wiki links]] resolve by file name from any folder; an ambiguous name is reported rather than guessed at."
+      },
+      "website": {
+        "title": "Read your document at phone width",
+        "body": "Ctrl+Alt+W shows the document as a page at 390, 768 and 1280 pixels — a real frame at that width, not a scaled picture, so the text wraps and the tables overflow exactly as they will for a reader."
+      },
+      "imageEditor": {
+        "title": "Crop and compress before inserting",
+        "body": "Picking a local image now offers a crop, a quality setting and a maximum width, with the resulting size shown while you decide. Compression re-encodes as WebP, which keeps transparency — a screenshot with a rounded corner survives it."
+      },
+      "exportWordProcessor": {
+        "title": "Export to Word and rich text",
+        "body": "Two new formats: .docx for Word, Pages or Google Docs, and .rtf for anything else that reads formatted text. Headings, lists, task boxes, quotes and code all carry over, and both are generated from the same reading of your document so they cannot disagree."
+      },
+      "callouts": {
+        "title": "Callouts",
+        "body": "A blockquote beginning > [!NOTE], [!TIP], [!IMPORTANT], [!WARNING] or [!CAUTION] renders as a coloured callout, in the editor and in every export."
+      },
+      "emoji": {
+        "title": "An emoji picker",
+        "body": "Ctrl+Alt+M, the toolbar, or /emoji. Search by name, with the ones you use most kept at the top."
+      },
+      "headingIds": {
+        "title": "Headings get their own links",
+        "body": "Every heading is given an anchor using GitHub’s rules, so [](#a-section) works and a link into a document lands where it should. Non-Latin headings are handled properly."
+      },
+      "codeCopy": {
+        "title": "Copy a code block in one click",
+        "body": "Code blocks now show their language and a copy button, which copies the raw text rather than what the highlighter drew."
+      },
+      "lintAndAudit": {
+        "title": "Find what is wrong before anyone else does",
+        "body": "The statistics panel now reports broken internal links, duplicate heading anchors and nine Markdown problems that actually render wrong — a heading with no space after the hash, an unclosed code fence, an image with no alt text."
+      },
+      "toolbarCustom": {
+        "title": "Choose what is on the toolbar",
+        "body": "Settings now lets you pick which tools appear and in what order."
+      },
+      "dropAnything": {
+        "title": "Drop anything onto the editor",
+        "body": "Images are inserted, Markdown and text files are opened, and anything else is linked relatively."
+      },
+      "startupSize": {
+        "title": "Faster to first paint",
+        "body": "The Markdown pipeline’s own dependencies were being loaded at startup along with the shell. Moving them to where they are actually needed took 330 kB out of the first paint."
+      },
+      "functionKeys": {
+        "title": "Function keys work while you type",
+        "body": "A shortcut with no modifier was handed to whatever text field had focus, which made F5 unreachable from the editor — the only place anyone presses it. Function keys cannot type a character, so they now reach the command they are bound to. Presentation mode also takes focus properly, so keys pressed while presenting no longer end up in the document."
+      },
+      "book": {
+        "title": "A folder can be a book",
+        "body": "Add a SUMMARY.md listing your chapters as a nested list of links and Ctrl+Alt+K reads the folder as one work — chapters in order, missing ones reported, and \"Open as one document\" combines them with each chapter’s headings shifted to its depth. It is the format mdBook and GitBook already use, so a book written here opens elsewhere."
+      },
+      "study": {
+        "title": "Revise from the notes you already wrote",
+        "body": "Write \"Term :: meaning\" on a line, or a question, a line containing only ?, and the answer — and that note is now revisable. The review session shows one card at a time and schedules the next sighting; a card keeps its history through any amount of rewriting around it, because it is identified by its own text."
+      },
+      "canvas": {
+        "title": "Canvas",
+        "body": "An infinite surface of cards and the lines between them, saved as JSON Canvas — the open format Obsidian writes, so a canvas made here opens there and the other way round. Cards render Markdown, and pan and zoom stay smooth with a hundred of them."
+      },
+      "httpTester": {
+        "title": "Send an HTTP request",
+        "body": "For the API a technical document is about. Method, address, headers, body; status, timing and a pretty-printed response. Only http:// and https:// are accepted — checked again at every redirect — no cookies or credentials travel, and it fires only when you press the button."
+      },
+      "runCode": {
+        "title": "Run a code block",
+        "body": "A Run button on any fenced block in a language installed on this machine — JavaScript, Python, Ruby, PHP, Go, shell, PowerShell. The output appears under the block it came from. There is no sandbox and MarkCraft does not claim one: the code runs with your own permissions, exactly as it would if you had saved it and run it yourself, and it never runs on its own."
+      },
+      "lock": {
+        "title": "Lock a document",
+        "body": "Turns editing off for the document you are reading — a guard against the accidental keystroke in something finished, signed off, or someone else’s. Checked at the save as well as in the editor, so autosave and \"save all\" respect it too."
+      },
+      "streak": {
+        "title": "A writing streak",
+        "body": "The statistics panel now counts the days you wrote, with four weeks of squares. A streak that ended yesterday still counts today: someone who has not started this morning has not broken anything. The record holds a date and a number, never a filename."
+      },
+      "pasteMarkdown": {
+        "title": "Paste web pages as Markdown",
+        "body": "Converts the clipboard’s formatted text through the same pipeline the preview uses, so headings, lists, tables and code survive — and a page’s navigation, banner and footer do not. A separate command rather than a hijack of Ctrl+V, which would do two different things depending on what you copied."
+      },
+      "codeLanguage": {
+        "title": "Set a code block’s language",
+        "body": "From the command palette, while the caret is anywhere in the block — including one you have not closed yet, which is when you most want it. The list comes from the highlighter’s own table, so nothing is offered that cannot be coloured."
+      },
+      "cleanUp": {
+        "title": "Clean up formatting",
+        "body": "Repairs the four problems that have one correct answer: a heading jammed against its hashes, tabs, stray trailing spaces, an unclosed fence. The other five are left alone — inventing alt text or picking a language would edit meaning rather than form."
+      },
+      "aiReview": {
+        "title": "Ask the AI to review, not rewrite",
+        "body": "A fifth AI action that reports findings instead of returning a document: structure that does not match the content, missing sections, claims left unexplained, headings that do not say what follows. Spelling and grammar are left to the checker that already does them."
+      },
+      "quietLog": {
+        "title": "A quieter log",
+        "body": "Opening the canvas or the book panel in a folder that has neither no longer writes an error for something entirely routine. A log full of routine errors is a log nobody reads."
+      }
+    }
+  },
+  "history": {
+    "title": "Version history",
+    "restore": "Restore this version",
+    "restoreTitle": "Restore this version?",
+    "restoreBody": "The editor is replaced with this version. Nothing is written to disk until you save, so you can undo it or close without saving.",
+    "restored": "Version restored",
+    "restoredDetail": "Save to keep it, or undo to go back.",
+    "forget": "Forget this version",
+    "comparedToNow": "Compared with the editor",
+    "identical": "Identical",
+    "hiddenLines": "{{count}} unchanged lines",
+    "emptyTitle": "No versions yet",
+    "emptyBody": "A version is recorded each time you save this document.",
+    "unsavedTitle": "Not saved yet",
+    "unsavedBody": "Save the document once and its versions start being recorded."
+  },
+  "emoji": {
+    "title": "Emoji",
+    "hint": "Inserted as the character itself, not a :shortcode:.",
+    "search": "Search emoji…",
+    "empty": "No match.",
+    "groups": {
+      "all": "All",
+      "common": "Common",
+      "people": "People",
+      "objects": "Objects",
+      "symbols": "Symbols",
+      "nature": "Nature"
+    }
+  },
+  "drop": {
+    "saveFirstTitle": "Save the document first",
+    "saveFirstBody": "Dropped files are copied next to the document, so it needs a location.",
+    "failed": "Could not add {{name}}"
+  },
+  "lint": {
+    "line": "Line {{line}} · {{rule}}: {{message}}",
+    "rules": {
+      "MD001": "Heading level jumps from {{from}} to {{to}}",
+      "MD009": "Trailing whitespace",
+      "MD010": "Hard tab",
+      "MD018": "No space after the # — this will not render as a heading",
+      "MD025": "A second top-level heading",
+      "MD040": "Fenced code has no language",
+      "MD042": "Link has no target",
+      "MD045": "Image has no alt text",
+      "MD046": "Unclosed code fence"
+    }
+  },
+  "present": {
+    "title": "Presentation",
+    "next": "Next slide",
+    "previous": "Previous slide",
+    "empty": "Nothing to present. Separate slides with a line containing only ---."
+  },
+  "slash": {
+    "title": "Insert block",
+    "blocks": {
+      "heading1": "Heading 1",
+      "heading2": "Heading 2",
+      "heading3": "Heading 3",
+      "bulletList": "Bullet list",
+      "orderedList": "Numbered list",
+      "taskList": "Task list",
+      "quote": "Blockquote",
+      "codeBlock": "Code block",
+      "callout": "Callout",
+      "table": "Table",
+      "link": "Link",
+      "image": "Image",
+      "emoji": "Emoji",
+      "horizontalRule": "Divider"
+    }
+  },
+  "devtools": {
+    "title": "Developer tools",
+    "copy": "Copy result",
+    "copied": "Copied to clipboard",
+    "input": "Input",
+    "output": "Result",
+    "inputHint": "Paste text here",
+    "pattern": "Pattern",
+    "flags": "Flags",
+    "generate": "Generate a new one",
+    "noMatches": "No matches.",
+    "tools": {
+      "json": "JSON",
+      "base64": "Base64",
+      "url": "URL",
+      "jwt": "JWT",
+      "timestamp": "Timestamp",
+      "regex": "Regex",
+      "uuid": "UUID",
+      "yaml": "YAML"
+    },
+    "forward": {
+      "json": "Format",
+      "base64": "Encode",
+      "url": "Encode",
+      "yaml": "JSON → YAML"
+    },
+    "back": {
+      "json": "Minify",
+      "base64": "Decode",
+      "url": "Decode",
+      "yaml": "YAML → JSON"
+    },
+    "errors": {
+      "json": "That is not valid JSON.",
+      "base64": "That is not valid Base64 text.",
+      "url": "That is not a valid escape sequence.",
+      "jwt": "That is not a readable JWT — a token has three dot-separated parts.",
+      "timestamp": "That is not a date or a Unix timestamp.",
+      "regex": "That pattern is not a valid regular expression.",
+      "yaml": "That is not valid YAML."
+    }
+  },
+  "links": {
+    "title": "Links and graph",
+    "summary": "{{files}} documents, {{links}} links",
+    "scanning": "Scanning the workspace…",
+    "empty": "No Markdown documents in this folder yet.",
+    "mapLabel": "Map of the documents and the links between them",
+    "backlinks": "Backlinks",
+    "backlinksFor": "What links to {{name}}",
+    "noBacklinks": "Nothing links here yet.",
+    "broken": "Broken links",
+    "brokenLine": "{{target}} — from {{file}}, line {{line}}"
+  },
+  "website": {
+    "title": "Website preview",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "devices": {
+      "phone": "Phone",
+      "tablet": "Tablet",
+      "laptop": "Laptop"
+    }
+  },
+  "image": {
+    "title": "Adjust image",
+    "apply": "Insert",
+    "preview": "Image preview",
+    "cropHint": "Drag on the image to crop it.",
+    "cropSet": "Cropped to the selected area.",
+    "cropClear": "Clear crop",
+    "compress": "Compress",
+    "compressHint": "Re-encodes as WebP, which keeps transparency.",
+    "quality": "Quality — {{percent}}%",
+    "maxWidth": "Maximum width",
+    "original": "Original",
+    "measuring": "Measuring…",
+    "result": "{{width}}×{{height}} · {{size}} ({{delta}})"
+  },
+  "clean": {
+    "action": "Clean up",
+    "done": "Repaired {{count}} formatting problem(s)",
+    "nothing": "Nothing to repair — the formatting is already clean."
+  },
+  "language": {
+    "title": "Code block language",
+    "current": "Currently {{name}}",
+    "clear": "No language",
+    "search": "Search languages…",
+    "noFence": "Put the caret inside a fenced code block first.",
+    "noMatch": "No language matches."
+  },
+  "paste": {
+    "noHtml": "The clipboard holds no formatted text to convert.",
+    "nothing": "That converted to nothing."
+  },
+  "book": {
+    "title": "Book",
+    "summary": "{{count}} chapters",
+    "reading": "Reading the summary…",
+    "none": "This folder is not a book",
+    "noneHint": "Add a {{name}} listing your chapters as a nested list of links, and they become one document.",
+    "openAsOne": "Open as one document",
+    "opened": "Combined {{count}} chapters into a new document",
+    "missing": "missing",
+    "missingCount": "{{count}} chapter(s) listed but not found on disk.",
+    "chapterMissing": "Could not read {{path}}",
+    "empty": "The chapters are all empty."
+  },
+  "study": {
+    "title": "Study",
+    "progress": "{{done}} reviewed · {{left}} left",
+    "reveal": "Show answer",
+    "reset": "Start the deck again",
+    "needsSaving": "Save the document first",
+    "noCards": "No cards in this document",
+    "noCardsHint": "Write \"Term :: meaning\" on a line, or a question, a line containing only ?, and the answer.",
+    "done": "Nothing left for today",
+    "doneHint": "You reviewed {{count}} card(s).",
+    "grade": {
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy"
+    }
+  },
+  "canvas": {
+    "title": "Canvas",
+    "reading": "Opening the canvas…",
+    "addCard": "Add card",
+    "fit": "Fit to view",
+    "newCard": "New card",
+    "saved": "Canvas saved",
+    "needsFolder": "Open a folder first — the canvas is saved beside it.",
+    "saveFailed": "Could not save the canvas"
+  },
+  "lock": {
+    "locked": "Locked — editing is off",
+    "lockedShort": "Locked",
+    "cannotSave": "This document is locked. Unlock it to save."
+  },
+  "streak": {
+    "title": "Writing streak",
+    "current": "{{count}} day(s) in a row",
+    "longest": "best {{count}}",
+    "days": "{{count}} day(s) written",
+    "dayTooltip": "{{day}} — {{count}} word(s)"
+  },
+  "http": {
+    "title": "HTTP request",
+    "subtitle": "Sent only when you press the button. Nothing else here reaches the network.",
+    "url": "Address",
+    "urlInvalid": "Only http:// and https:// can be requested.",
+    "headers": "Headers",
+    "headersHint": "One per line, as Name: value. Lines starting with # are ignored.",
+    "body": "Body",
+    "send": "Send",
+    "sending": "Sending…",
+    "truncated": "truncated",
+    "responseHeaders": "Response headers",
+    "responseBody": "Response body"
+  }
+}

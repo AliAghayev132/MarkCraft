@@ -167,4 +167,4 @@ rich editor does not reformat your Markdown.
 
 ## Licence
 
-MIT.
+MIT — see [LICENSE](LICENSE).

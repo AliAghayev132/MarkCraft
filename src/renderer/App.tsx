@@ -361,6 +361,7 @@ export function App(): React.ReactElement {
             onRevealMatch={onRevealMatch}
             onRevealLine={onRevealLine}
             onOpenSettings={() => overlays.show('settings')}
+            onOpenTool={(id) => overlays.show(id)}
           />
         </ErrorBoundary>
 

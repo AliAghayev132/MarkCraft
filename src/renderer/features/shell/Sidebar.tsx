@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Clock, Trash2, FolderTree, List, Search, Settings } from '@icons'
+import { Beaker, Book, Clock, FolderTree, Globe, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
 import { useCallback, useEffect, useRef, type PointerEvent, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -26,7 +26,7 @@ import { cx } from '@utils'
 
 // ── types ──────────────────────────────────────────────────────────────────
 import type { SidebarView } from '@store/slices/types'
-import type { SidebarProps } from './types'
+import type { OverlayId, SidebarProps } from './types'
 
 const MIN_WIDTH = 180
 const MAX_WIDTH = 520
@@ -47,7 +47,8 @@ export function Sidebar({
   homePath,
   onRevealMatch,
   onRevealLine,
-  onOpenSettings
+  onOpenSettings,
+  onOpenTool
 }: SidebarProps): ReactElement {
   const t = useT()
   const dispatch = useAppDispatch()
@@ -109,6 +110,21 @@ export function Sidebar({
     }
   }
 
+  /*
+   * The rail's second group. These open an overlay rather than swapping the
+   * panel beside it, so they are deliberately separated by a rule — a button
+   * that changes what is *in* the sidebar and one that covers the whole window
+   * should not look like the same kind of thing.
+   */
+  const tools: { id: OverlayId; icon: ReactElement; label: string; shortcut?: string }[] = [
+    { id: 'book', icon: <Book size={17} />, label: t('book.title'), shortcut: 'mod+alt+k' },
+    { id: 'canvas', icon: <Shapes size={17} />, label: t('canvas.title') },
+    { id: 'study', icon: <Beaker size={17} />, label: t('study.title') },
+    { id: 'links', icon: <Globe size={17} />, label: t('links.title'), shortcut: 'mod+alt+l' },
+    { id: 'present', icon: <Presentation size={17} />, label: t('present.title'), shortcut: 'f5' },
+    { id: 'devTools', icon: <Wrench size={17} />, label: t('devtools.title'), shortcut: 'mod+alt+t' }
+  ]
+
   return (
     <div className="flex min-h-0 flex-none border-r border-line-subtle bg-sunken">
       {/* The rail and the panel carry the interface zoom; the resize handle
@@ -137,6 +153,21 @@ export function Sidebar({
               dispatch(sidebarViewChanged(entry.id))
               if (!visible) void updateSettings({ appearance: { sidebarVisible: true } })
             }}
+          />
+        ))}
+
+        <div className="my-1 h-px w-6 flex-none bg-line-subtle" role="presentation" />
+
+        {tools.map((tool) => (
+          <IconButton
+            key={tool.id}
+            icon={tool.icon}
+            label={tool.label}
+            shortcut={tool.shortcut}
+            size="lg"
+            tooltipPlacement="right"
+            className={RAIL_BUTTON}
+            onClick={() => onOpenTool(tool.id)}
           />
         ))}
 

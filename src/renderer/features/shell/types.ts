@@ -24,6 +24,8 @@ export interface SidebarProps {
   /** Jumps the open document to a line — used by the outline. */
   onRevealLine: (line: number) => void
   onOpenSettings: () => void
+  /** Opens one of the rail's overlay tools. */
+  onOpenTool: (id: OverlayId) => void
 }
 
 export interface StatusBarProps {

@@ -63,9 +63,15 @@ jobs:
             echo "### Tests failed on ${{ matrix.os }}"
             echo
             echo '```'
-            tail -120 test-output.txt
+            tail -150 test-output.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+          # And as an annotation. The step summary above is only visible in the
+          # browser; an annotation is on the run itself and in the API, so a
+          # red build can be diagnosed from anywhere.
+          body=$(tail -60 test-output.txt | sed 's/%/%25/g; s/\r//g' | awk '{ printf "%s%%0A", $0 }')
+          echo "::error title=Tests failed on ${{ matrix.os }}::${body}"
 
   build:
     name: Build bundles

@@ -137,7 +137,7 @@ export class JsonStore<T> {
 
   /** Shallow-per-section merge so a new setting appears without wiping the file. */
   private merge(data: T): T {
-    return deepMerge(structuredClone(this.options.defaults), data)
+    return deepMerge(structuredClone(this.options.defaults), data, this.options.replaceWhole)
   }
 
   private async quarantine(): Promise<void> {
@@ -145,8 +145,25 @@ export class JsonStore<T> {
   }
 }
 
-export function deepMerge<T>(base: T, patch: unknown): T {
+/**
+ * Merge a patch into a settings object, section by section.
+ *
+ * `replaceWhole` names the paths that are *data* rather than structure — maps
+ * whose keys the user creates and deletes, like the custom colours or the
+ * keyboard overrides. Merging those can only ever add a key, so without this a
+ * patch could never remove one: "reset this colour" would write a patch with
+ * the key absent, the merge would keep the old value, and the button would
+ * appear to do nothing. Paths are dotted from the root, e.g.
+ * `appearance.customColors`.
+ */
+export function deepMerge<T>(
+  base: T,
+  patch: unknown,
+  replaceWhole: ReadonlySet<string> = new Set(),
+  path = ''
+): T {
   if (patch === null || patch === undefined) return base
+  if (path !== '' && replaceWhole.has(path)) return patch as T
   if (typeof base !== 'object' || base === null || Array.isArray(base)) return patch as T
 
   /*
@@ -164,7 +181,8 @@ export function deepMerge<T>(base: T, patch: unknown): T {
   const result = { ...(base as Record<string, unknown>) }
   for (const [key, value] of Object.entries(patch as Record<string, unknown>)) {
     if (value === undefined) continue
-    result[key] = key in result ? deepMerge(result[key], value) : value
+    const at = path === '' ? key : `${path}.${key}`
+    result[key] = key in result ? deepMerge(result[key], value, replaceWhole, at) : value
   }
   return result as T
 }

@@ -77,3 +77,45 @@ describe('migrateSettings', () => {
     expect(migrated.editor.fontSize).toBe(17)
   })
 })
+
+describe('custom colours gaining a theme dimension', () => {
+  /*
+   * The defect this migration exists for: one shared map meant a colour picked
+   * against a light page followed you into dark mode, where every text token
+   * had switched — light text on a light background, with no way to see what
+   * had happened.
+   */
+  it('moves a flat map into the theme it was chosen under', () => {
+    const migrated = migrateSettings(
+      { appearance: { theme: 'dark', customColors: { 'bg-app': '#101010' } } },
+      1
+    )
+
+    expect(migrated.appearance.customColors.dark).toEqual({ 'bg-app': '#101010' })
+    expect(migrated.appearance.customColors.light).toEqual({})
+  })
+
+  it('treats a system theme as light, because that is what it was written on', () => {
+    const migrated = migrateSettings(
+      { appearance: { theme: 'system', customColors: { accent: '#ff0000' } } },
+      1
+    )
+
+    expect(migrated.appearance.customColors.light).toEqual({ accent: '#ff0000' })
+  })
+
+  it('leaves an already-migrated file alone', () => {
+    const migrated = migrateSettings(
+      { appearance: { theme: 'dark', customColors: { light: { accent: '#111' }, dark: {} } } },
+      1
+    )
+
+    expect(migrated.appearance.customColors.light).toEqual({ accent: '#111' })
+    expect(migrated.appearance.customColors.dark).toEqual({})
+  })
+
+  it('copes with no overrides at all', () => {
+    const migrated = migrateSettings({ appearance: { theme: 'light' } }, 1)
+    expect(migrated.appearance.customColors).toEqual({ light: {}, dark: {} })
+  })
+})

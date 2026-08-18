@@ -94,8 +94,14 @@ export interface AppearanceSettings {
    * Sparse on purpose: only what the user actually changed is stored, so a
    * later change to a palette still reaches anyone who did not override that
    * particular token.
+   *
+   * Kept **per theme**, because a colour is only ever right for one of them.
+   * A single shared map meant that picking a light background and then
+   * switching to dark left that light background behind while every text
+   * token went dark — light text on a light page, and no way to see what had
+   * happened.
    */
-  customColors: Partial<Record<CustomColorToken, string>>
+  customColors: Record<ResolvedTheme, Partial<Record<CustomColorToken, string>>>
   /**
    * The formatting toolbar, in order. Empty means the built-in arrangement.
    *
@@ -229,7 +235,7 @@ export interface Settings {
   app: AppStateSettings
 }
 
-export const SETTINGS_VERSION = 1
+export const SETTINGS_VERSION = 2
 
 export const DEFAULT_SETTINGS: Settings = {
   version: SETTINGS_VERSION,
@@ -262,7 +268,7 @@ export const DEFAULT_SETTINGS: Settings = {
     uiScale: 1,
     reduceMotion: false,
     palette: 'default',
-    customColors: {},
+    customColors: { light: {}, dark: {} },
     toolbarItems: [],
     splashScreen: true,
     startupSound: true

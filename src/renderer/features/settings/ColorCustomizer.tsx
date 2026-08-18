@@ -12,7 +12,7 @@ import { useT } from '@i18n'
 import { updateSettings } from '@services'
 
 // ── @store ─────────────────────────────────────────────────────────────────
-import { useAppSelector } from '@store'
+import { resolveTheme, useAppSelector } from '@store'
 
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, ColorPicker, IconButton } from '@ui'
@@ -28,7 +28,18 @@ import { Button, ColorPicker, IconButton } from '@ui'
  */
 export function ColorCustomizer(): ReactElement {
   const t = useT()
-  const appearance = useAppSelector((state) => state.settings.values.appearance)
+  const settings = useAppSelector((state) => state.settings.values)
+  const systemPrefersDark = useAppSelector((state) => state.settings.systemPrefersDark)
+  const appearance = settings.appearance
+
+  /*
+   * Overrides belong to the theme they were chosen under: a colour picked by
+   * eye against a light page is almost never right against a dark one, and
+   * carrying it across is how a customised light theme turns into an
+   * unreadable dark one.
+   */
+  const theme = resolveTheme(settings, systemPrefersDark)
+
   const [resolved, setResolved] = useState<Record<string, string>>({})
 
   useEffect(() => {
@@ -40,10 +51,10 @@ export function ColorCustomizer(): ReactElement {
     }
 
     setResolved(next)
-  }, [appearance.theme, appearance.palette, appearance.accent, appearance.customColors])
+  }, [appearance.theme, appearance.palette, appearance.accent, appearance.customColors, theme])
 
   const setToken = (token: CustomColorToken, value: string | undefined): void => {
-    const next = { ...appearance.customColors }
+    const next = { ...appearance.customColors[theme] }
     if (value) next[token] = value
     else delete next[token]
 
@@ -52,16 +63,16 @@ export function ColorCustomizer(): ReactElement {
      * is a deep one: patching could never *remove* a key, so "reset this
      * colour" would silently do nothing.
      */
-    void updateSettings({ appearance: { customColors: next } })
+    void updateSettings({ appearance: { customColors: { ...appearance.customColors, [theme]: next } } })
   }
 
-  const overridden = Object.keys(appearance.customColors).length
+  const overridden = Object.keys(appearance.customColors[theme]).length
 
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 gap-2">
         {CUSTOM_COLOR_TOKENS.map((token) => {
-          const custom = appearance.customColors[token]
+          const custom = appearance.customColors[theme][token]
 
           return (
             <label
@@ -94,7 +105,11 @@ export function ColorCustomizer(): ReactElement {
           variant="ghost"
           size="sm"
           disabled={overridden === 0}
-          onClick={() => void updateSettings({ appearance: { customColors: {} } })}
+          onClick={() =>
+            void updateSettings({
+              appearance: { customColors: { ...appearance.customColors, [theme]: {} } }
+            })
+          }
         >
           {t('settings.appearance.resetAllColors')}
         </Button>

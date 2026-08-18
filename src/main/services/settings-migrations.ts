@@ -33,7 +33,40 @@ const MIGRATIONS: MigrationStep[] = [
   // 0 → 1: pre-versioned files. Nothing to do beyond the defaults merge; the
   // shape has not changed since, and every key it could be missing has a
   // default.
-  (settings) => settings
+  (settings) => settings,
+
+  /*
+   * 1 → 2: custom colours gained a theme dimension.
+   *
+   * The old flat map was written while some theme was active, and that is the
+   * theme it was right for — so it moves there and the other side starts
+   * empty. Guessing a dark equivalent of a colour the user picked by eye would
+   * be inventing a preference they never expressed.
+   */
+  (settings) => {
+    const appearance = settings.appearance
+    if (typeof appearance !== 'object' || appearance === null) return settings
+
+    const loose = appearance as LooseSettings
+    const existing = loose.customColors
+
+    // Already migrated, or never set.
+    if (typeof existing !== 'object' || existing === null) return settings
+    if ('light' in existing || 'dark' in existing) return settings
+
+    const owner = loose.theme === 'dark' ? 'dark' : 'light'
+
+    return {
+      ...settings,
+      appearance: {
+        ...loose,
+        customColors: {
+          light: owner === 'light' ? existing : {},
+          dark: owner === 'dark' ? existing : {}
+        }
+      }
+    }
+  }
 ]
 
 export function migrateSettings(raw: unknown, fromVersion: number): Settings {

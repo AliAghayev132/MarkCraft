@@ -61,14 +61,15 @@ export function useAppearance(): void {
    */
   useEffect(() => {
     const root = document.documentElement
-    const overrides = settings.appearance.customColors
+    const theme = resolveTheme(settings, systemPrefersDark)
+    const overrides = settings.appearance.customColors[theme] ?? {}
 
     for (const token of CUSTOM_COLOR_TOKENS) root.style.removeProperty(`--mc-${token}`)
 
     for (const [token, value] of Object.entries(overrides)) {
       if (value) root.style.setProperty(`--mc-${token}`, value)
     }
-  }, [settings.appearance.customColors])
+  }, [settings, systemPrefersDark])
 
   /* Interface zoom. Read by the `ui-scaled` utility, which is applied to the
      chrome only — see styles/tailwind.css. */

@@ -11,6 +11,15 @@ import { migrateSettings } from './settings-migrations'
 // ── ../util ────────────────────────────────────────────────────────────────
 import { JsonStore, deepMerge } from '../util/json-store'
 
+/*
+ * The two settings whose keys the user creates and deletes. Everything else in
+ * the file is a fixed set of fields, where merging is what you want.
+ */
+const USER_KEYED_MAPS: ReadonlySet<string> = new Set([
+  'appearance.customColors',
+  'keyboard.overrides'
+])
+
 let store: JsonStore<Settings> | null = null
 
 function getStore(): JsonStore<Settings> {
@@ -19,7 +28,8 @@ function getStore(): JsonStore<Settings> {
     defaults: DEFAULT_SETTINGS,
     version: SETTINGS_VERSION,
     debounceMs: 150,
-    migrate: migrateSettings
+    migrate: migrateSettings,
+    replaceWhole: USER_KEYED_MAPS
   })
   return store
 }
@@ -30,7 +40,7 @@ export async function getSettings(): Promise<Settings> {
 
 export async function updateSettings(patch: DeepPartial<Settings>): Promise<Settings> {
   return getStore().update((current) => {
-    const next = deepMerge(structuredClone(current), patch)
+    const next = deepMerge(structuredClone(current), patch, USER_KEYED_MAPS)
     return { ...next, version: SETTINGS_VERSION }
   })
 }

@@ -6,6 +6,12 @@
  */
 
 export interface JsonStoreOptions<T> {
+  /**
+   * Paths, dotted from the root, whose value is a user-keyed map rather than a
+   * fixed set of fields. These are taken from the patch wholesale so a key can
+   * actually be removed — see `deepMerge`.
+   */
+  replaceWhole?: ReadonlySet<string>
   /** File name relative to the app's userData directory. */
   file: string
   defaults: T

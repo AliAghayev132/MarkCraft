@@ -103,62 +103,76 @@ describe('pathGuard', () => {
   })
 })
 
+
 describe('a workspace reached through a symlink', () => {
   /*
    * The failure this covers: grants were stored as given while `assert`
    * resolved what it was handed through `realpath`, so the two lived in
    * different spaces and never met. Not a corner case — on macOS the temporary
-   * directory *is* a symlink, on Windows a path can arrive in its 8.3 short
-   * form, and notes linked into a synced folder are ordinary everywhere. The
-   * workspace refused to open its own files, and only ever on some machines.
+   * directory *is* a symlink, and notes linked into a synced folder are
+   * ordinary everywhere. The workspace refused to open its own files, and only
+   * ever on some machines.
    */
   let link: string
-  let available = true
+
+  /*
+   * Whether this platform both creates the link and resolves it. Windows needs
+   * a privilege for a real symlink and treats a junction inconsistently, and
+   * that is fine: where a link is not resolved, both sides of the check see it
+   * unresolved and agree — there is nothing for this fix to reconcile. What
+   * would not be fine is passing quietly, so the tests below skip out loud.
+   */
+  let resolvable = false
 
   beforeAll(async () => {
     link = path.join(path.dirname(root), 'linked')
-    try {
-      // A junction is the directory link Windows allows without privileges.
-      await fs.symlink(root, link, process.platform === 'win32' ? 'junction' : 'dir')
-    } catch {
-      available = false
+
+    for (const type of ['dir', 'junction'] as const) {
+      try {
+        await fs.symlink(root, link, type)
+        resolvable = (await fs.realpath(link)) === (await fs.realpath(root))
+        if (resolvable) return
+        await fs.unlink(link).catch(() => undefined)
+      } catch {
+        // Try the next kind of link, then give up.
+      }
     }
   })
 
-  it('opens a file when the root was granted through the link', async () => {
-    if (!available) return
+  it('opens a file when the root was granted through the link', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(link)
     await expect(pathGuard.assert(path.join(link, 'docs', 'a.md'))).resolves.toContain('a.md')
   })
 
-  it('opens it by its real path too — the same file, named differently', async () => {
-    if (!available) return
+  it('opens it by its real path too — the same file, named differently', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(link)
     await expect(pathGuard.assert(path.join(root, 'docs', 'a.md'))).resolves.toContain('a.md')
   })
 
-  it('works the other way round: granted real, asked through the link', async () => {
-    if (!available) return
+  it('works the other way round: granted real, asked through the link', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(root)
     await expect(pathGuard.assert(path.join(link, 'docs', 'a.md'))).resolves.toContain('a.md')
   })
 
-  it('allows a file that does not exist yet inside the linked root', async () => {
-    if (!available) return
+  it('allows a file that does not exist yet inside the linked root', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(link)
     await expect(pathGuard.assert(path.join(link, 'docs', 'new.md'))).resolves.toContain('new.md')
   })
 
-  it('still refuses what is outside, however the root was named', async () => {
-    if (!available) return
+  it('still refuses what is outside, however the root was named', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(link)
     await expect(pathGuard.assert(path.join(outside, 'secret.txt'))).rejects.toBeInstanceOf(
       ForbiddenPathError
     )
   })
 
-  it('revokes a root granted through the link', async () => {
-    if (!available) return
+  it('revokes a root granted through the link', async (ctx) => {
+    if (!resolvable) ctx.skip()
     pathGuard.grantRoot(link)
     pathGuard.revokeRoot(link)
     await expect(pathGuard.assert(path.join(root, 'docs', 'a.md'))).rejects.toBeInstanceOf(

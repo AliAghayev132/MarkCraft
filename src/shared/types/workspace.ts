@@ -24,7 +24,7 @@ export interface WorkspaceState {
   expandedPaths: string[]
   tabs: PersistedTab[]
   activeTabId: string | null
-  sidebarView: 'explorer' | 'outline' | 'search' | 'recent' | 'trash'
+  sidebarView: 'explorer' | 'outline' | 'book' | 'search' | 'recent' | 'trash'
   updatedAt: number
 }
 

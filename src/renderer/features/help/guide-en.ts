@@ -346,11 +346,13 @@ Add a **\`SUMMARY.md\`** to the folder, listing chapters as a nested list of lin
 - [Appendix](appendix.md)
 \`\`\`
 
-**\`Ctrl+Alt+K\`** reads the folder as one work.
+The **book icon** in the sidebar rail then shows the table of contents beside your text, and \`Ctrl+Alt+K\` opens the same book as a dialog.
 
 - An entry with no link (**Part one**) is a part title, not somewhere to go
 - Clicking a chapter opens it on its own
-- A chapter that is not on disk is flagged with an amber triangle
+- The chapter you are reading is highlighted, and the header shows **where you are** — 3/12
+- The arrows at the foot of the panel step to the **previous and next chapter** in the book's order, not the folder's alphabetical one
+- A chapter that is not on disk is flagged with an amber triangle, and the arrows step over it rather than into it
 
 **"Open as one document"** combines them, shifting each chapter's headings **to its depth**: a chapter that is \`# First chapter\` in its own file becomes \`## First chapter\` in the book. Otherwise a combined document has a dozen level-one headings and no structure at all.
 

@@ -107,7 +107,8 @@
     "settings": "Settings",
     "resize": "Resize sidebar",
     "outline": "Outline",
-    "trash": "Deleted"
+    "trash": "Deleted",
+    "book": "Book"
   },
   "explorer": {
     "files": "Workspace files",
@@ -1376,7 +1377,11 @@
     "missing": "missing",
     "missingCount": "{{count}} chapter(s) listed but not found on disk.",
     "chapterMissing": "Could not read {{path}}",
-    "empty": "The chapters are all empty."
+    "empty": "The chapters are all empty.",
+    "previous": "Previous chapter",
+    "next": "Next chapter",
+    "last": "Last chapter",
+    "notInBook": "Not in this book"
   },
   "study": {
     "title": "Study",

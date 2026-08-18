@@ -363,6 +363,7 @@ export function App(): React.ReactElement {
             onRevealLine={onRevealLine}
             onOpenSettings={() => overlays.show('settings')}
             onOpenTool={(id) => overlays.show(id)}
+            onOpenDocument={(path) => void openPath(path)}
           />
         </ErrorBoundary>
 

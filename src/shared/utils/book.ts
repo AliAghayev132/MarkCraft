@@ -169,3 +169,59 @@ export function readingOrder(chapters: Chapter[]): Chapter[] {
 export function summaryBase(summaryPath: string): string {
   return dirname(normalizeSeparators(summaryPath))
 }
+
+export interface ChapterPosition {
+  /** 1-based place in reading order, or 0 when the file is not in the book. */
+  index: number
+  total: number
+  previous: Chapter | null
+  next: Chapter | null
+}
+
+/**
+ * Where a file sits in the book, and what comes either side of it.
+ *
+ * Reading order rather than list order: a part divider is a label, and stepping
+ * "next" onto something with no file to open would be a dead end.
+ */
+export function chapterPosition(
+  chapters: Chapter[],
+  path: string | null,
+  /** Chapters whose file could not be read; stepped over rather than into. */
+  missing: string[] = []
+): ChapterPosition {
+  const order = readingOrder(chapters)
+
+  /*
+   * Compared on forward slashes throughout, rather than through
+   * `normalizeSeparators` — that normalises towards the platform a path looks
+   * like, so a summary's forward-slash path and the backslash one the platform
+   * hands back would normalise in opposite directions and never match.
+   */
+  const canonical = (value: string): string => value.replace(/\\/g, '/').toLowerCase()
+  const wanted = path === null ? null : canonical(path)
+  const gone = new Set(missing.map(canonical))
+
+  const at =
+    wanted === null ? -1 : order.findIndex((chapter) => canonical(chapter.path as string) === wanted)
+
+  /*
+   * The count is over the whole summary, because that is the book the author
+   * wrote — but stepping stops only on chapters that can actually be opened.
+   * Landing on a renamed-away file would leave the reader where they were with
+   * no explanation, which reads as a broken button.
+   */
+  const step = (from: number, by: number): Chapter | null => {
+    for (let at = from + by; at >= 0 && at < order.length; at += by) {
+      if (!gone.has(canonical(order[at].path as string))) return order[at]
+    }
+    return null
+  }
+
+  return {
+    index: at + 1,
+    total: order.length,
+    previous: at > 0 ? step(at, -1) : null,
+    next: at >= 0 ? step(at, 1) : null
+  }
+}

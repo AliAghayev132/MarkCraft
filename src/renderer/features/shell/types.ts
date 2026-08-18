@@ -26,6 +26,8 @@ export interface SidebarProps {
   onOpenSettings: () => void
   /** Opens one of the rail's overlay tools. */
   onOpenTool: (id: OverlayId) => void
+  /** Opens a file by absolute path — used by the book's table of contents. */
+  onOpenDocument: (absolutePath: string) => void
 }
 
 export interface StatusBarProps {

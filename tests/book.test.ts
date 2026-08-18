@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { combineBook, parseSummary, readingOrder, shiftHeadings } from '@shared'
+import { chapterPosition, combineBook, parseSummary, readingOrder, shiftHeadings } from '@shared'
 
 const SUMMARY = [
   '# Summary',
@@ -144,5 +144,78 @@ describe('combineBook', () => {
 
   it('produces an empty document for an empty book', () => {
     expect(combineBook([])).toBe('\n')
+  })
+})
+
+describe('chapterPosition', () => {
+  const chapters = parseSummary(
+    [
+      '# Summary',
+      '',
+      '- [Intro](intro.md)',
+      '- Part one',
+      '  - [First](one/first.md)',
+      '  - [Second](one/second.md)',
+      '- [Outro](outro.md)'
+    ].join('\n')
+  )
+
+  it('places a file in reading order, skipping the part divider', () => {
+    const at = chapterPosition(chapters, 'one/first.md')
+
+    expect(at.index).toBe(2)
+    expect(at.total).toBe(4)
+    expect(at.previous?.path).toBe('intro.md')
+    expect(at.next?.path).toBe('one/second.md')
+  })
+
+  it('has nothing before the first chapter or after the last', () => {
+    expect(chapterPosition(chapters, 'intro.md').previous).toBeNull()
+    expect(chapterPosition(chapters, 'outro.md').next).toBeNull()
+  })
+
+  it('matches regardless of separator or case, because paths arrive both ways', () => {
+    expect(chapterPosition(chapters, 'one\\First.md').index).toBe(2)
+  })
+
+  it('reports nothing for a file that is not in the book', () => {
+    const at = chapterPosition(chapters, 'stray.md')
+
+    expect(at.index).toBe(0)
+    expect(at.previous).toBeNull()
+    expect(at.next).toBeNull()
+  })
+
+  it('reports nothing when there is no file open at all', () => {
+    expect(chapterPosition(chapters, null).index).toBe(0)
+  })
+})
+
+describe('stepping past a chapter whose file is gone', () => {
+  const chapters = parseSummary(
+    ['- [One](one.md)', '- [Two](two.md)', '- [Three](three.md)', '- [Four](four.md)'].join('\n')
+  )
+
+  it('steps over the missing one rather than onto it', () => {
+    const at = chapterPosition(chapters, 'one.md', ['two.md'])
+    expect(at.next?.path).toBe('three.md')
+  })
+
+  it('steps over it backwards too', () => {
+    const at = chapterPosition(chapters, 'three.md', ['two.md'])
+    expect(at.previous?.path).toBe('one.md')
+  })
+
+  it('steps over a run of them', () => {
+    const at = chapterPosition(chapters, 'one.md', ['two.md', 'three.md'])
+    expect(at.next?.path).toBe('four.md')
+  })
+
+  it('has nowhere to go when everything after is missing', () => {
+    expect(chapterPosition(chapters, 'two.md', ['three.md', 'four.md']).next).toBeNull()
+  })
+
+  it('still counts the missing chapter, because the summary is the book', () => {
+    expect(chapterPosition(chapters, 'one.md', ['two.md']).total).toBe(4)
   })
 })

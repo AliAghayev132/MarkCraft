@@ -15,6 +15,7 @@ import { selectSidebarView, sidebarViewChanged, useAppDispatch, useAppSelector }
 import { IconButton } from '@ui'
 
 // ── @features ──────────────────────────────────────────────────────────────
+import { BookPanel } from '@features/book'
 import { TrashPanel } from '@features/trash'
 import { FileExplorer } from '@features/explorer'
 import { OutlinePanel } from '@features/outline'
@@ -48,7 +49,8 @@ export function Sidebar({
   onRevealMatch,
   onRevealLine,
   onOpenSettings,
-  onOpenTool
+  onOpenTool,
+  onOpenDocument
 }: SidebarProps): ReactElement {
   const t = useT()
   const dispatch = useAppDispatch()
@@ -63,6 +65,7 @@ export function Sidebar({
   const views: { id: SidebarView; icon: ReactElement; label: string; shortcut?: string }[] = [
     { id: 'explorer', icon: <FolderTree size={17} />, label: t('sidebar.explorer'), shortcut: 'mod+shift+e' },
     { id: 'outline', icon: <List size={17} />, label: t('sidebar.outline'), shortcut: 'mod+shift+u' },
+    { id: 'book', icon: <Book size={17} />, label: t('sidebar.book') },
     { id: 'search', icon: <Search size={17} />, label: t('sidebar.search'), shortcut: 'mod+shift+f' },
     { id: 'recent', icon: <Clock size={17} />, label: t('sidebar.recent') },
     { id: 'trash', icon: <Trash2 size={17} />, label: t('sidebar.trash') }
@@ -117,7 +120,6 @@ export function Sidebar({
    * should not look like the same kind of thing.
    */
   const tools: { id: OverlayId; icon: ReactElement; label: string; shortcut?: string }[] = [
-    { id: 'book', icon: <Book size={17} />, label: t('book.title'), shortcut: 'mod+alt+k' },
     { id: 'canvas', icon: <Shapes size={17} />, label: t('canvas.title') },
     { id: 'study', icon: <Beaker size={17} />, label: t('study.title') },
     { id: 'links', icon: <Globe size={17} />, label: t('links.title'), shortcut: 'mod+alt+l' },
@@ -204,6 +206,7 @@ export function Sidebar({
           >
             {view === 'explorer' ? <FileExplorer homePath={homePath} /> : null}
             {view === 'outline' ? <OutlinePanel onRevealLine={onRevealLine} /> : null}
+            {view === 'book' ? <BookPanel onOpenDocument={onOpenDocument} /> : null}
             {view === 'search' ? (
               <SearchPanel homePath={homePath} onRevealMatch={onRevealMatch} />
             ) : null}

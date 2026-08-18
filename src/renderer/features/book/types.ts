@@ -3,3 +3,7 @@ export interface BookDialogProps {
   onClose: () => void
   onOpenDocument: (absolutePath: string) => void
 }
+
+export interface BookPanelProps {
+  onOpenDocument: (absolutePath: string) => void
+}

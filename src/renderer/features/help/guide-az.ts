@@ -354,11 +354,13 @@ Qovluğa **\`SUMMARY.md\`** əlavə edin — fəsilləri iç-içə keçid siyah�
 - [Əlavə](elave.md)
 \`\`\`
 
-**\`Ctrl+Alt+K\`** qovluğu bir əsər kimi açır.
+Bundan sonra kənar paneldəki **kitab ikonu** mündəricatı mətninizin yanında göstərir, \`Ctrl+Alt+K\` isə eyni kitabı dialoq şəklində açır.
 
 - Keçidi olmayan bənd (**Birinci hissə**) hissə başlığıdır — getməli yer deyil
 - Fəslə klik onu ayrıca açır
-- Diskdə olmayan fəsil sarı üçbucaqla bildirilir
+- Oxuduğunuz fəsil vurğulanır, başlıqda isə **harada olduğunuz** görünür — 3/12
+- Panelin altındakı oxlar **əvvəlki və növbəti fəslə** keçir: kitabın sırası ilə, qovluğun əlifba sırası ilə deyil
+- Diskdə olmayan fəsil sarı üçbucaqla bildirilir, oxlar isə onun üstündən adlayır
 
 **«Bir sənəd kimi aç»** hamısını birləşdirir və hər fəslin başlıqlarını **öz dərinliyinə sürüşdürür**: öz faylında \`# Birinci fəsil\` olan mətn kitabda \`## Birinci fəsil\` olur. Yoxsa birləşmiş sənəddə onlarla birinci səviyyə başlıq və heç bir struktur alınardı.
 

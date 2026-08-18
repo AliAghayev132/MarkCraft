@@ -107,7 +107,8 @@
     "settings": "Parametrlər",
     "resize": "Yan panelin ölçüsünü dəyiş",
     "outline": "Struktur",
-    "trash": "Silinmişlər"
+    "trash": "Silinmişlər",
+    "book": "Kitab"
   },
   "explorer": {
     "files": "İş sahəsi faylları",
@@ -1376,7 +1377,11 @@
     "missing": "yoxdur",
     "missingCount": "{{count}} fəsil sadalanıb, amma diskdə tapılmadı.",
     "chapterMissing": "{{path}} oxuna bilmədi",
-    "empty": "Fəsillərin hamısı boşdur."
+    "empty": "Fəsillərin hamısı boşdur.",
+    "previous": "Əvvəlki fəsil",
+    "next": "Növbəti fəsil",
+    "last": "Son fəsil",
+    "notInBook": "Bu kitabda deyil"
   },
   "study": {
     "title": "Öyrənmə",

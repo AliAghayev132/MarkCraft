@@ -1,0 +1,96 @@
+name: Installers
+
+# Packaging is separate from CI on purpose. Every push runs the checks; only a
+# tag or an explicit request builds installers, because each one downloads a
+# ~100 MB Electron binary and packs it three times over.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: installers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # A Linux AppImage that failed to pack should not stop the Windows
+      # installer from being produced; whoever is cutting the release wants to
+      # see all three outcomes at once.
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: Windows installer
+            artifacts: 'release/*.exe'
+          - os: macos-latest
+            name: macOS disk image
+            artifacts: 'release/*.dmg'
+          - os: ubuntu-latest
+            name: Linux AppImage and deb
+            artifacts: |
+              release/*.AppImage
+              release/*.deb
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+
+      # No ELECTRON_SKIP_BINARY_DOWNLOAD here: this job is the one that needs
+      # the binary it is packing.
+      - name: Install
+        run: npm ci
+
+      # Unsigned, deliberately. Signing needs a certificate the project does
+      # not have, and shipping a half-signed build is worse than an honest
+      # unsigned one — the installer will show the usual unknown-publisher
+      # warning, which is the truth.
+      - name: Package
+        run: npm run dist
+        env:
+          # electron-builder would otherwise try to publish to GitHub itself;
+          # the release step below is the only thing that should upload.
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Collect
+        uses: actions/upload-artifact@v4
+        with:
+          name: markcraft-${{ matrix.os }}
+          path: ${{ matrix.artifacts }}
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Draft release
+    runs-on: ubuntu-latest
+    needs: package
+    # Only a tag produces a release. A manual run is for checking that the
+    # installers still pack, and should not create anything public.
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Gather every platform's installers
+        uses: actions/download-artifact@v4
+        with:
+          path: installers
+          merge-multiple: true
+
+      # Draft, not published: what goes out under the project's name is a
+      # decision for a person, not for a tag push.
+      - name: Draft
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: installers/*
+          generate_release_notes: true

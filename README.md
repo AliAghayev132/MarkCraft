@@ -111,10 +111,17 @@ npm run dist       # installers for the current platform
 
 | Script | |
 |---|---|
-| `npm test` | The unit suite — 522 tests |
+| `npm test` | The unit suite — 664 tests |
 | `npm run typecheck` | Both TypeScript projects, main and renderer |
 | `npm run lint` | ESLint, including the vendor-boundary rules |
 | `npm run package` | An unpacked build, without an installer |
+
+**On CI.** Type-check, lint and the test suite run on Linux, macOS and Windows
+for every push. Installers — an NSIS setup, a `.dmg`, an AppImage and a `.deb` —
+are built on all three when a `v*` tag is pushed, and collected into a **draft**
+release for a person to look at before anything goes out. They are unsigned:
+signing needs a certificate the project does not have, and an honest unsigned
+build beats a half-signed one.
 
 ---
 

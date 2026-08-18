@@ -15,8 +15,15 @@ concurrency:
 
 jobs:
   verify:
-    name: Type-check · lint · test
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} · type-check · lint · test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # One platform failing should not hide whether the others are fine —
+      # that is the whole point of running three.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -43,7 +50,7 @@ jobs:
         run: npm test
 
   build:
-    name: Build
+    name: Build bundles
     runs-on: ubuntu-latest
     # Building a broken bundle is not interesting; wait for the cheap checks.
     needs: verify

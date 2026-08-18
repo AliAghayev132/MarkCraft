@@ -1,0 +1,29 @@
+# Line endings, decided here rather than by whoever cloned the repository.
+#
+# The checks now run on Linux, macOS and Windows. Without this, what lands in a
+# working copy depends on each contributor's `core.autocrlf`, and a file can
+# arrive at CI with endings nobody chose.
+* text=auto eol=lf
+
+# Windows shells will not run a script with LF-only endings.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary, so git never tries to translate anything inside them.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.pdf binary
+*.docx binary
+
+# Generated: excluded from diffs and from the language statistics, which
+# otherwise report the project as whatever the lockfile is written in.
+package-lock.json -diff linguist-generated

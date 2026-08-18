@@ -392,7 +392,8 @@
     "view.study": "Учёба",
     "view.canvas": "Холст",
     "document.lock": "Заблокировать или разблокировать документ",
-    "tools.http": "HTTP-запрос"
+    "tools.http": "HTTP-запрос",
+    "help.guide": "Как пользоваться MarkCraft"
   },
   "dialogs": {
     "goToLine": {
@@ -1448,5 +1449,11 @@
     "truncated": "обрезано",
     "responseHeaders": "Заголовки ответа",
     "responseBody": "Тело ответа"
+  },
+  "help": {
+    "title": "Как пользоваться MarkCraft",
+    "contents": "Содержание",
+    "search": "Поиск по руководству…",
+    "noMatch": "В руководстве ничего не найдено."
   }
 }

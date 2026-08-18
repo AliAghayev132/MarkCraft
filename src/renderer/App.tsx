@@ -141,6 +141,7 @@ export function App(): React.ReactElement {
       openStudy: () => overlays.show('study'),
       openCanvas: () => overlays.show('canvas'),
       openHttp: () => overlays.show('http'),
+      openHelp: () => overlays.show('help'),
       toggleLock: () => {
         if (!activeDocument) return
         dispatch(lockToggled({ id: activeDocument.id, locked: !activeDocument.locked }))

@@ -70,6 +70,7 @@ export interface CommandContext {
   openCanvas: () => void
   toggleLock: () => void
   openHttp: () => void
+  openHelp: () => void
   openStatistics: () => void
   openTemplates: () => void
   openFind: (replace: boolean) => void

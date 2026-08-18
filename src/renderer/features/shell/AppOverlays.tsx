@@ -17,6 +17,7 @@ import { InsertDialogLayer } from '@features/editor/dialogs'
 import { EmojiPicker, emojiPicker } from '@features/emoji'
 import { HistoryDialog } from '@features/history'
 import { IconPickerLayer } from '@features/icons'
+import { HelpView } from '@features/help'
 import { HttpDialog } from '@features/http'
 import { LinksDialog } from '@features/links'
 import { ExportModal, ShareModal } from '@features/output'
@@ -98,6 +99,7 @@ export function AppOverlays({
       <StudyView open={open.study} onClose={() => hide('study')} />
       <CanvasView open={open.canvas} onClose={() => hide('canvas')} />
       <HttpDialog open={open.http} onClose={() => hide('http')} />
+      <HelpView open={open.help} onClose={() => hide('help')} />
 
       <LinksDialog
         open={open.links}

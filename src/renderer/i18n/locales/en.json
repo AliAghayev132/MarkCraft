@@ -372,7 +372,8 @@
     "view.study": "Study",
     "view.canvas": "Canvas",
     "document.lock": "Lock or unlock this document",
-    "tools.http": "HTTP request"
+    "tools.http": "HTTP request",
+    "help.guide": "How to use MarkCraft"
   },
   "dialogs": {
     "goToLine": {
@@ -1428,5 +1429,11 @@
     "truncated": "truncated",
     "responseHeaders": "Response headers",
     "responseBody": "Response body"
+  },
+  "help": {
+    "title": "How to use MarkCraft",
+    "contents": "Contents",
+    "search": "Search the guide…",
+    "noMatch": "Nothing in the guide matches."
   }
 }

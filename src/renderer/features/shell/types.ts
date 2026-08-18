@@ -62,6 +62,7 @@ export type OverlayId =
   | 'study'
   | 'canvas'
   | 'http'
+  | 'help'
 
 export interface Overlays {
   open: Record<OverlayId, boolean>

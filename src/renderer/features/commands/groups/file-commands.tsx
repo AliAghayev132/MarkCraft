@@ -248,6 +248,13 @@ export const fileCommands: CommandGroupFactory = (context): CommandDefinition[] 
     icon: <Globe size={14} />,
     run: () => context.openHttp()
   },
+  {
+    id: 'help.guide',
+    category: 'View',
+    shortcut: 'f1',
+    icon: <LifeBuoy size={14} />,
+    run: () => context.openHelp()
+  },
 
   /* ── Tabs ──────────────────────────────────────────────────────────────── */
   {

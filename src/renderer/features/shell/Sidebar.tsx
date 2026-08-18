@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Beaker, Book, Clock, FolderTree, Globe, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
+import { Beaker, Book, Clock, FolderTree, Globe, LifeBuoy, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
 import { useCallback, useEffect, useRef, type PointerEvent, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -172,6 +172,16 @@ export function Sidebar({
         ))}
 
         <div className="flex-1" />
+
+        <IconButton
+          icon={<LifeBuoy size={17} />}
+          label={t('help.title')}
+          shortcut="f1"
+          size="lg"
+          tooltipPlacement="right"
+          className={RAIL_BUTTON}
+          onClick={() => onOpenTool('help')}
+        />
 
         <IconButton
           icon={<Settings size={17} />}

@@ -26,7 +26,8 @@ const IDS: OverlayId[] = [
   'book',
   'study',
   'canvas',
-  'http'
+  'http',
+  'help'
 ]
 
 /**

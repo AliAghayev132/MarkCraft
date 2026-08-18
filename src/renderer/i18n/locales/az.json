@@ -372,7 +372,8 @@
     "view.study": "Öyrənmə",
     "view.canvas": "Kanvas",
     "document.lock": "Bu sənədi kilidlə və ya aç",
-    "tools.http": "HTTP sorğusu"
+    "tools.http": "HTTP sorğusu",
+    "help.guide": "MarkCraft necə işlədilir"
   },
   "dialogs": {
     "goToLine": {
@@ -1428,5 +1429,11 @@
     "truncated": "kəsilib",
     "responseHeaders": "Cavab başlıqları",
     "responseBody": "Cavab gövdəsi"
+  },
+  "help": {
+    "title": "MarkCraft necə işlədilir",
+    "contents": "Məzmun",
+    "search": "Bələdçidə axtar…",
+    "noMatch": "Bələdçidə uyğun gələn yoxdur."
   }
 }

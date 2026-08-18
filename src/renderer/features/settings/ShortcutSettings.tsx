@@ -44,6 +44,7 @@ const INERT_CONTEXT: CommandContext = {
   openCanvas: noop,
   toggleLock: noop,
   openHttp: noop,
+  openHelp: noop,
   openStatistics: noop,
   openTemplates: noop,
   openFind: noop,

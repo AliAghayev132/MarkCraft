@@ -1,15 +1,10 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-// `shortcuts.ts` reads `navigator.platform` when it loads, so a stub has to be
-// in place before the module is imported.
-beforeAll(() => {
-  if (typeof globalThis.navigator === 'undefined') {
-    Object.defineProperty(globalThis, 'navigator', {
-      value: { platform: 'Win32' },
-      configurable: true
-    })
-  }
-})
+import { pinPlatform } from './helpers/platform'
+
+// `shortcuts.ts` reads `navigator.platform` once, when it loads, so the
+// platform has to be pinned before the dynamic import below.
+pinPlatform('Win32')
 
 const {
   findConflicts,

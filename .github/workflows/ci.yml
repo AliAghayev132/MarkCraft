@@ -26,9 +26,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: package.json
           cache: npm
@@ -46,8 +46,26 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Captured so a red run says what actually failed. Without this the only
+      # public record is "exit code 1", and diagnosing a break that happens on
+      # one platform and not another comes down to guessing.
       - name: Test
-        run: npm test
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test-output.txt
+
+      - name: Report the failures
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo "### Tests failed on ${{ matrix.os }}"
+            echo
+            echo '```'
+            tail -120 test-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
   build:
     name: Build bundles
@@ -56,9 +74,9 @@ jobs:
     needs: verify
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: package.json
           cache: npm

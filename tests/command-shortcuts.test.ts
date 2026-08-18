@@ -1,15 +1,12 @@
 // @vitest-environment happy-dom
 
-import { beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-beforeAll(() => {
-  if (typeof globalThis.navigator === 'undefined') {
-    Object.defineProperty(globalThis, 'navigator', {
-      value: { platform: 'Win32' },
-      configurable: true
-    })
-  }
-})
+import { pinPlatform } from './helpers/platform'
+
+// The commands' accelerators are written as `mod+…`; pinned so the expected
+// spelling is Ctrl wherever this runs.
+pinPlatform('Win32')
 
 const { buildCommandDefinitions } = await import('@features/commands')
 const { findConflicts, parseAccelerator, resolveShortcuts } = await import(

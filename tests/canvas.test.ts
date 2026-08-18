@@ -4,11 +4,18 @@ import {
   anchorOf,
   bestSides,
   canvasBounds,
+  connect,
+  groupAround,
+  inPaintOrder,
+  MIN_NODE,
   nextNodeId,
   nodeAt,
   parseCanvas,
+  removeNode,
+  resizeNode,
   serialiseCanvas,
   snap,
+  type CanvasData,
   type CanvasNode
 } from '@shared'
 
@@ -182,5 +189,109 @@ describe('nextNodeId', () => {
   it('avoids edge ids too', () => {
     const canvas = { nodes: [node({ id: 'x' })], edges: [{ id: 'n2', fromNode: 'x', toNode: 'x' }] }
     expect(nextNodeId(canvas)).not.toBe('n2')
+  })
+})
+
+describe('editing a canvas', () => {
+  const canvas: CanvasData = {
+    nodes: [
+      { id: 'n1', type: 'text', x: 0, y: 0, width: 200, height: 120, text: 'one' },
+      { id: 'n2', type: 'text', x: 400, y: 0, width: 200, height: 120, text: 'two' },
+      { id: 'g1', type: 'group', x: -40, y: -40, width: 700, height: 300, label: 'both' }
+    ],
+    edges: []
+  }
+
+  describe('connect', () => {
+    it('joins two cards', () => {
+      const next = connect(canvas, 'n1', 'n2')
+      expect(next.edges).toHaveLength(1)
+      expect(next.edges[0]).toMatchObject({ fromNode: 'n1', toNode: 'n2' })
+    })
+
+    it('refuses to join a card to itself', () => {
+      expect(connect(canvas, 'n1', 'n1')).toBe(canvas)
+    })
+
+    it('leaves an existing pair alone, in either direction', () => {
+      const once = connect(canvas, 'n1', 'n2')
+      expect(connect(once, 'n1', 'n2').edges).toHaveLength(1)
+      expect(connect(once, 'n2', 'n1').edges).toHaveLength(1)
+    })
+
+    it('ignores a node that is not there', () => {
+      expect(connect(canvas, 'n1', 'gone')).toBe(canvas)
+    })
+
+    it('gives each edge an id nothing else is using', () => {
+      const two = connect(connect(canvas, 'n1', 'n2'), 'n1', 'g1')
+      const ids = [...two.nodes.map((n) => n.id), ...two.edges.map((e) => e.id)]
+      expect(new Set(ids).size).toBe(ids.length)
+    })
+
+    it('leaves the sides unset, so they are re-chosen as the cards move', () => {
+      const [edge] = connect(canvas, 'n1', 'n2').edges
+      expect(edge.fromSide).toBeUndefined()
+      expect(edge.toSide).toBeUndefined()
+    })
+  })
+
+  describe('removeNode', () => {
+    it('takes the lines that reached it with it', () => {
+      const joined = connect(canvas, 'n1', 'n2')
+      const next = removeNode(joined, 'n2')
+
+      expect(next.nodes.map((n) => n.id)).toEqual(['n1', 'g1'])
+      expect(next.edges).toEqual([])
+    })
+  })
+
+  describe('resizeNode', () => {
+    it('snaps to the grid', () => {
+      expect(resizeNode(canvas.nodes[0], 213, 187)).toMatchObject({ width: 220, height: 180 })
+    })
+
+    it('will not shrink a card below what can be read or grabbed', () => {
+      const tiny = resizeNode(canvas.nodes[0], 4, 4)
+      expect(tiny.width).toBe(MIN_NODE.width)
+      expect(tiny.height).toBe(MIN_NODE.height)
+    })
+  })
+
+  describe('groupAround', () => {
+    it('surrounds the nodes it is given', () => {
+      const bounds = groupAround([canvas.nodes[0], canvas.nodes[1]])
+
+      expect(bounds.x).toBeLessThan(0)
+      expect(bounds.y).toBeLessThan(0)
+      expect(bounds.x + bounds.width).toBeGreaterThan(600)
+      expect(bounds.y + bounds.height).toBeGreaterThan(120)
+    })
+
+    it('leaves more room above, where the label goes', () => {
+      const bounds = groupAround([canvas.nodes[0]])
+      const above = canvas.nodes[0].y - bounds.y
+      const below = bounds.y + bounds.height - (canvas.nodes[0].y + canvas.nodes[0].height)
+
+      expect(above).toBeGreaterThan(below)
+    })
+
+    it('gives an empty selection a usable default rather than a zero rectangle', () => {
+      const bounds = groupAround([])
+      expect(bounds.width).toBeGreaterThan(0)
+      expect(bounds.height).toBeGreaterThan(0)
+    })
+  })
+
+  describe('inPaintOrder', () => {
+    it('puts groups behind, whatever order the file had them in', () => {
+      const order = inPaintOrder(canvas.nodes).map((n) => n.id)
+      expect(order).toEqual(['g1', 'n1', 'n2'])
+    })
+
+    it('keeps the order within each band, because that is what front-to-back means', () => {
+      const order = inPaintOrder([...canvas.nodes].reverse()).map((n) => n.id)
+      expect(order).toEqual(['g1', 'n2', 'n1'])
+    })
   })
 })

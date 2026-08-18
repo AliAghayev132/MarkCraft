@@ -43,6 +43,9 @@ export interface CanvasEdge {
 
 export type Side = 'top' | 'right' | 'bottom' | 'left'
 
+/** In drawing order, so the anchor handles round a card always read the same. */
+export const SIDES: readonly Side[] = ['top', 'right', 'bottom', 'left']
+
 export interface CanvasData {
   nodes: CanvasNode[]
   edges: CanvasEdge[]
@@ -214,4 +217,91 @@ export function nextNodeId(canvas: CanvasData): string {
   while (used.has(`n${at}`)) at++
 
   return `n${at}`
+}
+
+/** A new edge id, distinct from every id already in the canvas. */
+export function nextEdgeId(canvas: CanvasData): string {
+  const used = new Set([...canvas.nodes.map((n) => n.id), ...canvas.edges.map((e) => e.id)])
+
+  let at = canvas.edges.length + 1
+  while (used.has(`e${at}`)) at++
+
+  return `e${at}`
+}
+
+/**
+ * Joins two cards.
+ *
+ * A card cannot be joined to itself, and a pair already joined is left alone —
+ * dragging the same link twice is a slip, not a request for two identical
+ * lines stacked on top of each other. The sides are deliberately not stored:
+ * leaving them out lets `bestSides` re-choose them every time the cards move,
+ * so a line never ends up leaving the far side of its own card.
+ */
+export function connect(canvas: CanvasData, fromNode: string, toNode: string): CanvasData {
+  if (fromNode === toNode) return canvas
+
+  const exists = canvas.edges.some(
+    (edge) =>
+      (edge.fromNode === fromNode && edge.toNode === toNode) ||
+      (edge.fromNode === toNode && edge.toNode === fromNode)
+  )
+  if (exists) return canvas
+
+  const ids = new Set(canvas.nodes.map((node) => node.id))
+  if (!ids.has(fromNode) || !ids.has(toNode)) return canvas
+
+  return {
+    ...canvas,
+    edges: [...canvas.edges, { id: nextEdgeId(canvas), fromNode, toNode }]
+  }
+}
+
+/** Removes a node and every line that reached it. */
+export function removeNode(canvas: CanvasData, id: string): CanvasData {
+  return {
+    nodes: canvas.nodes.filter((node) => node.id !== id),
+    edges: canvas.edges.filter((edge) => edge.fromNode !== id && edge.toNode !== id)
+  }
+}
+
+export const MIN_NODE = { width: 80, height: 60 }
+
+/** Resizes from the bottom-right corner, on the grid, never below usable. */
+export function resizeNode(node: CanvasNode, width: number, height: number): CanvasNode {
+  return {
+    ...node,
+    width: Math.max(MIN_NODE.width, snap(width)),
+    height: Math.max(MIN_NODE.height, snap(height))
+  }
+}
+
+/**
+ * A group rectangle drawn around the given nodes.
+ *
+ * The padding leaves room for the group's own label above its contents, which
+ * is why the top gets more of it than the other three sides.
+ */
+export function groupAround(nodes: CanvasNode[], padding = 40): Bounds {
+  if (nodes.length === 0) return { x: 0, y: 0, width: 320, height: 240 }
+
+  const bounds = canvasBounds(nodes)
+  return {
+    x: snap(bounds.x - padding),
+    y: snap(bounds.y - padding * 1.5),
+    width: snap(bounds.width + padding * 2),
+    height: snap(bounds.height + padding * 2.5)
+  }
+}
+
+/**
+ * Groups first, so a group added after the cards it surrounds does not cover
+ * them. Order within each band is left alone — it is what "bring to front"
+ * means, and the file records it.
+ */
+export function inPaintOrder(nodes: CanvasNode[]): CanvasNode[] {
+  return [
+    ...nodes.filter((node) => node.type === 'group'),
+    ...nodes.filter((node) => node.type !== 'group')
+  ]
 }

@@ -76,8 +76,13 @@ The canvas is stored as **\`canvas.canvas\`** inside the open folder. If the fil
 | **Zoom** | Mouse wheel — the point under the cursor stays put |
 | **Move a card** | Drag it; it settles onto a 20-pixel grid |
 | **Select a card** | Click it — a blue ring appears |
-| **Delete a card** | Select, then \`Delete\` or \`Backspace\` |
-| **Add a card** | The "Add card" button at the top |
+| **Write in a card** | Double-click it, or select it and press \`Enter\`. Clicking away keeps the change, \`Escape\` abandons it |
+| **Resize a card** | Drag the small square at its bottom-right corner |
+| **Join two cards** | Drag from one of the four round handles on a selected card onto another card |
+| **Delete a card** | Select, then \`Delete\` or \`Backspace\` — the lines that reached it go too |
+| **Add a card** | The "Add card" button at the top; it opens ready to be written in |
+| **Add a group** | The group icon — it wraps the selected card, or drops an empty frame |
+| **Undo** | \`Ctrl+Z\`, or the undo icon. A whole drag is one step back, not one per pixel |
 | **Fit to view** | The expand icon — scales so everything is visible |
 | **Save** | \`Ctrl+S\`, or the save icon |
 

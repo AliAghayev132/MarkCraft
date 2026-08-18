@@ -1,143 +1,110 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Expand, Plus, Save, Shapes, X } from '@icons'
-import { useCallback, useEffect, useRef, useState, type ReactElement } from '@lib/react'
+import { Expand, Group, Plus, Save, Shapes, Undo2, X } from '@icons'
+import { useEffect, useRef, useState, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
 import {
-  anchorOf,
-  bestSides,
-  canvasBounds,
+  connect,
+  groupAround,
+  inPaintOrder,
   nextNodeId,
   nodeAt,
-  parseCanvas,
-  serialiseCanvas,
+  removeNode,
+  resizeNode,
   snap,
-  EMPTY_CANVAS,
-  type CanvasData,
-  type CanvasNode
+  type CanvasNode,
+  type Side
 } from '@shared'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
 
-// ── @services ──────────────────────────────────────────────────────────────
-import { toast } from '@services'
-
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, IconButton, Spinner } from '@ui'
 
-// ── @utils ─────────────────────────────────────────────────────────────────
-import { cx } from '@utils'
-
-// ── @features ──────────────────────────────────────────────────────────────
-import { renderMarkdown } from '@features/editor/markdown'
-import { canvasFilePath, readCanvas, writeCanvas } from './canvas-actions'
+// ── ./canvas ───────────────────────────────────────────────────────────────
+import { canvasFilePath } from './canvas-actions'
+import { CanvasCard } from './CanvasCard'
+import { CanvasEdges } from './CanvasEdges'
+import { useCanvasDocument } from './useCanvasDocument'
+import { useCanvasViewport } from './useCanvasViewport'
 
 // ── types ──────────────────────────────────────────────────────────────────
-import type { CanvasViewProps } from './types'
-
-interface Viewport {
-  x: number
-  y: number
-  zoom: number
-}
-
-const ZOOM_LIMITS = { min: 0.2, max: 2.5 }
+import type { CanvasGesture, CanvasViewProps } from './types'
 
 /**
  * The canvas surface.
  *
- * Pan and zoom live in one transform on a single group rather than on each
- * card: the browser then composites the whole scene once, and a canvas with a
- * hundred cards drags as smoothly as one with three.
+ * The pointer does four different things here — panning, moving a card,
+ * resizing one and drawing a line between two — and which one is in progress is
+ * held in a single value rather than four booleans. A gesture that cannot be
+ * two things at once should not be able to represent being two things at once.
  */
 export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | null {
   const t = useT()
 
-  const [canvas, setCanvas] = useState<CanvasData>(EMPTY_CANVAS)
-  const [view, setView] = useState<Viewport>({ x: 0, y: 0, zoom: 1 })
-  const [selected, setSelected] = useState<string | null>(null)
-  const [dirty, setDirty] = useState(false)
-  const [loading, setLoading] = useState(false)
-
   const surface = useRef<HTMLDivElement>(null)
-  const drag = useRef<{ id: string | null; startX: number; startY: number; originX: number; originY: number } | null>(null)
+  const { canvas, dirty, loading, canUndo, edit, undo, save } = useCanvasDocument(open)
+  const { view, setView, toScene, zoomAt, fit } = useCanvasViewport(surface)
+
+  const [selected, setSelected] = useState<string | null>(null)
+  const [editing, setEditing] = useState<string | null>(null)
+  const [gesture, setGesture] = useState<CanvasGesture | null>(null)
 
   useEffect(() => {
     if (!open) return
-
-    let cancelled = false
-    setLoading(true)
-
-    void readCanvas()
-      .then((json) => {
-        if (cancelled) return
-        setCanvas(parseCanvas(json))
-        setSelected(null)
-        setDirty(false)
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-
-    return () => {
-      cancelled = true
-    }
+    setSelected(null)
+    setEditing(null)
   }, [open])
-
-  const toScene = useCallback(
-    (clientX: number, clientY: number) => {
-      const box = surface.current?.getBoundingClientRect()
-      if (!box) return { x: 0, y: 0 }
-
-      return {
-        x: (clientX - box.left - view.x) / view.zoom,
-        y: (clientY - box.top - view.y) / view.zoom
-      }
-    },
-    [view]
-  )
-
-  const save = useCallback(async (): Promise<void> => {
-    const path = await writeCanvas(serialiseCanvas(canvas))
-    if (path) {
-      setDirty(false)
-      toast.success(t('canvas.saved'))
-    }
-  }, [canvas, t])
 
   useEffect(() => {
     if (!open) return
 
     const onKey = (event: KeyboardEvent): void => {
+      // A card being written in owns the keyboard. The editor stops these
+      // before they reach the window; this is the belt to that braces.
+      if (editing) return
+
       if (event.key === 'Escape') {
         event.preventDefault()
         onClose()
         return
       }
 
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+      const mod = event.ctrlKey || event.metaKey
+
+      if (mod && event.key.toLowerCase() === 's') {
         event.preventDefault()
         void save()
         return
       }
 
-      // Delete removes the selected card and every line that reached it — an
-      // edge to a card that is gone would draw into empty space.
+      if (mod && event.key.toLowerCase() === 'z') {
+        event.preventDefault()
+        undo()
+        return
+      }
+
       if ((event.key === 'Delete' || event.key === 'Backspace') && selected) {
         event.preventDefault()
-        setCanvas((at) => ({
-          nodes: at.nodes.filter((node) => node.id !== selected),
-          edges: at.edges.filter((edge) => edge.fromNode !== selected && edge.toNode !== selected)
-        }))
+        edit((at) => removeNode(at, selected))
         setSelected(null)
-        setDirty(true)
+        return
+      }
+
+      // Enter opens the selected card, the way it opens a row in the explorer.
+      if (event.key === 'Enter' && selected) {
+        const node = canvas.nodes.find((candidate) => candidate.id === selected)
+        if (node?.type === 'text' || node?.type === 'group') {
+          event.preventDefault()
+          setEditing(selected)
+        }
       }
     }
 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose, save, selected])
+  }, [open, onClose, save, undo, edit, selected, editing, canvas.nodes])
 
   if (!open) return null
 
@@ -145,75 +112,87 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
     const point = toScene(event.clientX, event.clientY)
     const hit = nodeAt(canvas.nodes, point.x, point.y)
 
+    if (editing !== null && hit?.id !== editing) setEditing(null)
     setSelected(hit?.id ?? null)
     event.currentTarget.setPointerCapture(event.pointerId)
 
-    drag.current = {
-      id: hit?.id ?? null,
-      startX: event.clientX,
-      startY: event.clientY,
-      originX: hit?.x ?? view.x,
-      originY: hit?.y ?? view.y
-    }
+    setGesture(
+      hit
+        ? {
+            kind: 'move',
+            id: hit.id,
+            startX: event.clientX,
+            startY: event.clientY,
+            originX: hit.x,
+            originY: hit.y
+          }
+        : {
+            kind: 'pan',
+            startX: event.clientX,
+            startY: event.clientY,
+            originX: view.x,
+            originY: view.y
+          }
+    )
   }
 
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>): void => {
-    const state = drag.current
-    if (!state) return
+    if (!gesture) return
 
-    const dx = event.clientX - state.startX
-    const dy = event.clientY - state.startY
-
-    // No node under the pointer means the surface itself is being dragged.
-    if (state.id === null) {
-      setView((at) => ({ ...at, x: state.originX + dx, y: state.originY + dy }))
+    if (gesture.kind === 'link') {
+      const point = toScene(event.clientX, event.clientY)
+      setGesture({ ...gesture, toX: point.x, toY: point.y })
       return
     }
 
-    setCanvas((at) => ({
-      ...at,
-      nodes: at.nodes.map((node) =>
-        node.id === state.id
-          ? { ...node, x: snap(state.originX + dx / view.zoom), y: snap(state.originY + dy / view.zoom) }
-          : node
+    if (gesture.kind === 'pan') {
+      setView((at) => ({
+        ...at,
+        x: gesture.originX + (event.clientX - gesture.startX),
+        y: gesture.originY + (event.clientY - gesture.startY)
+      }))
+      return
+    }
+
+    const dx = (event.clientX - gesture.startX) / view.zoom
+    const dy = (event.clientY - gesture.startY) / view.zoom
+
+    if (gesture.kind === 'resize') {
+      // Coalesced: the whole drag is one thing to undo, not one step per pixel.
+      edit(
+        (at) => ({
+          ...at,
+          nodes: at.nodes.map((node) =>
+            node.id === gesture.id ? resizeNode(node, gesture.width + dx, gesture.height + dy) : node
+          )
+        }),
+        true
       )
-    }))
-    setDirty(true)
-  }
+      return
+    }
 
-  const onWheel = (event: React.WheelEvent<HTMLDivElement>): void => {
-    const box = surface.current?.getBoundingClientRect()
-    if (!box) return
-
-    const factor = event.deltaY < 0 ? 1.1 : 1 / 1.1
-    const zoom = Math.min(ZOOM_LIMITS.max, Math.max(ZOOM_LIMITS.min, view.zoom * factor))
-
-    // Zoom about the pointer, so the card under it stays under it.
-    const px = event.clientX - box.left
-    const py = event.clientY - box.top
-
-    setView({
-      zoom,
-      x: px - ((px - view.x) / view.zoom) * zoom,
-      y: py - ((py - view.y) / view.zoom) * zoom
-    })
-  }
-
-  const fit = (): void => {
-    const box = surface.current?.getBoundingClientRect()
-    const bounds = canvasBounds(canvas.nodes)
-    if (!box || bounds.width === 0) return
-
-    const zoom = Math.min(
-      ZOOM_LIMITS.max,
-      Math.min((box.width - 80) / bounds.width, (box.height - 80) / bounds.height)
+    edit(
+      (at) => ({
+        ...at,
+        nodes: at.nodes.map((node) =>
+          node.id === gesture.id
+            ? { ...node, x: snap(gesture.originX + dx), y: snap(gesture.originY + dy) }
+            : node
+        )
+      }),
+      true
     )
+  }
 
-    setView({
-      zoom,
-      x: box.width / 2 - (bounds.x + bounds.width / 2) * zoom,
-      y: box.height / 2 - (bounds.y + bounds.height / 2) * zoom
-    })
+  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>): void => {
+    // A line only becomes an edge if it was let go over another card.
+    if (gesture?.kind === 'link') {
+      const point = toScene(event.clientX, event.clientY)
+      const target = nodeAt(canvas.nodes, point.x, point.y)
+      if (target) edit((at) => connect(at, gesture.id, target.id))
+    }
+
+    setGesture(null)
   }
 
   const addCard = (): void => {
@@ -230,12 +209,45 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
       text: t('canvas.newCard')
     }
 
-    setCanvas((at) => ({ ...at, nodes: [...at.nodes, card] }))
+    edit((at) => ({ ...at, nodes: [...at.nodes, card] }))
     setSelected(card.id)
-    setDirty(true)
+
+    // Straight into the editor: a card that says "New card" is never what was
+    // wanted, and making the user find the double-click first is a step for
+    // nothing.
+    setEditing(card.id)
   }
 
-  const byId = new Map(canvas.nodes.map((node) => [node.id, node]))
+  const addGroup = (): void => {
+    const around = canvas.nodes.filter((node) => node.id === selected && node.type !== 'group')
+    const box = surface.current?.getBoundingClientRect()
+
+    // Around the selected card if there is one, otherwise a default rectangle
+    // in the middle of what the user is looking at.
+    let bounds = groupAround(around)
+    if (around.length === 0) {
+      const centre = box
+        ? toScene(box.left + box.width / 2, box.top + box.height / 2)
+        : { x: 0, y: 0 }
+      bounds = { x: snap(centre.x - 160), y: snap(centre.y - 120), width: 320, height: 240 }
+    }
+
+    const group: CanvasNode = {
+      id: nextNodeId(canvas),
+      type: 'group',
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+      label: t('canvas.newGroup')
+    }
+
+    edit((at) => ({ ...at, nodes: [...at.nodes, group] }))
+    setSelected(group.id)
+  }
+
+  const linking = gesture?.kind === 'link' ? gesture : null
+  const linkingFrom = linking ? canvas.nodes.find((node) => node.id === linking.id) : undefined
 
   return (
     <div
@@ -255,12 +267,29 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
           <span className="pr-1 text-xs tabular-nums text-ink-tertiary">
             {canvas.nodes.length} · {Math.round(view.zoom * 100)}%
           </span>
+
           <Button size="sm" variant="secondary" onClick={addCard}>
             <Plus size={13} />
             {t('canvas.addCard')}
           </Button>
-          <IconButton icon={<Expand size={15} />} label={t('canvas.fit')} onClick={fit} />
-          <IconButton icon={<Save size={15} />} label={t('common.save')} onClick={() => void save()} />
+
+          <IconButton icon={<Group size={15} />} label={t('canvas.addGroup')} onClick={addGroup} />
+          <IconButton
+            icon={<Undo2 size={15} />}
+            label={t('common.undo')}
+            disabled={!canUndo}
+            onClick={undo}
+          />
+          <IconButton
+            icon={<Expand size={15} />}
+            label={t('canvas.fit')}
+            onClick={() => fit(canvas.nodes)}
+          />
+          <IconButton
+            icon={<Save size={15} />}
+            label={t('common.save')}
+            onClick={() => void save()}
+          />
           <IconButton icon={<X size={15} />} label={t('common.close')} onClick={onClose} />
         </span>
       </div>
@@ -270,11 +299,9 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
         role="presentation"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        onPointerUp={() => {
-          drag.current = null
-        }}
-        onWheel={onWheel}
-        className="relative min-h-0 flex-1 cursor-grab touch-none overflow-hidden bg-sunken select-none"
+        onPointerUp={onPointerUp}
+        onWheel={(event) => zoomAt(event.clientX, event.clientY, event.deltaY < 0 ? 1.1 : 1 / 1.1)}
+        className="relative min-h-0 flex-1 cursor-grab touch-none select-none overflow-hidden bg-sunken"
       >
         {loading ? (
           <div className="flex h-full items-center justify-center">
@@ -288,56 +315,59 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
             }}
             className="absolute inset-0"
           >
-            <svg className="pointer-events-none absolute overflow-visible" width={1} height={1}>
-              {canvas.edges.map((edge) => {
-                const from = byId.get(edge.fromNode)
-                const to = byId.get(edge.toNode)
-                if (!from || !to) return null
+            <CanvasEdges
+              canvas={canvas}
+              pending={
+                linking && linkingFrom
+                  ? {
+                      from: linkingFrom,
+                      side: linking.side,
+                      toX: linking.toX,
+                      toY: linking.toY
+                    }
+                  : null
+              }
+            />
 
-                const sides = bestSides(from, to)
-                const a = anchorOf(from, edge.fromSide ?? sides.from)
-                const b = anchorOf(to, edge.toSide ?? sides.to)
-
-                return (
-                  <line
-                    key={edge.id}
-                    x1={a.x}
-                    y1={a.y}
-                    x2={b.x}
-                    y2={b.y}
-                    className="stroke-ink-tertiary"
-                    strokeWidth={2}
-                  />
-                )
-              })}
-            </svg>
-
-            {canvas.nodes.map((node) => (
-              <div
+            {inPaintOrder(canvas.nodes).map((node) => (
+              <CanvasCard
                 key={node.id}
-                style={{ left: node.x, top: node.y, width: node.width, height: node.height }}
-                className={cx(
-                  'absolute overflow-hidden rounded-lg border p-2.5',
-                  node.type === 'group'
-                    ? 'border-dashed border-line bg-transparent'
-                    : 'border-line bg-app shadow-sm',
-                  selected === node.id ? 'ring-2 ring-accent' : ''
-                )}
-              >
-                {node.type === 'group' ? (
-                  <span className="text-2xs font-semibold uppercase tracking-wider text-ink-tertiary">
-                    {node.label ?? ''}
-                  </span>
-                ) : node.type === 'file' ? (
-                  <span className="text-xs text-ink-secondary">{node.file}</span>
-                ) : node.type === 'link' ? (
-                  <span className="text-xs break-all text-ink-secondary">{node.url}</span>
-                ) : (
-                  <article className="mc-document mc-canvas-card">
-                    {renderMarkdown(node.text ?? '', { baseDir: null, gfm: true, highlight: false })}
-                  </article>
-                )}
-              </div>
+                node={node}
+                selected={selected === node.id}
+                editing={editing === node.id}
+                zoom={view.zoom}
+                onStartEdit={() => setEditing(node.id)}
+                onCancelEdit={() => setEditing(null)}
+                onCommitEdit={(text) => {
+                  setEditing(null)
+                  edit((at) => ({
+                    ...at,
+                    nodes: at.nodes.map((candidate) =>
+                      candidate.id !== node.id
+                        ? candidate
+                        : node.type === 'group'
+                          ? { ...candidate, label: text }
+                          : { ...candidate, text }
+                    )
+                  }))
+                }}
+                onStartLink={(side: Side, event) => {
+                  const point = toScene(event.clientX, event.clientY)
+                  setSelected(node.id)
+                  setGesture({ kind: 'link', id: node.id, side, toX: point.x, toY: point.y })
+                }}
+                onStartResize={(event) => {
+                  setSelected(node.id)
+                  setGesture({
+                    kind: 'resize',
+                    id: node.id,
+                    startX: event.clientX,
+                    startY: event.clientY,
+                    width: node.width,
+                    height: node.height
+                  })
+                }}
+              />
             ))}
           </div>
         )}

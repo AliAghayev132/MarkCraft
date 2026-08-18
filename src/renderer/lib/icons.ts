@@ -177,6 +177,7 @@ export {
   Rocket,
   Scroll,
   Shapes,
+  Group,
   Tag,
   Target,
   Wrench,

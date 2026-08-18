@@ -60,7 +60,8 @@
     "occurrences_other": "{{count}} occurrences",
     "characters_one": "{{count}} character",
     "characters_other": "{{count}} characters",
-    "apply": "Apply"
+    "apply": "Apply",
+    "undo": "Undo"
   },
   "time": {
     "justNow": "just now",
@@ -1402,7 +1403,16 @@
     "newCard": "New card",
     "saved": "Canvas saved",
     "needsFolder": "Open a folder first — the canvas is saved beside it.",
-    "saveFailed": "Could not save the canvas"
+    "saveFailed": "Could not save the canvas",
+    "addGroup": "Add group",
+    "newGroup": "Group",
+    "resize": "Resize card",
+    "linkFrom": {
+      "top": "Draw a line from the top",
+      "right": "Draw a line from the right",
+      "bottom": "Draw a line from the bottom",
+      "left": "Draw a line from the left"
+    }
   },
   "lock": {
     "locked": "Locked — editing is off",

@@ -84,8 +84,13 @@ Kanvas açıq qovluğun içindəki **\`canvas.canvas\`** faylında saxlanılır.
 | **Miqyas** | Siçan təkəri — kursorun altındakı nöqtə yerində qalır |
 | **Kartı köçürmək** | Kartdan tutub çəkin, 20 pikselik şəbəkəyə oturur |
 | **Kart seçmək** | Kartın üzərinə klik — mavi çərçivə görünür |
-| **Kart silmək** | Seçin, sonra \`Delete\` və ya \`Backspace\` |
-| **Kart əlavə etmək** | Yuxarıdakı «Kart əlavə et» düyməsi |
+| **Kartın içində yazmaq** | İki dəfə klikləyin, ya seçib \`Enter\` basın. Kənara klikləmək saxlayır, \`Escape\` imtina edir |
+| **Kartın ölçüsünü dəyişmək** | Sağ alt küncdəki kiçik kvadratı çəkin |
+| **İki kartı birləşdirmək** | Seçilmiş kartın dörd dəyirmi tutacağının birindən digər kartın üzərinə çəkin |
+| **Kart silmək** | Seçin, sonra \`Delete\` və ya \`Backspace\` — ona gedən xətlər də silinir |
+| **Kart əlavə etmək** | Yuxarıdakı «Kart əlavə et» düyməsi — kart birbaşa yazmağa hazır açılır |
+| **Qrup əlavə etmək** | Qrup ikonu — seçilmiş kartı əhatə edir, seçim yoxdursa boş çərçivə qoyur |
+| **Geri almaq** | \`Ctrl+Z\`, yaxud geri al ikonu. Bütöv bir çəkmə bir addımdır, hər piksel üçün ayrı deyil |
 | **Ekrana sığdırmaq** | Genişləndirmə ikonu — hamısını görünəcək şəkildə miqyaslayır |
 | **Saxlamaq** | \`Ctrl+S\`, yaxud disket ikonu |
 

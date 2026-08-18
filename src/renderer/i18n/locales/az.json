@@ -60,7 +60,8 @@
     "occurrences_other": "{{count}} təkrar",
     "characters_one": "{{count}} simvol",
     "characters_other": "{{count}} simvol",
-    "apply": "Tətbiq et"
+    "apply": "Tətbiq et",
+    "undo": "Geri al"
   },
   "time": {
     "justNow": "indicə",
@@ -1402,7 +1403,16 @@
     "newCard": "Yeni kart",
     "saved": "Kanvas saxlanıldı",
     "needsFolder": "Əvvəlcə qovluq açın — kanvas onun yanında saxlanılır.",
-    "saveFailed": "Kanvas saxlanıla bilmədi"
+    "saveFailed": "Kanvas saxlanıla bilmədi",
+    "addGroup": "Qrup əlavə et",
+    "newGroup": "Qrup",
+    "resize": "Kartın ölçüsünü dəyiş",
+    "linkFrom": {
+      "top": "Yuxarıdan xətt çək",
+      "right": "Sağdan xətt çək",
+      "bottom": "Aşağıdan xətt çək",
+      "left": "Soldan xətt çək"
+    }
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

@@ -102,3 +102,67 @@ describe('pathGuard', () => {
     await expect(pathGuard.isAllowed(path.join(outside, 'secret.txt'))).resolves.toBe(false)
   })
 })
+
+describe('a workspace reached through a symlink', () => {
+  /*
+   * The failure this covers: grants were stored as given while `assert`
+   * resolved what it was handed through `realpath`, so the two lived in
+   * different spaces and never met. Not a corner case — on macOS the temporary
+   * directory *is* a symlink, on Windows a path can arrive in its 8.3 short
+   * form, and notes linked into a synced folder are ordinary everywhere. The
+   * workspace refused to open its own files, and only ever on some machines.
+   */
+  let link: string
+  let available = true
+
+  beforeAll(async () => {
+    link = path.join(path.dirname(root), 'linked')
+    try {
+      // A junction is the directory link Windows allows without privileges.
+      await fs.symlink(root, link, process.platform === 'win32' ? 'junction' : 'dir')
+    } catch {
+      available = false
+    }
+  })
+
+  it('opens a file when the root was granted through the link', async () => {
+    if (!available) return
+    pathGuard.grantRoot(link)
+    await expect(pathGuard.assert(path.join(link, 'docs', 'a.md'))).resolves.toContain('a.md')
+  })
+
+  it('opens it by its real path too — the same file, named differently', async () => {
+    if (!available) return
+    pathGuard.grantRoot(link)
+    await expect(pathGuard.assert(path.join(root, 'docs', 'a.md'))).resolves.toContain('a.md')
+  })
+
+  it('works the other way round: granted real, asked through the link', async () => {
+    if (!available) return
+    pathGuard.grantRoot(root)
+    await expect(pathGuard.assert(path.join(link, 'docs', 'a.md'))).resolves.toContain('a.md')
+  })
+
+  it('allows a file that does not exist yet inside the linked root', async () => {
+    if (!available) return
+    pathGuard.grantRoot(link)
+    await expect(pathGuard.assert(path.join(link, 'docs', 'new.md'))).resolves.toContain('new.md')
+  })
+
+  it('still refuses what is outside, however the root was named', async () => {
+    if (!available) return
+    pathGuard.grantRoot(link)
+    await expect(pathGuard.assert(path.join(outside, 'secret.txt'))).rejects.toBeInstanceOf(
+      ForbiddenPathError
+    )
+  })
+
+  it('revokes a root granted through the link', async () => {
+    if (!available) return
+    pathGuard.grantRoot(link)
+    pathGuard.revokeRoot(link)
+    await expect(pathGuard.assert(path.join(root, 'docs', 'a.md'))).rejects.toBeInstanceOf(
+      ForbiddenPathError
+    )
+  })
+})

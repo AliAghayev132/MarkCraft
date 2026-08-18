@@ -1,5 +1,5 @@
 // ── node: ──────────────────────────────────────────────────────────────────
-import { promises as fs } from 'node:fs'
+import { promises as fs, realpathSync } from 'node:fs'
 import path from 'node:path'
 
 // ── @shared ────────────────────────────────────────────────────────────────
@@ -22,7 +22,7 @@ class PathGuard {
   private readonly files = new Map<string, string>()
 
   grantRoot(target: string): void {
-    const resolved = path.resolve(target)
+    const resolved = realOf(path.resolve(target))
     this.roots.set(pathKey(resolved), resolved)
   }
 
@@ -32,13 +32,13 @@ class PathGuard {
    * document breaks — so the folder, not just the file, is the useful unit.
    */
   grantFile(target: string): void {
-    const resolved = path.resolve(target)
+    const resolved = realOf(path.resolve(target))
     this.files.set(pathKey(resolved), resolved)
     this.grantRoot(path.dirname(resolved))
   }
 
   revokeRoot(target: string): void {
-    this.roots.delete(pathKey(path.resolve(target)))
+    this.roots.delete(pathKey(realOf(path.resolve(target))))
   }
 
   reset(): void {
@@ -106,6 +106,33 @@ class PathGuard {
         current = parent
       }
     }
+  }
+}
+
+/**
+ * A granted path, in the same space the checks are made in.
+ *
+ * `assert` resolves what it is given through `realpath`, so a grant that was
+ * not resolved lived somewhere else entirely and never matched. That is not a
+ * corner case: on macOS the temporary directory is `/var` symlinked to
+ * `/private/var`, on Windows a path can arrive in its 8.3 short form, and on
+ * any platform a workspace kept behind a symlink — notes linked into a synced
+ * folder, say — is ordinary. The workspace simply refused to open its own
+ * files.
+ *
+ * Synchronous on purpose: grants happen when the user picks a folder or a file,
+ * a handful of times per session, while `assert` runs on every read. The
+ * expensive side stays async; this one buys correctness for a few syscalls.
+ *
+ * Falls back to the resolved-but-not-real path when the target does not exist
+ * yet — `assert` walks up to the nearest existing ancestor for the same
+ * reason, so the two still meet.
+ */
+function realOf(resolved: string): string {
+  try {
+    return realpathSync(resolved)
+  } catch {
+    return resolved
   }
 }
 

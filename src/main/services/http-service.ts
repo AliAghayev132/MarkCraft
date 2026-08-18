@@ -65,7 +65,7 @@ export async function sendRequest(request: HttpRequest): Promise<HttpResponse> {
         code: 'TIMEOUT'
       })
     }
-    throw error
+    throw withCause(error)
   } finally {
     clearTimeout(timer)
   }
@@ -110,4 +110,25 @@ async function fetchFollowing(
   }
 
   throw Object.assign(new Error(`More than ${MAX_REDIRECTS} redirects.`), { code: 'INVALID_ARGUMENT' })
+}
+
+/**
+ * The reason behind a failed `fetch`.
+ *
+ * Node's fetch reports every network failure as the single word "fetch failed"
+ * and puts what actually happened — the host that did not resolve, the refused
+ * connection, the certificate — in `cause`. Shown as-is, the user is told their
+ * request failed and nothing else; the one thing they need in order to fix a
+ * typed-in URL is the part that was being hidden.
+ */
+export function withCause(error: unknown): unknown {
+  if (!(error instanceof Error) || error.message !== 'fetch failed') return error
+
+  const cause = error.cause
+  if (!(cause instanceof Error)) return error
+
+  const detail = 'code' in cause && typeof cause.code === 'string' ? cause.code : null
+  const message = detail === null ? cause.message : `${cause.message} (${detail})`
+
+  return Object.assign(new Error(message), { code: 'NETWORK', cause })
 }

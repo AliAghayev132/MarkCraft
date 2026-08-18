@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import { withCause } from '@main/services/http-service'
+
 import { formatHeaders, isRequestableUrl, parseHeaders, prettyBody, statusTone } from '@shared'
 
 describe('parseHeaders', () => {
@@ -93,5 +95,49 @@ describe('statusTone', () => {
     expect(statusTone(404)).toBe('warning')
     expect(statusTone(500)).toBe('danger')
     expect(statusTone(0)).toBe('neutral')
+  })
+})
+
+describe('withCause', () => {
+  /*
+   * Node's fetch reports every network failure as "fetch failed" and hides the
+   * reason in `cause`. A user who mistyped a hostname was told only that it
+   * failed, which is the one thing they already knew.
+   */
+  it('surfaces the reason a fetch failed', () => {
+    const cause = Object.assign(new Error('getaddrinfo ENOTFOUND nowhere.invalid'), {
+      code: 'ENOTFOUND'
+    })
+    const surfaced = withCause(Object.assign(new Error('fetch failed'), { cause }))
+
+    expect((surfaced as Error).message).toBe('getaddrinfo ENOTFOUND nowhere.invalid (ENOTFOUND)')
+  })
+
+  it('keeps the original as the cause, so the log still has the whole chain', () => {
+    const cause = new Error('socket hang up')
+    const surfaced = withCause(Object.assign(new Error('fetch failed'), { cause }))
+
+    expect((surfaced as Error).cause).toBe(cause)
+  })
+
+  it('leaves the message alone when there is no code to add', () => {
+    const surfaced = withCause(
+      Object.assign(new Error('fetch failed'), { cause: new Error('socket hang up') })
+    )
+    expect((surfaced as Error).message).toBe('socket hang up')
+  })
+
+  it('passes through an error that already says something', () => {
+    const real = new Error('Only http:// and https:// addresses can be requested.')
+    expect(withCause(real)).toBe(real)
+  })
+
+  it('passes through a bare "fetch failed" with nothing behind it', () => {
+    const bare = new Error('fetch failed')
+    expect(withCause(bare)).toBe(bare)
+  })
+
+  it('passes through something that is not an error at all', () => {
+    expect(withCause('a string')).toBe('a string')
   })
 })

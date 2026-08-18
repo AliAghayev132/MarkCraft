@@ -153,3 +153,27 @@ export function validateFileName(name: string): NameValidation {
   if (trimmed.length > 255) return { valid: false, reason: 'Name is too long.' }
   return { valid: true }
 }
+
+/**
+ * A path expressed relative to a root, with forward slashes.
+ *
+ * Forward slashes are not cosmetic here: the link graph, `SUMMARY.md` and the
+ * canvas all key their entries this way, because a relative path written in a
+ * document is a URL and always uses them. Anything that has to look a document
+ * up in one of those has to arrive in the same shape, and a caller that slices
+ * the root off by hand on Windows ends up with backslashes and finds nothing.
+ *
+ * Null when the path is not under the root at all — that is a real answer, not
+ * a failure: a file opened from elsewhere has no place in this workspace's
+ * graph.
+ */
+export function relativeToRoot(root: string | null, target: string | null): string | null {
+  if (!root || !target) return null
+  if (!isDescendantPath(root, target)) return null
+
+  const rootParts = splitPath(root)
+  const targetParts = splitPath(target)
+  if (targetParts.length <= rootParts.length) return null
+
+  return targetParts.slice(rootParts.length).join('/')
+}

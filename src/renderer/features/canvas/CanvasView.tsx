@@ -256,20 +256,26 @@ export function CanvasView({ open, onClose }: CanvasViewProps): ReactElement | n
       aria-label={t('canvas.title')}
       className="fixed inset-0 z-palette flex flex-col bg-app"
     >
-      <div className="mc-no-drag flex flex-none items-center justify-between border-b border-line px-3 py-2">
-        <span className="flex items-center gap-2 text-sm font-medium text-ink">
-          <Shapes size={15} className="text-ink-tertiary" />
-          {canvasFilePath() ?? t('canvas.title')}
-          {dirty ? <span className="text-ink-tertiary">•</span> : null}
+      <div className="mc-no-drag flex flex-none items-center justify-between gap-3 border-b border-line px-3 py-2">
+        {/*
+         * The path truncates. A canvas several folders deep produced a title
+         * wide enough to crush the toolbar beside it, leaving "Add card"
+         * spilling out of its own button.
+         */}
+        <span className="flex min-w-0 items-center gap-2 text-sm font-medium text-ink">
+          <Shapes size={15} className="flex-none text-ink-tertiary" />
+          <span className="min-w-0 truncate" title={canvasFilePath() ?? undefined}>
+            {canvasFilePath() ?? t('canvas.title')}
+          </span>
+          {dirty ? <span className="flex-none text-ink-tertiary">•</span> : null}
         </span>
 
-        <span className="flex items-center gap-1">
+        <span className="flex flex-none items-center gap-1">
           <span className="pr-1 text-xs tabular-nums text-ink-tertiary">
             {canvas.nodes.length} · {Math.round(view.zoom * 100)}%
           </span>
 
-          <Button size="sm" variant="secondary" onClick={addCard}>
-            <Plus size={13} />
+          <Button size="sm" variant="secondary" icon={<Plus size={13} />} onClick={addCard}>
             {t('canvas.addCard')}
           </Button>
 

@@ -92,8 +92,12 @@ export function HttpDialog({ open, onClose }: HttpDialogProps): ReactElement {
       footer={
         <ModalActions>
           <Button onClick={onClose}>{t('common.close')}</Button>
-          <Button variant="primary" disabled={!valid || sending} onClick={() => void send()}>
-            <Mail size={14} />
+          <Button
+            variant="primary"
+            icon={<Mail size={14} />}
+            disabled={!valid || sending}
+            onClick={() => void send()}
+          >
             {sending ? t('http.sending') : t('http.send')}
           </Button>
         </ModalActions>

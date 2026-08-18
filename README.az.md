@@ -11,6 +11,19 @@ ilə idarəsini istəyən **tərtibatçıya**.
 
 ---
 
+## Görünüşü
+
+| | |
+|---|---|
+| ![Mənbə və önizləmə yan-yana](docs/screenshots/01-editor.png) | ![Yalnız önizləmə](docs/screenshots/02-reading.png) |
+| **Bölünmüş görünüş** — Markdown mənbəyi və onun çevrildiyi sənəd yan-yana, birlikdə sürüşür. | **Yalnız önizləmə** — eyni sənəd, mənbə görünmədən. |
+| ![Kitabın mündəricatı kənar paneldə](docs/screenshots/03-book.png) | ![Keçidlər qrafı](docs/screenshots/04-graph.png) |
+| **Kitab rejimi** — qovluq öz `SUMMARY.md` faylı ilə oxunur, harada olduğunuz görünür, növbəti fəsil bir klikdir. | **Keçidlər və qraf** — bütün iş sahəsində nə nəyə işarə edir və açıq sənədə nə keçid verir. |
+| ![Kanvas](docs/screenshots/05-canvas.png) | ![Görünüş parametrləri qaranlıq rejimdə](docs/screenshots/06-appearance-dark.png) |
+| **Kanvas** — sonsuz səthdə Markdown saxlayan kartlar, JSON Canvas formatında yadda saxlanılır. | **Görünüş** — iki tema, yeddi palitra, yeddi vurğu rəngi, hər rəng ayrıca və tema başına dəyişdirilə bilər. |
+
+---
+
 ## Əsas imkanlar
 
 | Sahə | Nə edir |

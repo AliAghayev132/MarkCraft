@@ -16,6 +16,19 @@ request tool, and running a code block. All three ship off or unconfigured.
 
 ---
 
+## What it looks like
+
+| | |
+|---|---|
+| ![The editor, split between source and preview](docs/screenshots/01-editor.png) | ![Preview only](docs/screenshots/02-reading.png) |
+| **Split view** — the Markdown source beside the document it renders to, scrolled together. | **Preview only** — the same document with the source out of the way. |
+| ![A book's table of contents in the sidebar](docs/screenshots/03-book.png) | ![The link graph](docs/screenshots/04-graph.png) |
+| **Book mode** — a folder read through its `SUMMARY.md`, with your place in it and the next chapter one click away. | **Links and graph** — what points at what across the whole workspace, and what links to the document you have open. |
+| ![The canvas](docs/screenshots/05-canvas.png) | ![Appearance settings in dark mode](docs/screenshots/06-appearance-dark.png) |
+| **Canvas** — cards holding Markdown on an infinite surface, saved as JSON Canvas. | **Appearance** — two themes, seven palettes, seven accents, and any individual colour overridable per theme. |
+
+---
+
 ## Writing
 
 | | |

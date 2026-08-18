@@ -4,6 +4,7 @@ import {
   dirname,
   ensureExtension,
   isDescendantPath,
+  relativeToRoot,
   joinPath,
   pathKey,
   pathsEqual,
@@ -101,5 +102,54 @@ describe('validateFileName', () => {
     // space the user cannot see is not worth an error message.
     expect(validateFileName('notes ').valid).toBe(true)
     expect(validateFileName('  notes.md  ').valid).toBe(true)
+  })
+})
+
+describe('relativeToRoot', () => {
+  /*
+   * The link graph, SUMMARY.md and the canvas all key their entries with
+   * forward slashes, because a relative path in a document is a URL. This is
+   * the one place that conversion happens.
+   */
+  it('uses forward slashes whatever the platform handed it', () => {
+    expect(relativeToRoot('C:\\Users\\me\\notes', 'C:\\Users\\me\\notes\\ideas\\one.md')).toBe(
+      'ideas/one.md'
+    )
+  })
+
+  it('copes with the two separators mixed, which Windows paths routinely are', () => {
+    expect(relativeToRoot('C:\\Users\\me\\notes', 'C:/Users/me/notes/ideas/one.md')).toBe(
+      'ideas/one.md'
+    )
+  })
+
+  it('ignores case on Windows, where the filesystem does', () => {
+    expect(relativeToRoot('C:\\Users\\Me\\Notes', 'c:\\users\\me\\notes\\one.md')).toBe('one.md')
+  })
+
+  it('is exact on POSIX, where the filesystem is', () => {
+    expect(relativeToRoot('/home/me/notes', '/home/Me/notes/one.md')).toBeNull()
+    expect(relativeToRoot('/home/me/notes', '/home/me/notes/one.md')).toBe('one.md')
+  })
+
+  it('tolerates a trailing separator on the root', () => {
+    expect(relativeToRoot('/home/me/notes/', '/home/me/notes/one.md')).toBe('one.md')
+  })
+
+  it('says nothing for a file outside the root', () => {
+    expect(relativeToRoot('/home/me/notes', '/home/me/other/one.md')).toBeNull()
+  })
+
+  it('is not fooled by a sibling folder with the same prefix', () => {
+    expect(relativeToRoot('/home/me/notes', '/home/me/notes-old/one.md')).toBeNull()
+  })
+
+  it('says nothing for the root itself, which is not a file in it', () => {
+    expect(relativeToRoot('/home/me/notes', '/home/me/notes')).toBeNull()
+  })
+
+  it('says nothing when either side is missing', () => {
+    expect(relativeToRoot(null, '/home/me/notes/one.md')).toBeNull()
+    expect(relativeToRoot('/home/me/notes', null)).toBeNull()
   })
 })

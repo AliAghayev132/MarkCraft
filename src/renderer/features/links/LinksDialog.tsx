@@ -3,7 +3,7 @@ import { AlertTriangle, FolderTree, Link2 } from '@icons'
 import { useEffect, useMemo, useState, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { backlinksOf, joinPath, normalizeSeparators, type LinkGraphResult } from '@shared'
+import { backlinksOf, joinPath, relativeToRoot, type LinkGraphResult } from '@shared'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
@@ -71,15 +71,16 @@ export function LinksDialog({ open, onClose, onOpenDocument }: LinksDialogProps)
     }
   }, [open, root])
 
-  const relative = useMemo(() => {
-    if (!document_?.path || !root) return null
-    const normalisedRoot = normalizeSeparators(root).replace(/\/$/, '')
-    const normalised = normalizeSeparators(document_.path)
-
-    return normalised.toLowerCase().startsWith(`${normalisedRoot.toLowerCase()}/`)
-      ? normalised.slice(normalisedRoot.length + 1)
-      : null
-  }, [document_?.path, root])
+  /*
+   * The graph is keyed by forward-slash relative paths. This was slicing the
+   * root off by hand and comparing against a forward slash, which on Windows
+   * never matched what `normalizeSeparators` produces — so the backlinks list
+   * was empty on Windows however many documents pointed at the open one.
+   */
+  const relative = useMemo(
+    () => relativeToRoot(root, document_?.path ?? null),
+    [document_?.path, root]
+  )
 
   const backlinks = useMemo(
     () => (graph && relative ? backlinksOf(graph, relative) : []),

@@ -193,8 +193,11 @@ export function DevToolsDialog({ open, onClose }: DevToolsDialogProps): ReactEle
           ) : null}
 
           {active.generator ? (
-            <Button variant="secondary" onClick={() => setGenerated(uuid())}>
-              <RefreshCw size={14} />
+            <Button
+              variant="secondary"
+              icon={<RefreshCw size={14} />}
+              onClick={() => setGenerated(uuid())}
+            >
               {t('devtools.generate')}
             </Button>
           ) : (

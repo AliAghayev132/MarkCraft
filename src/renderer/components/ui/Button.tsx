@@ -55,7 +55,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       aria-busy={loading || undefined}
       className={cx(BASE, VARIANTS[variant], SIZES[size], fullWidth && 'w-full', className)}
     >
-      {/* The label keeps its box while loading, so the button does not resize. */}
+      {/*
+       * The label keeps its box while loading, so the button does not resize.
+       *
+       * Icons belong in `icon`/`iconAfter`, not among the children: `truncate`
+       * carries `overflow: hidden`, and an `<svg>` — which the reset renders as
+       * a block — then lands on its own line above the text and spills out of
+       * the button. Three call sites had done exactly that.
+       */}
       <span className={cx('inline-flex min-w-0 items-center gap-1.5', loading && 'invisible')}>
         {icon}
         {children ? <span className="truncate">{children}</span> : null}

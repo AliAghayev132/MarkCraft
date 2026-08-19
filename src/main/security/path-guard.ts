@@ -1,6 +1,7 @@
 // ── node: ──────────────────────────────────────────────────────────────────
-import { promises as fs, realpathSync } from 'node:fs'
+import { realpath as realpathCallback, realpathSync } from 'node:fs'
 import path from 'node:path'
+import { promisify } from 'node:util'
 
 // ── @shared ────────────────────────────────────────────────────────────────
 import { isDescendantPath, pathKey } from '@shared'
@@ -97,7 +98,7 @@ class PathGuard {
 
     for (;;) {
       try {
-        const real = await fs.realpath(current)
+        const real = await realpathNative(current)
         return segments.length ? path.join(real, ...segments.reverse()) : real
       } catch {
         const parent = path.dirname(current)
@@ -108,6 +109,19 @@ class PathGuard {
     }
   }
 }
+
+/*
+ * The operating system's own resolver, on both sides of the check.
+ *
+ * Node ships two implementations. The default is JavaScript with a cache, and
+ * on Windows it does not follow a junction the way the native one does — so a
+ * grant resolved by one and a target resolved by the other disagreed about the
+ * same folder. Junctions are not exotic there: OneDrive uses them, and so do
+ * several paths under `C:\Users`.
+ *
+ * Which of the two is "right" does not matter. Using one everywhere does.
+ */
+const realpathNative = promisify(realpathCallback.native)
 
 /**
  * A granted path, in the same space the checks are made in.
@@ -130,7 +144,7 @@ class PathGuard {
  */
 function realOf(resolved: string): string {
   try {
-    return realpathSync(resolved)
+    return realpathSync.native(resolved)
   } catch {
     return resolved
   }

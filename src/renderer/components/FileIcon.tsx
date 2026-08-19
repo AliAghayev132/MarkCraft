@@ -8,12 +8,13 @@ import {
   FileText,
   FileType2,
   Folder,
-  FolderOpen
+  FolderOpen,
+  Shapes
 } from '@icons'
 import { memo, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import type { IconName } from '@shared'
+import { CANVAS_EXTENSION, type IconName } from '@shared'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { CustomSvgIcon, ICON_COMPONENTS, useIconAppearance, useIconSubject } from '@features/icons'
@@ -97,7 +98,9 @@ export const FileIcon = memo(function FileIcon({
   const extension = ext.toLowerCase()
 
   const [Glyph, tone] = extension
-    ? MARKDOWN_EXTENSIONS.has(extension)
+    ? extension === CANVAS_EXTENSION
+      ? ([Shapes, 'text-[var(--mc-canvas-6)]'] as const)
+      : MARKDOWN_EXTENSIONS.has(extension)
       ? ([FileType2, 'text-info'] as const)
       : IMAGE_EXTENSIONS.has(extension)
         ? ([FileImage, 'text-success'] as const)

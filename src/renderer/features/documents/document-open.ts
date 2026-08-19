@@ -9,9 +9,10 @@ import { dispatch, documentActivated, fileAdopted, getState, selectDocumentByPat
 
 // ── @features ──────────────────────────────────────────────────────────────
 // ── @shared ────────────────────────────────────────────────────────────────
-import { MARKDOWN_EXTENSIONS } from '@shared'
+import { CANVAS_EXTENSION, DOCUMENT_EXTENSIONS, extensionOf } from '@shared'
 
 // ── @features ──────────────────────────────────────────────────────────────
+import { canvasTarget } from '@features/canvas'
 import { defaultViewMode, readAllowingRemembered, reportError } from './document-context'
 
 /**
@@ -31,6 +32,17 @@ export async function openPath(
   path: string,
   options: { activate?: boolean } = {}
 ): Promise<string | null> {
+  /*
+   * A canvas is a document, but not a text one: it belongs on the canvas
+   * surface rather than in a tab beside the editor, where it would show as a
+   * page of JSON. Handled here rather than at each call site so every way into
+   * a file — the tree, the recent list, a drop onto the window — agrees.
+   */
+  if (extensionOf(path) === CANVAS_EXTENSION) {
+    canvasTarget.open(path)
+    return null
+  }
+
   const existing = selectDocumentByPath(getState(), path)
   if (existing) {
     if (options.activate !== false) dispatch(documentActivated(existing.id))
@@ -65,11 +77,11 @@ export async function openPath(
 }
 
 export async function openPaths(paths: string[]): Promise<void> {
-  const markdownLike = paths.filter((path) =>
-    MARKDOWN_EXTENSIONS.some((extension) => path.toLowerCase().endsWith(`.${extension}`))
+  const openable = paths.filter((path) =>
+    DOCUMENT_EXTENSIONS.some((extension) => path.toLowerCase().endsWith(`.${extension}`))
   )
 
-  const skipped = paths.length - markdownLike.length
+  const skipped = paths.length - openable.length
   if (skipped > 0) {
     toast.warning(
       t('notifications.skippedFiles', { count: skipped }),
@@ -78,7 +90,7 @@ export async function openPaths(paths: string[]): Promise<void> {
   }
 
   // Sequential so tab order matches the order the user selected them.
-  for (const path of markdownLike) {
+  for (const path of openable) {
     await openPath(path)
   }
 }

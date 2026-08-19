@@ -2,7 +2,7 @@
 import { createSelector } from '@lib/redux'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { MARKDOWN_EXTENSIONS } from '@shared'
+import { DOCUMENT_EXTENSIONS } from '@shared'
 
 // ── @store ─────────────────────────────────────────────────────────────────
 import type { RootState } from '@store'
@@ -19,7 +19,7 @@ import type { TreeNode } from '@store/slices/types'
  * workspace slice has no business importing settings.
  */
 
-const MARKDOWN_SET = new Set<string>(MARKDOWN_EXTENSIONS)
+const KEPT = new Set<string>(DOCUMENT_EXTENSIONS)
 
 /**
  * The visible, ordered list of tree rows.
@@ -39,8 +39,8 @@ export const selectVisibleTree = createSelector(
     const rows = flattenTree(workspace)
     if (!markdownOnly) return rows
 
-    // Directories always survive: hiding them would make their Markdown
-    // contents unreachable, which is the opposite of what the filter is for.
-    return rows.filter((row) => row.kind === 'directory' || MARKDOWN_SET.has(row.ext))
+    // Directories always survive: hiding them would make their contents
+    // unreachable, which is the opposite of what the filter is for.
+    return rows.filter((row) => row.kind === 'directory' || KEPT.has(row.ext))
   }
 )

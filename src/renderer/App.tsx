@@ -38,6 +38,7 @@ import { ExternalChangeBanner, useAutosave } from '@features/documents'
 import { EditorPane, editorRegistry } from '@features/editor'
 import { openLanguageDialog } from '@features/editor/dialogs'
 import { startAi } from '@features/ai'
+import { openDefaultCanvas } from '@features/canvas'
 import { pasteAsMarkdown } from '@features/editor/markdown'
 import { goToLine } from '@features/editor/source'
 import { MarkdownToolbar } from '@features/editor/toolbar'
@@ -362,7 +363,12 @@ export function App(): React.ReactElement {
             onRevealMatch={onRevealMatch}
             onRevealLine={onRevealLine}
             onOpenSettings={() => overlays.show('settings')}
-            onOpenTool={(id) => overlays.show(id)}
+            onOpenTool={(id) => {
+              // The canvas is a file, not a panel: its button opens the
+              // workspace's own canvas rather than raising an empty surface.
+              if (id === 'canvas') openDefaultCanvas()
+              else overlays.show(id)
+            }}
             onOpenDocument={(path) => void openPath(path)}
           />
         </ErrorBoundary>

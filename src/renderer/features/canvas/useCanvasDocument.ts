@@ -20,48 +20,54 @@ import type { CanvasDocument } from './types'
 const HISTORY_LIMIT = 50
 
 /**
- * The canvas file: reading it when the view opens, writing it back, and the
+ * The canvas file: reading it when one is opened, writing it back, and the
  * undo stack over the top.
  *
  * `edit` is the only way the canvas changes, which is what makes undo possible
  * at all — every operation in the view goes through it, so there is no path
  * that changes the document without the previous state being kept.
  */
-export function useCanvasDocument(open: boolean): CanvasDocument {
+export function useCanvasDocument(path: string | null): CanvasDocument {
   const t = useT()
 
   const [canvas, setCanvas] = useState<CanvasData>(EMPTY_CANVAS)
   const [dirty, setDirty] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [depth, setDepth] = useState(0)
+  const [depth, setDepth] = useState({ undo: 0, redo: 0 })
 
   /*
-   * Both refs mirror state rather than replacing it. `edit` reads them instead
+   * The refs mirror state rather than replacing it. `edit` reads them instead
    * of closing over the values, which keeps its identity stable — the view's
    * keyboard listener depends on it, and an `edit` that changed on every card
    * move would tear down and re-register that listener on every pointer event.
    */
   const canvasRef = useRef<CanvasData>(EMPTY_CANVAS)
-  const historyRef = useRef<CanvasData[]>([])
+  const undoRef = useRef<CanvasData[]>([])
+  const redoRef = useRef<CanvasData[]>([])
 
   const apply = useCallback((next: CanvasData): void => {
     canvasRef.current = next
     setCanvas(next)
   }, [])
 
+  const remember = useCallback((): void => {
+    setDepth({ undo: undoRef.current.length, redo: redoRef.current.length })
+  }, [])
+
   useEffect(() => {
-    if (!open) return
+    if (path === null) return
 
     let cancelled = false
     setLoading(true)
 
-    void readCanvas()
+    void readCanvas(path)
       .then((json) => {
         if (cancelled) return
 
         apply(parseCanvas(json))
-        historyRef.current = []
-        setDepth(0)
+        undoRef.current = []
+        redoRef.current = []
+        remember()
         setDirty(false)
       })
       .finally(() => {
@@ -71,7 +77,7 @@ export function useCanvasDocument(open: boolean): CanvasDocument {
     return () => {
       cancelled = true
     }
-  }, [open, apply])
+  }, [path, apply, remember])
 
   /**
    * `coalesce` is for the middle of a drag: a hundred pointer moves are one
@@ -85,33 +91,58 @@ export function useCanvasDocument(open: boolean): CanvasDocument {
       if (next === current) return
 
       if (!coalesce) {
-        historyRef.current = [...historyRef.current.slice(-(HISTORY_LIMIT - 1)), current]
-        setDepth(historyRef.current.length)
+        undoRef.current = [...undoRef.current.slice(-(HISTORY_LIMIT - 1)), current]
+        // A new edit is a new branch: what was undone is no longer ahead.
+        redoRef.current = []
+        remember()
       }
 
       apply(next)
       setDirty(true)
     },
-    [apply]
+    [apply, remember]
   )
 
   const undo = useCallback((): void => {
-    const previous = historyRef.current.at(-1)
+    const previous = undoRef.current.at(-1)
     if (!previous) return
 
-    historyRef.current = historyRef.current.slice(0, -1)
-    setDepth(historyRef.current.length)
+    undoRef.current = undoRef.current.slice(0, -1)
+    redoRef.current = [...redoRef.current, canvasRef.current]
+    remember()
     apply(previous)
     setDirty(true)
-  }, [apply])
+  }, [apply, remember])
+
+  const redo = useCallback((): void => {
+    const next = redoRef.current.at(-1)
+    if (!next) return
+
+    redoRef.current = redoRef.current.slice(0, -1)
+    undoRef.current = [...undoRef.current, canvasRef.current]
+    remember()
+    apply(next)
+    setDirty(true)
+  }, [apply, remember])
 
   const save = useCallback(async (): Promise<void> => {
-    const path = await writeCanvas(serialiseCanvas(canvasRef.current))
-    if (path) {
+    if (path === null) return
+
+    if (await writeCanvas(path, serialiseCanvas(canvasRef.current))) {
       setDirty(false)
       toast.success(t('canvas.saved'))
     }
-  }, [t])
+  }, [path, t])
 
-  return { canvas, dirty, loading, canUndo: depth > 0, edit, undo, save }
+  return {
+    canvas,
+    dirty,
+    loading,
+    canUndo: depth.undo > 0,
+    canRedo: depth.redo > 0,
+    edit,
+    undo,
+    redo,
+    save
+  }
 }

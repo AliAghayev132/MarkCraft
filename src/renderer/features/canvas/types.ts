@@ -1,10 +1,5 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import type { CanvasData, CanvasNode, Side } from '@shared'
-
-export interface CanvasViewProps {
-  open: boolean
-  onClose: () => void
-}
+import type { CanvasData, CanvasEdge, CanvasNode, Side } from '@shared'
 
 export interface Viewport {
   x: number
@@ -26,18 +21,40 @@ export interface CanvasDocument {
   dirty: boolean
   loading: boolean
   canUndo: boolean
+  canRedo: boolean
   /** The only way the canvas changes; `coalesce` folds a drag into one frame. */
   edit: (change: (canvas: CanvasData) => CanvasData, coalesce?: boolean) => void
   undo: () => void
+  redo: () => void
   save: () => Promise<void>
 }
+
+/**
+ * What is selected.
+ *
+ * Cards and lines together, because the toolbar acts on both and the user made
+ * no distinction when they dragged a box around them.
+ */
+export interface CanvasSelection {
+  nodes: string[]
+  edges: string[]
+}
+
+export const EMPTY_SELECTION: CanvasSelection = { nodes: [], edges: [] }
 
 /** What the pointer is doing between press and release. */
 export type CanvasGesture =
   | { kind: 'pan'; startX: number; startY: number; originX: number; originY: number }
-  | { kind: 'move'; id: string; startX: number; startY: number; originX: number; originY: number }
+  | {
+      kind: 'move'
+      /** Every node that travels, including a group's contents. */
+      origins: Map<string, { x: number; y: number }>
+      startX: number
+      startY: number
+    }
   | { kind: 'resize'; id: string; startX: number; startY: number; width: number; height: number }
   | { kind: 'link'; id: string; side: Side; toX: number; toY: number }
+  | { kind: 'marquee'; fromX: number; fromY: number; toX: number; toY: number; additive: boolean }
 
 export interface CanvasCardProps {
   node: CanvasNode
@@ -53,6 +70,24 @@ export interface CanvasCardProps {
 
 export interface CanvasEdgesProps {
   canvas: CanvasData
+  selected: string[]
   /** The line being dragged out of a card, before it has landed anywhere. */
   pending: { from: CanvasNode; side: Side; toX: number; toY: number } | null
+  onSelect: (edge: CanvasEdge, additive: boolean) => void
+}
+
+export interface CanvasPaletteProps {
+  /** The colour every selected mark shares, or undefined when they differ. */
+  current: string | undefined
+  onPick: (color: string | undefined) => void
+}
+
+export interface CanvasToolbarProps {
+  selection: CanvasSelection
+  canvas: CanvasData
+  onColor: (color: string | undefined) => void
+  onDuplicate: () => void
+  onDelete: () => void
+  onGroup: () => void
+  onLabelEdge: (id: string, label: string) => void
 }

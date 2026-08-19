@@ -61,7 +61,8 @@
     "characters_one": "{{count}} simvol",
     "characters_other": "{{count}} simvol",
     "apply": "Tətbiq et",
-    "undo": "Geri al"
+    "undo": "Geri al",
+    "redo": "Yenidən et"
   },
   "time": {
     "justNow": "indicə",
@@ -1417,7 +1418,23 @@
       "right": "Sağdan xətt çək",
       "bottom": "Aşağıdan xətt çək",
       "left": "Soldan xətt çək"
-    }
+    },
+    "grid": "Tor",
+    "colour": "Rəng",
+    "noColour": "Rəngsiz",
+    "colours": {
+      "1": "Qırmızı",
+      "2": "Narıncı",
+      "3": "Sarı",
+      "4": "Yaşıl",
+      "5": "Firuzəyi",
+      "6": "Bənövşəyi"
+    },
+    "selected": "{count} seçilib",
+    "duplicate": "Nüsxələ",
+    "groupSelection": "Bunları qruplaşdır",
+    "edgeLabel": "Xətt etiketi",
+    "empty": "Kart əlavə etmək üçün iki dəfə klikləyin, seçmək üçün sürüşdürün."
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

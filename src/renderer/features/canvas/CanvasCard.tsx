@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { SIDES, type Side } from '@shared'
+import { canvasColorCss, SIDES, type Side } from '@shared'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
@@ -46,10 +46,30 @@ export function CanvasCard({
   onStartResize
 }: CanvasCardProps): ReactElement {
   const t = useT()
+  const colour = canvasColorCss(node.color)
+
+  /*
+   * Colour is the border and a wash, never a solid fill. A card is read, and
+   * filling it would put the document's text on an arbitrary background where
+   * nothing can promise it stays legible — the wash keeps the card's own
+   * surface underneath and only tints it.
+   */
+  const painted = colour
+    ? {
+        borderColor: colour,
+        backgroundColor: `color-mix(in srgb, ${colour} 12%, var(--mc-bg-app))`
+      }
+    : undefined
 
   return (
     <div
-      style={{ left: node.x, top: node.y, width: node.width, height: node.height }}
+      style={{
+        left: node.x,
+        top: node.y,
+        width: node.width,
+        height: node.height,
+        ...(node.type === 'group' && colour ? { borderColor: colour } : painted)
+      }}
       className={cx(
         'absolute rounded-lg border',
         node.type === 'group'

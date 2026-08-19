@@ -4,14 +4,23 @@ import {
   anchorOf,
   bestSides,
   canvasBounds,
+  CANVAS_COLOR_SLOTS,
+  canvasColorCss,
+  colorSelection,
   connect,
+  duplicateNodes,
   groupAround,
   inPaintOrder,
+  isCanvasColor,
+  labelEdge,
   MIN_NODE,
   nextNodeId,
   nodeAt,
+  nodesInside,
   parseCanvas,
+  removeEdge,
   removeNode,
+  removeNodes,
   resizeNode,
   serialiseCanvas,
   snap,
@@ -293,5 +302,184 @@ describe('editing a canvas', () => {
       const order = inPaintOrder([...canvas.nodes].reverse()).map((n) => n.id)
       expect(order).toEqual(['g1', 'n2', 'n1'])
     })
+  })
+})
+
+describe('colour', () => {
+  it('accepts the six preset slots the format defines', () => {
+    for (const slot of CANVAS_COLOR_SLOTS) expect(isCanvasColor(slot)).toBe(true)
+  })
+
+  it('accepts a hex, because a canvas from elsewhere may carry one', () => {
+    expect(isCanvasColor('#ff8800')).toBe(true)
+    expect(isCanvasColor('#FF8800')).toBe(true)
+  })
+
+  it('refuses anything else — it ends up in a style attribute', () => {
+    for (const value of ['red', '7', '0', '#fff', 'var(--x)', 'url(evil)', 42, null, undefined]) {
+      expect(isCanvasColor(value)).toBe(false)
+    }
+  })
+
+  it('resolves a preset to a custom property, so it follows the theme', () => {
+    expect(canvasColorCss('4')).toBe('var(--mc-canvas-4)')
+  })
+
+  it('uses a hex as written — someone who typed one meant it', () => {
+    expect(canvasColorCss('#ff8800')).toBe('#ff8800')
+  })
+
+  it('is null for no colour, which is not the same as black', () => {
+    expect(canvasColorCss(undefined)).toBeNull()
+    expect(canvasColorCss('')).toBeNull()
+    expect(canvasColorCss('nonsense')).toBeNull()
+  })
+
+  it('drops an unusable colour when reading a file', () => {
+    const json = JSON.stringify({
+      nodes: [{ id: 'a', type: 'text', x: 0, y: 0, width: 100, height: 100, color: 'javascript:x' }],
+      edges: []
+    })
+
+    expect(parseCanvas(json).nodes[0].color).toBeUndefined()
+  })
+
+  it('keeps a colour it can use', () => {
+    const json = JSON.stringify({
+      nodes: [{ id: 'a', type: 'text', x: 0, y: 0, width: 100, height: 100, color: '3' }],
+      edges: []
+    })
+
+    expect(parseCanvas(json).nodes[0].color).toBe('3')
+  })
+
+  it('colours cards and lines together, because that is one action', () => {
+    const canvas = {
+      nodes: [
+        { id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 },
+        { id: 'b', type: 'text' as const, x: 200, y: 0, width: 100, height: 100 }
+      ],
+      edges: [{ id: 'e1', fromNode: 'a', toNode: 'b' }]
+    }
+
+    const painted = colorSelection(canvas, ['a'], ['e1'], '2')
+    expect(painted.nodes[0].color).toBe('2')
+    expect(painted.nodes[1].color).toBeUndefined()
+    expect(painted.edges[0].color).toBe('2')
+  })
+
+  it('clears a colour rather than storing an empty one', () => {
+    const canvas = {
+      nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100, color: '2' }],
+      edges: []
+    }
+
+    const cleared = colorSelection(canvas, ['a'], [], undefined)
+    expect('color' in cleared.nodes[0]).toBe(false)
+    expect(serialiseCanvas(cleared)).not.toContain('color')
+  })
+})
+
+describe('duplicating', () => {
+  const canvas = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 },
+      { id: 'b', type: 'text' as const, x: 200, y: 0, width: 100, height: 100 },
+      { id: 'c', type: 'text' as const, x: 400, y: 0, width: 100, height: 100 }
+    ],
+    edges: [
+      { id: 'e1', fromNode: 'a', toNode: 'b' },
+      { id: 'e2', fromNode: 'b', toNode: 'c' }
+    ]
+  }
+
+  it('offsets the copies so they are visibly not the originals', () => {
+    const { canvas: next, ids } = duplicateNodes(canvas, ['a'])
+    const copy = next.nodes.find((node) => node.id === ids[0])
+
+    expect(copy?.x).toBe(40)
+    expect(copy?.y).toBe(40)
+  })
+
+  it('keeps a line that ran between two copied cards', () => {
+    const { canvas: next, ids } = duplicateNodes(canvas, ['a', 'b'])
+
+    const added = next.edges.filter((edge) => !canvas.edges.some((old) => old.id === edge.id))
+    expect(added).toHaveLength(1)
+    expect(ids).toContain(added[0].fromNode)
+    expect(ids).toContain(added[0].toNode)
+  })
+
+  it('drops a line to a card that was not copied, rather than guessing', () => {
+    const { canvas: next } = duplicateNodes(canvas, ['b'])
+    expect(next.edges).toHaveLength(2)
+  })
+
+  it('gives every copy an id nothing else uses', () => {
+    const { canvas: next } = duplicateNodes(canvas, ['a', 'b', 'c'])
+    const ids = next.nodes.map((node) => node.id)
+
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('does nothing when nothing was selected', () => {
+    const { canvas: next, ids } = duplicateNodes(canvas, [])
+    expect(next).toBe(canvas)
+    expect(ids).toEqual([])
+  })
+})
+
+describe('groups carrying their contents', () => {
+  const group = { id: 'g', type: 'group' as const, x: 0, y: 0, width: 400, height: 400 }
+  const inside = { id: 'a', type: 'text' as const, x: 50, y: 50, width: 100, height: 100 }
+  const straddling = { id: 'b', type: 'text' as const, x: 350, y: 50, width: 100, height: 100 }
+  const outside = { id: 'c', type: 'text' as const, x: 500, y: 50, width: 100, height: 100 }
+
+  it('takes what is wholly inside it', () => {
+    expect(nodesInside([group, inside, outside], group).map((n) => n.id)).toEqual(['a'])
+  })
+
+  it('leaves a card hanging over the edge, which was put there deliberately', () => {
+    expect(nodesInside([group, straddling], group)).toEqual([])
+  })
+
+  it('never takes itself', () => {
+    expect(nodesInside([group], group)).toEqual([])
+  })
+})
+
+describe('removing and labelling', () => {
+  const canvas = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 },
+      { id: 'b', type: 'text' as const, x: 200, y: 0, width: 100, height: 100 }
+    ],
+    edges: [{ id: 'e1', fromNode: 'a', toNode: 'b' }]
+  }
+
+  it('removes several cards and every line that reached them', () => {
+    const next = removeNodes(canvas, ['a'])
+    expect(next.nodes.map((n) => n.id)).toEqual(['b'])
+    expect(next.edges).toEqual([])
+  })
+
+  it('removes a line without touching the cards it joined', () => {
+    const next = removeEdge(canvas, 'e1')
+    expect(next.nodes).toHaveLength(2)
+    expect(next.edges).toEqual([])
+  })
+
+  it('drops an emptied label rather than storing a blank one', () => {
+    const labelled = labelEdge(canvas, 'e1', 'depends on')
+    expect(labelled.edges[0].label).toBe('depends on')
+
+    const cleared = labelEdge(labelled, 'e1', '   ')
+    expect('label' in cleared.edges[0]).toBe(false)
+    expect(serialiseCanvas(cleared)).not.toContain('label')
+  })
+
+  it('round-trips a label through the file', () => {
+    const labelled = labelEdge(canvas, 'e1', 'depends on')
+    expect(parseCanvas(serialiseCanvas(labelled)).edges[0].label).toBe('depends on')
   })
 })

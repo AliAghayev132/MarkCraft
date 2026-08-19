@@ -97,7 +97,7 @@ export function AppOverlays({
       <PresentView open={open.present} onClose={() => hide('present')} />
       <WebsiteView open={open.website} onClose={() => hide('website')} />
       <StudyView open={open.study} onClose={() => hide('study')} />
-      <CanvasView open={open.canvas} onClose={() => hide('canvas')} />
+      <CanvasView />
       <HttpDialog open={open.http} onClose={() => hide('http')} />
       <HelpView open={open.help} onClose={() => hide('help')} />
 

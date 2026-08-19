@@ -61,7 +61,8 @@
     "characters_one": "{{count}} character",
     "characters_other": "{{count}} characters",
     "apply": "Apply",
-    "undo": "Undo"
+    "undo": "Undo",
+    "redo": "Redo"
   },
   "time": {
     "justNow": "just now",
@@ -1417,7 +1418,23 @@
       "right": "Draw a line from the right",
       "bottom": "Draw a line from the bottom",
       "left": "Draw a line from the left"
-    }
+    },
+    "grid": "Grid",
+    "colour": "Colour",
+    "noColour": "No colour",
+    "colours": {
+      "1": "Red",
+      "2": "Orange",
+      "3": "Yellow",
+      "4": "Green",
+      "5": "Cyan",
+      "6": "Purple"
+    },
+    "selected": "{count} selected",
+    "duplicate": "Duplicate",
+    "groupSelection": "Group these",
+    "edgeLabel": "Line label",
+    "empty": "Double-click to add a card, or drag to select."
   },
   "lock": {
     "locked": "Locked — editing is off",

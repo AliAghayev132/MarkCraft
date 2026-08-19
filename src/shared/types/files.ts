@@ -82,6 +82,18 @@ export type WatchEvent =
 
 export const MARKDOWN_EXTENSIONS = ['md', 'markdown', 'mdown', 'mkd', 'mdx', 'txt'] as const
 
+/** JSON Canvas — the open format the canvas reads and writes. */
+export const CANVAS_EXTENSION = 'canvas'
+
+/**
+ * What the file tree keeps when "Markdown only" is on.
+ *
+ * Wider than Markdown, because the filter is really "documents this
+ * application opens" — and a canvas is one of those. Naming it after Markdown
+ * is what hid every `.canvas` file the user made.
+ */
+export const DOCUMENT_EXTENSIONS = [...MARKDOWN_EXTENSIONS, CANVAS_EXTENSION] as const
+
 export const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'avif'] as const
 
 /** Hard ceiling for opening a file in the editor (32 MB). */

@@ -48,7 +48,8 @@ const workspace: WorkspaceState = {
       file('notes.markdown'),
       file('script.ts'),
       file('photo.png'),
-      file('Makefile')
+      file('Makefile'),
+      file('plan.canvas')
     ]
   },
   expanded: {},
@@ -88,6 +89,13 @@ describe('selectVisibleTree', () => {
     expect(names).not.toContain('Makefile')
   })
 
+  it('keeps a canvas, which is a document this application opens', () => {
+    // It did not, and every .canvas file the user made was invisible: the
+    // filter was written against Markdown rather than against what can be
+    // opened, and the canvas arrived later.
+    expect(namesOf(true)).toContain('plan.canvas')
+  })
+
   it('always keeps directories, so their contents stay reachable', () => {
     expect(namesOf(true)).toContain('docs')
   })
@@ -96,7 +104,15 @@ describe('selectVisibleTree', () => {
     const names = namesOf(false)
 
     expect(names).toEqual(
-      expect.arrayContaining(['docs', 'README.md', 'notes.markdown', 'script.ts', 'photo.png', 'Makefile'])
+      expect.arrayContaining([
+        'docs',
+        'README.md',
+        'notes.markdown',
+        'script.ts',
+        'photo.png',
+        'Makefile',
+        'plan.canvas'
+      ])
     )
   })
 

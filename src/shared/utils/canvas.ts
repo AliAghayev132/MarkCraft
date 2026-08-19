@@ -90,12 +90,20 @@ export function parseCanvas(json: string): CanvasData {
       )
     })
     // A zero-width node cannot be seen, selected or dragged back into shape.
-    .map((node) => ({ ...node, width: Math.max(40, node.width), height: Math.max(30, node.height) }))
+    // A colour that is neither a preset nor a hex is dropped rather than
+    // carried into the stylesheet, where it would be an unvetted value in a
+    // `style` attribute.
+    .map((node) => ({
+      ...node,
+      width: Math.max(40, node.width),
+      height: Math.max(30, node.height),
+      ...(isCanvasColor(node.color) ? {} : { color: undefined })
+    }))
 
   const ids = new Set(nodes.map((node) => node.id))
 
-  const edges: CanvasEdge[] = (Array.isArray(source.edges) ? source.edges : []).filter(
-    (edge): edge is CanvasEdge => {
+  const edges: CanvasEdge[] = (Array.isArray(source.edges) ? source.edges : [])
+    .filter((edge): edge is CanvasEdge => {
       if (typeof edge !== 'object' || edge === null) return false
       const candidate = edge as Partial<CanvasEdge>
       return (
@@ -103,8 +111,8 @@ export function parseCanvas(json: string): CanvasData {
         ids.has(candidate.fromNode as string) &&
         ids.has(candidate.toNode as string)
       )
-    }
-  )
+    })
+    .map((edge) => ({ ...edge, ...(isCanvasColor(edge.color) ? {} : { color: undefined }) }))
 
   return { nodes, edges }
 }
@@ -304,4 +312,194 @@ export function inPaintOrder(nodes: CanvasNode[]): CanvasNode[] {
     ...nodes.filter((node) => node.type === 'group'),
     ...nodes.filter((node) => node.type !== 'group')
   ]
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Colour
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * JSON Canvas stores a colour as either a preset slot — "1" to "6" — or a hex
+ * string. The slots are the interoperable part: a canvas coloured here opens
+ * elsewhere with the same six colours, because every reader maps the same
+ * digits. What each digit *looks* like is the reader's business, which is why
+ * the values live in the stylesheet and change with the theme rather than
+ * being frozen into the file.
+ */
+export const CANVAS_COLOR_SLOTS = ['1', '2', '3', '4', '5', '6'] as const
+
+export type CanvasColorSlot = (typeof CANVAS_COLOR_SLOTS)[number]
+
+const SLOTS = new Set<string>(CANVAS_COLOR_SLOTS)
+
+const HEX = /^#[0-9a-f]{6}$/i
+
+/** True for anything the format allows, so a foreign canvas keeps its colours. */
+export function isCanvasColor(value: unknown): value is string {
+  return typeof value === 'string' && (SLOTS.has(value) || HEX.test(value))
+}
+
+/**
+ * The CSS colour to paint with.
+ *
+ * A preset resolves to a custom property so it follows the theme; a hex is
+ * used as written, because someone who typed one meant that exact colour.
+ * Returns null for "no colour", which is not the same as black.
+ */
+export function canvasColorCss(color: string | undefined): string | null {
+  if (color === undefined || color === '') return null
+  if (SLOTS.has(color)) return `var(--mc-canvas-${color})`
+  return HEX.test(color) ? color : null
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Editing
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/** Removes an edge. Nodes are untouched — the cards it joined stay. */
+export function removeEdge(canvas: CanvasData, id: string): CanvasData {
+  return { ...canvas, edges: canvas.edges.filter((edge) => edge.id !== id) }
+}
+
+/** Removes several nodes and every line that reached any of them. */
+export function removeNodes(canvas: CanvasData, ids: Iterable<string>): CanvasData {
+  const doomed = new Set(ids)
+  if (doomed.size === 0) return canvas
+
+  return {
+    nodes: canvas.nodes.filter((node) => !doomed.has(node.id)),
+    edges: canvas.edges.filter((edge) => !doomed.has(edge.fromNode) && !doomed.has(edge.toNode))
+  }
+}
+
+/**
+ * Sets — or clears, with `undefined` — the colour of some nodes and edges.
+ *
+ * One function for both because the user is doing one thing: they selected
+ * some marks on the canvas and picked a colour. Which of them happen to be
+ * cards and which are lines is not a distinction they made.
+ */
+export function colorSelection(
+  canvas: CanvasData,
+  nodeIds: Iterable<string>,
+  edgeIds: Iterable<string>,
+  color: string | undefined
+): CanvasData {
+  const nodes = new Set(nodeIds)
+  const edges = new Set(edgeIds)
+  if (nodes.size === 0 && edges.size === 0) return canvas
+
+  const paint = <T extends { id: string; color?: string }>(item: T, chosen: Set<string>): T => {
+    if (!chosen.has(item.id)) return item
+    if (color === undefined) {
+      const { color: _dropped, ...rest } = item
+      return rest as T
+    }
+    return { ...item, color }
+  }
+
+  return {
+    nodes: canvas.nodes.map((node) => paint(node, nodes)),
+    edges: canvas.edges.map((edge) => paint(edge, edges))
+  }
+}
+
+/**
+ * Copies nodes, offset so the copies are visibly not the originals, keeping
+ * every line that ran *between* the copied nodes.
+ *
+ * Lines to nodes that were not copied are dropped rather than duplicated: two
+ * cards pointing at the same third card is a guess about what was meant, and
+ * the wrong guess is the one that quietly adds edges nobody asked for.
+ */
+export function duplicateNodes(
+  canvas: CanvasData,
+  ids: Iterable<string>,
+  offset = 40
+): { canvas: CanvasData; ids: string[] } {
+  const chosen = new Set(ids)
+  const sources = canvas.nodes.filter((node) => chosen.has(node.id))
+  if (sources.length === 0) return { canvas, ids: [] }
+
+  const used = new Set([...canvas.nodes.map((n) => n.id), ...canvas.edges.map((e) => e.id)])
+  const mapping = new Map<string, string>()
+
+  const nodes = sources.map((node) => {
+    let at = used.size + 1
+    while (used.has(`n${at}`)) at++
+    used.add(`n${at}`)
+    mapping.set(node.id, `n${at}`)
+
+    return { ...node, id: `n${at}`, x: snap(node.x + offset), y: snap(node.y + offset) }
+  })
+
+  const edges = canvas.edges
+    .filter((edge) => mapping.has(edge.fromNode) && mapping.has(edge.toNode))
+    .map((edge) => {
+      let at = used.size + 1
+      while (used.has(`e${at}`)) at++
+      used.add(`e${at}`)
+
+      return {
+        ...edge,
+        id: `e${at}`,
+        fromNode: mapping.get(edge.fromNode) as string,
+        toNode: mapping.get(edge.toNode) as string
+      }
+    })
+
+  return {
+    canvas: { nodes: [...canvas.nodes, ...nodes], edges: [...canvas.edges, ...edges] },
+    ids: nodes.map((node) => node.id)
+  }
+}
+
+/**
+ * The nodes a group carries when it is dragged: everything wholly inside it.
+ *
+ * Wholly, not merely overlapping — a card that hangs over the edge of a group
+ * was put there deliberately, and dragging the group should not quietly adopt
+ * it. Nested groups come along, which is what makes a group of groups behave
+ * the way it looks like it should.
+ */
+export function nodesInside(nodes: CanvasNode[], group: CanvasNode): CanvasNode[] {
+  return nodes.filter(
+    (node) =>
+      node.id !== group.id &&
+      node.x >= group.x &&
+      node.y >= group.y &&
+      node.x + node.width <= group.x + group.width &&
+      node.y + node.height <= group.y + group.height
+  )
+}
+
+/** Moves nodes by a delta, on the grid. */
+export function moveNodes(
+  canvas: CanvasData,
+  moves: ReadonlyMap<string, { x: number; y: number }>
+): CanvasData {
+  if (moves.size === 0) return canvas
+
+  return {
+    ...canvas,
+    nodes: canvas.nodes.map((node) => {
+      const at = moves.get(node.id)
+      return at ? { ...node, x: snap(at.x), y: snap(at.y) } : node
+    })
+  }
+}
+
+/** Sets an edge's label, dropping it entirely when the text is emptied. */
+export function labelEdge(canvas: CanvasData, id: string, label: string): CanvasData {
+  return {
+    ...canvas,
+    edges: canvas.edges.map((edge) => {
+      if (edge.id !== id) return edge
+      if (label.trim() === '') {
+        const { label: _dropped, ...rest } = edge
+        return rest
+      }
+      return { ...edge, label }
+    })
+  }
 }

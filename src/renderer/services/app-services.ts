@@ -1,5 +1,5 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import type { AppInfo, CanvasData, SessionRole, CardState, DayRecord, HttpRequest, HttpResponse, RunResult, StudyRecord, DeepPartial, ExportRequest, ExportResult, LinkGraphResult, PendingOpen, PinnedFile, PrintRequest, RecentFile, RecentWorkspace, RecoveryRecord, Settings, ShareRequest, WindowState, WorkspaceReplaceRequest, WorkspaceReplaceResponse, WorkspaceSearchRequest, WorkspaceSearchResponse, WorkspaceState } from '@shared'
+import type { AppInfo, CanvasData, SessionRole, WorkspaceTags, CardState, DayRecord, HttpRequest, HttpResponse, RunResult, StudyRecord, DeepPartial, ExportRequest, ExportResult, LinkGraphResult, PendingOpen, PinnedFile, PrintRequest, RecentFile, RecentWorkspace, RecoveryRecord, Settings, ShareRequest, WindowState, WorkspaceReplaceRequest, WorkspaceReplaceResponse, WorkspaceSearchRequest, WorkspaceSearchResponse, WorkspaceState } from '@shared'
 
 // ── @services ──────────────────────────────────────────────────────────────
 import { soft, unwrap } from './ipc'
@@ -101,6 +101,9 @@ export const recoveryService = {
 }
 
 export const linksService = {
+  tags(root: string): Promise<WorkspaceTags> {
+    return unwrap(window.api.links.tags({ root }))
+  },
   graph(root: string): Promise<LinkGraphResult> {
     return unwrap(window.api.links.graph({ root }))
   }

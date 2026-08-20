@@ -3,7 +3,14 @@ import { promises as fs, type Dirent } from 'node:fs'
 import path from 'node:path'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { buildLinkGraph, type GraphFile, type LinkGraphResult } from '@shared'
+import {
+  buildLinkGraph,
+  summariseTags,
+  tagsIn,
+  type GraphFile,
+  type LinkGraphResult,
+  type TagSummary
+} from '@shared'
 
 // ── ./services ─────────────────────────────────────────────────────────────
 import { NOISY_DIRECTORIES } from './fs-service'
@@ -67,6 +74,55 @@ export async function buildWorkspaceGraph(root: string): Promise<LinkGraphResult
     truncated,
     durationMs: Date.now() - started
   }
+}
+
+/**
+ * Every tag in the workspace, and which files carry it.
+ *
+ * The same walk as the graph, and for the same reason it lives here: thousands
+ * of small reads belong on this side of the bridge, and the renderer only ever
+ * wants the finished list. Kept separate from the graph rather than folded into
+ * it, because a tag panel is opened far more often than a graph and should not
+ * pay for one.
+ */
+export async function collectWorkspaceTags(
+  root: string
+): Promise<{ tags: TagSummary[]; truncated: boolean; durationMs: number }> {
+  const started = Date.now()
+  const safeRoot = await pathGuard.assert(root)
+
+  const files: { path: string; tags: string[] }[] = []
+  let truncated = false
+  let seen = 0
+
+  for await (const full of walk(safeRoot)) {
+    if (seen >= MAX_FILES) {
+      truncated = true
+      break
+    }
+
+    if (!MARKDOWN_EXTENSIONS.has(path.extname(full).toLowerCase())) continue
+    seen++
+
+    try {
+      const stats = await fs.stat(full)
+      if (stats.size > MAX_BYTES) continue
+
+      const tags = tagsIn(await fs.readFile(full, 'utf8'))
+      // Only files that carry one: a workspace is mostly files that do not,
+      // and holding them all would be a list of nothing.
+      if (tags.length === 0) continue
+
+      files.push({
+        path: path.relative(safeRoot, full).split(path.sep).join('/'),
+        tags
+      })
+    } catch {
+      continue
+    }
+  }
+
+  return { tags: summariseTags(files), truncated, durationMs: Date.now() - started }
 }
 
 async function* walk(root: string): AsyncGenerator<string> {

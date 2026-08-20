@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Beaker, Book, Clock, FolderTree, Globe, LifeBuoy, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
+import { Beaker, Book, Clock, FolderTree, Globe, Hash, LifeBuoy, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
 import { useCallback, useEffect, useRef, type PointerEvent, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -16,6 +16,7 @@ import { IconButton } from '@ui'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { BookPanel } from '@features/book'
+import { TagPanel } from '@features/tags'
 import { TrashPanel } from '@features/trash'
 import { FileExplorer } from '@features/explorer'
 import { OutlinePanel } from '@features/outline'
@@ -66,6 +67,7 @@ export function Sidebar({
     { id: 'explorer', icon: <FolderTree size={17} />, label: t('sidebar.explorer'), shortcut: 'mod+shift+e' },
     { id: 'outline', icon: <List size={17} />, label: t('sidebar.outline'), shortcut: 'mod+shift+u' },
     { id: 'book', icon: <Book size={17} />, label: t('sidebar.book') },
+    { id: 'tags', icon: <Hash size={17} />, label: t('sidebar.tags') },
     { id: 'search', icon: <Search size={17} />, label: t('sidebar.search'), shortcut: 'mod+shift+f' },
     { id: 'recent', icon: <Clock size={17} />, label: t('sidebar.recent') },
     { id: 'trash', icon: <Trash2 size={17} />, label: t('sidebar.trash') }
@@ -210,6 +212,7 @@ export function Sidebar({
             {view === 'search' ? (
               <SearchPanel homePath={homePath} onRevealMatch={onRevealMatch} />
             ) : null}
+            {view === 'tags' ? <TagPanel /> : null}
             {view === 'recent' ? <RecentPanel homePath={homePath} /> : null}
             {view === 'trash' ? <TrashPanel /> : null}
           </div>

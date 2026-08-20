@@ -155,6 +155,7 @@ export {
   Check,
   Circle,
   Grid2x2,
+  Hash,
   LayoutGrid,
   Scissors,
   SendToBack,

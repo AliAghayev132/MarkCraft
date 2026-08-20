@@ -146,7 +146,8 @@ export interface TreeNode extends DirEntry {
   depth: number
 }
 
-export type SidebarView = 'explorer' | 'outline' | 'book' | 'search' | 'recent' | 'trash'
+export type { SidebarView } from '@shared'
+import type { SidebarView } from '@shared'
 
 export interface ClipboardState {
   paths: string[]

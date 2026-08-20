@@ -109,7 +109,8 @@
     "resize": "Resize sidebar",
     "outline": "Outline",
     "trash": "Deleted",
-    "book": "Book"
+    "book": "Book",
+    "tags": "Tags"
   },
   "explorer": {
     "files": "Workspace files",
@@ -1596,5 +1597,14 @@
     "keyFileFor": "This key opens: {{name}}",
     "keyFileWarning": "Keep this file away from the document it unlocks.",
     "keyFileNoRecovery": "If both are lost, the document cannot be recovered by anyone."
+  },
+  "tags": {
+    "filter": "Filter tags",
+    "rescan": "Look again",
+    "scanning": "Reading the workspace…",
+    "none": "No tags yet. Write #something in a document.",
+    "noMatch": "No tag matches that.",
+    "needsFolder": "Open a folder to see its tags.",
+    "truncated": "The workspace is large; some files were not read."
   }
 }

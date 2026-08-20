@@ -2,6 +2,7 @@
 import type { CanvasData } from './utils/canvas'
 import type { SessionEvent, SessionRole } from './utils/session'
 import type { LinkGraphResult } from './utils/links'
+import type { WorkspaceTags } from './utils/tags'
 import type { CardState, StudyRecord } from './utils/cards'
 import type { DayRecord } from './utils/streak'
 import type { HttpRequest, HttpResponse } from './utils/http'
@@ -175,6 +176,7 @@ export interface IpcApi {
   'search:cancel': { req: void; res: void }
 
   // ── Links ────────────────────────────────────────────────────────────────
+  'links:tags': { req: { root: string }; res: WorkspaceTags }
   'links:graph': { req: { root: string }; res: LinkGraphResult }
 
   // ── Study ────────────────────────────────────────────────────────────────
@@ -336,6 +338,7 @@ export const PATH_BEARING_CHANNELS: ReadonlySet<string> = new Set<IpcChannel>([
   'search:workspace',
   'search:replace',
   'links:graph',
+  'links:tags',
   'study:load',
   'study:save',
   'study:reset',

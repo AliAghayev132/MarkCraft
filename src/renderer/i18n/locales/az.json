@@ -109,7 +109,8 @@
     "resize": "Yan panelin ölçüsünü dəyiş",
     "outline": "Struktur",
     "trash": "Silinmişlər",
-    "book": "Kitab"
+    "book": "Kitab",
+    "tags": "Etiketlər"
   },
   "explorer": {
     "files": "İş sahəsi faylları",
@@ -1596,5 +1597,14 @@
     "keyFileFor": "Bu açar bunu açır: {{name}}",
     "keyFileWarning": "Bu faylı açdığı sənəddən ayrı saxlayın.",
     "keyFileNoRecovery": "İkisi də itsə, sənədi heç kim bərpa edə bilməz."
+  },
+  "tags": {
+    "filter": "Etiketləri süz",
+    "rescan": "Yenidən bax",
+    "scanning": "İş sahəsi oxunur…",
+    "none": "Hələ etiket yoxdur. Sənəddə #nəsə yazın.",
+    "noMatch": "Uyğun etiket yoxdur.",
+    "needsFolder": "Etiketləri görmək üçün qovluq açın.",
+    "truncated": "İş sahəsi böyükdür; bəzi fayllar oxunmadı."
   }
 }

@@ -91,7 +91,7 @@ const api: MarkCraftApi = {
 
   recovery: namespace('recovery', ['list', 'put', 'drop', 'clear']),
 
-  links: namespace('links', ['graph']),
+  links: namespace('links', ['graph', 'tags']),
   http: namespace('http', ['send']),
   crypto: namespace('crypto', ['encrypt', 'decrypt', 'generateKey']),
   session: namespace('session', [

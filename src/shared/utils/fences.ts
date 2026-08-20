@@ -77,3 +77,38 @@ export function setFenceLanguage(markdown: string, line: number, language: strin
 
   return lines.join('\n')
 }
+
+/**
+ * Which lines are inside a fenced block.
+ *
+ * A one-based set, because everything that asks — tags, links, lint — is
+ * working with line numbers a person could be shown. An unclosed fence runs to
+ * the end of the document, which is how every Markdown parser reads it and
+ * therefore what anyone editing one will expect.
+ */
+export function fencedLines(markdown: string): Set<number> {
+  const inside = new Set<number>()
+  const lines = markdown.split('\n')
+
+  let marker: string | null = null
+
+  lines.forEach((text, index) => {
+    const line = index + 1
+    const fence = text.match(OPEN)
+
+    if (marker === null) {
+      if (fence) {
+        marker = fence[2]
+        inside.add(line)
+      }
+      return
+    }
+
+    inside.add(line)
+    // Closed only by its own kind of fence, so a ~~~ inside a ``` block is
+    // just text.
+    if (fence && fence[2].startsWith(marker) && fence[3].trim() === '') marker = null
+  })
+
+  return inside
+}

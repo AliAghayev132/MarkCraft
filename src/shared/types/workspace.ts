@@ -19,12 +19,27 @@ export interface PersistedTab {
   wordGoal?: number | null
 }
 
+/**
+ * Which panel the sidebar is showing.
+ *
+ * Here rather than in the renderer because the persisted workspace carries it,
+ * and a value both sides have to agree on belongs where both can see it.
+ */
+export type SidebarView =
+  | 'explorer'
+  | 'outline'
+  | 'book'
+  | 'tags'
+  | 'search'
+  | 'recent'
+  | 'trash'
+
 export interface WorkspaceState {
   rootPath: string | null
   expandedPaths: string[]
   tabs: PersistedTab[]
   activeTabId: string | null
-  sidebarView: 'explorer' | 'outline' | 'book' | 'search' | 'recent' | 'trash'
+  sidebarView: SidebarView
   updatedAt: number
 }
 

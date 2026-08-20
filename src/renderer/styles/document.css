@@ -582,6 +582,19 @@
  */
 .mc-canvas-card {
   font-size: 0.8125rem;
+
+  /*
+   * The document surface pads its bottom by 45vh so the last line of a long
+   * file can be scrolled to the middle of the window, and centres itself in a
+   * measure of 46em. A card is neither of those things: it is a box a few
+   * hundred pixels tall, and inheriting four hundred pixels of padding pushed
+   * its writing clean out of the shape — invisibly for a rectangle, where the
+   * text is laid out from the top anyway, and plainly for an ellipse, a
+   * diamond or a triangle, which centre it and had nothing to show.
+   */
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
 .mc-canvas-card > :first-child { margin-top: 0; }

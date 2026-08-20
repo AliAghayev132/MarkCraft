@@ -1589,7 +1589,15 @@
         "step2": "Sonra",
         "step3": "Nəhayət"
       }
-    }
+    },
+    "exportImage": "Şəkil kimi saxla",
+    "exportPng": "PNG şəkil",
+    "exportSvg": "SVG rəsm",
+    "exported": "{{name}} ünvanına saxlanıldı",
+    "exportFailed": "Şəkil saxlanıla bilmədi",
+    "exportEmpty": "Kanvasda hələ çəkiləcək bir şey yoxdur.",
+    "exportTooBig": "Kanvas bir şəkil üçün çox böyükdür",
+    "exportTooBigHint": "Ölçü limiti olmayan SVG kimi saxla."
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

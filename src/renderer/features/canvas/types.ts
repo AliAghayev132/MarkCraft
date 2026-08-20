@@ -150,6 +150,8 @@ export interface CanvasMenuActions {
   find: () => void
   /** Opens the picker; the chosen shape is added beside what is there. */
   templates: () => void
+  /** Saves the whole canvas as a picture. */
+  exportImage: (format: 'svg' | 'png') => void
   selectAll: () => void
   fit: () => void
 }

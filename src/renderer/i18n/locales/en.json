@@ -1589,7 +1589,15 @@
         "step2": "Then",
         "step3": "Finally"
       }
-    }
+    },
+    "exportImage": "Save as a picture",
+    "exportPng": "PNG image",
+    "exportSvg": "SVG drawing",
+    "exported": "Saved to {{name}}",
+    "exportFailed": "The picture could not be saved",
+    "exportEmpty": "There is nothing on the canvas to draw yet.",
+    "exportTooBig": "The canvas is too large for one picture",
+    "exportTooBigHint": "Save it as an SVG instead, which has no size limit."
   },
   "lock": {
     "locked": "Locked — editing is off",

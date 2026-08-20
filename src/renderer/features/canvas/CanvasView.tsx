@@ -89,6 +89,7 @@ import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
 import { CanvasFind } from './CanvasFind'
 import { CanvasTemplatePicker } from './CanvasTemplatePicker'
+import { exportCanvasImage } from './canvas-export'
 import { CanvasToolbar } from './CanvasToolbar'
 import { CardFormatBar } from './CardFormatBar'
 import { useCanvasDocument } from './useCanvasDocument'
@@ -943,6 +944,7 @@ export function CanvasView(): ReactElement | null {
     fitCards,
     find: () => setFinding(''),
     templates: () => setTemplating(true),
+    exportImage: (format) => void exportCanvasImage(canvas, path, format),
     tidy,
     addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),

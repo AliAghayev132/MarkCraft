@@ -6,6 +6,7 @@ import {
   Copy,
   FileText,
   Group,
+  ImageIcon,
   LayoutGrid,
   LayoutTemplate,
   Scaling,
@@ -215,6 +216,23 @@ export function useCanvasMenu(
               label: t('canvas.fitCards'),
               icon: <Scaling size={14} />,
               onSelect: actions.fitCards
+            },
+            {
+              id: 'exportImage',
+              label: t('canvas.exportImage'),
+              icon: <ImageIcon size={14} />,
+              submenu: [
+                {
+                  id: 'export-png',
+                  label: t('canvas.exportPng'),
+                  onSelect: () => actions.exportImage('png')
+                },
+                {
+                  id: 'export-svg',
+                  label: t('canvas.exportSvg'),
+                  onSelect: () => actions.exportImage('svg')
+                }
+              ]
             },
             {
               id: 'templates',

@@ -1475,7 +1475,22 @@
     "bringToFront": "Bring to front",
     "sendToBack": "Send to back",
     "openFile": "Open {{name}}",
-    "openLink": "Open {{name}} in the browser"
+    "openLink": "Open {{name}} in the browser",
+    "shape": "Shape",
+    "shapes": {
+      "rectangle": "Rectangle",
+      "rounded": "Rounded",
+      "ellipse": "Circle",
+      "diamond": "Diamond",
+      "triangle": "Triangle"
+    },
+    "editCard": "Edit",
+    "followCard": "Open what it points at",
+    "addCardHere": "Add a card here",
+    "pasteHere": "Paste here",
+    "selectAll": "Select every card",
+    "copied_one": "{{count}} card copied",
+    "copied_other": "{{count}} cards copied"
   },
   "lock": {
     "locked": "Locked — editing is off",

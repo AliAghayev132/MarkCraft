@@ -1475,7 +1475,22 @@
     "bringToFront": "Önə gətir",
     "sendToBack": "Arxaya göndər",
     "openFile": "{{name}} aç",
-    "openLink": "{{name}} brauzerdə aç"
+    "openLink": "{{name}} brauzerdə aç",
+    "shape": "Forma",
+    "shapes": {
+      "rectangle": "Düzbucaqlı",
+      "rounded": "Yumşaq künc",
+      "ellipse": "Dairə",
+      "diamond": "Romb",
+      "triangle": "Üçbucaq"
+    },
+    "editCard": "Redaktə et",
+    "followCard": "Göstərdiyini aç",
+    "addCardHere": "Bura kart əlavə et",
+    "pasteHere": "Bura yapışdır",
+    "selectAll": "Bütün kartları seç",
+    "copied_one": "{{count}} kart köçürüldü",
+    "copied_other": "{{count}} kart köçürüldü"
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

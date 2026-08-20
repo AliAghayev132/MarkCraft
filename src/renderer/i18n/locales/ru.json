@@ -1499,7 +1499,24 @@
     "bringToFront": "На передний план",
     "sendToBack": "На задний план",
     "openFile": "Открыть {{name}}",
-    "openLink": "Открыть {{name}} в браузере"
+    "openLink": "Открыть {{name}} в браузере",
+    "shape": "Форма",
+    "shapes": {
+      "rectangle": "Прямоугольник",
+      "rounded": "Со скруглением",
+      "ellipse": "Круг",
+      "diamond": "Ромб",
+      "triangle": "Треугольник"
+    },
+    "editCard": "Изменить",
+    "followCard": "Открыть то, на что указывает",
+    "addCardHere": "Добавить карточку здесь",
+    "pasteHere": "Вставить здесь",
+    "selectAll": "Выбрать все карточки",
+    "copied_one": "Скопирована {{count}} карточка",
+    "copied_few": "Скопированы {{count}} карточки",
+    "copied_many": "Скопировано {{count}} карточек",
+    "copied_other": "Скопировано {{count}} карточек"
   },
   "lock": {
     "locked": "Заблокирован — правка выключена",

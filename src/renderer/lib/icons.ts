@@ -155,7 +155,9 @@ export {
   Check,
   Circle,
   Grid2x2,
+  Scissors,
   SendToBack,
+  Triangle,
 
   // ── Working together ─────────────────────────────────────────────────────
   LogIn,

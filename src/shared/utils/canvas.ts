@@ -29,6 +29,56 @@ export interface CanvasNode {
   /** `group` nodes only. */
   label?: string
   color?: string
+  /**
+   * What the card is drawn as.
+   *
+   * Not part of JSON Canvas, which describes rectangles. An extra field is the
+   * one way to add this without breaking the promise the format makes: a reader
+   * that has never heard of `shape` ignores it and draws a rectangle, which is
+   * exactly what the card was before. Nothing is lost anywhere, and a canvas
+   * made here still opens elsewhere.
+   */
+  shape?: CanvasShape
+}
+
+/**
+ * The shapes a card can take.
+ *
+ * Few, and each one meaning something people already agree on from every
+ * diagram they have ever seen: a rectangle is a thing, an ellipse is a start or
+ * an end, a diamond is a decision, a triangle points. A palette of thirty would
+ * be a drawing program pretending to be a thinking tool.
+ */
+export const CANVAS_SHAPES = ['rectangle', 'rounded', 'ellipse', 'diamond', 'triangle'] as const
+
+export type CanvasShape = (typeof CANVAS_SHAPES)[number]
+
+const SHAPES = new Set<string>(CANVAS_SHAPES)
+
+export function isCanvasShape(value: unknown): value is CanvasShape {
+  return typeof value === 'string' && SHAPES.has(value)
+}
+
+/** Sets — or clears, back to a rectangle — the shape of some cards. */
+export function shapeNodes(
+  canvas: CanvasData,
+  ids: Iterable<string>,
+  shape: CanvasShape | undefined
+): CanvasData {
+  const chosen = new Set(ids)
+  if (chosen.size === 0) return canvas
+
+  return {
+    ...canvas,
+    nodes: canvas.nodes.map((node) => {
+      if (!chosen.has(node.id)) return node
+      if (shape === undefined || shape === 'rectangle') {
+        const { shape: _dropped, ...rest } = node
+        return rest
+      }
+      return { ...node, shape }
+    })
+  }
 }
 
 export interface CanvasEdge {
@@ -97,7 +147,8 @@ export function parseCanvas(json: string): CanvasData {
       ...node,
       width: Math.max(40, node.width),
       height: Math.max(30, node.height),
-      ...(isCanvasColor(node.color) ? {} : { color: undefined })
+      ...(isCanvasColor(node.color) ? {} : { color: undefined }),
+      ...(isCanvasShape(node.shape) ? {} : { shape: undefined })
     }))
 
   const ids = new Set(nodes.map((node) => node.id))
@@ -127,6 +178,7 @@ export function serialiseCanvas(canvas: CanvasData): string {
     width: Math.round(node.width),
     height: Math.round(node.height),
     ...(node.color ? { color: node.color } : {}),
+    ...(node.shape ? { shape: node.shape } : {}),
     ...(node.text !== undefined ? { text: node.text } : {}),
     ...(node.file !== undefined ? { file: node.file } : {}),
     ...(node.url !== undefined ? { url: node.url } : {}),

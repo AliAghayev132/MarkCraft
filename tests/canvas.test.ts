@@ -7,6 +7,7 @@ import {
   bringToFront,
   canvasBounds,
   CANVAS_COLOR_SLOTS,
+  CANVAS_SHAPES,
   canvasColorCss,
   colorSelection,
   connect,
@@ -17,6 +18,7 @@ import {
   groupAround,
   inPaintOrder,
   isCanvasColor,
+  isCanvasShape,
   labelEdge,
   moveNodes,
   MIN_NODE,
@@ -28,6 +30,7 @@ import {
   removeNode,
   removeNodes,
   sendToBack,
+  shapeNodes,
   resizeNode,
   serialiseCanvas,
   snap,
@@ -652,5 +655,52 @@ describe('a click that is not a drag', () => {
 
     expect(next.nodes[0]).toBe(canvas.nodes[0])
     expect(next.nodes[1].x).toBe(300)
+  })
+})
+
+describe('shapes', () => {
+  const canvas = {
+    nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 }],
+    edges: []
+  }
+
+  it('accepts the shapes it can draw', () => {
+    for (const shape of CANVAS_SHAPES) expect(isCanvasShape(shape)).toBe(true)
+  })
+
+  it('refuses anything else, which ends up in a clip path', () => {
+    for (const value of ['star', '', 'polygon(0 0)', 42, null, undefined]) {
+      expect(isCanvasShape(value)).toBe(false)
+    }
+  })
+
+  it('sets a shape on the chosen cards', () => {
+    expect(shapeNodes(canvas, ['a'], 'ellipse').nodes[0].shape).toBe('ellipse')
+  })
+
+  it('stores nothing for a rectangle, because that is the absence of a shape', () => {
+    // Keeps a canvas that nobody reshaped byte-identical to one made before
+    // shapes existed.
+    const round = shapeNodes(canvas, ['a'], 'ellipse')
+    const back = shapeNodes(round, ['a'], 'rectangle')
+
+    expect('shape' in back.nodes[0]).toBe(false)
+    expect(serialiseCanvas(back)).not.toContain('shape')
+  })
+
+  it('round-trips through the file', () => {
+    const round = shapeNodes(canvas, ['a'], 'diamond')
+    expect(parseCanvas(serialiseCanvas(round)).nodes[0].shape).toBe('diamond')
+  })
+
+  it('drops a shape it cannot draw when reading a file', () => {
+    // A reader that has never heard of `shape` draws a rectangle, which is what
+    // the card was before — so nothing is lost anywhere.
+    const json = JSON.stringify({
+      nodes: [{ id: 'a', type: 'text', x: 0, y: 0, width: 100, height: 100, shape: 'star' }],
+      edges: []
+    })
+
+    expect(parseCanvas(json).nodes[0].shape).toBeUndefined()
   })
 })

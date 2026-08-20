@@ -44,8 +44,10 @@ import {
   removeNodes,
   resizeNode,
   sendToBack,
+  shapeNodes,
   snap,
   type Alignment,
+  type CanvasShape,
   type CanvasNode,
   type Side
 } from '@shared'
@@ -70,17 +72,19 @@ import { useKeyboardClaim } from '@hooks'
 import { Button, IconButton, Spinner } from '@ui'
 
 // ── ./canvas ───────────────────────────────────────────────────────────────
+import { copyNodes, hasClipping, pasteInto } from './canvas-clipboard'
 import { canvasTarget } from './canvas-store'
 import { CanvasMinimap } from './CanvasMinimap'
 import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
 import { CanvasToolbar } from './CanvasToolbar'
 import { useCanvasDocument } from './useCanvasDocument'
+import { useCanvasMenu } from './useCanvasMenu'
 import { useCanvasSelection } from './useCanvasSelection'
 import { useCanvasViewport } from './useCanvasViewport'
 
 // ── types ──────────────────────────────────────────────────────────────────
-import type { CanvasGesture } from './types'
+import type { CanvasGesture, CanvasMenuActions } from './types'
 
 /** Below this the drag was a click that wobbled, not an attempt to draw a box. */
 const MARQUEE_THRESHOLD = 4
@@ -88,13 +92,17 @@ const MARQUEE_THRESHOLD = 4
 /**
  * A second press counts as a double-click within this long, and this close.
  *
+ * Half a second is what Windows uses by default, and matching the platform
+ * means the gesture feels the same here as it does everywhere else on the
+ * machine.
+ *
  * Recognised here rather than by listening for `dblclick`, because the surface
  * takes pointer capture on press — and a captured pointer sends its derived
  * click events to the element holding the capture, not to whatever is under it.
  * The card's own `ondblclick` therefore never fired, and double-clicking a card
  * did nothing at all.
  */
-const DOUBLE_PRESS_MS = 450
+const DOUBLE_PRESS_MS = 500
 const DOUBLE_PRESS_SLOP = 6
 
 /** An image dropped on the canvas gets a card shaped to show it. */
@@ -134,6 +142,23 @@ export function CanvasView(): ReactElement | null {
 
   /** The previous press, for recognising the second one of a double-click. */
   const lastPressRef = useRef<{ id: string | null; at: number; x: number; y: number } | null>(null)
+
+  /**
+   * A card a second press landed on, waiting for the button to come up.
+   *
+   * Carries where the press was, rather than reading it back from the last
+   * press — which is cleared at that moment, so the first jitter of a real
+   * mouse looked like the pointer walking away and cancelled the open.
+   */
+  const pendingOpenRef = useRef<{ id: string; x: number; y: number } | null>(null)
+
+  /*
+   * The right button acts on what is under it, using whatever the view can do
+   * at the moment the menu opens — held in a ref so this hook sits with the
+   * others rather than below the early return.
+   */
+  const menuActionsRef = useRef<CanvasMenuActions | null>(null)
+  const openMenu = useCanvasMenu(menuActionsRef)
 
   const root = useAppSelector((state) => state.workspace.root)
 
@@ -240,6 +265,41 @@ export function CanvasView(): ReactElement | null {
     [edit, selection.nodes]
   )
 
+  const copySelected = useCallback((): void => {
+    const copied = copyNodes(canvas, selection.nodes)
+    if (copied > 0) toast.info(t('canvas.copied', { count: copied }))
+  }, [canvas, selection.nodes, t])
+
+  const cutSelected = useCallback((): void => {
+    if (copyNodes(canvas, selection.nodes) === 0) return
+    edit((at) => removeNodes(at, selection.nodes))
+    clear()
+  }, [canvas, selection.nodes, edit, clear])
+
+  /**
+   * Pastes at the pointer when there is one.
+   *
+   * That is where the person is looking, and a paste that lands somewhere off
+   * screen looks exactly like a paste that did nothing.
+   */
+  const pasteHere = useCallback(
+    (clientX?: number, clientY?: number): void => {
+      if (!hasClipping()) return
+
+      const at =
+        clientX !== undefined && clientY !== undefined ? toScene(clientX, clientY) : null
+
+      let created: string[] = []
+      edit((current) => {
+        const result = pasteInto(current, at)
+        created = result.ids
+        return result.canvas
+      })
+      if (created.length > 0) selectNodes(created)
+    },
+    [edit, selectNodes, toScene]
+  )
+
   const nudge = useCallback(
     (dx: number, dy: number): void => {
       if (selection.nodes.length === 0) return
@@ -286,6 +346,24 @@ export function CanvasView(): ReactElement | null {
         event.preventDefault()
         if (event.shiftKey) redo()
         else undo()
+        return
+      }
+
+      if (mod && event.key.toLowerCase() === 'c') {
+        event.preventDefault()
+        copySelected()
+        return
+      }
+
+      if (mod && event.key.toLowerCase() === 'x') {
+        event.preventDefault()
+        cutSelected()
+        return
+      }
+
+      if (mod && event.key.toLowerCase() === 'v') {
+        event.preventDefault()
+        pasteHere()
         return
       }
 
@@ -352,6 +430,9 @@ export function CanvasView(): ReactElement | null {
     selectNodes,
     removeSelected,
     duplicateSelected,
+    copySelected,
+    cutSelected,
+    pasteHere,
     nudge
   ])
 
@@ -376,13 +457,21 @@ export function CanvasView(): ReactElement | null {
       Math.abs(event.clientY - last.y) < DOUBLE_PRESS_SLOP
 
     if (secondPress) {
-      // Not a drag: the second press of a double-click must not also start
-      // moving the card it opened.
+      /*
+       * Noted now, acted on when the button comes up.
+       *
+       * Opening here put a text field on screen in the middle of the browser's
+       * own press sequence — and the focus change that follows a mousedown then
+       * blurred it, which commits and closes. The card flashed into an editor
+       * and straight back out, and nothing in the interface said why.
+       */
       lastPressRef.current = null
+      pendingOpenRef.current = { id: hit.id, x: event.clientX, y: event.clientY }
       setGesture(null)
-      openNode(hit)
       return
     }
+
+    pendingOpenRef.current = null
 
     if (!hit) {
       if (!event.shiftKey) clear()
@@ -448,6 +537,15 @@ export function CanvasView(): ReactElement | null {
     const where = toScene(event.clientX, event.clientY)
     session.report(where.x, where.y)
 
+    // A double-click the pointer walked away from was a drag all along.
+    const pending = pendingOpenRef.current
+    if (pending !== null && event.buttons !== 0) {
+      const moved =
+        Math.abs(event.clientX - pending.x) > DOUBLE_PRESS_SLOP ||
+        Math.abs(event.clientY - pending.y) > DOUBLE_PRESS_SLOP
+      if (moved) pendingOpenRef.current = null
+    }
+
     if (!gesture) return
 
     if (gesture.kind === 'link' || gesture.kind === 'marquee') {
@@ -489,6 +587,18 @@ export function CanvasView(): ReactElement | null {
   }
 
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>): void => {
+    const opening = pendingOpenRef.current
+    pendingOpenRef.current = null
+
+    if (opening !== null) {
+      const node = canvas.nodes.find((candidate) => candidate.id === opening.id)
+      if (node) {
+        openNode(node)
+        setGesture(null)
+        return
+      }
+    }
+
     // A line only becomes an edge if it was let go over another card.
     if (gesture?.kind === 'link') {
       const point = toScene(event.clientX, event.clientY)
@@ -634,10 +744,59 @@ export function CanvasView(): ReactElement | null {
     follow(node)
   }
 
+  const addCardAt = (clientX: number, clientY: number): void => {
+    const point = toScene(clientX, clientY)
+    const card: CanvasNode = {
+      id: nextNodeId(canvas),
+      type: 'text',
+      x: snap(point.x - 100),
+      y: snap(point.y - 60),
+      width: 200,
+      height: 120,
+      text: t('canvas.newCard')
+    }
+
+    edit((at) => ({ ...at, nodes: [...at.nodes, card] }))
+    selectNodes([card.id])
+    setEditing(card.id)
+  }
+
   const zoomAtCentre = (factor: number): void => {
     const box = surface.current?.getBoundingClientRect()
     if (!box) return
     zoomAt(box.left + box.width / 2, box.top + box.height / 2, factor)
+  }
+
+  menuActionsRef.current = {
+    open: (node) => openNode(node),
+    colour: (colour) => edit((at) => colorSelection(at, selection.nodes, selection.edges, colour)),
+    shape: (shape: CanvasShape) => edit((at) => shapeNodes(at, selection.nodes, shape)),
+    copy: copySelected,
+    cut: cutSelected,
+    paste: pasteHere,
+    canPaste: hasClipping,
+    duplicate: duplicateSelected,
+    remove: removeSelected,
+    group: addGroup,
+    restack,
+    addHere: addCardAt,
+    selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
+    fit: () => fit(canvas.nodes)
+  }
+
+  /*
+   * Pressing the right button over a card that is not selected selects it
+   * first — otherwise the menu would offer to delete something other than the
+   * card it opened on, which is how people lose work.
+   */
+  const onContextMenu = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const point = toScene(event.clientX, event.clientY)
+    const hit = nodeAt(canvas.nodes, point.x, point.y)
+
+    if (hit && !isNodeSelected(hit.id)) selectNodes([hit.id])
+    if (!hit) clear()
+
+    openMenu(event, hit)
   }
 
   const linking = gesture?.kind === 'link' ? gesture : null
@@ -752,6 +911,7 @@ export function CanvasView(): ReactElement | null {
           event.dataTransfer.dropEffect = 'copy'
         }}
         onDrop={dropFiles}
+        onContextMenu={onContextMenu}
         style={
           grid
             ? {

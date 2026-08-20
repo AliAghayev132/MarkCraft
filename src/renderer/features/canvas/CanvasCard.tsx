@@ -20,6 +20,25 @@ import { FileCard, LinkCard } from './CanvasReferences'
 // ── types ──────────────────────────────────────────────────────────────────
 import type { CanvasCardProps } from './types'
 
+/**
+ * The outlines, in a hundred-unit box stretched to the card.
+ *
+ * Percentages rather than pixels so a card keeps its shape at any size, and
+ * `non-scaling-stroke` so the line stays one pixel wide however far it is
+ * stretched.
+ */
+const CLIP: Record<string, string> = {
+  ellipse: 'ellipse(50% 50% at 50% 50%)',
+  diamond: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+  triangle: 'polygon(50% 0%, 100% 100%, 0% 100%)'
+}
+
+const OUTLINE: Record<string, string> = {
+  ellipse: 'M 50 0 A 50 50 0 1 1 49.99 0 Z',
+  diamond: 'M 50 0 L 100 50 L 50 100 L 0 50 Z',
+  triangle: 'M 50 0 L 100 100 L 0 100 Z'
+}
+
 /** Where each anchor handle sits on the card's border. */
 const HANDLE_AT: Record<Side, string> = {
   top: 'left-1/2 top-0 -translate-x-1/2 -translate-y-1/2',
@@ -61,6 +80,18 @@ export function CanvasCard({
       }
     : undefined
 
+  /*
+   * Anything that is not a rectangle is cut out of the card rather than drawn
+   * over it. A clip path keeps one element: the border, the wash, the selection
+   * ring and the text all follow the same outline, and there is no second shape
+   * underneath to keep in step with the first.
+   *
+   * The border is redrawn inside the clip, because a clipped element has no
+   * outside edge left for a CSS border to sit on.
+   */
+  const shape = node.shape ?? 'rectangle'
+  const clipped = shape !== 'rectangle' && shape !== 'rounded'
+
   return (
     <div
       style={{
@@ -68,17 +99,49 @@ export function CanvasCard({
         top: node.y,
         width: node.width,
         height: node.height,
-        ...(node.type === 'group' && colour ? { borderColor: colour } : painted)
+        ...(node.type === 'group' && colour ? { borderColor: colour } : painted),
+        ...(clipped ? { clipPath: CLIP[shape], border: 'none' } : {}),
+        ...(shape === 'ellipse' ? { borderRadius: '50%' } : {}),
+        ...(shape === 'rounded' ? { borderRadius: '1.75rem' } : {})
       }}
       className={cx(
-        'absolute rounded-lg border',
+        'absolute border',
+        shape === 'rectangle' ? 'rounded-lg' : '',
         node.type === 'group'
           ? 'border-dashed border-line bg-transparent'
           : 'border-line bg-app shadow-sm',
         selected ? 'ring-2 ring-accent' : ''
       )}
     >
-      <div className="h-full w-full overflow-hidden rounded-lg p-2.5">
+      {/* The outline, for a shape a CSS border cannot follow. */}
+      {clipped ? (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-0 size-full"
+        >
+          <path
+            d={OUTLINE[shape]}
+            fill="none"
+            stroke={colour ?? 'var(--mc-line)'}
+            strokeWidth={selected ? 1.6 : 1}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      ) : null}
+
+      <div
+        className={cx(
+          'h-full w-full overflow-hidden p-2.5',
+          shape === 'rectangle' ? 'rounded-lg' : '',
+          // A triangle's usable room is its lower middle; a diamond's is its
+          // centre. Text laid out corner to corner would fall outside the shape.
+          shape === 'triangle' ? 'flex items-end justify-center px-6 pb-2' : '',
+          shape === 'diamond' ? 'flex items-center justify-center px-8' : '',
+          shape === 'ellipse' ? 'flex items-center justify-center px-5' : ''
+        )}
+      >
         {editing ? (
           <CardEditor
             value={node.type === 'group' ? (node.label ?? '') : (node.text ?? '')}

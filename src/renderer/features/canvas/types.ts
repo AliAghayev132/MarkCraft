@@ -1,7 +1,7 @@
 // ── @shared ────────────────────────────────────────────────────────────────
 import type { RefObject } from '@lib/react'
 
-import type { Alignment, CanvasData, CanvasEdge, CanvasNode, Side } from '@shared'
+import type { Alignment, CanvasData, CanvasEdge, CanvasNode, CanvasShape, Side } from '@shared'
 
 export interface Viewport {
   x: number
@@ -83,6 +83,30 @@ export interface CanvasPaletteProps {
   /** The colour every selected mark shares, or undefined when they differ. */
   current: string | undefined
   onPick: (color: string | undefined) => void
+}
+
+/**
+ * What the right button can do.
+ *
+ * One object rather than a dozen props, because the menu takes all of them and
+ * none of them separately — and a menu missing one entry because a prop was
+ * forgotten is a menu that looks complete and is not.
+ */
+export interface CanvasMenuActions {
+  open: (node: CanvasNode) => void
+  colour: (colour: string | undefined) => void
+  shape: (shape: CanvasShape) => void
+  copy: () => void
+  cut: () => void
+  paste: (clientX: number, clientY: number) => void
+  canPaste: () => boolean
+  duplicate: () => void
+  remove: () => void
+  group: () => void
+  restack: (where: 'front' | 'back') => void
+  addHere: (clientX: number, clientY: number) => void
+  selectAll: () => void
+  fit: () => void
 }
 
 export interface CanvasMinimapProps {

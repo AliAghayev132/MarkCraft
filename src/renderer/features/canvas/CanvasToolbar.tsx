@@ -76,7 +76,17 @@ export function CanvasToolbar({
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center p-3">
-      <div className="mc-no-drag pointer-events-auto flex items-center gap-2 rounded-xl border border-line bg-app/95 px-2.5 py-1.5 shadow-lg backdrop-blur">
+      {/*
+       * The bar sits inside the canvas surface, so without this its own presses
+       * reached the canvas underneath — which treated them as a click on empty
+       * space and cleared the selection before the button it was on could act.
+       * Pressing a colour did nothing at all, because by the time it ran there
+       * was nothing selected to colour.
+       */}
+      <div
+        onPointerDown={(event) => event.stopPropagation()}
+        className="mc-no-drag pointer-events-auto flex items-center gap-2 rounded-xl border border-line bg-app/95 px-2.5 py-1.5 shadow-lg backdrop-blur"
+      >
         <span className="px-1 text-xs tabular-nums text-ink-tertiary">
           {t('canvas.selected', { count })}
         </span>

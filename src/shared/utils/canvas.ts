@@ -826,3 +826,83 @@ export function edgeMidpoint(
     y: (from.y + 3 * (from.y + a.y) + 3 * (to.y + b.y) + to.y) / 8
   }
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Fitting a card to what is in it
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * How tall a card needs to be for its text.
+ *
+ * A rough count rather than a measurement: the real answer depends on the font,
+ * the zoom and the shape, and asking the browser means one layout pass per card
+ * on every keystroke. This is close enough that nobody has to drag a card open
+ * to read it, which is the whole complaint — and a card that ends up slightly
+ * too tall is a card you can still read.
+ */
+export function heightForText(text: string, width: number): number {
+  const usable = Math.max(60, width - 24)
+
+  // Roughly the width of a character at the card's own text size.
+  const perLine = Math.max(8, Math.floor(usable / 6.6))
+
+  let lines = 0
+  for (const line of text.split('\n')) {
+    const heading = line.match(/^(#{1,6})\s/)
+    // A heading is set larger, so fewer of its characters fit on a line.
+    const scale = heading ? 1 + (7 - heading[1].length) * 0.09 : 1
+    const fits = Math.max(6, Math.floor(perLine / scale))
+
+    lines += Math.max(1, Math.ceil(line.length / fits)) * scale
+  }
+
+  return Math.max(MIN_NODE.height, snap(lines * 20 + 28))
+}
+
+/**
+ * Grows the chosen cards to fit what they hold.
+ *
+ * Grows only. Shrinking a card somebody sized by hand would undo a decision
+ * they made deliberately, and "it got smaller when I deleted a word" is a
+ * surprise nobody wants from a layout tool.
+ */
+export function fitToContent(canvas: CanvasData, ids: Iterable<string>): CanvasData {
+  const chosen = new Set(ids)
+  if (chosen.size === 0) return canvas
+
+  let changed = false
+  const nodes = canvas.nodes.map((node) => {
+    if (!chosen.has(node.id) || node.type === 'group') return node
+
+    const text = node.type === 'text' ? (node.text ?? '') : (node.file ?? node.url ?? '')
+    const height = heightForText(text, node.width)
+    if (height <= node.height) return node
+
+    changed = true
+    return { ...node, height }
+  })
+
+  return changed ? { ...canvas, nodes } : canvas
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Finding a card
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * The cards whose text contains what was typed.
+ *
+ * Everything a card can carry is searched — its writing, the file it points at,
+ * the address it links to, a group's name — because somebody looking for
+ * "budget" does not know or care which kind of card they wrote it on.
+ */
+export function findInCanvas(canvas: CanvasData, query: string): CanvasNode[] {
+  const needle = query.trim().toLowerCase()
+  if (needle === '') return []
+
+  return canvas.nodes.filter((node) =>
+    [node.text, node.file, node.url, node.label]
+      .filter((value): value is string => typeof value === 'string')
+      .some((value) => value.toLowerCase().includes(needle))
+  )
+}

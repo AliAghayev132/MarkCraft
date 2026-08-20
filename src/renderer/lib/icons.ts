@@ -157,6 +157,7 @@ export {
   Grid2x2,
   Hash,
   LayoutGrid,
+  Scaling,
   Scissors,
   SendToBack,
   Triangle,

@@ -71,6 +71,7 @@ const HANDLE_AT: Record<Side, string> = {
 export function CanvasCard({
   node,
   selected,
+  matched,
   editing,
   zoom,
   onCommitEdit,
@@ -144,7 +145,11 @@ export function CanvasCard({
           : node.type === 'group'
             ? 'border border-dashed border-line bg-transparent'
             : 'border border-line bg-app shadow-sm',
-        selected ? 'ring-2 ring-accent' : ''
+        selected ? 'ring-2 ring-accent' : '',
+        // A found card is outlined in the warning colour rather than the
+        // accent: it is not selected, and showing it as though it were would
+        // make the next Delete look like it applies to it.
+        matched && !selected ? 'ring-2 ring-warning' : ''
       )}
     >
       {/* The outline, for a shape a CSS border cannot follow. */}

@@ -1532,7 +1532,13 @@
     "fromDocument": "Laid out as a canvas",
     "fromDocumentFailed": "Could not lay it out",
     "fromDocumentEmpty": "There are no headings to lay out.",
-    "fromDocumentNeedsFile": "Save the document first — the canvas goes beside it."
+    "fromDocumentNeedsFile": "Save the document first — the canvas goes beside it.",
+    "find": "Find on the canvas",
+    "findPlaceholder": "Find a card",
+    "findGo": "Select what was found",
+    "findCount_one": "{{count}} card",
+    "findCount_other": "{{count}} cards",
+    "fitCards": "Fit cards to their text"
   },
   "lock": {
     "locked": "Locked — editing is off",

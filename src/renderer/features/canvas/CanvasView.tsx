@@ -16,6 +16,7 @@ import {
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -33,6 +34,8 @@ import {
   connect,
   distributeNodes,
   duplicateNodes,
+  findInCanvas,
+  fitToContent,
   gridLayout,
   groupAround,
   inPaintOrder,
@@ -81,6 +84,7 @@ import { canvasTarget } from './canvas-store'
 import { CanvasMinimap } from './CanvasMinimap'
 import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
+import { CanvasFind } from './CanvasFind'
 import { CanvasToolbar } from './CanvasToolbar'
 import { CardFormatBar } from './CardFormatBar'
 import { useCanvasDocument } from './useCanvasDocument'
@@ -160,6 +164,20 @@ export function CanvasView(): ReactElement | null {
   draftRef.current = draft
   const [gesture, setGesture] = useState<CanvasGesture | null>(null)
   const [grid, setGrid] = useState(true)
+
+  /** What is being looked for on the canvas, if anything. */
+  const [finding, setFinding] = useState<string | null>(null)
+
+  /*
+   * Matches are marked on the canvas itself rather than listed beside it. A
+   * card's answer to "where is it" is where it is, and a list would make
+   * somebody read the same names twice and then hunt for them anyway.
+   */
+  const found = useMemo(
+    () => (finding === null ? [] : findInCanvas(canvas, finding)),
+    [canvas, finding]
+  )
+  const foundIds = useMemo(() => new Set(found.map((node) => node.id)), [found])
 
   // While the canvas is up, the application's own accelerators stand aside.
   useKeyboardClaim(path !== null)
@@ -405,6 +423,12 @@ export function CanvasView(): ReactElement | null {
         event.preventDefault()
         if (event.shiftKey) redo()
         else undo()
+        return
+      }
+
+      if (mod && event.key.toLowerCase() === 'f') {
+        event.preventDefault()
+        setFinding((current) => (current === null ? '' : current))
         return
       }
 
@@ -830,6 +854,18 @@ export function CanvasView(): ReactElement | null {
     }
   }
 
+  /**
+   * Grows the chosen cards to fit what they hold.
+   *
+   * Grows only: shrinking a card somebody sized by hand would undo a decision
+   * they made, and "it got smaller when I deleted a word" is a surprise nobody
+   * wants from a layout tool.
+   */
+  const fitCards = (): void => {
+    const chosen = selection.nodes.length > 0 ? selection.nodes : canvas.nodes.map((n) => n.id)
+    edit((at) => fitToContent(at, chosen))
+  }
+
   const tidy = (): void => {
     const chosen = selection.nodes.length > 1 ? selection.nodes : canvas.nodes.map((n) => n.id)
     edit((at) => gridLayout(at, chosen))
@@ -878,6 +914,8 @@ export function CanvasView(): ReactElement | null {
     restack,
     addHere: addCardAt,
     writeUp: () => void writeUp(),
+    fitCards,
+    find: () => setFinding(''),
     tidy,
     addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
@@ -1067,6 +1105,7 @@ export function CanvasView(): ReactElement | null {
                   key={node.id}
                   node={node}
                   selected={isNodeSelected(node.id)}
+                  matched={foundIds.has(node.id)}
                   editing={editing === node.id}
                   zoom={view.zoom}
                   onCancelEdit={() => setEditing(null)}
@@ -1141,6 +1180,20 @@ export function CanvasView(): ReactElement | null {
               * selection toolbar at the bottom: always in the same place, never
               * over the thing it acts on, and never clipped by the header.
               */}
+            {finding !== null ? (
+              <CanvasFind
+                query={finding}
+                count={found.length}
+                onQuery={setFinding}
+                onClose={() => setFinding(null)}
+                onGo={() => {
+                  if (found.length === 0) return
+                  selectNodes(found.map((node) => node.id))
+                  fit(found)
+                }}
+              />
+            ) : null}
+
             {editing !== null ? (
               <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center p-3">
                 <CardFormatBar />

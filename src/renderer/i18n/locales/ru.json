@@ -1558,7 +1558,15 @@
     "fromDocument": "Разложено как холст",
     "fromDocumentFailed": "Не удалось разложить",
     "fromDocumentEmpty": "Нет заголовков, которые можно разложить.",
-    "fromDocumentNeedsFile": "Сначала сохраните документ — холст ляжет рядом с ним."
+    "fromDocumentNeedsFile": "Сначала сохраните документ — холст ляжет рядом с ним.",
+    "find": "Найти на холсте",
+    "findPlaceholder": "Найти карточку",
+    "findGo": "Выделить найденное",
+    "findCount_one": "{{count}} карточка",
+    "findCount_few": "{{count}} карточки",
+    "findCount_many": "{{count}} карточек",
+    "findCount_other": "{{count}} карточек",
+    "fitCards": "Подогнать карточки под текст"
   },
   "lock": {
     "locked": "Заблокирован — правка выключена",

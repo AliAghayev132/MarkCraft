@@ -73,6 +73,8 @@ export type CanvasGesture =
 export interface CanvasCardProps {
   node: CanvasNode
   selected: boolean
+  /** Highlighted because a search on the canvas found it. */
+  matched: boolean
   editing: boolean
   zoom: number
   onCommitEdit: (text: string) => void
@@ -143,8 +145,20 @@ export interface CanvasMenuActions {
   /** The canvas, written out as a document beside it. */
   writeUp: () => void
   tidy: () => void
+  /** Grows the chosen cards to hold what is in them. */
+  fitCards: () => void
+  find: () => void
   selectAll: () => void
   fit: () => void
+}
+
+export interface CanvasFindProps {
+  query: string
+  count: number
+  onQuery: (query: string) => void
+  onClose: () => void
+  /** Selects every match and brings them into view. */
+  onGo: () => void
 }
 
 export interface CanvasMinimapProps {

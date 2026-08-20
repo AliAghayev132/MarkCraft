@@ -1532,7 +1532,13 @@
     "fromDocument": "Kanvas kimi düzüldü",
     "fromDocumentFailed": "Kanvas kimi düzmək olmadı",
     "fromDocumentEmpty": "Düzüləcək başlıq yoxdur.",
-    "fromDocumentNeedsFile": "Əvvəl sənədi saxlayın — kanvas onun yanına düşür."
+    "fromDocumentNeedsFile": "Əvvəl sənədi saxlayın — kanvas onun yanına düşür.",
+    "find": "Kanvasda tap",
+    "findPlaceholder": "Kart tap",
+    "findGo": "Tapılanları seç",
+    "findCount_one": "{{count}} kart",
+    "findCount_other": "{{count}} kart",
+    "fitCards": "Kartları mətnə uyğunlaşdır"
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

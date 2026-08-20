@@ -16,9 +16,12 @@ import {
   connect,
   distributeNodes,
   duplicateNodes,
+  findInCanvas,
+  fitToContent,
   edgeMidpoint,
   edgePath,
   groupAround,
+  heightForText,
   inPaintOrder,
   isCanvasColor,
   isCanvasAlign,
@@ -805,5 +808,107 @@ describe('a colour of one\u2019s own', () => {
 
   it('is used as written, not resolved through the theme', () => {
     expect(canvasColorCss('#4f8ef7')).toBe('#4f8ef7')
+  })
+})
+
+describe('fitting a card to what is in it', () => {
+  const canvas = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 200, height: 60, text: 'Short' },
+      {
+        id: 'b',
+        type: 'text' as const,
+        x: 300,
+        y: 0,
+        width: 200,
+        height: 60,
+        text: 'A much longer piece of writing that will not fit into sixty pixels of card, however hard it tries, and which somebody would otherwise have to drag open to read at all.'
+      }
+    ],
+    edges: []
+  }
+
+  it('grows a card that is too small for its text', () => {
+    const fitted = fitToContent(canvas, ['b'])
+    expect(fitted.nodes[1].height).toBeGreaterThan(60)
+  })
+
+  it('leaves a card that already fits', () => {
+    const fitted = fitToContent(canvas, ['a'])
+    expect(fitted.nodes[0].height).toBe(60)
+  })
+
+  it('never shrinks one, because that would undo a decision', () => {
+    const roomy = {
+      nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 200, height: 400, text: 'Hi' }],
+      edges: []
+    }
+    expect(fitToContent(roomy, ['a'])).toBe(roomy)
+  })
+
+  it('gives a heading more room than a paragraph of the same length', () => {
+    const words = 'the same number of characters here'
+    expect(heightForText(`# ${words}`, 200)).toBeGreaterThan(heightForText(words, 200))
+  })
+
+  it('leaves a group alone — its size is the area it encloses', () => {
+    const group = {
+      nodes: [
+        { id: 'g', type: 'group' as const, x: 0, y: 0, width: 400, height: 60, label: 'A group' }
+      ],
+      edges: []
+    }
+    expect(fitToContent(group, ['g'])).toBe(group)
+  })
+
+  it('never returns a card below the usable minimum', () => {
+    expect(heightForText('', 200)).toBeGreaterThanOrEqual(MIN_NODE.height)
+  })
+})
+
+describe('finding a card', () => {
+  const canvas = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 200, height: 100, text: 'The budget' },
+      { id: 'b', type: 'file' as const, x: 0, y: 0, width: 200, height: 100, file: 'budget.md' },
+      {
+        id: 'c',
+        type: 'link' as const,
+        x: 0,
+        y: 0,
+        width: 200,
+        height: 100,
+        url: 'https://example.com/budget'
+      },
+      {
+        id: 'g',
+        type: 'group' as const,
+        x: 0,
+        y: 0,
+        width: 400,
+        height: 400,
+        label: 'Budget review'
+      },
+      { id: 'd', type: 'text' as const, x: 0, y: 0, width: 200, height: 100, text: 'Unrelated' }
+    ],
+    edges: []
+  }
+
+  it('searches everything a card can carry', () => {
+    // Somebody looking for a word does not know which kind of card they wrote
+    // it on.
+    expect(findInCanvas(canvas, 'budget').map((n) => n.id)).toEqual(['a', 'b', 'c', 'g'])
+  })
+
+  it('ignores case', () => {
+    expect(findInCanvas(canvas, 'BUDGET')).toHaveLength(4)
+  })
+
+  it('finds nothing for nothing', () => {
+    expect(findInCanvas(canvas, '   ')).toEqual([])
+  })
+
+  it('finds nothing that is not there', () => {
+    expect(findInCanvas(canvas, 'zebra')).toEqual([])
   })
 })

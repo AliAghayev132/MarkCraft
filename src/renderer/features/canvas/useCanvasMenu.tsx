@@ -7,6 +7,8 @@ import {
   FileText,
   Group,
   LayoutGrid,
+  Scaling,
+  Search,
   Scissors,
   SendToBack,
   Shapes,
@@ -200,6 +202,19 @@ export function useCanvasMenu(
             { id: 'sep5', separator: true },
             { id: 'selectAll', label: t('canvas.selectAll'), shortcut: 'mod+a', onSelect: actions.selectAll },
             { id: 'sep-out', separator: true },
+            {
+              id: 'find',
+              label: t('canvas.find'),
+              icon: <Search size={14} />,
+              shortcut: 'mod+f',
+              onSelect: actions.find
+            },
+            {
+              id: 'fitCards',
+              label: t('canvas.fitCards'),
+              icon: <Scaling size={14} />,
+              onSelect: actions.fitCards
+            },
             {
               id: 'tidy',
               label: t('canvas.tidy'),

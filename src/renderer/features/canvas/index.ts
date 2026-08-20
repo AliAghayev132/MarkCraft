@@ -1,4 +1,5 @@
 /** `@features/canvas`. */
+export * from './CanvasFind'
 export * from './CanvasView'
 export * from './canvas-actions'
 export * from './canvas-clipboard'

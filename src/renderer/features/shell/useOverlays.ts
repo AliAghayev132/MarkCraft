@@ -12,6 +12,7 @@ import type { OverlayId, Overlays } from './types'
 
 const IDS: OverlayId[] = [
   'palette',
+  'quickOpen',
   'settings',
   'export',
   'share',

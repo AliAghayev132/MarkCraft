@@ -42,6 +42,7 @@ const INERT_CONTEXT: CommandContext = {
   openBook: noop,
   openStudy: noop,
   openCanvas: noop,
+  openQuickOpen: noop,
   documentToCanvas: noop,
   toggleLock: noop,
   openHttp: noop,

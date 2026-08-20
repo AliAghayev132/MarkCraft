@@ -141,6 +141,7 @@ export function App(): React.ReactElement {
       openBook: () => overlays.show('book'),
       openStudy: () => overlays.show('study'),
       openCanvas: () => overlays.show('canvas'),
+      openQuickOpen: () => overlays.show('quickOpen'),
       documentToCanvas: () => void documentToCanvas(),
       openHttp: () => overlays.show('http'),
       openHelp: () => overlays.show('help'),

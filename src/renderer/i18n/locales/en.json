@@ -378,7 +378,8 @@
     "document.lock": "Lock or unlock this document",
     "tools.http": "HTTP request",
     "help.guide": "How to use MarkCraft",
-    "document.toCanvas": "Lay Out As Canvas"
+    "document.toCanvas": "Lay Out As Canvas",
+    "app.quickOpen": "Open File…"
   },
   "dialogs": {
     "goToLine": {
@@ -1606,5 +1607,12 @@
     "noMatch": "No tag matches that.",
     "needsFolder": "Open a folder to see its tags.",
     "truncated": "The workspace is large; some files were not read."
+  },
+  "quickOpen": {
+    "title": "Open a file",
+    "body": "Type a few letters of the name — they do not have to be together.",
+    "placeholder": "File name",
+    "noMatch": "No file matches that.",
+    "nothingOpen": "Open a folder, or expand one, and its files appear here."
   }
 }

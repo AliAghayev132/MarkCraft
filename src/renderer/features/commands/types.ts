@@ -51,6 +51,7 @@ export interface Command extends CommandDefinition {
  */
 export interface CommandContext {
   openCommandPalette: () => void
+  openQuickOpen: () => void
   openSettings: () => void
   openShortcuts: () => void
   openExport: () => void

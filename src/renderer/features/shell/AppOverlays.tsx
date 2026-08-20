@@ -23,6 +23,7 @@ import { HttpDialog } from '@features/http'
 import { LinksDialog } from '@features/links'
 import { ExportModal, ShareModal } from '@features/output'
 import { PresentView } from '@features/present'
+import { QuickOpen } from '@features/quickopen'
 import { SettingsModal } from '@features/settings'
 import { SlashMenu, slashMenu } from '@features/slash'
 import { StudyView } from '@features/study'
@@ -101,6 +102,7 @@ export function AppOverlays({
       <CanvasView />
       <HttpDialog open={open.http} onClose={() => hide('http')} />
       <HelpView open={open.help} onClose={() => hide('help')} />
+      <QuickOpen open={open.quickOpen} onClose={() => hide('quickOpen')} />
 
       <LinksDialog
         open={open.links}

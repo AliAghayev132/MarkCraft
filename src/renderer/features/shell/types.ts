@@ -49,6 +49,7 @@ export interface TitleBarProps {
 
 export type OverlayId =
   | 'palette'
+  | 'quickOpen'
   | 'settings'
   | 'export'
   | 'share'

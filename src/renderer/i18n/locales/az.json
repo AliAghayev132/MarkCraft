@@ -378,7 +378,8 @@
     "document.lock": "Bu sənədi kilidlə və ya aç",
     "tools.http": "HTTP sorğusu",
     "help.guide": "MarkCraft necə işlədilir",
-    "document.toCanvas": "Kanvas Kimi Düz"
+    "document.toCanvas": "Kanvas Kimi Düz",
+    "app.quickOpen": "Fayl Aç…"
   },
   "dialogs": {
     "goToLine": {
@@ -1606,5 +1607,12 @@
     "noMatch": "Uyğun etiket yoxdur.",
     "needsFolder": "Etiketləri görmək üçün qovluq açın.",
     "truncated": "İş sahəsi böyükdür; bəzi fayllar oxunmadı."
+  },
+  "quickOpen": {
+    "title": "Fayl aç",
+    "body": "Adın bir neçə hərfini yazın — ardıcıl olmaya da bilər.",
+    "placeholder": "Fayl adı",
+    "noMatch": "Uyğun fayl yoxdur.",
+    "nothingOpen": "Qovluq açın və ya birini genişləndirin — faylları burada görünəcək."
   }
 }

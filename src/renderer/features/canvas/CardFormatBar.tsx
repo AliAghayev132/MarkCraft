@@ -1,16 +1,6 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Bold, Code, Italic, Link2, List, ListOrdered, Quote } from '@icons'
-import { type ReactElement } from '@lib/react'
-
-// ── @shared ────────────────────────────────────────────────────────────────
-import {
-  headingLevelAt,
-  insertLink,
-  setHeading,
-  toggleLinePrefix,
-  toggleWrap,
-  type TextDocument
-} from '@shared'
+import { Bold, Code, Italic, Link2, List, ListOrdered, Quote, Strikethrough } from '@icons'
+import { useSyncExternalStore, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
@@ -21,42 +11,46 @@ import { IconButton } from '@ui'
 // ── @utils ─────────────────────────────────────────────────────────────────
 import { cx } from '@utils'
 
-// ── types ──────────────────────────────────────────────────────────────────
-import type { CardFormatBarProps } from './types'
+// ── ./canvas ───────────────────────────────────────────────────────────────
+import { cardEditor } from './card-editor-store'
 
 const LEVELS = [1, 2, 3] as const
 
 /**
- * Markdown, while a card is being written in.
+ * Formatting, while a card is being written in.
  *
- * A card holds the same Markdown a document does — it is rendered by the same
- * pipeline — and until now the only way to get a heading into one was to know
- * that `#` makes headings. The buttons do not add anything the text could not
- * already say; they say what it can.
+ * The buttons drive the editor rather than rewriting Markdown behind it. The
+ * card is a live surface now, and text operations on a string it no longer
+ * holds would put the caret somewhere the person was not.
  *
- * Docked to the surface rather than floating over the card. Above a card near
- * the top of the canvas a floating bar sat under the window's own header, where
- * a click reached the header instead — which took focus, committed the edit and
- * closed the editor before the button could run.
+ * Docked to the canvas rather than floating over the card. Above a card near
+ * the top of the window a floating bar sat under the header, where a click
+ * reached the header, took focus, and closed the editor before the button it
+ * was on could run.
  */
-export function CardFormatBar({ draft, onApply }: CardFormatBarProps): ReactElement {
+export function CardFormatBar(): ReactElement | null {
   const t = useT()
 
-  const document: TextDocument = { text: draft.text, from: draft.from, to: draft.to }
-  const level = headingLevelAt(document)
+  // The revision, not the instance: the instance is mutable and keeps its
+  // identity, so it would never tell React the selection had moved.
+  useSyncExternalStore(
+    (listener) => cardEditor.subscribe(listener),
+    () => cardEditor.version()
+  )
+
+  const editor = cardEditor.get()
+  if (!editor) return null
+
+  const level = LEVELS.find((heading) => editor.isActive('heading', { level: heading })) ?? 0
 
   return (
     <div
       /*
-       * Two different problems, and they need two different events.
-       *
-       * Focus moves on `mousedown`, and that is the only place preventing the
-       * default keeps it where it is — a bar that steals focus from the field
-       * it formats blurs it, which commits the edit and closes the editor
-       * before the button has run.
-       *
-       * Propagation is stopped separately, because the canvas surface below
-       * reads a press as a click on empty space and would clear the selection.
+       * Focus moves on `mousedown`, and preventing the default there is the one
+       * way to keep it in the editor — a bar that takes focus from what it
+       * formats loses the selection it was about to act on. Propagation is
+       * stopped separately, because the canvas below reads a press as a click
+       * on empty space and would clear the selection.
        */
       onMouseDown={(event) => event.preventDefault()}
       onPointerDown={(event) => event.stopPropagation()}
@@ -69,7 +63,7 @@ export function CardFormatBar({ draft, onApply }: CardFormatBarProps): ReactElem
           aria-pressed={level === heading}
           aria-label={t(`toolbar.heading${heading}`)}
           title={t(`toolbar.heading${heading}`)}
-          onClick={() => onApply(setHeading(document, heading))}
+          onClick={() => editor.chain().focus().toggleHeading({ level: heading }).run()}
           className={cx(
             'rounded px-1.5 py-0.5 text-xs font-semibold tabular-nums',
             'focus-visible:shadow-focus focus-visible:outline-none',
@@ -85,7 +79,7 @@ export function CardFormatBar({ draft, onApply }: CardFormatBarProps): ReactElem
         aria-pressed={level === 0}
         aria-label={t('canvas.paragraph')}
         title={t('canvas.paragraph')}
-        onClick={() => onApply(setHeading(document, 0))}
+        onClick={() => editor.chain().focus().setParagraph().run()}
         className={cx(
           'rounded px-1.5 py-0.5 text-xs',
           'focus-visible:shadow-focus focus-visible:outline-none',
@@ -101,25 +95,42 @@ export function CardFormatBar({ draft, onApply }: CardFormatBarProps): ReactElem
         icon={<Bold size={14} />}
         label={t('toolbar.bold')}
         size="sm"
-        onClick={() => onApply(toggleWrap(document, '**'))}
+        active={editor.isActive('bold')}
+        onClick={() => editor.chain().focus().toggleBold().run()}
       />
       <IconButton
         icon={<Italic size={14} />}
         label={t('toolbar.italic')}
         size="sm"
-        onClick={() => onApply(toggleWrap(document, '*'))}
+        active={editor.isActive('italic')}
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+      />
+      <IconButton
+        icon={<Strikethrough size={14} />}
+        label={t('toolbar.strikethrough')}
+        size="sm"
+        active={editor.isActive('strike')}
+        onClick={() => editor.chain().focus().toggleStrike().run()}
       />
       <IconButton
         icon={<Code size={14} />}
         label={t('toolbar.inlineCode')}
         size="sm"
-        onClick={() => onApply(toggleWrap(document, '`'))}
+        active={editor.isActive('code')}
+        onClick={() => editor.chain().focus().toggleCode().run()}
       />
       <IconButton
         icon={<Link2 size={14} />}
         label={t('toolbar.insertLink')}
         size="sm"
-        onClick={() => onApply(insertLink(document))}
+        active={editor.isActive('link')}
+        onClick={() => {
+          // Off again if it is already a link; otherwise the address is typed
+          // into the card, where the link is, rather than into a dialog that
+          // covers the thing it is being added to.
+          if (editor.isActive('link')) editor.chain().focus().unsetLink().run()
+          else editor.chain().focus().setLink({ href: '' }).run()
+        }}
       />
 
       <span className="mx-0.5 h-4 w-px bg-line-subtle" role="presentation" />
@@ -128,19 +139,22 @@ export function CardFormatBar({ draft, onApply }: CardFormatBarProps): ReactElem
         icon={<List size={14} />}
         label={t('toolbar.bulletList')}
         size="sm"
-        onClick={() => onApply(toggleLinePrefix(document, '- ', /^[-*+][ \t]+/))}
+        active={editor.isActive('bulletList')}
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
       />
       <IconButton
         icon={<ListOrdered size={14} />}
         label={t('toolbar.numberedList')}
         size="sm"
-        onClick={() => onApply(toggleLinePrefix(document, '1. ', /^\d+[.)][ \t]+/))}
+        active={editor.isActive('orderedList')}
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
       />
       <IconButton
         icon={<Quote size={14} />}
         label={t('toolbar.blockquote')}
         size="sm"
-        onClick={() => onApply(toggleLinePrefix(document, '> ', /^>[ \t]?/))}
+        active={editor.isActive('blockquote')}
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
       />
     </div>
   )

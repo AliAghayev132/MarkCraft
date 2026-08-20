@@ -1520,7 +1520,8 @@
     },
     "addText": "Write on the canvas",
     "addTextHere": "Write here",
-    "ownColour": "A colour of your own"
+    "ownColour": "A colour of your own",
+    "writeHere": "Write here…"
   },
   "lock": {
     "locked": "Locked — editing is off",

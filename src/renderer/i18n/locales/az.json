@@ -1520,7 +1520,8 @@
     },
     "addText": "Kanvasa yaz",
     "addTextHere": "Bura yaz",
-    "ownColour": "Öz rənginiz"
+    "ownColour": "Öz rənginiz",
+    "writeHere": "Bura yazın…"
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

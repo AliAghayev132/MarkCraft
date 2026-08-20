@@ -112,6 +112,14 @@ export interface CardDraft {
   to: number
 }
 
+export interface CardRichEditorProps {
+  value: string
+  onChange: (markdown: string) => void
+  /** Finished writing; the card takes what is there. */
+  onDone: () => void
+  onCancel: () => void
+}
+
 export interface CardFormatBarProps {
   draft: CardDraft
   onApply: (next: TextDocument) => void

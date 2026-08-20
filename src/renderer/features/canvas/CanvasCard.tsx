@@ -15,6 +15,7 @@ import { cx } from '@utils'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { renderMarkdown } from '@features/editor/markdown'
+import { CardRichEditor } from './CardRichEditor'
 import { FileCard, LinkCard } from './CanvasReferences'
 
 // ── types ──────────────────────────────────────────────────────────────────
@@ -178,12 +179,19 @@ export function CanvasCard({
           ALIGNMENT[align]
         )}
       >
-        {editing ? (
+        {editing && node.type !== 'group' ? (
+          <CardRichEditor
+            value={draft?.text ?? node.text ?? ''}
+            onChange={(markdown) => onDraft({ text: markdown, from: 0, to: 0 })}
+            onDone={() => onCommitEdit(draft?.text ?? node.text ?? '')}
+            onCancel={onCancelEdit}
+          />
+        ) : editing ? (
           <CardEditor
             value={node.type === 'group' ? (node.label ?? '') : (node.text ?? '')}
             // A group's label is one line, and Markdown in it would not be
             // rendered anywhere — so it gets a field and no formatting.
-            single={node.type === 'group'}
+            single
             draft={draft}
             onDraft={onDraft}
             onCommit={onCommitEdit}

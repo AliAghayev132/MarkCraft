@@ -30,7 +30,6 @@ import {
   bringToFront,
   colorSelection,
   connect,
-  insertLink,
   distributeNodes,
   duplicateNodes,
   groupAround,
@@ -49,7 +48,6 @@ import {
   sendToBack,
   shapeNodes,
   snap,
-  toggleWrap,
   type Alignment,
   type CanvasShape,
   type CanvasNode,
@@ -380,30 +378,9 @@ export function CanvasView(): ReactElement | null {
        * rather than on the field itself so every shortcut the canvas answers
        * to is decided in one place.
        */
-      if (editing) {
-        const writing = draftRef.current
-        if (!writing || !(event.ctrlKey || event.metaKey)) return
-
-        const format = (next: CardDraft): void => {
-          event.preventDefault()
-          setDraft(next)
-        }
-
-        switch (event.key.toLowerCase()) {
-          case 'b':
-            format(toggleWrap(writing, '**'))
-            break
-          case 'i':
-            format(toggleWrap(writing, '*'))
-            break
-          case 'k':
-            format(insertLink(writing))
-            break
-          default:
-            break
-        }
-        return
-      }
+      // A card being written in owns the keyboard: the editor inside it answers
+      // Ctrl+B and the rest itself, the same as the document editor does.
+      if (editing) return
 
       const mod = event.ctrlKey || event.metaKey
 
@@ -1135,9 +1112,9 @@ export function CanvasView(): ReactElement | null {
               * selection toolbar at the bottom: always in the same place, never
               * over the thing it acts on, and never clipped by the header.
               */}
-            {draft && editing !== null ? (
+            {editing !== null ? (
               <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center p-3">
-                <CardFormatBar draft={draft} onApply={(next) => setDraft(next)} />
+                <CardFormatBar />
               </div>
             ) : null}
 

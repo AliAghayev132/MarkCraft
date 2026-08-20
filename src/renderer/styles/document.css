@@ -587,11 +587,38 @@
 .mc-canvas-card > :first-child { margin-top: 0; }
 .mc-canvas-card > :last-child { margin-bottom: 0; }
 
+/*
+ * Headings on a card were all one size, which is the same as having none: a
+ * heading is only a heading because it is bigger than what follows it. Scaled
+ * down from the document's own steps rather than flattened, so a card reads the
+ * way the document it came from does.
+ */
 .mc-canvas-card h1,
 .mc-canvas-card h2,
-.mc-canvas-card h3 {
-  font-size: 1rem;
-  margin-block: 0.25em;
+.mc-canvas-card h3,
+.mc-canvas-card h4,
+.mc-canvas-card h5,
+.mc-canvas-card h6 {
+  margin-block: 0.3em 0.2em;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+.mc-canvas-card h1 { font-size: 1.55em; }
+.mc-canvas-card h2 { font-size: 1.3em; }
+.mc-canvas-card h3 { font-size: 1.1em; }
+.mc-canvas-card h4 { font-size: 1em; }
+.mc-canvas-card h5,
+.mc-canvas-card h6 {
+  font-size: 0.9em;
+  color: var(--mc-text-secondary);
+}
+
+/* A card is small; a rule under a heading eats a line of it for nothing. */
+.mc-canvas-card h1,
+.mc-canvas-card h2 {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 /*
@@ -625,3 +652,29 @@
 }
 
 .mc-run-error { color: var(--mc-danger); }
+
+/*
+ * ── Writing in a card ───────────────────────────────────────────────────────
+ *
+ * The live surface inside a card. It carries `.mc-canvas-card`, so the heading
+ * scale and the tight margins above already apply — what is left is the shell:
+ * no outline of its own, since the card already has one, and room to scroll
+ * when what is being written outgrows the card holding it.
+ */
+.mc-card-editor {
+  outline: none;
+  min-height: 100%;
+}
+
+.mc-card-editor .ProseMirror-focused {
+  outline: none;
+}
+
+/* The placeholder, which is a data attribute rather than real text. */
+.mc-card-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--mc-text-tertiary);
+}

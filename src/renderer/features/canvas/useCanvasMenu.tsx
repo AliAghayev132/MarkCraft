@@ -17,7 +17,8 @@ import {
   Square,
   Trash2,
   Triangle,
-  Type
+  Type,
+  Workflow
 } from '@icons'
 import { useCallback, type RefObject } from '@lib/react'
 
@@ -239,6 +240,23 @@ export function useCanvasMenu(
               label: t('canvas.templates.add'),
               icon: <LayoutTemplate size={14} />,
               onSelect: actions.templates
+            },
+            {
+              id: 'arrange',
+              label: t('canvas.arrange'),
+              icon: <Workflow size={14} />,
+              submenu: [
+                {
+                  id: 'arrange-tree',
+                  label: t('canvas.arrangeTree'),
+                  onSelect: () => actions.arrange('tree')
+                },
+                {
+                  id: 'arrange-radial',
+                  label: t('canvas.arrangeRadial'),
+                  onSelect: () => actions.arrange('radial')
+                }
+              ]
             },
             {
               id: 'tidy',

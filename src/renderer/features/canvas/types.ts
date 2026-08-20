@@ -145,6 +145,8 @@ export interface CanvasMenuActions {
   /** The canvas, written out as a document beside it. */
   writeUp: () => void
   tidy: () => void
+  /** Arranges the chosen cards by the arrows between them. */
+  arrange: (shape: 'tree' | 'radial') => void
   /** Grows the chosen cards to hold what is in them. */
   fitCards: () => void
   find: () => void

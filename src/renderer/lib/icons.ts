@@ -163,6 +163,7 @@ export {
   Scissors,
   SendToBack,
   Triangle,
+  Workflow,
 
   // ── Working together ─────────────────────────────────────────────────────
   LogIn,

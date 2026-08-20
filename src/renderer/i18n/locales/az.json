@@ -1600,7 +1600,10 @@
     "exportFailed": "Şəkil saxlanıla bilmədi",
     "exportEmpty": "Kanvasda hələ çəkiləcək bir şey yoxdur.",
     "exportTooBig": "Kanvas bir şəkil üçün çox böyükdür",
-    "exportTooBigHint": "Ölçü limiti olmayan SVG kimi saxla."
+    "exportTooBigHint": "Ölçü limiti olmayan SVG kimi saxla.",
+    "arrange": "Bağlantılara görə düz",
+    "arrangeTree": "Ağac kimi",
+    "arrangeRadial": "Mərkəzin ətrafında"
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

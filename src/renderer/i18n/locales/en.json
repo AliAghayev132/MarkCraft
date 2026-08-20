@@ -1600,7 +1600,10 @@
     "exportFailed": "The picture could not be saved",
     "exportEmpty": "There is nothing on the canvas to draw yet.",
     "exportTooBig": "The canvas is too large for one picture",
-    "exportTooBigHint": "Save it as an SVG instead, which has no size limit."
+    "exportTooBigHint": "Save it as an SVG instead, which has no size limit.",
+    "arrange": "Arrange by connections",
+    "arrangeTree": "As a tree",
+    "arrangeRadial": "Around a middle"
   },
   "lock": {
     "locked": "Locked — editing is off",

@@ -38,6 +38,7 @@ import {
   findInCanvas,
   fitToContent,
   gridLayout,
+  radialLayout,
   groupAround,
   inPaintOrder,
   labelEdge,
@@ -55,6 +56,7 @@ import {
   sendToBack,
   shapeNodes,
   snap,
+  treeLayout,
   type Alignment,
   type CanvasData,
   type CanvasShape,
@@ -898,6 +900,21 @@ export function CanvasView(): ReactElement | null {
     edit((at) => gridLayout(at, chosen))
   }
 
+  /**
+   * Arranges the cards by what they are joined to.
+   *
+   * The whole canvas unless something is chosen, like tidying: somebody who
+   * asks for a diagram to be laid out means the diagram, and laying out one
+   * card of it is not a thing anybody wants.
+   */
+  const layOut = (shape: 'tree' | 'radial'): void => {
+    const chosen = selection.nodes.length > 1 ? selection.nodes : canvas.nodes.map((n) => n.id)
+    const laid = shape === 'tree' ? treeLayout(canvas, chosen) : radialLayout(canvas, chosen)
+
+    edit(() => laid)
+    fit(laid.nodes)
+  }
+
   const addCardAt = (clientX: number, clientY: number, shape?: CanvasShape): void => {
     const point = toScene(clientX, clientY)
     const bare = shape === 'plain'
@@ -946,6 +963,7 @@ export function CanvasView(): ReactElement | null {
     templates: () => setTemplating(true),
     exportImage: (format) => void exportCanvasImage(canvas, path, format),
     tidy,
+    arrange: layOut,
     addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
     fit: () => fit(canvas.nodes)

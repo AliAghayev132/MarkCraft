@@ -46,6 +46,7 @@ export interface MarkCraftApi {
   http: Bridge<'http'>
   run: Bridge<'run'>
   crypto: Bridge<'crypto'>
+  session: Bridge<'session'>
   streak: Bridge<'streak'>
   study: Bridge<'study'>
   export: Bridge<'export'>

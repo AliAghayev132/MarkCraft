@@ -2,6 +2,7 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
 
 // ── @shared ────────────────────────────────────────────────────────────────
+import { IPC_EVENT_NAMES } from '@shared'
 import type { IpcChannel, IpcEventName, IpcEvents, MarkCraftApi } from '@shared'
 import { INTERNAL_GRANT_PATHS } from '@shared'
 
@@ -93,6 +94,15 @@ const api: MarkCraftApi = {
   links: namespace('links', ['graph']),
   http: namespace('http', ['send']),
   crypto: namespace('crypto', ['encrypt', 'decrypt', 'generateKey']),
+  session: namespace('session', [
+    'host',
+    'join',
+    'leave',
+    'canvas',
+    'cursor',
+    'selection',
+    'where'
+  ]),
   run: namespace('run', ['code']),
   streak: namespace('streak', ['load', 'add', 'reset']),
   study: namespace('study', ['load', 'save', 'reset']),
@@ -159,17 +169,7 @@ const api: MarkCraftApi = {
   }
 }
 
-const ALLOWED_EVENTS = new Set<string>([
-  'event:watch',
-  'event:windowState',
-  'event:systemTheme',
-  'event:command',
-  'event:openPaths',
-  'event:quitRequested',
-  'event:powerSuspend',
-  'event:aiChunk',
-  'event:aiDone'
-])
+const ALLOWED_EVENTS = new Set<string>(IPC_EVENT_NAMES)
 
 contextBridge.exposeInMainWorld('api', api)
 

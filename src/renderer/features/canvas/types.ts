@@ -26,6 +26,8 @@ export interface CanvasDocument {
   canRedo: boolean
   /** The only way the canvas changes; `coalesce` folds a drag into one frame. */
   edit: (change: (canvas: CanvasData) => CanvasData, coalesce?: boolean) => void
+  /** A canvas that arrived from someone else; not an edit, and not undoable. */
+  replace: (canvas: CanvasData) => void
   undo: () => void
   redo: () => void
   save: () => Promise<void>

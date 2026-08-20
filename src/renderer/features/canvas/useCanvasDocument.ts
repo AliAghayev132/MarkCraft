@@ -103,6 +103,24 @@ export function useCanvasDocument(path: string | null): CanvasDocument {
     [apply, remember]
   )
 
+  /**
+   * The canvas somebody else changed.
+   *
+   * Not an edit: it does not go on the undo stack, because undoing another
+   * person's work is never what the key was pressed for, and it does not mark
+   * the document dirty on a machine that is only watching — the host is the one
+   * that owns the file.
+   */
+  const replace = useCallback(
+    (incoming: CanvasData): void => {
+      undoRef.current = []
+      redoRef.current = []
+      remember()
+      apply(incoming)
+    },
+    [apply, remember]
+  )
+
   const undo = useCallback((): void => {
     const previous = undoRef.current.at(-1)
     if (!previous) return
@@ -141,6 +159,7 @@ export function useCanvasDocument(path: string | null): CanvasDocument {
     canUndo: depth.undo > 0,
     canRedo: depth.redo > 0,
     edit,
+    replace,
     undo,
     redo,
     save

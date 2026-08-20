@@ -1,4 +1,6 @@
 // ── types ──────────────────────────────────────────────────────────────────
+import type { CanvasData } from './utils/canvas'
+import type { SessionEvent, SessionRole } from './utils/session'
 import type { LinkGraphResult } from './utils/links'
 import type { CardState, StudyRecord } from './utils/cards'
 import type { DayRecord } from './utils/streak'
@@ -205,6 +207,19 @@ export interface IpcApi {
   'crypto:decrypt': { req: { json: string; passphrase: string }; res: string }
   'crypto:generateKey': { req: void; res: string }
 
+  // ── Working on one canvas together ───────────────────────────────────────
+  /*
+   * Local network only. See session-service: nothing here reaches the internet
+   * and nothing about the document leaves the network the people are on.
+   */
+  'session:host': { req: { canvas: CanvasData; name: string; port?: number }; res: { address: string } }
+  'session:join': { req: { host: string; port: number; name: string }; res: { joined: true } }
+  'session:leave': { req: void; res: { left: true } }
+  'session:canvas': { req: { canvas: CanvasData }; res: { sent: true } }
+  'session:cursor': { req: { x: number; y: number }; res: { sent: true } }
+  'session:selection': { req: { ids: string[] }; res: { sent: true } }
+  'session:where': { req: void; res: { address: string; name: string; role: SessionRole } }
+
   // ── Output ───────────────────────────────────────────────────────────────
   'export:run': { req: ExportRequest; res: ExportResult }
   'print:run': { req: PrintRequest; res: { printed: boolean } }
@@ -264,9 +279,38 @@ export interface IpcEvents {
   /** One slice of a streamed answer. */
   'event:aiChunk': AiChunkEvent
   'event:aiDone': AiDoneEvent
+  /** Somebody else moved, selected something, or changed the canvas. */
+  'event:session': SessionEvent
 }
 
 export type IpcEventName = keyof IpcEvents
+
+/**
+ * Every push channel, as a value.
+ *
+ * The preload needs a runtime list to check against, and keeping a second copy
+ * of it there meant a channel could be declared in the contract, sent by main,
+ * and silently refused at the bridge — which is what happened the first time
+ * this list was not derived from anything. Adding a channel above without
+ * adding it here is now a type error.
+ */
+export const IPC_EVENT_NAMES = [
+  'event:watch',
+  'event:windowState',
+  'event:systemTheme',
+  'event:command',
+  'event:openPaths',
+  'event:quitRequested',
+  'event:powerSuspend',
+  'event:aiChunk',
+  'event:aiDone',
+  'event:session'
+] as const satisfies readonly IpcEventName[]
+
+/** Compile-time proof that the list above names every channel, not merely some. */
+export type _AllEventsListed = IpcEventName extends (typeof IPC_EVENT_NAMES)[number]
+  ? true
+  : never
 
 export const IPC_CHANNEL_PREFIX = 'markcraft'
 

@@ -21,6 +21,7 @@ import { registerSearchHandlers } from './search-ipc'
 import { registerHttpHandlers } from './http-ipc'
 import { registerCryptoHandlers } from './crypto-ipc'
 import { registerRunHandlers } from './run-ipc'
+import { registerSessionHandlers } from './session-ipc'
 import { registerStreakHandlers } from './streak-ipc'
 import { registerStudyHandlers } from './study-ipc'
 import { registerSettingsHandlers } from './settings-ipc'
@@ -47,6 +48,7 @@ export function registerIpcHandlers(): void {
   registerHttpHandlers()
   registerCryptoHandlers()
   registerRunHandlers()
+  registerSessionHandlers()
   registerStreakHandlers()
   registerStudyHandlers()
   registerOutputHandlers()

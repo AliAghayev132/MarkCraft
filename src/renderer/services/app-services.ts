@@ -1,5 +1,5 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import type { AppInfo, CardState, DayRecord, HttpRequest, HttpResponse, RunResult, StudyRecord, DeepPartial, ExportRequest, ExportResult, LinkGraphResult, PendingOpen, PinnedFile, PrintRequest, RecentFile, RecentWorkspace, RecoveryRecord, Settings, ShareRequest, WindowState, WorkspaceReplaceRequest, WorkspaceReplaceResponse, WorkspaceSearchRequest, WorkspaceSearchResponse, WorkspaceState } from '@shared'
+import type { AppInfo, CanvasData, SessionRole, CardState, DayRecord, HttpRequest, HttpResponse, RunResult, StudyRecord, DeepPartial, ExportRequest, ExportResult, LinkGraphResult, PendingOpen, PinnedFile, PrintRequest, RecentFile, RecentWorkspace, RecoveryRecord, Settings, ShareRequest, WindowState, WorkspaceReplaceRequest, WorkspaceReplaceResponse, WorkspaceSearchRequest, WorkspaceSearchResponse, WorkspaceState } from '@shared'
 
 // ── @services ──────────────────────────────────────────────────────────────
 import { soft, unwrap } from './ipc'
@@ -135,6 +135,36 @@ export const cryptoService = {
   },
   generateKey(): Promise<string> {
     return unwrap(window.api.crypto.generateKey())
+  }
+}
+
+/**
+ * Working on one canvas together.
+ *
+ * A pass-through, like the crypto bridge: the transport is in main, where the
+ * network stack is and where a sandboxed page has no business being.
+ */
+export const sessionService = {
+  host(canvas: CanvasData, name: string, port?: number): Promise<{ address: string }> {
+    return unwrap(window.api.session.host({ canvas, name, port }))
+  },
+  join(host: string, port: number, name: string): Promise<{ joined: true }> {
+    return unwrap(window.api.session.join({ host, port, name }))
+  },
+  leave(): Promise<{ left: true }> {
+    return unwrap(window.api.session.leave())
+  },
+  canvas(canvas: CanvasData): Promise<{ sent: true }> {
+    return unwrap(window.api.session.canvas({ canvas }))
+  },
+  cursor(x: number, y: number): Promise<{ sent: true }> {
+    return unwrap(window.api.session.cursor({ x, y }))
+  },
+  selection(ids: string[]): Promise<{ sent: true }> {
+    return unwrap(window.api.session.selection({ ids }))
+  },
+  where(): Promise<{ address: string; name: string; role: SessionRole }> {
+    return unwrap(window.api.session.where())
   }
 }
 

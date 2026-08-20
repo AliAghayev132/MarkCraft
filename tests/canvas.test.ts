@@ -18,6 +18,7 @@ import {
   inPaintOrder,
   isCanvasColor,
   labelEdge,
+  moveNodes,
   MIN_NODE,
   nextNodeId,
   nodeAt,
@@ -609,5 +610,47 @@ describe('the curve a line follows', () => {
     const middle = edgeMidpoint({ x: 100, y: 50 }, 'bottom', { x: 300, y: 50 }, 'bottom')
     // Both ends leave downwards, so the middle of the curve is below them.
     expect(middle.y).toBeGreaterThan(50)
+  })
+})
+
+describe('a click that is not a drag', () => {
+  const canvas = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 40, y: 60, width: 100, height: 100 },
+      { id: 'b', type: 'text' as const, x: 200, y: 60, width: 100, height: 100 }
+    ],
+    edges: []
+  }
+
+  it('leaves the canvas untouched when nothing ends up anywhere new', () => {
+    // A press without a drag still produces pointer moves. Without this, a
+    // click snapped the card to the grid and marked the document unsaved —
+    // selecting something was enough to be asked whether to save it.
+    const moves = new Map([['a', { x: 40, y: 60 }]])
+    expect(moveNodes(canvas, moves)).toBe(canvas)
+  })
+
+  it('leaves it untouched when the move rounds back to where it was', () => {
+    const moves = new Map([['a', { x: 43, y: 57 }]])
+    expect(moveNodes(canvas, moves)).toBe(canvas)
+  })
+
+  it('still moves a card that genuinely goes somewhere', () => {
+    const moves = new Map([['a', { x: 140, y: 60 }]])
+    const next = moveNodes(canvas, moves)
+
+    expect(next).not.toBe(canvas)
+    expect(next.nodes[0].x).toBe(140)
+  })
+
+  it('moves the ones that changed and keeps the ones that did not', () => {
+    const moves = new Map([
+      ['a', { x: 40, y: 60 }],
+      ['b', { x: 300, y: 60 }]
+    ])
+    const next = moveNodes(canvas, moves)
+
+    expect(next.nodes[0]).toBe(canvas.nodes[0])
+    expect(next.nodes[1].x).toBe(300)
   })
 })

@@ -473,20 +473,34 @@ export function nodesInside(nodes: CanvasNode[], group: CanvasNode): CanvasNode[
   )
 }
 
-/** Moves nodes by a delta, on the grid. */
+/**
+ * Moves nodes by a delta, on the grid.
+ *
+ * Returns the canvas untouched when nothing actually ends up anywhere new.
+ * A press without a drag still produces pointer moves, and without this a
+ * click on a card would snap it to the grid and mark the document unsaved —
+ * so selecting something was enough to be asked whether to save it.
+ */
 export function moveNodes(
   canvas: CanvasData,
   moves: ReadonlyMap<string, { x: number; y: number }>
 ): CanvasData {
   if (moves.size === 0) return canvas
 
-  return {
-    ...canvas,
-    nodes: canvas.nodes.map((node) => {
-      const at = moves.get(node.id)
-      return at ? { ...node, x: snap(at.x), y: snap(at.y) } : node
-    })
-  }
+  let changed = false
+  const nodes = canvas.nodes.map((node) => {
+    const at = moves.get(node.id)
+    if (!at) return node
+
+    const x = snap(at.x)
+    const y = snap(at.y)
+    if (x === node.x && y === node.y) return node
+
+    changed = true
+    return { ...node, x, y }
+  })
+
+  return changed ? { ...canvas, nodes } : canvas
 }
 
 /** Sets an edge's label, dropping it entirely when the text is emptied. */

@@ -157,6 +157,12 @@ export {
   Grid2x2,
   SendToBack,
 
+  // ── Working together ─────────────────────────────────────────────────────
+  LogIn,
+  Radio,
+  Users,
+  Wifi,
+
   // ── Locked documents ─────────────────────────────────────────────────────
   Download,
   EyeOff,

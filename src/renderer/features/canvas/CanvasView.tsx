@@ -7,6 +7,7 @@ import {
   Save,
   Shapes,
   Undo2,
+  Users,
   X,
   ZoomIn,
   ZoomOut
@@ -60,6 +61,7 @@ import { useAppSelector } from '@store'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { openPath } from '@features/documents'
+import { SessionCursors, SessionDialog, SessionSelections, useSession } from '@features/session'
 
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, IconButton, Spinner } from '@ui'
@@ -101,7 +103,7 @@ export function CanvasView(): ReactElement | null {
   )
 
   const surface = useRef<HTMLDivElement>(null)
-  const { canvas, dirty, loading, canUndo, canRedo, edit, undo, redo, save } =
+  const { canvas, dirty, loading, canUndo, canRedo, edit, replace, undo, redo, save } =
     useCanvasDocument(path)
   const { view, setView, toScene, zoomAt, fit } = useCanvasViewport(surface)
   const { selection, isNodeSelected, clear, selectNode, selectEdge, selectNodes, prune } =
@@ -110,8 +112,11 @@ export function CanvasView(): ReactElement | null {
   const [editing, setEditing] = useState<string | null>(null)
   const [gesture, setGesture] = useState<CanvasGesture | null>(null)
   const [grid, setGrid] = useState(true)
+  const [sharingOpen, setSharingOpen] = useState(false)
 
   const root = useAppSelector((state) => state.workspace.root)
+
+  const session = useSession(useCallback((incoming) => replace(incoming), [replace]))
 
   const close = useCallback((): void => canvasTarget.close(), [])
 
@@ -152,6 +157,21 @@ export function CanvasView(): ReactElement | null {
   useEffect(() => {
     prune(canvas.nodes, new Set(canvas.edges.map((edge) => edge.id)))
   }, [canvas, prune])
+
+  /*
+   * Everything a local edit changes is published. Hooked here rather than at
+   * each call site because there are eleven of them, and one that forgot would
+   * be a change everyone else silently never saw.
+   */
+  useEffect(() => {
+    session.publish(canvas)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvas])
+
+  useEffect(() => {
+    session.announce(selection.nodes)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selection.nodes])
 
   const removeSelected = useCallback((): void => {
     if (selection.nodes.length === 0 && selection.edges.length === 0) return
@@ -376,6 +396,12 @@ export function CanvasView(): ReactElement | null {
   }
 
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>): void => {
+    // Reported whether or not a gesture is in progress: a cursor that only
+    // appears while somebody is dragging says nothing about where they are
+    // thinking of working next.
+    const where = toScene(event.clientX, event.clientY)
+    session.report(where.x, where.y)
+
     if (!gesture) return
 
     if (gesture.kind === 'link' || gesture.kind === 'marquee') {
@@ -612,6 +638,12 @@ export function CanvasView(): ReactElement | null {
           </Button>
 
           <IconButton
+            icon={<Users size={15} />}
+            label={t('session.title')}
+            active={session.state.role !== 'off'}
+            onClick={() => setSharingOpen(true)}
+          />
+          <IconButton
             icon={<Grid2x2 size={15} />}
             label={t('canvas.grid')}
             active={grid}
@@ -745,6 +777,9 @@ export function CanvasView(): ReactElement | null {
                 />
               ))}
 
+              <SessionSelections participants={session.state.participants} nodes={canvas.nodes} />
+              <SessionCursors participants={session.state.participants} zoom={view.zoom} />
+
               {marquee ? (
                 <div
                   role="presentation"
@@ -758,6 +793,14 @@ export function CanvasView(): ReactElement | null {
                 />
               ) : null}
             </div>
+
+            <SessionDialog
+              open={sharingOpen}
+              onClose={() => setSharingOpen(false)}
+              canvas={canvas}
+              path={path}
+              state={session.state}
+            />
 
             <CanvasMinimap
               canvas={canvas}

@@ -69,7 +69,26 @@ export function Modal({
   return createPortal(
     <div
       className="fixed inset-0 z-modal-backdrop flex animate-fade-in items-center justify-center bg-overlay px-4 py-8 backdrop-blur-[2px]"
+      /*
+       * A portal draws somewhere else but still reports its events to the React
+       * tree that rendered it. For a dialog opened from inside an interactive
+       * surface — the canvas, say — that means the surface sees a press meant
+       * for the dialog, and a surface that captures the pointer on press takes
+       * the release with it: the button lights up and then nothing happens.
+       *
+       * A dialog is its own surface, so nothing behind it hears anything that
+       * happens inside it.
+       */
+      onPointerDown={(event) => event.stopPropagation()}
+      onPointerUp={(event) => event.stopPropagation()}
+      onPointerMove={(event) => event.stopPropagation()}
+      onMouseUp={(event) => event.stopPropagation()}
+      onClick={(event) => event.stopPropagation()}
+      onContextMenu={(event) => event.stopPropagation()}
+      onWheel={(event) => event.stopPropagation()}
       onMouseDown={(event) => {
+        event.stopPropagation()
+
         // Only a press that both starts and ends on the backdrop dismisses, so
         // dragging a selection out of the dialog does not close it.
         if (event.target !== event.currentTarget) return

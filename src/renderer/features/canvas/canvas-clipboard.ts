@@ -1,5 +1,5 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import { canvasBounds, snap, type CanvasData, type CanvasEdge, type CanvasNode } from '@shared'
+import { mergeCanvas, type CanvasData, type CanvasEdge, type CanvasNode } from '@shared'
 
 /**
  * Cards on the clipboard.
@@ -64,40 +64,8 @@ export function pasteInto(
   canvas: CanvasData,
   at: { x: number; y: number } | null
 ): { canvas: CanvasData; ids: string[] } {
-  if (!held || held.nodes.length === 0) return { canvas, ids: [] }
-
-  const used = new Set([...canvas.nodes.map((n) => n.id), ...canvas.edges.map((e) => e.id)])
-  const mint = (prefix: string): string => {
-    let at = used.size + 1
-    while (used.has(`${prefix}${at}`)) at++
-    used.add(`${prefix}${at}`)
-    return `${prefix}${at}`
-  }
-
-  const from = canvasBounds(held.nodes)
-  // Without a point to aim at, offset from where they were — so a paste is
-  // never invisible underneath the cards it was copied from.
-  const dx = at ? snap(at.x) - from.x : 40
-  const dy = at ? snap(at.y) - from.y : 40
-
-  const mapping = new Map<string, string>()
-  const nodes = held.nodes.map((node) => {
-    const id = mint('n')
-    mapping.set(node.id, id)
-    return { ...node, id, x: snap(node.x + dx), y: snap(node.y + dy) }
-  })
-
-  const edges = held.edges.map((edge) => ({
-    ...edge,
-    id: mint('e'),
-    fromNode: mapping.get(edge.fromNode) as string,
-    toNode: mapping.get(edge.toNode) as string
-  }))
-
-  return {
-    canvas: { nodes: [...canvas.nodes, ...nodes], edges: [...canvas.edges, ...edges] },
-    ids: nodes.map((node) => node.id)
-  }
+  if (!held) return { canvas, ids: [] }
+  return mergeCanvas(canvas, held, at)
 }
 
 /** For a test to start from nothing; nothing in the interface calls it. */

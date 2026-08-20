@@ -1549,7 +1549,47 @@
     "findGo": "Tapılanları seç",
     "findCount_one": "{{count}} kart",
     "findCount_other": "{{count}} kart",
-    "fitCards": "Kartları mətnə uyğunlaşdır"
+    "fitCards": "Kartları mətnə uyğunlaşdır",
+    "templates": {
+      "title": "Hazır formadan başla",
+      "description": "Kartlar burada olanların altına əlavə olunur, çəkdiyin heç nə əvəzlənmir.",
+      "add": "Şablon əlavə et…",
+      "placeholder": "Bura yaz",
+      "kanban": {
+        "title": "Lövhə",
+        "description": "Kartları arasında daşıya biləcəyin üç sütun.",
+        "todo": "Görüləcək",
+        "doing": "İşlənir",
+        "done": "Bitdi"
+      },
+      "retrospective": {
+        "title": "Retrospektiv",
+        "description": "Nə yaxşı getdi, nə getmədi və bununla nə edəcəyik."
+      },
+      "retro": {
+        "well": "Yaxşı getdi",
+        "badly": "Pis getdi",
+        "next": "Növbəti dəfə"
+      },
+      "mindMap": {
+        "title": "Fikir xəritəsi",
+        "description": "Ortada bir mövzu, ətrafında budaqlar."
+      },
+      "mind": {
+        "centre": "Mövzu",
+        "branch1": "Birinci budaq",
+        "branch2": "İkinci budaq",
+        "branch3": "Üçüncü budaq",
+        "branch4": "Dördüncü budaq"
+      },
+      "timeline": {
+        "title": "Mərhələlər",
+        "description": "Bir sırada addımlar, hər biri o birinə aparır.",
+        "step1": "Əvvəlcə",
+        "step2": "Sonra",
+        "step3": "Nəhayət"
+      }
+    }
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

@@ -28,6 +28,7 @@ import {
   alignNodes,
   alignText,
   basename,
+  canvasBounds,
   canvasToMarkdown,
   bringToFront,
   colorSelection,
@@ -40,6 +41,7 @@ import {
   groupAround,
   inPaintOrder,
   labelEdge,
+  mergeCanvas,
   moveNodes,
   nextNodeId,
   nodeAt,
@@ -54,6 +56,7 @@ import {
   shapeNodes,
   snap,
   type Alignment,
+  type CanvasData,
   type CanvasShape,
   type CanvasNode,
   type Side
@@ -85,6 +88,7 @@ import { CanvasMinimap } from './CanvasMinimap'
 import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
 import { CanvasFind } from './CanvasFind'
+import { CanvasTemplatePicker } from './CanvasTemplatePicker'
 import { CanvasToolbar } from './CanvasToolbar'
 import { CardFormatBar } from './CardFormatBar'
 import { useCanvasDocument } from './useCanvasDocument'
@@ -167,6 +171,9 @@ export function CanvasView(): ReactElement | null {
 
   /** What is being looked for on the canvas, if anything. */
   const [finding, setFinding] = useState<string | null>(null)
+
+  /** Whether the template picker is open. */
+  const [templating, setTemplating] = useState(false)
 
   /*
    * Matches are marked on the canvas itself rather than listed beside it. A
@@ -866,6 +873,25 @@ export function CanvasView(): ReactElement | null {
     edit((at) => fitToContent(at, chosen))
   }
 
+  /**
+   * Adds a template's cards below everything already on the canvas.
+   *
+   * Added rather than applied, and then selected and brought into view: a
+   * template that replaced the canvas would be a destructive command wearing a
+   * friendly name, and putting one below the existing work is both safe and
+   * where somebody would have drawn it themselves.
+   */
+  const addTemplate = (template: CanvasData): void => {
+    const bounds = canvasBounds(canvas.nodes)
+    const at =
+      canvas.nodes.length === 0 ? { x: 0, y: 0 } : { x: bounds.x, y: bounds.y + bounds.height + 80 }
+
+    const merged = mergeCanvas(canvas, template, at)
+    edit(() => merged.canvas)
+    selectNodes(merged.ids)
+    fit(merged.canvas.nodes.filter((node) => merged.ids.includes(node.id)))
+  }
+
   const tidy = (): void => {
     const chosen = selection.nodes.length > 1 ? selection.nodes : canvas.nodes.map((n) => n.id)
     edit((at) => gridLayout(at, chosen))
@@ -916,6 +942,7 @@ export function CanvasView(): ReactElement | null {
     writeUp: () => void writeUp(),
     fitCards,
     find: () => setFinding(''),
+    templates: () => setTemplating(true),
     tidy,
     addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
@@ -1175,11 +1202,12 @@ export function CanvasView(): ReactElement | null {
               onJump={(x, y) => setView((at) => ({ ...at, x, y }))}
             />
 
-            {/*
-              * Docked at the top while a card is being written in, mirroring the
-              * selection toolbar at the bottom: always in the same place, never
-              * over the thing it acts on, and never clipped by the header.
-              */}
+            <CanvasTemplatePicker
+              open={templating}
+              onClose={() => setTemplating(false)}
+              onChoose={addTemplate}
+            />
+
             {finding !== null ? (
               <CanvasFind
                 query={finding}
@@ -1194,6 +1222,11 @@ export function CanvasView(): ReactElement | null {
               />
             ) : null}
 
+            {/*
+              * Docked at the top while a card is being written in, mirroring the
+              * selection toolbar at the bottom: always in the same place, never
+              * over the thing it acts on, and never clipped by the header.
+              */}
             {editing !== null ? (
               <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center p-3">
                 <CardFormatBar />

@@ -7,6 +7,7 @@ import {
   FileText,
   Group,
   LayoutGrid,
+  LayoutTemplate,
   Scaling,
   Search,
   Scissors,
@@ -214,6 +215,12 @@ export function useCanvasMenu(
               label: t('canvas.fitCards'),
               icon: <Scaling size={14} />,
               onSelect: actions.fitCards
+            },
+            {
+              id: 'templates',
+              label: t('canvas.templates.add'),
+              icon: <LayoutTemplate size={14} />,
+              onSelect: actions.templates
             },
             {
               id: 'tidy',

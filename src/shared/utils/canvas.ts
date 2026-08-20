@@ -500,6 +500,61 @@ export function removeNodes(canvas: CanvasData, ids: Iterable<string>): CanvasDa
 }
 
 /**
+ * Puts one canvas onto another, with the top-left of the addition where asked.
+ *
+ * Ids are minted fresh, so the same cards can be added twice and so a template
+ * cannot collide with what is already there. Edges are carried over with their
+ * ends remapped; an edge whose other end was not part of the addition is
+ * dropped rather than guessed at, because the wrong guess quietly draws a
+ * connection nobody made.
+ *
+ * Shared by pasting and by the templates: they are the same operation asked
+ * for by two different gestures.
+ */
+export function mergeCanvas(
+  canvas: CanvasData,
+  addition: CanvasData,
+  at: { x: number; y: number } | null
+): { canvas: CanvasData; ids: string[] } {
+  if (addition.nodes.length === 0) return { canvas, ids: [] }
+
+  const used = new Set([...canvas.nodes.map((n) => n.id), ...canvas.edges.map((e) => e.id)])
+  const mint = (prefix: string): string => {
+    let next = used.size + 1
+    while (used.has(`${prefix}${next}`)) next++
+    used.add(`${prefix}${next}`)
+    return `${prefix}${next}`
+  }
+
+  const from = canvasBounds(addition.nodes)
+  // Without a point to aim at, offset from where they were — so an addition is
+  // never invisible underneath the cards it came from.
+  const dx = at ? snap(at.x) - from.x : 40
+  const dy = at ? snap(at.y) - from.y : 40
+
+  const mapping = new Map<string, string>()
+  const nodes = addition.nodes.map((node) => {
+    const id = mint('n')
+    mapping.set(node.id, id)
+    return { ...node, id, x: snap(node.x + dx), y: snap(node.y + dy) }
+  })
+
+  const edges = addition.edges
+    .filter((edge) => mapping.has(edge.fromNode) && mapping.has(edge.toNode))
+    .map((edge) => ({
+      ...edge,
+      id: mint('e'),
+      fromNode: mapping.get(edge.fromNode) as string,
+      toNode: mapping.get(edge.toNode) as string
+    }))
+
+  return {
+    canvas: { nodes: [...canvas.nodes, ...nodes], edges: [...canvas.edges, ...edges] },
+    ids: nodes.map((node) => node.id)
+  }
+}
+
+/**
  * Sets — or clears, with `undefined` — the colour of some nodes and edges.
  *
  * One function for both because the user is doing one thing: they selected

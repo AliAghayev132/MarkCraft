@@ -1,5 +1,7 @@
 /** `@features/canvas`. */
 export * from './CanvasFind'
+export * from './CanvasTemplatePicker'
+export * from './canvas-templates'
 export * from './CanvasView'
 export * from './canvas-actions'
 export * from './canvas-clipboard'

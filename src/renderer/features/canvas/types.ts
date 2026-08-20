@@ -148,8 +148,17 @@ export interface CanvasMenuActions {
   /** Grows the chosen cards to hold what is in them. */
   fitCards: () => void
   find: () => void
+  /** Opens the picker; the chosen shape is added beside what is there. */
+  templates: () => void
   selectAll: () => void
   fit: () => void
+}
+
+export interface CanvasTemplatePickerProps {
+  open: boolean
+  onClose: () => void
+  /** Given the template's cards, to place beside whatever is already there. */
+  onChoose: (template: CanvasData) => void
 }
 
 export interface CanvasFindProps {

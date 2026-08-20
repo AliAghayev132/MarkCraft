@@ -1549,7 +1549,47 @@
     "findGo": "Select what was found",
     "findCount_one": "{{count}} card",
     "findCount_other": "{{count}} cards",
-    "fitCards": "Fit cards to their text"
+    "fitCards": "Fit cards to their text",
+    "templates": {
+      "title": "Start from a shape",
+      "description": "The cards are added below whatever is already here, so nothing you have drawn is replaced.",
+      "add": "Add a template…",
+      "placeholder": "Write here",
+      "kanban": {
+        "title": "Board",
+        "description": "Three columns to move cards between.",
+        "todo": "To do",
+        "doing": "Doing",
+        "done": "Done"
+      },
+      "retrospective": {
+        "title": "Retrospective",
+        "description": "What went well, what did not, and what to do about it."
+      },
+      "retro": {
+        "well": "Went well",
+        "badly": "Went badly",
+        "next": "Try next"
+      },
+      "mindMap": {
+        "title": "Mind map",
+        "description": "A subject in the middle, with branches around it."
+      },
+      "mind": {
+        "centre": "Subject",
+        "branch1": "First branch",
+        "branch2": "Second branch",
+        "branch3": "Third branch",
+        "branch4": "Fourth branch"
+      },
+      "timeline": {
+        "title": "Steps",
+        "description": "Stages in a row, each leading to the next.",
+        "step1": "First",
+        "step2": "Then",
+        "step3": "Finally"
+      }
+    }
   },
   "lock": {
     "locked": "Locked — editing is off",

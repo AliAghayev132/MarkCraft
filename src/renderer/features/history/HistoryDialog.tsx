@@ -16,7 +16,7 @@ import { historyService, toast } from '@services'
 import { contentChanged, dispatch, selectActiveDocument, useAppSelector } from '@store'
 
 // ── @ui ────────────────────────────────────────────────────────────────────
-import { Badge, Button, EmptyState, IconButton, Modal, ModalActions, dialogs } from '@ui'
+import { Badge, Button, EmptyState, IconButton, Modal, ModalActions, Select, dialogs } from '@ui'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { collapseUnchanged, diffLines, summariseDiff } from './diff'
@@ -55,6 +55,15 @@ export function HistoryDialog({ open, onClose }: HistoryDialogProps): ReactEleme
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [selectedContent, setSelectedContent] = useState<string | null>(null)
 
+  /*
+   * What the chosen version is being held up against. Null means the document
+   * as it is now, which is the question people ask most — but "what changed
+   * between Tuesday and Thursday" is a real question too, and answering it by
+   * restoring Tuesday and looking is a terrible way to find out.
+   */
+  const [againstId, setAgainstId] = useState<string | null>(null)
+  const [againstContent, setAgainstContent] = useState<string | null>(null)
+
   const path = document?.path ?? null
 
   const refresh = useCallback(async () => {
@@ -78,10 +87,42 @@ export function HistoryDialog({ open, onClose }: HistoryDialogProps): ReactEleme
     })
   }, [open, path, selectedId])
 
+  useEffect(() => {
+    if (!open || !path || !againstId) {
+      setAgainstContent(null)
+      return
+    }
+    void historyService.read(path, againstId).then((version) => {
+      setAgainstContent(version?.content ?? null)
+    })
+  }, [open, path, againstId])
+
+  // A version cannot be compared with itself, and a version that has been
+  // forgotten is no longer something to compare with.
+  useEffect(() => {
+    if (againstId === null) return
+    if (againstId === selectedId || !entries.some((entry) => entry.id === againstId)) {
+      setAgainstId(null)
+    }
+  }, [againstId, selectedId, entries])
+
+  /* Older on the left, newer on the right, whichever way round they were
+     picked — a diff that reads backwards is a diff nobody trusts. */
   const lines = useMemo(() => {
     if (selectedContent === null || !document) return []
-    return collapseUnchanged(diffLines(selectedContent, document.content))
-  }, [selectedContent, document])
+
+    if (againstId === null) return collapseUnchanged(diffLines(selectedContent, document.content))
+    if (againstContent === null) return []
+
+    const selectedAt = entries.find((entry) => entry.id === selectedId)?.savedAt ?? 0
+    const againstAt = entries.find((entry) => entry.id === againstId)?.savedAt ?? 0
+    const [before, after] =
+      selectedAt <= againstAt
+        ? [selectedContent, againstContent]
+        : [againstContent, selectedContent]
+
+    return collapseUnchanged(diffLines(before, after))
+  }, [selectedContent, againstContent, againstId, selectedId, entries, document])
 
   const summary = useMemo(() => summariseDiff(lines), [lines])
 
@@ -176,8 +217,25 @@ export function HistoryDialog({ open, onClose }: HistoryDialogProps): ReactEleme
           </ul>
 
           <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-ink-secondary">{t('history.comparedToNow')}</span>
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-ink-secondary">{t('history.comparedWith')}</span>
+
+              <Select
+                value={againstId ?? 'now'}
+                size="sm"
+                ariaLabel={t('history.comparedWith')}
+                options={[
+                  { value: 'now', label: t('history.now') },
+                  ...entries
+                    .filter((entry) => entry.id !== selectedId)
+                    .map((entry) => ({
+                      value: entry.id,
+                      label: formatRelativeTime(entry.savedAt)
+                    }))
+                ]}
+                onChange={(value) => setAgainstId(value === 'now' ? null : value)}
+              />
+
               <Badge tone="success">+{summary.added}</Badge>
               <Badge tone="danger">−{summary.removed}</Badge>
               {summary.added === 0 && summary.removed === 0 ? (

@@ -1251,13 +1251,14 @@
     "restored": "Versiya bərpa edildi",
     "restoredDetail": "Saxlamaqla təsdiqləyin, geri almaqla ləğv edin.",
     "forget": "Bu versiyanı unut",
-    "comparedToNow": "Redaktorla müqayisədə",
     "identical": "Eynidir",
     "hiddenLines": "{{count}} dəyişməyən sətir",
     "emptyTitle": "Hələ versiya yoxdur",
     "emptyBody": "Bu sənədi hər saxlayanda bir versiya qeyd olunur.",
     "unsavedTitle": "Hələ saxlanılmayıb",
-    "unsavedBody": "Sənədi bir dəfə saxlayın, versiyaları qeyd olunmağa başlasın."
+    "unsavedBody": "Sənədi bir dəfə saxlayın, versiyaları qeyd olunmağa başlasın.",
+    "comparedWith": "Müqayisə edilir",
+    "now": "indiki hal"
   },
   "emoji": {
     "title": "Emoji",

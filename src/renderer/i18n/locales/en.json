@@ -1251,13 +1251,14 @@
     "restored": "Version restored",
     "restoredDetail": "Save to keep it, or undo to go back.",
     "forget": "Forget this version",
-    "comparedToNow": "Compared with the editor",
     "identical": "Identical",
     "hiddenLines": "{{count}} unchanged lines",
     "emptyTitle": "No versions yet",
     "emptyBody": "A version is recorded each time you save this document.",
     "unsavedTitle": "Not saved yet",
-    "unsavedBody": "Save the document once and its versions start being recorded."
+    "unsavedBody": "Save the document once and its versions start being recorded.",
+    "comparedWith": "Compared with",
+    "now": "now"
   },
   "emoji": {
     "title": "Emoji",

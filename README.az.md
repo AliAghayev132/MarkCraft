@@ -33,6 +33,8 @@ ilə idarəsini istəyən **tərtibatçıya**.
 | **Fərdi fayl explorer-i** | Tənbəl, virtuallaşdırılmış ağac: tam CRUD, çoxlu seçim, sürüklə-burax, filtr və çeşidləmə. 50 000 fayllıq repozitoriyanı açmaq yalnız açdığınız qovluqlara başa gəlir. |
 | **Tablar** | Sırasını dəyişmək olar; dəyişiklik göstəricisi, digərlərini/hamısını bağla və bağlananı yenidən aç. |
 | **İş sahəsində axtarış** | Qovluq boyu tap və əvəz et — glob, regex, tam söz və registr seçimləri ilə. |
+| **Əvəzləməni əvvəlcədən gör** | Hər uyğunluq nəyə çevriləcəyini yanında göstərir, köhnəsi üstündən xətlə. Bunu əvəzləməni aparacaq kodun özü hesablayır. “40 faylda əvəzlə” gözübağlı basılacaq düymə deyil. |
+| **Versiyaları tutuşdur** | Hər saxlama bir versiya qoyur; onu redaktorla və ya başqa bir versiya ilə müqayisə et — çünki “çərşənbə ilə cümə arasında nə dəyişdi” real sualdır. |
 | **Əmr paleti** | `Ctrl/Cmd + Shift + P`. Proqramdakı hər əməliyyat bir axtarıla bilən siyahıda. |
 | **Dəyişdirilə bilən qısayollar** | Hər əmrin qısayolu Parametrlər → Klaviatura bölməsində dəyişdirilə bilər. |
 | **Çökmədən bərpa** | Saxlanılmamış iş davamlı jurnala yazılır və növbəti açılışda geri təklif olunur — adsız sənədlər də daxil. |
@@ -50,6 +52,7 @@ ilə idarəsini istəyən **tərtibatçıya**.
 | **Riyaziyyat və diaqramlar** | `$…$` KaTeX ilə göstərilir; ```mermaid bloku diaqrama çevrilir və proqramın öz tokenləri ilə rənglənir, yəni mövzunuza uyğun gəlir. Mermaid yalnız sənəddə həqiqətən diaqram olanda yüklənir. |
 | **Wiki keçidləri** | `[[Başqa qeyd]]` → `Başqa qeyd.md`, adi nisbi keçid kimi həll olunur. |
 | **Şablonlar** | `Ctrl/Cmd + Alt + N` sənədi hazır formadan başladır — iclas qeydləri, məqalə, görüləcəklər — tərcümə edilmiş, ingilis şablonu deyil. |
+| **Snippetlər** | Tez-tez yazdığın bloku saxla, ona tetik ver və `/` ilə çağır. Tarixi, sənədin adını, seçdiyin mətni və kursorun düşəcəyi yeri özü doldura bilər — sayt generatoru üçün yazılmış `{{ site.title }}` isə olduğu kimi qalır. |
 | **Cədvəl redaktəsi** | Zəngin görünüşdə kursor cədvəlin içindəykən idarəetmələr görünür; Markdown boruları düymənin sintaksisi üstələdiyi yeganə yerdir. |
 | **Öz AI-nızı gətirin** | İstəyə bağlı, standart olaraq söndürülü. OpenRouter, OpenAI, Anthropic, Gemini, Groq, DeepSeek, Mistral, Together, xAI, Fireworks — və ya yerli Ollama / LM Studio qoşun, seçilmiş mətn üzərində «Səliqəyə sal», «Detallandır», «Xülasə et» və sərbəst göstərişlər alın. Açarlar OS hesabınız üçün şifrələnir və heç vaxt `settings.json`-a düşmür. |
 | **Axtarıla bilən parametrlər** | Parametrlərdə yazın — bütün səhifələr üzrə istənilən seçim tapılır; nəticəni seçəndə səhifə açılır və idarəetmə işıqlandırılır. |
@@ -67,10 +70,16 @@ ilə idarəsini istəyən **tərtibatçıya**.
 | **Kitab rejimi** | Fəsilləri iç-içə siyahı kimi sadalayan `SUMMARY.md` qovluğu bir əsərə çevirir — `Ctrl/Cmd + Alt + K`. Fəsillər ayrıca açılır və ya başlıqları öz dərinliyinə sürüşdürülərək bir sənəddə birləşir. mdBook və GitBook-un işlətdiyi format. |
 | **Öyrənmə rejimi** | `Termin :: məna` yazın, yaxud sual, yalnız `?` olan sətir və cavab — qeyd təkrarlana bilən olur. Bir anda bir kart, və ətrafındakı mətn yenidən yazılsa da yaşayan cədvəl. |
 | **Kanvas** | Markdown kartları və aralarındakı xətlərdən ibarət sonsuz səth, JSON Canvas kimi saxlanılır — Obsidian-ın yazdığı açıq format, orada da açılır. |
+| **Kanvas şablonları** | Lövhə, retrospektiv, fikir xəritəsi və ya mərhələlər sırası — mövcud olanı əvəz etmədən, altına əlavə olunur. |
+| **Bağlantılara görə düz** | Kanvası səliqəli ağac kimi və ya ən çox bağlantısı olan kartın ətrafında halqa kimi düz. Tor kanvası səliqəli edir; bu isə onu danışdırır. |
+| **Kanvas şəkil kimi** | Bütün kanvası SVG və ya PNG kimi saxla — yazı əsl mətn kimi, rənglər həll olunmuş halda. Yəni proqramdan kənarda da düzgün görünən fayl. |
 | **HTTP sorğusu** | Sənədin bəhs etdiyi API üçün. Yalnız `http://` və `https://`, hər yönləndirmədə yenidən yoxlanır, kuki və kimlik məlumatı getmir, yalnız düymə basılanda işə düşür. |
 | **Kod blokunu işə salmaq** | Bu maşında quraşdırılmış dildə hər çəpərə Run düyməsi. Nəticə blokun altında görünür. Sandbox yoxdur və iddia edilmir — kod sizin öz icazələrinizlə işləyir və heç vaxt öz-özünə işə düşmür. |
 | **Sənədi kilidləmək** | Bitmiş və ya başqasının sənədində redaktəni bağlayır. Saxlamada da tətbiq olunur, ona görə avtosaxlama və «hamısını saxla» da ona hörmət edir. |
 | **Yazı seriyası** | Statistika paneli yazdığınız günləri sayır. Dünən bitən seriya bu gün hələ sayılır. Qeyddə tarix və rəqəm var, fayl adı yox. |
+| **Fokus rejimi** | Yazdığın abzasdan başqa hər şeyi soluqlaşdırır. Necə işlədiyinlə bağlı bir seçim olduğu üçün yadda saxlanılır, hər dəfə sıfırlanmır. |
+| **Günlük hədəf** | Yazdığın hər şey üzrə gündə neçə söz. Sən təyin edənə qədər sönülüdür — heç kimin qoymadığı hədəf hədəf deyil. |
+| **Şərhlər** | Bir hissəyə qeyd yaz. Şərhlər sənədin içində yox, yanındakı faylda saxlanılır və yazıldıqları sözlərə görə yenidən tapılır — ona görə sənəd ətraflarında redaktə olunanda itmirlər, hissə silinəndə isə açıq şəkildə bunu deyirlər. |
 | **Markdown kimi yapışdırmaq** | Buferdəki formatlı mətni önizləmənin boru xəttindən keçirir — başlıqlar, siyahılar və cədvəllər qalır, səhifənin naviqasiyası və altlığı qalmır. |
 | **Formatlaşdırmanı təmizləmək** | Cavabı birmənalı olan dörd problemi düzəldir — yapışmış başlıq, tablar, artıq boşluqlar, bağlanmamış blok — mühakimə tələb edənlərə toxunmur. |
 | **Kod blokunun dili** | Çəpərin dilini əmr palitrasından təyin edin, hətta hələ bağlamadığınız blokda da. Siyahı vurğulayıcının öz cədvəlindən gəlir. |

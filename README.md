@@ -38,9 +38,13 @@ request tool, and running a code block. All three ship off or unconfigured.
 | **`/` block menu** | A slash at the start of a line opens fourteen blocks. It stays quiet inside file paths and URLs, and matches both the English name and your own language. |
 | **Formatting toolbar** | Choose which tools appear, and in what order. |
 | **Templates** | `Ctrl/Cmd + Alt + N` starts a document from a shape — meeting notes, article, to-do — localised, not English boilerplate. |
+| **Snippets** | Save a block you keep writing, give it a trigger, and reach it with `/`. It can fill in the date, the document’s name, whatever you had selected, and where the cursor should land — and it leaves a `{{ site.title }}` meant for a site generator exactly as written. |
 | **Emoji picker** | `Ctrl/Cmd + Alt + M`, the toolbar, or `/emoji`. Searchable, with your most-used first. |
 | **Word goals** | Set a target per document; the status bar tracks it. |
 | **Writing streak** | The statistics panel counts the days you wrote. A streak that ended yesterday still counts today. The record holds a date and a number, never a filename. |
+| **Focus mode** | Dims everything but the paragraph being written. A preference about how you work, so it is remembered rather than reset each session. |
+| **A goal for the day** | Words a day to aim for, across everything you write. Off until you set one — a goal nobody set is a goal nobody has. |
+| **Comments** | Leave a note on a passage. Comments live in a file beside the document, not inside it, and are re-found by the words they were left on — so they survive the document being edited around them, and say so plainly when the passage has gone. |
 
 ## Markdown
 
@@ -62,9 +66,11 @@ request tool, and running a code block. All three ship off or unconfigured.
 | **Custom file explorer** | Lazy, virtualised tree with full CRUD, multi-select, drag & drop, filter and sort. Opening a 50,000-file repository costs only the folders you expand. |
 | **Tabs** | Reorderable, with dirty indicators, close-others/close-all, and reopen-closed. |
 | **Workspace search** | Find and replace across a folder, with globs, regex, whole-word and case options. |
+| **See the replacement first** | Every match shows what it becomes, struck through beside it, computed per match through the same code that will perform it. “Replace in 40 files” is not something to press on faith. |
 | **Crash recovery** | Unsaved work is journalled continuously and offered back on next launch — including for untitled documents. |
 | **Conflict protection** | External changes are detected, and a save never silently overwrites a file that changed underneath you. |
 | **Version history** | Every save is kept, with a diff and one-click restore. |
+| **Compare two versions** | Against the editor, or against another saved version — because “what changed between Tuesday and Thursday” is a real question. |
 | **Trash** | Deleted files are recoverable, with a configurable limit. |
 | **Lock a document** | Turns editing off for something finished or someone else's. Enforced at the save too, so autosave respects it. |
 | **Images** | Cropped, resized and compressed before they reach the document, with the resulting size shown while you decide. |
@@ -78,6 +84,9 @@ request tool, and running a code block. All three ship off or unconfigured.
 | **Website preview** | `Ctrl/Cmd + Alt + W` shows the document at 390, 768 and 1280 pixels — a real frame at that width, so text wraps as a reader will see it. |
 | **Links and graph** | `Ctrl/Cmd + Alt + L` maps how your documents reference each other, lists backlinks, and reports every broken link with its file and line. |
 | **Canvas** | An infinite surface of Markdown cards and the lines between them, saved as JSON Canvas — the open format Obsidian writes. |
+| **Canvas templates** | A board, a retrospective, a mind map or a row of steps, added below what is already there rather than replacing it. |
+| **Arrange by the arrows** | Lay a canvas out as a tidy tree or as a ring round its busiest card. A grid makes a canvas neat; this makes it say something. |
+| **Canvas as a picture** | Save the whole canvas as an SVG or a PNG, with the writing as real text and the colours resolved — a file that draws correctly outside the application, not only in it. |
 | **Book mode** | A `SUMMARY.md` listing chapters turns the folder into one work — `Ctrl/Cmd + Alt + K`. The format mdBook and GitBook already use. |
 | **Study mode** | Write `Term :: meaning`, or a question, a line containing only `?`, and the answer — and the note becomes revisable, with a schedule that survives rewriting around it. |
 | **Reading mode** | Double-click a `.md` file and it opens as the rendered document with an Edit button, not a split-pane editor. |

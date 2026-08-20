@@ -32,3 +32,36 @@
 .prosemirror-dropcursor-inline {
   background-color: var(--mc-accent) !important;
 }
+
+/*
+ * ── Focus mode ──────────────────────────────────────────────────────────────
+ *
+ * Everything but the paragraph being written is dimmed rather than hidden.
+ * Hiding it would make the document jump as the caret moves and would take away
+ * the one thing the surrounding text is for — knowing roughly where you are.
+ *
+ * Opacity rather than colour, so it works in every theme and against every
+ * palette without a second set of tokens to keep in step.
+ */
+.mc-focus-mode .cm-line,
+.mc-focus-mode .ProseMirror > * {
+  opacity: 0.32;
+  transition: opacity 140ms ease-out;
+}
+
+.mc-focus-mode .cm-line.cm-activeLine,
+.mc-focus-mode .ProseMirror > .mc-focus-here {
+  opacity: 1;
+}
+
+/* Nothing dims while the pointer is over the text: reading back over what you
+   wrote is not a reason to be shown less of it. */
+.mc-focus-mode .cm-content:hover .cm-line,
+.mc-focus-mode .ProseMirror:hover > * {
+  opacity: 0.72;
+}
+
+.mc-focus-mode .cm-content:hover .cm-line.cm-activeLine,
+.mc-focus-mode .ProseMirror:hover > .mc-focus-here {
+  opacity: 1;
+}

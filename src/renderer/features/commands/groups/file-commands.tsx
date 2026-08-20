@@ -15,6 +15,7 @@ import {
   Beaker,
   Book,
   Clipboard,
+  Crosshair,
   LifeBuoy,
   Shapes,
   Sparkles,
@@ -246,6 +247,17 @@ export const fileCommands: CommandGroupFactory = (context): CommandDefinition[] 
     icon: <Shapes size={14} />,
     enabled: hasDocument,
     run: () => context.documentToCanvas()
+  },
+  {
+    /*
+     * Dims everything but the paragraph being written. A preference about how
+     * somebody works, so it is remembered rather than reset each session.
+     */
+    id: 'view.focusMode',
+    category: 'View',
+    icon: <Crosshair size={14} />,
+    enabled: hasDocument,
+    run: () => context.toggleFocusMode()
   },
   {
     id: 'document.lock',

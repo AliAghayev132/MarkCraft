@@ -120,3 +120,39 @@ export function recentDays(today: string, days: number): string[] {
 
   return out
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * A goal for the day
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+export interface GoalProgress {
+  /** Words written today. */
+  written: number
+  goal: number
+  /** Zero to one, and never above it — a bar cannot be more than full. */
+  fraction: number
+  met: boolean
+}
+
+/**
+ * How far along today is.
+ *
+ * A goal of zero is no goal, and everything downstream reads `goal === 0` as
+ * "do not show this". Somebody who never set a target should not be told they
+ * are behind on it.
+ *
+ * The fraction is capped, so a day of writing three times the goal fills the
+ * bar rather than overflowing whatever draws it — and `written` is still there
+ * for anyone who wants to say by how much.
+ */
+export function goalProgress(days: DayRecord[], today: string, goal: number): GoalProgress {
+  const written = days.find((day) => day.day === today)?.words ?? 0
+  if (goal <= 0) return { written, goal: 0, fraction: 0, met: false }
+
+  return {
+    written,
+    goal,
+    fraction: Math.min(1, written / goal),
+    met: written >= goal
+  }
+}

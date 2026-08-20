@@ -23,6 +23,9 @@ import { IconButton, dialogs } from '@ui'
 // ── @components ────────────────────────────────────────────────────────────
 import { ErrorBoundary } from '@components'
 
+// ── @utils ─────────────────────────────────────────────────────────────────
+import { cx } from '@utils'
+
 // ── @features ──────────────────────────────────────────────────────────────
 import { hasUnseenRelease, whatsNew } from '@features/whatsnew'
 import { CommandPalette, useCommands } from '@features/commands'
@@ -142,6 +145,8 @@ export function App(): React.ReactElement {
       openStudy: () => overlays.show('study'),
       openCanvas: () => overlays.show('canvas'),
       openQuickOpen: () => overlays.show('quickOpen'),
+      toggleFocusMode: () =>
+        void updateSettings({ writing: { focusMode: !settings.writing.focusMode } }),
       documentToCanvas: () => void documentToCanvas(),
       openHttp: () => overlays.show('http'),
       openHelp: () => overlays.show('help'),
@@ -375,7 +380,12 @@ export function App(): React.ReactElement {
           />
         </ErrorBoundary>
 
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col border-t border-line-subtle bg-surface">
+        <main
+          className={cx(
+            'flex min-h-0 min-w-0 flex-1 flex-col border-t border-line-subtle bg-surface',
+            settings.writing.focusMode ? 'mc-focus-mode' : ''
+          )}
+        >
           <TabBar homePath={appInfo?.homePath ?? null} />
 
           {activeDocument ? <ExternalChangeBanner document={activeDocument} /> : null}
@@ -392,6 +402,11 @@ export function App(): React.ReactElement {
             />
           ) : null}
 
+          {/*
+            * Focus mode is a class on the wrapper rather than a prop threaded
+            * into both editors: what it does is entirely visual, and the two
+            * surfaces have nothing else to say about it.
+            */}
           <ErrorBoundary scope="editor">
             {activeDocument ? (
               <EditorPane

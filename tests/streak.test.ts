@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
-import { dayOf, previousDay, recentDays, record, summarise, type DayRecord } from '@shared'
+import {
+  dayOf,
+  goalProgress,
+  previousDay,
+  recentDays,
+  record,
+  summarise,
+  type DayRecord
+} from '@shared'
 
 const days = (...list: [string, number][]): DayRecord[] =>
   list.map(([day, words]) => ({ day, words }))
@@ -116,5 +124,47 @@ describe('recentDays', () => {
 
   it('crosses month boundaries', () => {
     expect(recentDays('2026-08-02', 3)).toEqual(['2026-07-31', '2026-08-01', '2026-08-02'])
+  })
+})
+
+describe('a goal for the day', () => {
+  const days = [
+    { day: '2026-08-20', words: 300 },
+    { day: '2026-08-19', words: 900 }
+  ]
+
+  it('counts what was written today, not yesterday', () => {
+    expect(goalProgress(days, '2026-08-20', 500).written).toBe(300)
+  })
+
+  it('counts nothing on a day with nothing', () => {
+    expect(goalProgress(days, '2026-08-21', 500).written).toBe(0)
+  })
+
+  it('reports how far along the day is', () => {
+    expect(goalProgress(days, '2026-08-20', 600).fraction).toBeCloseTo(0.5, 5)
+  })
+
+  it('knows when the goal is met', () => {
+    expect(goalProgress(days, '2026-08-20', 300).met).toBe(true)
+    expect(goalProgress(days, '2026-08-20', 301).met).toBe(false)
+  })
+
+  it('fills the bar rather than overflowing it', () => {
+    // Three times the goal is a good day, not a broken layout.
+    expect(goalProgress(days, '2026-08-20', 100).fraction).toBe(1)
+    expect(goalProgress(days, '2026-08-20', 100).written).toBe(300)
+  })
+
+  it('treats no goal as no goal', () => {
+    // Somebody who never set a target should not be told they are behind.
+    const none = goalProgress(days, '2026-08-20', 0)
+    expect(none.goal).toBe(0)
+    expect(none.met).toBe(false)
+    expect(none.fraction).toBe(0)
+  })
+
+  it('still says what was written when there is no goal', () => {
+    expect(goalProgress(days, '2026-08-20', 0).written).toBe(300)
   })
 })

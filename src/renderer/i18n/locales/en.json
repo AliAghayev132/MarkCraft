@@ -379,7 +379,8 @@
     "tools.http": "HTTP request",
     "help.guide": "How to use MarkCraft",
     "document.toCanvas": "Lay Out As Canvas",
-    "app.quickOpen": "Open File…"
+    "app.quickOpen": "Open File…",
+    "view.focusMode": "Focus Mode"
   },
   "dialogs": {
     "goToLine": {
@@ -733,6 +734,13 @@
       "maxTokensHint": "The longest answer to allow. Lower it if the provider says you cannot afford the request.",
       "temperature": "Temperature",
       "temperatureHint": "Lower is more literal, higher is more inventive. 0.4 suits editing."
+    },
+    "writing": {
+      "focusMode": "Focus mode",
+      "focusModeHint": "Dims everything but the paragraph you are writing.",
+      "dailyGoal": "Words a day",
+      "dailyGoalHint": "Shown beside your streak in Statistics. Nought is no goal.",
+      "noGoal": "No goal"
     }
   },
   "recovery": {
@@ -1550,7 +1558,9 @@
     "current": "{{count}} day(s) in a row",
     "longest": "best {{count}}",
     "days": "{{count}} day(s) written",
-    "dayTooltip": "{{day}} — {{count}} word(s)"
+    "dayTooltip": "{{day}} — {{count}} word(s)",
+    "goalToday": "{{words}} of {{goal}} today",
+    "goalMet": "Done"
   },
   "http": {
     "title": "HTTP request",

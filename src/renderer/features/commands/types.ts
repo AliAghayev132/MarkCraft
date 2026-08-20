@@ -72,6 +72,7 @@ export interface CommandContext {
   /** Lays the open document out as a canvas beside it. */
   documentToCanvas: () => void
   toggleLock: () => void
+  toggleFocusMode: () => void
   openHttp: () => void
   openHelp: () => void
   openStatistics: () => void

@@ -9,7 +9,16 @@ import { useT } from '@i18n'
 import { selectActiveDocument, useAppDispatch, useAppSelector, wordGoalSet } from '@store'
 
 // ── @ui ────────────────────────────────────────────────────────────────────
-import { auditDocument, dayOf, fixMarkdown, lintMarkdown, recentDays, summarise, type DayRecord } from '@shared'
+import {
+  auditDocument,
+  dayOf,
+  fixMarkdown,
+  goalProgress,
+  lintMarkdown,
+  recentDays,
+  summarise,
+  type DayRecord
+} from '@shared'
 
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, Divider, Input, Modal, ModalActions } from '@ui'
@@ -41,6 +50,7 @@ export function StatsDialog({ open, onClose }: StatsDialogProps): ReactElement |
   const t = useT()
   const dispatch = useAppDispatch()
   const document_ = useAppSelector(selectActiveDocument)
+  const dailyGoal = useAppSelector((state) => state.settings.values.writing.dailyGoal)
 
   const [draft, setDraft] = useState('')
   const [history, setHistory] = useState<DayRecord[]>([])
@@ -119,6 +129,7 @@ export function StatsDialog({ open, onClose }: StatsDialogProps): ReactElement |
   ]
 
   const streak = summarise(history, today)
+  const dayGoal = goalProgress(history, today, dailyGoal)
   const written = new Map(history.map((day) => [day.day, day.words]))
 
   return (
@@ -192,6 +203,39 @@ export function StatsDialog({ open, onClose }: StatsDialogProps): ReactElement |
         <h3 className="text-2xs font-semibold uppercase tracking-wider text-ink-tertiary">
           {t('streak.title')}
         </h3>
+
+        {/*
+          * Today against the goal, if there is one. Beside the streak rather
+          * than in the status bar, which already carries a goal for the open
+          * document — two bars in one corner meaning different things is worse
+          * than one bar somewhere sensible.
+          */}
+        {dayGoal.goal > 0 ? (
+          <div className="flex flex-col gap-1">
+            <div className="flex items-baseline justify-between text-sm">
+              <span className="flex items-center gap-1.5 text-ink">
+                <Target
+                  size={14}
+                  className={dayGoal.met ? 'text-success' : 'text-ink-tertiary'}
+                />
+                {t('streak.goalToday', { words: dayGoal.written, goal: dayGoal.goal })}
+              </span>
+              {dayGoal.met ? (
+                <span className="text-xs text-success">{t('streak.goalMet')}</span>
+              ) : null}
+            </div>
+
+            <span className="h-1.5 w-full overflow-hidden rounded-full bg-active">
+              <span
+                style={{ width: `${dayGoal.fraction * 100}%` }}
+                className={cx(
+                  'block h-full rounded-full transition-[width] duration-300',
+                  dayGoal.met ? 'bg-success' : 'bg-accent'
+                )}
+              />
+            </span>
+          </div>
+        ) : null}
 
         <div className="flex items-baseline justify-between text-sm">
           <span className="flex items-center gap-1.5 text-ink">

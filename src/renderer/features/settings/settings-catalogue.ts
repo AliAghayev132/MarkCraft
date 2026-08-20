@@ -17,6 +17,8 @@ import type { SettingEntry, SettingsSearchHit, SettingsSectionId } from './types
  */
 export const SETTINGS_CATALOGUE: SettingEntry[] = [
   // ── Editor ───────────────────────────────────────────────────────────────
+  { id: 'writing.focusMode', section: 'editor', labelKey: 'settings.writing.focusMode', keywords: 'focus dim zen distraction fokus' },
+  { id: 'writing.dailyGoal', section: 'editor', labelKey: 'settings.writing.dailyGoal', keywords: 'goal target words daily streak hədəf' },
   { id: 'editor.fontFamily', section: 'editor', labelKey: 'settings.editor.fontFamily', keywords: 'typeface monospace' },
   { id: 'editor.fontSize', section: 'editor', labelKey: 'settings.editor.fontSize', keywords: 'size zoom bigger smaller' },
   { id: 'editor.lineHeight', section: 'editor', labelKey: 'settings.editor.lineHeight', keywords: 'spacing leading' },

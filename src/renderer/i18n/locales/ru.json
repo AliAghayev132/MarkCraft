@@ -399,7 +399,8 @@
     "tools.http": "HTTP-запрос",
     "help.guide": "Как пользоваться MarkCraft",
     "document.toCanvas": "Разложить Как Холст",
-    "app.quickOpen": "Открыть Файл…"
+    "app.quickOpen": "Открыть Файл…",
+    "view.focusMode": "Режим Фокуса"
   },
   "dialogs": {
     "goToLine": {
@@ -753,6 +754,13 @@
       "maxTokensHint": "Максимальная длина ответа. Уменьшите, если провайдер сообщает о нехватке кредитов.",
       "temperature": "Температура",
       "temperatureHint": "Ниже — буквальнее, выше — изобретательнее. Для правки подходит 0.4."
+    },
+    "writing": {
+      "focusMode": "Режим фокуса",
+      "focusModeHint": "Приглушает всё, кроме абзаца, который вы пишете.",
+      "dailyGoal": "Слов в день",
+      "dailyGoalHint": "Показано рядом с серией в статистике. Ноль — без цели.",
+      "noGoal": "Без цели"
     }
   },
   "recovery": {
@@ -1578,7 +1586,9 @@
     "current": "дней подряд: {{count}}",
     "longest": "лучшая {{count}}",
     "days": "дней с записями: {{count}}",
-    "dayTooltip": "{{day}} — слов: {{count}}"
+    "dayTooltip": "{{day}} — слов: {{count}}",
+    "goalToday": "Сегодня {{words}} из {{goal}}",
+    "goalMet": "Готово"
   },
   "http": {
     "title": "HTTP-запрос",

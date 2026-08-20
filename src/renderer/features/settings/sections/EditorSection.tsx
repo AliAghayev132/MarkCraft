@@ -25,6 +25,7 @@ import type { SectionProps } from './types'
 export function EditorSection({ matches }: SectionProps): ReactElement {
   const t = useT()
   const editor = useAppSelector((state) => state.settings.values.editor)
+  const writing = useAppSelector((state) => state.settings.values.writing)
 
   const toggles = [
     ['editor.insertSpaces', 'insertSpaces', 'settings.editor.insertSpaces'],
@@ -53,6 +54,42 @@ export function EditorSection({ matches }: SectionProps): ReactElement {
 
   return (
     <div className="flex flex-col gap-3">
+      <SettingsRow
+        id="writing.focusMode"
+        label={t('settings.writing.focusMode')}
+        hint={t('settings.writing.focusModeHint')}
+        highlighted={matches.has('writing.focusMode')}
+      >
+        <Switch
+          checked={writing.focusMode}
+          onChange={(checked) => void updateSettings({ writing: { focusMode: checked } })}
+          ariaLabel={t('settings.writing.focusMode')}
+        />
+      </SettingsRow>
+
+      <SettingsRow
+        id="writing.dailyGoal"
+        label={t('settings.writing.dailyGoal')}
+        hint={t('settings.writing.dailyGoalHint')}
+        highlighted={matches.has('writing.dailyGoal')}
+      >
+        <Slider
+          value={writing.dailyGoal}
+          min={0}
+          max={3000}
+          step={100}
+          onChange={(value) => void updateSettings({ writing: { dailyGoal: value } })}
+          valueLabel={
+            writing.dailyGoal === 0
+              ? t('settings.writing.noGoal')
+              : t('common.words', { count: writing.dailyGoal })
+          }
+          ariaLabel={t('settings.writing.dailyGoal')}
+        />
+      </SettingsRow>
+
+      <Divider />
+
       <SettingsRow
         id="editor.fontFamily"
         label={t('settings.editor.fontFamily')}

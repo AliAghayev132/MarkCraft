@@ -154,6 +154,7 @@ export {
   BringToFront,
   Check,
   Circle,
+  Crosshair,
   Grid2x2,
   Hash,
   LayoutGrid,

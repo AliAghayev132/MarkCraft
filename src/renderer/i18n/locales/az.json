@@ -379,7 +379,8 @@
     "tools.http": "HTTP sorğusu",
     "help.guide": "MarkCraft necə işlədilir",
     "document.toCanvas": "Kanvas Kimi Düz",
-    "app.quickOpen": "Fayl Aç…"
+    "app.quickOpen": "Fayl Aç…",
+    "view.focusMode": "Fokus Rejimi"
   },
   "dialogs": {
     "goToLine": {
@@ -733,6 +734,13 @@
       "maxTokensHint": "İcazə verilən ən uzun cavab. Provayder «kredit çatmır» deyirsə, bunu azaldın.",
       "temperature": "Temperatur",
       "temperatureHint": "Aşağı — daha hərfi, yuxarı — daha ixtiraçı. Redaktə üçün 0.4 uyğundur."
+    },
+    "writing": {
+      "focusMode": "Fokus rejimi",
+      "focusModeHint": "Yazdığınız abzasdan başqa hər şeyi sönükləşdirir.",
+      "dailyGoal": "Gündə söz",
+      "dailyGoalHint": "Statistikada seriyanızın yanında görünür. Sıfır — hədəf yoxdur.",
+      "noGoal": "Hədəf yoxdur"
     }
   },
   "recovery": {
@@ -1550,7 +1558,9 @@
     "current": "ardıcıl {{count}} gün",
     "longest": "ən yaxşı {{count}}",
     "days": "{{count}} gün yazılıb",
-    "dayTooltip": "{{day}} — {{count}} söz"
+    "dayTooltip": "{{day}} — {{count}} söz",
+    "goalToday": "Bu gün {{goal}} sözdən {{words}}",
+    "goalMet": "Tamam"
   },
   "http": {
     "title": "HTTP sorğusu",

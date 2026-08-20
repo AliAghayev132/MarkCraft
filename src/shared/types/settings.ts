@@ -229,6 +229,22 @@ export interface LanguageSettings {
  * preferences. It lives in settings because it has to survive a restart and
  * belongs to the person, not to a workspace.
  */
+export interface WritingSettings {
+  /**
+   * Words a day to aim for. Zero is off, which is the default: a goal nobody
+   * set is a goal nobody has, and showing progress towards one is a way of
+   * telling somebody they are behind on something they never agreed to.
+   */
+  dailyGoal: number
+  /**
+   * Dims everything but the paragraph being written.
+   *
+   * Off by default. It is a preference about how somebody works and a strange
+   * thing to have imposed the first time they open a file.
+   */
+  focusMode: boolean
+}
+
 export interface AppStateSettings {
   /** The last build whose release notes were shown. Empty on a first run. */
   lastSeenVersion: string
@@ -244,6 +260,7 @@ export interface Settings {
   language: LanguageSettings
   keyboard: KeyboardSettings
   ai: AiSettings
+  writing: WritingSettings
   app: AppStateSettings
 }
 
@@ -328,6 +345,7 @@ export const DEFAULT_SETTINGS: Settings = {
     overrides: {}
   },
   ai: DEFAULT_AI_SETTINGS,
+  writing: { dailyGoal: 0, focusMode: false },
   app: { lastSeenVersion: '' }
 }
 

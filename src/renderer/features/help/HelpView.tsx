@@ -8,6 +8,9 @@ import { useT, useTranslation } from '@i18n'
 // ── @store ─────────────────────────────────────────────────────────────────
 import { useAppSelector } from '@store'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useKeyboardClaim } from '@hooks'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { IconButton, SearchInput } from '@ui'
 
@@ -33,6 +36,9 @@ import type { HelpViewProps } from './types'
  */
 export function HelpView({ open, onClose }: HelpViewProps): ReactElement | null {
   const t = useT()
+
+  // While this is up, the application's own accelerators stand aside.
+  useKeyboardClaim(open)
   const { language } = useTranslation()
   const settings = useAppSelector((state) => state.settings.values.markdown)
 

@@ -11,6 +11,9 @@ import { useT } from '@i18n'
 // ── @store ─────────────────────────────────────────────────────────────────
 import { selectActiveDocument, useAppSelector } from '@store'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useKeyboardClaim } from '@hooks'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { IconButton } from '@ui'
 
@@ -30,6 +33,9 @@ import type { PresentViewProps } from './types'
  */
 export function PresentView({ open, onClose }: PresentViewProps): ReactElement | null {
   const t = useT()
+
+  // While this is up, the application's own accelerators stand aside.
+  useKeyboardClaim(open)
   const document_ = useAppSelector(selectActiveDocument)
   const settings = useAppSelector((state) => state.settings.values.markdown)
   const [index, setIndex] = useState(0)

@@ -23,6 +23,9 @@ import { studyService } from '@services'
 // ── @store ─────────────────────────────────────────────────────────────────
 import { selectActiveDocument, useAppSelector } from '@store'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useKeyboardClaim } from '@hooks'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, EmptyState, IconButton } from '@ui'
 
@@ -44,6 +47,9 @@ const GRADES: Grade[] = ['again', 'hard', 'good', 'easy']
  */
 export function StudyView({ open, onClose }: StudyViewProps): ReactElement | null {
   const t = useT()
+
+  // While this is up, the application's own accelerators stand aside.
+  useKeyboardClaim(open)
   const document_ = useAppSelector(selectActiveDocument)
   const settings = useAppSelector((state) => state.settings.values.markdown)
 

@@ -40,12 +40,10 @@ export function CanvasCard({
   selected,
   editing,
   zoom,
-  onStartEdit,
   onCommitEdit,
   onCancelEdit,
   onStartLink,
   onStartResize,
-  onOpen
 }: CanvasCardProps): ReactElement {
   const t = useT()
   const colour = canvasColorCss(node.color)
@@ -79,13 +77,6 @@ export function CanvasCard({
           : 'border-line bg-app shadow-sm',
         selected ? 'ring-2 ring-accent' : ''
       )}
-      onDoubleClick={(event) => {
-        // Text and groups carry writing the user can change; a file or link
-        // card is a reference, and editing it here would only break the target.
-        if (node.type !== 'text' && node.type !== 'group') return
-        event.stopPropagation()
-        onStartEdit()
-      }}
     >
       <div className="h-full w-full overflow-hidden rounded-lg p-2.5">
         {editing ? (
@@ -100,9 +91,9 @@ export function CanvasCard({
             {node.label ?? ''}
           </span>
         ) : node.type === 'file' ? (
-          <FileCard node={node} onOpen={onOpen} />
+          <FileCard node={node} />
         ) : node.type === 'link' ? (
-          <LinkCard node={node} onOpen={onOpen} />
+          <LinkCard node={node} />
         ) : (
           <article className="mc-document mc-canvas-card">
             {renderMarkdown(node.text ?? '', { baseDir: null, gfm: true, highlight: false })}

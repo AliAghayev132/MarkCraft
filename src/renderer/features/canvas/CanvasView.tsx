@@ -63,6 +63,9 @@ import { useAppSelector } from '@store'
 import { openPath } from '@features/documents'
 import { SessionCursors, SessionDialog, SessionSelections, useSession } from '@features/session'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useKeyboardClaim } from '@hooks'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, IconButton, Spinner } from '@ui'
 
@@ -81,6 +84,18 @@ import type { CanvasGesture } from './types'
 
 /** Below this the drag was a click that wobbled, not an attempt to draw a box. */
 const MARQUEE_THRESHOLD = 4
+
+/**
+ * A second press counts as a double-click within this long, and this close.
+ *
+ * Recognised here rather than by listening for `dblclick`, because the surface
+ * takes pointer capture on press — and a captured pointer sends its derived
+ * click events to the element holding the capture, not to whatever is under it.
+ * The card's own `ondblclick` therefore never fired, and double-clicking a card
+ * did nothing at all.
+ */
+const DOUBLE_PRESS_MS = 450
+const DOUBLE_PRESS_SLOP = 6
 
 /** An image dropped on the canvas gets a card shaped to show it. */
 const IMAGE_SET = new Set<string>(IMAGE_EXTENSIONS)
@@ -112,7 +127,13 @@ export function CanvasView(): ReactElement | null {
   const [editing, setEditing] = useState<string | null>(null)
   const [gesture, setGesture] = useState<CanvasGesture | null>(null)
   const [grid, setGrid] = useState(true)
+
+  // While the canvas is up, the application's own accelerators stand aside.
+  useKeyboardClaim(path !== null)
   const [sharingOpen, setSharingOpen] = useState(false)
+
+  /** The previous press, for recognising the second one of a double-click. */
+  const lastPressRef = useRef<{ id: string | null; at: number; x: number; y: number } | null>(null)
 
   const root = useAppSelector((state) => state.workspace.root)
 
@@ -301,12 +322,16 @@ export function CanvasView(): ReactElement | null {
         return
       }
 
-      // Enter opens the selected card, the way it opens a row in the explorer.
+      // Enter opens the selected card, the way it opens a row in the explorer:
+      // for writing if it holds writing, and by going there if it is a
+      // reference. This is also the only way to reach a file card without a
+      // pointer.
       if (event.key === 'Enter' && selection.nodes.length === 1) {
         const node = canvas.nodes.find((candidate) => candidate.id === selection.nodes[0])
-        if (node?.type === 'text' || node?.type === 'group') {
+        if (node) {
           event.preventDefault()
-          setEditing(node.id)
+          if (node.type === 'text' || node.type === 'group') setEditing(node.id)
+          else follow(node)
         }
       }
     }
@@ -323,6 +348,7 @@ export function CanvasView(): ReactElement | null {
     canvas.nodes,
     selection,
     clear,
+    follow,
     selectNodes,
     removeSelected,
     duplicateSelected,
@@ -337,6 +363,26 @@ export function CanvasView(): ReactElement | null {
 
     if (editing !== null && hit?.id !== editing) setEditing(null)
     event.currentTarget.setPointerCapture(event.pointerId)
+
+    const last = lastPressRef.current
+    lastPressRef.current = { id: hit?.id ?? null, at: event.timeStamp, x: event.clientX, y: event.clientY }
+
+    const secondPress =
+      hit !== null &&
+      last !== null &&
+      last.id === hit.id &&
+      event.timeStamp - last.at < DOUBLE_PRESS_MS &&
+      Math.abs(event.clientX - last.x) < DOUBLE_PRESS_SLOP &&
+      Math.abs(event.clientY - last.y) < DOUBLE_PRESS_SLOP
+
+    if (secondPress) {
+      // Not a drag: the second press of a double-click must not also start
+      // moving the card it opened.
+      lastPressRef.current = null
+      setGesture(null)
+      openNode(hit)
+      return
+    }
 
     if (!hit) {
       if (!event.shiftKey) clear()
@@ -573,6 +619,21 @@ export function CanvasView(): ReactElement | null {
     selectNodes([group.id])
   }
 
+  /**
+   * What a double-click on a card means.
+   *
+   * Text and groups carry writing the user can change; a file or link card is
+   * a reference, and the useful thing to do with it is go there.
+   */
+  const openNode = (node: CanvasNode): void => {
+    if (node.type === 'text' || node.type === 'group') {
+      selectNodes([node.id])
+      setEditing(node.id)
+      return
+    }
+    follow(node)
+  }
+
   const zoomAtCentre = (factor: number): void => {
     const box = surface.current?.getBoundingClientRect()
     if (!box) return
@@ -742,7 +803,6 @@ export function CanvasView(): ReactElement | null {
                   selected={isNodeSelected(node.id)}
                   editing={editing === node.id}
                   zoom={view.zoom}
-                  onStartEdit={() => setEditing(node.id)}
                   onCancelEdit={() => setEditing(null)}
                   onCommitEdit={(text) => {
                     setEditing(null)
@@ -762,7 +822,6 @@ export function CanvasView(): ReactElement | null {
                     selectNodes([node.id])
                     setGesture({ kind: 'link', id: node.id, side, toX: point.x, toY: point.y })
                   }}
-                  onOpen={follow}
                   onStartResize={(event) => {
                     selectNodes([node.id])
                     setGesture({

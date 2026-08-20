@@ -8,7 +8,7 @@ import { pinPlatform } from './helpers/platform'
 // spelling is Ctrl wherever this runs.
 pinPlatform('Win32')
 
-const { buildCommandDefinitions } = await import('@features/commands')
+const { buildCommandDefinitions, claimKeyboard, keyboardIsClaimed } = await import('@features/commands')
 const { findConflicts, parseAccelerator, resolveShortcuts } = await import(
   '@features/commands'
 )
@@ -94,5 +94,55 @@ describe('command titles', () => {
       .filter((id) => !ids.has(id))
 
     expect(orphans, `${orphans.length} unused command string(s)`).toEqual([])
+  })
+})
+
+describe('who owns the keyboard', () => {
+  /*
+   * The registry listens on `document` in the capture phase and stops the event
+   * once it matches — which is right, and is what lets a command win over an
+   * editor's own key handling. It was wrong the moment something modal was on
+   * top: with a document open behind it, Ctrl+Z on the canvas undid an edit in
+   * the document, Ctrl+S saved the document, and Ctrl+A selected its text.
+   *
+   * None of it was visible, because what changed was covered up — and it only
+   * happened when a document happened to be open, which is why it survived
+   * every check that opened the canvas on its own.
+   */
+  it('is nobody in particular to start with', () => {
+    expect(keyboardIsClaimed()).toBe(false)
+  })
+
+  it('is the modal that claimed it', () => {
+    const release = claimKeyboard()
+    expect(keyboardIsClaimed()).toBe(true)
+
+    release()
+    expect(keyboardIsClaimed()).toBe(false)
+  })
+
+  it('stays claimed while two of them are stacked', () => {
+    const first = claimKeyboard()
+    const second = claimKeyboard()
+
+    first()
+    expect(keyboardIsClaimed()).toBe(true)
+
+    second()
+    expect(keyboardIsClaimed()).toBe(false)
+  })
+
+  it('survives a release being called twice', () => {
+    // React runs an effect's cleanup twice in development, and a count that
+    // went negative would hand the keyboard back for good.
+    const first = claimKeyboard()
+    const second = claimKeyboard()
+
+    first()
+    first()
+    expect(keyboardIsClaimed()).toBe(true)
+
+    second()
+    expect(keyboardIsClaimed()).toBe(false)
   })
 })

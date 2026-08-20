@@ -65,13 +65,10 @@ export interface CanvasCardProps {
   selected: boolean
   editing: boolean
   zoom: number
-  onStartEdit: () => void
   onCommitEdit: (text: string) => void
   onCancelEdit: () => void
   onStartLink: (side: Side, event: React.PointerEvent) => void
   onStartResize: (event: React.PointerEvent) => void
-  /** A file or link card was double-clicked; the reference is followed. */
-  onOpen: (node: CanvasNode) => void
 }
 
 export interface CanvasEdgesProps {

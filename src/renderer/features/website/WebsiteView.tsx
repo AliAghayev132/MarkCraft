@@ -11,6 +11,9 @@ import { dirname } from '@shared'
 // ── @store ─────────────────────────────────────────────────────────────────
 import { selectActiveDocument, useAppSelector } from '@store'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useKeyboardClaim } from '@hooks'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { IconButton, Segmented } from '@ui'
 
@@ -45,6 +48,9 @@ const DEVICES: Device[] = [
  */
 export function WebsiteView({ open, onClose }: WebsiteViewProps): ReactElement | null {
   const t = useT()
+
+  // While this is up, the application's own accelerators stand aside.
+  useKeyboardClaim(open)
   const document_ = useAppSelector(selectActiveDocument)
   const settings = useAppSelector((state) => state.settings.values.markdown)
 

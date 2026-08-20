@@ -28,13 +28,7 @@ const IMAGES = new Set<string>(IMAGE_EXTENSIONS)
  * application — a single click has to stay available for selecting and
  * dragging the card itself.
  */
-export function FileCard({
-  node,
-  onOpen
-}: {
-  node: CanvasNode
-  onOpen: (node: CanvasNode) => void
-}): ReactElement {
+export function FileCard({ node }: { node: CanvasNode }): ReactElement {
   const t = useT()
   const root = useAppSelector((state) => state.workspace.root)
 
@@ -53,11 +47,9 @@ export function FileCard({
 
   if (IMAGES.has(extension) && absolute) {
     return (
-      <button
-        type="button"
+      <div
         title={relative}
         aria-label={t('canvas.openFile', { name: basename(relative) })}
-        onDoubleClick={() => onOpen(node)}
         className="flex h-full w-full items-center justify-center overflow-hidden rounded"
       >
         <img
@@ -66,16 +58,14 @@ export function FileCard({
           draggable={false}
           className="max-h-full max-w-full object-contain"
         />
-      </button>
+      </div>
     )
   }
 
   return (
-    <button
-      type="button"
+    <div
       title={relative}
       aria-label={t('canvas.openFile', { name: basename(relative) })}
-      onDoubleClick={() => onOpen(node)}
       className="flex h-full w-full flex-col items-start gap-1.5 text-left"
     >
       <span className="flex min-w-0 items-center gap-1.5">
@@ -85,7 +75,7 @@ export function FileCard({
         </span>
       </span>
       <span className="min-w-0 truncate text-2xs text-ink-tertiary">{relative}</span>
-    </button>
+    </div>
   )
 }
 
@@ -96,13 +86,7 @@ export function FileCard({
  * canvas is which site it goes to, and a forty-character tracking query buries
  * that under itself.
  */
-export function LinkCard({
-  node,
-  onOpen
-}: {
-  node: CanvasNode
-  onOpen: (node: CanvasNode) => void
-}): ReactElement {
+export function LinkCard({ node }: { node: CanvasNode }): ReactElement {
   const t = useT()
   const url = node.url ?? ''
 
@@ -115,11 +99,9 @@ export function LinkCard({
   }, [url])
 
   return (
-    <button
-      type="button"
+    <div
       title={url}
       aria-label={t('canvas.openLink', { name: host })}
-      onDoubleClick={() => onOpen(node)}
       className="flex h-full w-full flex-col items-start gap-1.5 text-left"
     >
       <span className="flex min-w-0 items-center gap-1.5">
@@ -127,6 +109,6 @@ export function LinkCard({
         <span className="min-w-0 truncate text-xs font-medium text-ink">{host}</span>
       </span>
       <span className="line-clamp-3 min-w-0 break-all text-2xs text-ink-tertiary">{url}</span>
-    </button>
+    </div>
   )
 }

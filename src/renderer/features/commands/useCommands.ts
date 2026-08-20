@@ -19,6 +19,8 @@ import {
   resolveShortcuts
 } from './shortcuts'
 
+import { keyboardIsClaimed } from './keyboard-owner'
+
 // ── types ──────────────────────────────────────────────────────────────────
 import { localizeCommand, type Command, type CommandContext } from './types'
 import type { CommandRegistry } from './types'
@@ -53,6 +55,13 @@ export function useCommands(context: CommandContext): CommandRegistry {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent): void => {
       if (event.defaultPrevented) return
+
+      /*
+       * A modal owns the keyboard while it is up. Without this the canvas's
+       * own Ctrl+Z reached the document behind it — and the person watching
+       * the canvas saw nothing happen, because what changed was covered up.
+       */
+      if (keyboardIsClaimed()) return
 
       const hasModifier = event.ctrlKey || event.metaKey || event.altKey
       // A bare key inside a text field belongs to the field, not to a command —

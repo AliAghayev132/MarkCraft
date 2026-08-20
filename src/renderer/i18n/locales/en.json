@@ -592,7 +592,13 @@
         "accent-hover": "Accent (hover)",
         "success": "Success",
         "warning": "Warning",
-        "danger": "Danger"
+        "danger": "Danger",
+        "canvas-1": "Canvas red",
+        "canvas-2": "Canvas orange",
+        "canvas-3": "Canvas yellow",
+        "canvas-4": "Canvas green",
+        "canvas-5": "Canvas cyan",
+        "canvas-6": "Canvas purple"
       },
       "toolbarItems": "Formatting toolbar",
       "toolbarItemsHint": "Choose which buttons appear and in what order.",
@@ -1482,7 +1488,8 @@
       "rounded": "Rounded",
       "ellipse": "Circle",
       "diamond": "Diamond",
-      "triangle": "Triangle"
+      "triangle": "Triangle",
+      "plain": "No card"
     },
     "editCard": "Edit",
     "followCard": "Open what it points at",
@@ -1510,7 +1517,10 @@
         "centre": "Bottom",
         "right": "Bottom right"
       }
-    }
+    },
+    "addText": "Write on the canvas",
+    "addTextHere": "Write here",
+    "ownColour": "A colour of your own"
   },
   "lock": {
     "locked": "Locked — editing is off",

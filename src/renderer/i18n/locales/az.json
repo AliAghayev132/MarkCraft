@@ -592,7 +592,13 @@
         "accent-hover": "Vurğu (üstünə gələndə)",
         "success": "Uğur",
         "warning": "Xəbərdarlıq",
-        "danger": "Təhlükə"
+        "danger": "Təhlükə",
+        "canvas-1": "Kanvas qırmızı",
+        "canvas-2": "Kanvas narıncı",
+        "canvas-3": "Kanvas sarı",
+        "canvas-4": "Kanvas yaşıl",
+        "canvas-5": "Kanvas firuzəyi",
+        "canvas-6": "Kanvas bənövşəyi"
       },
       "toolbarItems": "Format paneli",
       "toolbarItemsHint": "Hansı düymələrin və hansı sırada görünəcəyini seçin.",
@@ -1482,7 +1488,8 @@
       "rounded": "Yumşaq künc",
       "ellipse": "Dairə",
       "diamond": "Romb",
-      "triangle": "Üçbucaq"
+      "triangle": "Üçbucaq",
+      "plain": "Kartsız"
     },
     "editCard": "Redaktə et",
     "followCard": "Göstərdiyini aç",
@@ -1510,7 +1517,10 @@
         "centre": "Aşağı",
         "right": "Aşağı sağ"
       }
-    }
+    },
+    "addText": "Kanvasa yaz",
+    "addTextHere": "Bura yaz",
+    "ownColour": "Öz rənginiz"
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

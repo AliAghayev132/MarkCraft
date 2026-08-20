@@ -45,7 +45,19 @@ export const CUSTOM_COLOR_TOKENS = [
   'accent-hover',
   'success',
   'warning',
-  'danger'
+  'danger',
+  /*
+   * The six canvas slots. On the list because a canvas is coloured to separate
+   * one group of cards from another, and which six colours do that best is a
+   * judgement about the work — not something an application can make for
+   * somebody else.
+   */
+  'canvas-1',
+  'canvas-2',
+  'canvas-3',
+  'canvas-4',
+  'canvas-5',
+  'canvas-6'
 ] as const
 
 export type CustomColorToken = (typeof CUSTOM_COLOR_TOKENS)[number]

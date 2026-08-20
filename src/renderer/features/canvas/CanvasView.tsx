@@ -6,6 +6,7 @@ import {
   Redo2,
   Save,
   Shapes,
+  Type,
   Undo2,
   Users,
   X,
@@ -705,18 +706,25 @@ export function CanvasView(): ReactElement | null {
     setGesture(null)
   }
 
-  const addCard = (): void => {
+  const addCard = (shape?: CanvasShape): void => {
     const box = surface.current?.getBoundingClientRect()
     const centre = box ? toScene(box.left + box.width / 2, box.top + box.height / 2) : { x: 0, y: 0 }
+
+    // Writing on the canvas is wider and shorter than a card: it is a line or
+    // two of text, not a box of notes.
+    const bare = shape === 'plain'
+    const width = bare ? 320 : 200
+    const height = bare ? 60 : 120
 
     const card: CanvasNode = {
       id: nextNodeId(canvas),
       type: 'text',
-      x: snap(centre.x - 100),
-      y: snap(centre.y - 60),
-      width: 200,
-      height: 120,
-      text: t('canvas.newCard')
+      x: snap(centre.x - width / 2),
+      y: snap(centre.y - height / 2),
+      width,
+      height,
+      text: bare ? '' : t('canvas.newCard'),
+      ...(shape ? { shape } : {})
     }
 
     edit((at) => ({ ...at, nodes: [...at.nodes, card] }))
@@ -823,16 +831,21 @@ export function CanvasView(): ReactElement | null {
     follow(node)
   }
 
-  const addCardAt = (clientX: number, clientY: number): void => {
+  const addCardAt = (clientX: number, clientY: number, shape?: CanvasShape): void => {
     const point = toScene(clientX, clientY)
+    const bare = shape === 'plain'
+    const width = bare ? 320 : 200
+    const height = bare ? 60 : 120
+
     const card: CanvasNode = {
       id: nextNodeId(canvas),
       type: 'text',
-      x: snap(point.x - 100),
-      y: snap(point.y - 60),
-      width: 200,
-      height: 120,
-      text: t('canvas.newCard')
+      x: snap(point.x - width / 2),
+      y: snap(point.y - height / 2),
+      width,
+      height,
+      text: bare ? '' : t('canvas.newCard'),
+      ...(shape ? { shape } : {})
     }
 
     edit((at) => ({ ...at, nodes: [...at.nodes, card] }))
@@ -860,6 +873,7 @@ export function CanvasView(): ReactElement | null {
     group: addGroup,
     restack,
     addHere: addCardAt,
+    addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
     fit: () => fit(canvas.nodes)
   }
@@ -933,9 +947,15 @@ export function CanvasView(): ReactElement | null {
             onClick={() => zoomAtCentre(1.25)}
           />
 
-          <Button size="sm" variant="secondary" icon={<Plus size={13} />} onClick={addCard}>
+          <Button size="sm" variant="secondary" icon={<Plus size={13} />} onClick={() => addCard()}>
             {t('canvas.addCard')}
           </Button>
+
+          <IconButton
+            icon={<Type size={15} />}
+            label={t('canvas.addText')}
+            onClick={() => addCard('plain')}
+          />
 
           <IconButton
             icon={<Users size={15} />}

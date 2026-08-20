@@ -762,3 +762,48 @@ describe('where the writing sits', () => {
     expect(parseCanvas(json).nodes[0].align).toBeUndefined()
   })
 })
+
+describe('writing without a card', () => {
+  it('is one of the shapes, so nothing new had to be invented for it', () => {
+    expect(CANVAS_SHAPES).toContain('plain')
+    expect(isCanvasShape('plain')).toBe(true)
+  })
+
+  it('round-trips through the file', () => {
+    const canvas = {
+      nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 320, height: 60, text: '# Hi' }],
+      edges: []
+    }
+    const written = shapeNodes(canvas, ['a'], 'plain')
+
+    expect(parseCanvas(serialiseCanvas(written)).nodes[0].shape).toBe('plain')
+  })
+
+  it('opens elsewhere as the rectangle it always was', () => {
+    // A reader that has never heard of `shape` draws a card. Nothing is lost;
+    // it simply looks like it did before the field existed.
+    const json = JSON.stringify({
+      nodes: [{ id: 'a', type: 'text', x: 0, y: 0, width: 320, height: 60, shape: 'plain' }],
+      edges: []
+    })
+
+    expect(parseCanvas(json).nodes[0].shape).toBe('plain')
+  })
+})
+
+describe('a colour of one\u2019s own', () => {
+  it('is carried by the format exactly as a preset slot is', () => {
+    const canvas = {
+      nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 }],
+      edges: []
+    }
+    const painted = colorSelection(canvas, ['a'], [], '#4f8ef7')
+
+    expect(painted.nodes[0].color).toBe('#4f8ef7')
+    expect(parseCanvas(serialiseCanvas(painted)).nodes[0].color).toBe('#4f8ef7')
+  })
+
+  it('is used as written, not resolved through the theme', () => {
+    expect(canvasColorCss('#4f8ef7')).toBe('#4f8ef7')
+  })
+})

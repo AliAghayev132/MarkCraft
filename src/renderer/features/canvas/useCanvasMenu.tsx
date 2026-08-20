@@ -10,7 +10,8 @@ import {
   Shapes,
   Square,
   Trash2,
-  Triangle
+  Triangle,
+  Type
 } from '@icons'
 import { useCallback, type RefObject } from '@lib/react'
 
@@ -40,7 +41,8 @@ const SHAPE_ICON: Record<CanvasShape, typeof Square> = {
   rounded: Square,
   ellipse: Circle,
   diamond: Shapes,
-  triangle: Triangle
+  triangle: Triangle,
+  plain: Type
 }
 
 /**
@@ -179,6 +181,12 @@ export function useCanvasMenu(
               id: 'add',
               label: t('canvas.addCardHere'),
               onSelect: () => actions.addHere(event.clientX, event.clientY)
+            },
+            {
+              id: 'addText',
+              label: t('canvas.addTextHere'),
+              icon: <Type size={14} />,
+              onSelect: () => actions.addTextHere(event.clientX, event.clientY)
             },
             {
               id: 'paste',

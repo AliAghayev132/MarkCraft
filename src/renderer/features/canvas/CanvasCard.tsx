@@ -91,7 +91,8 @@ export function CanvasCard({
   const painted = colour
     ? {
         borderColor: colour,
-        backgroundColor: `color-mix(in srgb, ${colour} 12%, var(--mc-bg-app))`
+        borderWidth: 2,
+        backgroundColor: `color-mix(in srgb, ${colour} 22%, var(--mc-bg-app))`
       }
     : undefined
 
@@ -105,7 +106,8 @@ export function CanvasCard({
    * outside edge left for a CSS border to sit on.
    */
   const shape = node.shape ?? 'rectangle'
-  const clipped = shape !== 'rectangle' && shape !== 'rounded'
+  const clipped = shape !== 'rectangle' && shape !== 'rounded' && shape !== 'plain'
+  const bare = shape === 'plain'
 
   /*
    * A shape that is not a rectangle has less room at its edges than in its
@@ -113,7 +115,8 @@ export function CanvasCard({
    * triangle has its text hanging outside the triangle. An explicit choice
    * still wins.
    */
-  const align = node.align ?? (shape === 'rectangle' || shape === 'rounded' ? 'left' : 'centre')
+  const align =
+    node.align ?? (shape === 'rectangle' || shape === 'rounded' || shape === 'plain' ? 'left' : 'centre')
   const valign = node.valign ?? (clipped ? (shape === 'triangle' ? 'bottom' : 'middle') : 'top')
 
   return (
@@ -123,17 +126,23 @@ export function CanvasCard({
         top: node.y,
         width: node.width,
         height: node.height,
-        ...(node.type === 'group' && colour ? { borderColor: colour } : painted),
+        ...(node.type === 'group' && colour ? { borderColor: colour } : bare ? {} : painted),
+        ...(bare && colour ? { color: colour } : {}),
         ...(clipped ? { clipPath: CLIP[shape], border: 'none' } : {}),
         ...(shape === 'ellipse' ? { borderRadius: '50%' } : {}),
         ...(shape === 'rounded' ? { borderRadius: '1.75rem' } : {})
       }}
       className={cx(
-        'absolute border',
+        'absolute',
         shape === 'rectangle' ? 'rounded-lg' : '',
-        node.type === 'group'
-          ? 'border-dashed border-line bg-transparent'
-          : 'border-line bg-app shadow-sm',
+        // Writing on the canvas has no card: no border, no fill, no shadow.
+        // Selected it still shows a ring, or there would be no way to tell it
+        // apart from the surface it is written on.
+        bare
+          ? 'border border-transparent'
+          : node.type === 'group'
+            ? 'border border-dashed border-line bg-transparent'
+            : 'border border-line bg-app shadow-sm',
         selected ? 'ring-2 ring-accent' : ''
       )}
     >
@@ -164,6 +173,7 @@ export function CanvasCard({
           shape === 'triangle' ? 'px-6 pb-2' : '',
           shape === 'diamond' ? 'px-8' : '',
           shape === 'ellipse' ? 'px-5' : '',
+          bare ? 'p-0' : '',
           VERTICAL[valign],
           ALIGNMENT[align]
         )}

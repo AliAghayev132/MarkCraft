@@ -186,12 +186,12 @@
 
   color-scheme: light;
   /* The six JSON Canvas colour slots. What the digits in the file mean here. */
-  --mc-canvas-1: #d4453a;
-  --mc-canvas-2: #c2670c;
-  --mc-canvas-3: #9a7d0a;
-  --mc-canvas-4: #2f8a4a;
-  --mc-canvas-5: #1f7f96;
-  --mc-canvas-6: #7a52c9;
+  --mc-canvas-1: #e02d24;
+  --mc-canvas-2: #e07600;
+  --mc-canvas-3: #c9a200;
+  --mc-canvas-4: #1a9e4b;
+  --mc-canvas-5: #0d90b8;
+  --mc-canvas-6: #7b3fe4;
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -271,12 +271,12 @@
 
   color-scheme: dark;
   /* Lifted for a dark surface; the same six meanings, legible against it. */
-  --mc-canvas-1: #f08a80;
-  --mc-canvas-2: #eda45c;
-  --mc-canvas-3: #ddc45e;
-  --mc-canvas-4: #6cc98a;
-  --mc-canvas-5: #56bfd6;
-  --mc-canvas-6: #b294f5;
+  --mc-canvas-1: #ff6b60;
+  --mc-canvas-2: #ffa23d;
+  --mc-canvas-3: #f2cf3f;
+  --mc-canvas-4: #4ede84;
+  --mc-canvas-5: #3fcbf0;
+  --mc-canvas-6: #b98bff;
 }
 
 /* ────────────────────────────────────────────────────────────────────────────

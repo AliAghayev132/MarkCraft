@@ -11,6 +11,9 @@ import { useT } from '@i18n'
 // ── @utils ─────────────────────────────────────────────────────────────────
 import { cx } from '@utils'
 
+// ── @ui ────────────────────────────────────────────────────────────────────
+import { ColorPicker } from '@ui'
+
 // ── types ──────────────────────────────────────────────────────────────────
 import type { CanvasPaletteProps } from './types'
 
@@ -59,6 +62,19 @@ export function CanvasPalette({ current, onPick }: CanvasPaletteProps): ReactEle
           )}
         />
       ))}
+
+      {/*
+       * A colour of their own, beside the six. The format carries a hex as
+       * readily as a slot, so this costs nothing in what the file can say — and
+       * six colours is a good default, not a limit somebody else gets to set.
+       */}
+      <span className="mx-0.5 h-4 w-px bg-line-subtle" role="presentation" />
+
+      <ColorPicker
+        value={current && current.startsWith('#') ? current : '#4f8ef7'}
+        label={t('canvas.ownColour')}
+        onChange={(hex) => onPick(hex)}
+      />
     </div>
   )
 }

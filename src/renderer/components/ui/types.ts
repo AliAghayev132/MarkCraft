@@ -290,6 +290,11 @@ export interface MenuListProps {
   onClose: () => void
   ariaLabel?: string
   className?: string
+  /**
+   * A list opened from another one. Escape steps back to it rather than
+   * closing the whole menu, which is what "escape" means in a nested menu.
+   */
+  nested?: boolean
 }
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl'

@@ -131,6 +131,7 @@ export interface CanvasMenuActions {
   group: () => void
   restack: (where: 'front' | 'back') => void
   addHere: (clientX: number, clientY: number) => void
+  addTextHere: (clientX: number, clientY: number) => void
   selectAll: () => void
   fit: () => void
 }

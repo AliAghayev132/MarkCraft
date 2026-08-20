@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type Reac
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Kbd } from '@ui/Display'
 
+// ── @hooks ─────────────────────────────────────────────────────────────────
+import { useEscapeKey } from '@hooks'
+
 // ── @utils ─────────────────────────────────────────────────────────────────
 import { cx } from '@utils'
 
@@ -26,12 +29,22 @@ export function MenuList({
   onSelect,
   onClose,
   ariaLabel,
-  className
+  className,
+  nested = false
 }: MenuListProps): ReactElement {
   const listRef = useRef<HTMLDivElement | null>(null)
   const [activeIndex, setActiveIndex] = useState<number>(() => firstEnabledIndex(items))
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
   const typeAhead = useRef({ buffer: '', timer: 0 })
+
+  /*
+   * A submenu joins the escape stack, so Escape steps back to the menu that
+   * opened it rather than closing everything. Handling the key on this element
+   * could never have worked: the popover's own handler is on the document in
+   * the capture phase, and runs first by design. The stack is how layers take
+   * turns, and the submenu simply was not on it.
+   */
+  useEscapeKey(nested, onClose)
 
   const move = useCallback(
     (delta: number) => {
@@ -52,7 +65,10 @@ export function MenuList({
     (entry: MenuEntry | undefined) => {
       if (!entry || isSeparator(entry) || entry.disabled) return
       if (entry.submenu?.length) {
-        setOpenSubmenu(entry.id)
+        // Pressing the same item again closes it. Opening a submenu used to be
+        // one-way with a pointer — only ArrowLeft came back, and nobody finds
+        // that with a mouse.
+        setOpenSubmenu((open) => (open === entry.id ? null : entry.id))
         return
       }
       onSelect(entry)
@@ -148,7 +164,12 @@ export function MenuList({
             item={entry}
             active={index === activeIndex}
             submenuOpen={openSubmenu === entry.id}
-            onHover={() => setActiveIndex(index)}
+            onHover={() => {
+              setActiveIndex(index)
+              // Moving onto a different item closes whatever was open, the way
+              // every menu on every platform behaves.
+              if (openSubmenu && openSubmenu !== entry.id) setOpenSubmenu(null)
+            }}
             onActivate={() => activate(entry)}
             onSelectDeep={(item) => {
               onSelect(item)
@@ -234,6 +255,7 @@ function MenuItem({
       {hasSubmenu && submenuOpen ? (
         <div className="absolute -top-1 left-full z-1 ml-px animate-scale-in rounded-lg border border-line bg-raised p-1 shadow-lg">
           <MenuList
+            nested
             items={item.submenu as MenuEntry[]}
             onSelect={onSelectDeep}
             onClose={onCloseSubmenu}

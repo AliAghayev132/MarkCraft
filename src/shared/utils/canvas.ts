@@ -108,7 +108,19 @@ export function alignText(
  * an end, a diamond is a decision, a triangle points. A palette of thirty would
  * be a drawing program pretending to be a thinking tool.
  */
-export const CANVAS_SHAPES = ['rectangle', 'rounded', 'ellipse', 'diamond', 'triangle'] as const
+export const CANVAS_SHAPES = [
+  'rectangle',
+  'rounded',
+  'ellipse',
+  'diamond',
+  'triangle',
+  /*
+   * No card at all: a heading or a note written straight onto the canvas, with
+   * nothing drawn around it. Every canvas ends up wanting a title over a group
+   * of cards, and a bordered box holding one word is not a title.
+   */
+  'plain'
+] as const
 
 export type CanvasShape = (typeof CANVAS_SHAPES)[number]
 

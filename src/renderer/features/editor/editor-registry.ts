@@ -106,6 +106,37 @@ class EditorRegistry {
     return view.state.sliceDoc(from, to)
   }
 
+  /**
+   * The selection as offsets into the Markdown, or null.
+   *
+   * Only the source editor can answer: a rich-editor position counts nodes in
+   * a document tree, and pretending it were a character offset into the
+   * Markdown would put a comment on the wrong sentence. A caller that needs an
+   * answer from the rich editor has `selectedText()` and can look for it.
+   */
+  selectionRange(): { from: number; to: number } | null {
+    if (this.surface === 'rich') return null
+
+    const view = this.sourceView
+    if (!view) return null
+
+    const { from, to } = view.state.selection.main
+    return { from, to }
+  }
+
+  /** Selects a passage and scrolls to it, so a list can point at the text. */
+  revealRange(from: number, to: number): boolean {
+    const view = this.sourceView
+    if (!view) return false
+
+    const end = Math.min(view.state.doc.length, Math.max(from, to))
+    const start = Math.max(0, Math.min(from, to))
+
+    view.dispatch({ selection: { anchor: start, head: end }, scrollIntoView: true })
+    view.focus()
+    return true
+  }
+
   focusActive(): void {
     if (this.surface === 'rich') this.richEditor?.commands.focus()
     else this.sourceView?.focus()

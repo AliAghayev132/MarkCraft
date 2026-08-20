@@ -111,7 +111,8 @@
     "outline": "Struktur",
     "trash": "Silinmişlər",
     "book": "Kitab",
-    "tags": "Etiketlər"
+    "tags": "Etiketlər",
+    "comments": "Şərhlər"
   },
   "explorer": {
     "files": "İş sahəsi faylları",
@@ -382,7 +383,8 @@
     "document.toCanvas": "Kanvas Kimi Düz",
     "app.quickOpen": "Fayl Aç…",
     "view.focusMode": "Fokus Rejimi",
-    "edit.saveSnippet": "Seçiləni Snippet Kimi Saxla"
+    "edit.saveSnippet": "Seçiləni Snippet Kimi Saxla",
+    "edit.comment": "Seçiləyə Şərh Yaz"
   },
   "dialogs": {
     "goToLine": {
@@ -1719,5 +1721,25 @@
     "untitled": "Snippet",
     "nothingSelected": "Əvvəlcə saxlamaq istədiyin mətni seç.",
     "savedToast": "“{{name}}” snippet kimi saxlanıldı"
+  },
+  "comments": {
+    "add": "Şərh yaz",
+    "placeholder": "Mətni seç, sonra onun haqqında demək istədiyini yaz.",
+    "none": "Bu sənəddə şərh yoxdur",
+    "noneHint": "Bir hissəni seç və şərh yaz. Şərhlər sənədin içində yox, yanındakı faylda saxlanılır.",
+    "noDocument": "Açıq sənəd yoxdur",
+    "noDocumentHint": "Şərhlər sənədə aiddir. Oxumaq və ya yazmaq üçün birini aç.",
+    "needsFile": "Əvvəlcə sənədi yadda saxla — şərh onun yanındakı faylda saxlanılır.",
+    "needsSelection": "Əvvəlcə şərh yazmaq istədiyin hissəni seç.",
+    "noQuote": "(hissə yoxdur)",
+    "orphaned": "Bu şərhin aid olduğu hissə artıq sənəddə yoxdur.",
+    "moved": "Bunun ətrafındakı mətn yenidən yazılıb.",
+    "resolve": "Bitdi kimi işarələ",
+    "reopen": "Yenidən aç",
+    "resolvedCount_one": "{{count}} bitdi",
+    "resolvedCount_other": "{{count}} bitdi",
+    "removeTitle": "Bu şərh silinsin?",
+    "removeBody": "Şərh gedir; sənədə toxunulmur.",
+    "saveFailed": "Şərhlər saxlanıla bilmədi"
   }
 }

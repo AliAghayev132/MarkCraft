@@ -111,7 +111,8 @@
     "outline": "Outline",
     "trash": "Deleted",
     "book": "Book",
-    "tags": "Tags"
+    "tags": "Tags",
+    "comments": "Comments"
   },
   "explorer": {
     "files": "Workspace files",
@@ -382,7 +383,8 @@
     "document.toCanvas": "Lay Out As Canvas",
     "app.quickOpen": "Open File…",
     "view.focusMode": "Focus Mode",
-    "edit.saveSnippet": "Save Selection as Snippet"
+    "edit.saveSnippet": "Save Selection as Snippet",
+    "edit.comment": "Comment on the Selection"
   },
   "dialogs": {
     "goToLine": {
@@ -1719,5 +1721,25 @@
     "untitled": "Snippet",
     "nothingSelected": "Select the text you want to keep first.",
     "savedToast": "Saved “{{name}}” as a snippet"
+  },
+  "comments": {
+    "add": "Leave a comment",
+    "placeholder": "Select some text, then write what you want to say about it.",
+    "none": "No comments on this document",
+    "noneHint": "Select a passage and leave one. They are kept in a file beside the document, not inside it.",
+    "noDocument": "No document open",
+    "noDocumentHint": "Comments belong to a document. Open one to read or write them.",
+    "needsFile": "Save the document first — a comment is kept in a file beside it.",
+    "needsSelection": "Select the passage you want to comment on first.",
+    "noQuote": "(no passage)",
+    "orphaned": "The passage this was about is no longer in the document.",
+    "moved": "The text around this was rewritten.",
+    "resolve": "Mark as done",
+    "reopen": "Reopen",
+    "resolvedCount_one": "{{count}} done",
+    "resolvedCount_other": "{{count}} done",
+    "removeTitle": "Delete this comment?",
+    "removeBody": "The comment goes; the document is untouched.",
+    "saveFailed": "The comments could not be saved"
   }
 }

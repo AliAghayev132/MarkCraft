@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Redo2, Replace, Scissors, Search, Undo2 } from '@icons'
+import { MessageSquareText, Redo2, Replace, Scissors, Search, Undo2 } from '@icons'
 
 // ── @services ──────────────────────────────────────────────────────────────
 import { updateSettings } from '@services'
@@ -66,6 +66,19 @@ export const editCommands: CommandGroupFactory = (context): CommandDefinition[] 
     shortcut: 'mod+g',
     enabled: hasDocument,
     run: () => context.openGoToLine()
+  },
+  {
+    id: 'edit.comment',
+    category: 'Edit',
+    icon: <MessageSquareText size={14} />,
+    keywords: 'comment note annotate review remark',
+    enabled: hasDocument,
+    run: () => {
+      // The panel is where a comment is written; this opens it and puts the
+      // selection in front of the person, rather than inventing a second
+      // place to type one.
+      dispatch(sidebarViewChanged('comments'))
+    }
   },
   {
     /*

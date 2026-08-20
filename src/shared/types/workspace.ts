@@ -30,6 +30,7 @@ export type SidebarView =
   | 'outline'
   | 'book'
   | 'tags'
+  | 'comments'
   | 'search'
   | 'recent'
   | 'trash'

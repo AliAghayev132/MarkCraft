@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Beaker, Book, Clock, FolderTree, Globe, Hash, LifeBuoy, List, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
+import { Beaker, Book, Clock, FolderTree, Globe, Hash, LifeBuoy, List, MessageSquareText, Presentation, Search, Settings, Shapes, Trash2, Wrench } from '@icons'
 import { useCallback, useEffect, useRef, type PointerEvent, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -15,6 +15,7 @@ import { selectSidebarView, sidebarViewChanged, useAppDispatch, useAppSelector }
 import { IconButton } from '@ui'
 
 // ── @features ──────────────────────────────────────────────────────────────
+import { CommentPanel } from '@features/annotations'
 import { BookPanel } from '@features/book'
 import { TagPanel } from '@features/tags'
 import { TrashPanel } from '@features/trash'
@@ -68,6 +69,7 @@ export function Sidebar({
     { id: 'outline', icon: <List size={17} />, label: t('sidebar.outline'), shortcut: 'mod+shift+u' },
     { id: 'book', icon: <Book size={17} />, label: t('sidebar.book') },
     { id: 'tags', icon: <Hash size={17} />, label: t('sidebar.tags') },
+    { id: 'comments', icon: <MessageSquareText size={17} />, label: t('sidebar.comments') },
     { id: 'search', icon: <Search size={17} />, label: t('sidebar.search'), shortcut: 'mod+shift+f' },
     { id: 'recent', icon: <Clock size={17} />, label: t('sidebar.recent') },
     { id: 'trash', icon: <Trash2 size={17} />, label: t('sidebar.trash') }
@@ -213,6 +215,7 @@ export function Sidebar({
               <SearchPanel homePath={homePath} onRevealMatch={onRevealMatch} />
             ) : null}
             {view === 'tags' ? <TagPanel /> : null}
+            {view === 'comments' ? <CommentPanel /> : null}
             {view === 'recent' ? <RecentPanel homePath={homePath} /> : null}
             {view === 'trash' ? <TrashPanel /> : null}
           </div>

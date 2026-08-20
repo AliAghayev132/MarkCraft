@@ -22,6 +22,14 @@ export type IpcErrorCode =
   | 'CONFLICT'
   | 'INVALID_ARGUMENT'
   | 'UNSUPPORTED'
+  /*
+   * A guess that did not work, or a file that was not a locked document.
+   * Ordinary outcomes rather than faults: the first is what an unlock dialog
+   * is *for*, and neither should end up in the log — a run of them is somebody
+   * trying to remember their passphrase, not an application going wrong.
+   */
+  | 'WRONG_PASSPHRASE'
+  | 'NOT_ENCRYPTED'
   | 'UNKNOWN'
 
 export interface IpcError {
@@ -59,5 +67,7 @@ export const ERROR_TITLES: Record<IpcErrorCode, string> = {
   CONFLICT: 'File changed on disk',
   INVALID_ARGUMENT: 'Invalid request',
   UNSUPPORTED: 'Not supported',
+  WRONG_PASSPHRASE: 'That passphrase does not open this document',
+  NOT_ENCRYPTED: 'Not a locked document',
   UNKNOWN: 'Something went wrong'
 }

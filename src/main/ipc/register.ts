@@ -68,6 +68,8 @@ const KNOWN_CODES = new Set<string>([
   'CONFLICT',
   'INVALID_ARGUMENT',
   'UNSUPPORTED',
+  'WRONG_PASSPHRASE',
+  'NOT_ENCRYPTED',
   'UNKNOWN'
 ])
 

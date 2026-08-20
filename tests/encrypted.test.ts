@@ -8,9 +8,11 @@ import {
   sameSecret,
   WrongPassphraseError
 } from '@main/services/crypto-service'
+import { toIpcError } from '@main/ipc/register'
 
 import {
   ENCRYPTED_FORMAT,
+  ERROR_TITLES,
   isEncryptedDocument,
   parseEncrypted,
   ratePassphrase,
@@ -262,5 +264,28 @@ describe('rating a passphrase', () => {
   it('rewards length over cleverness, because that is what holds', () => {
     expect(ratePassphrase('Xy7!')).toBe('weak')
     expect(ratePassphrase('a whole sentence here')).toBe('strong')
+  })
+})
+
+describe('how failures cross the bridge', () => {
+  /*
+   * A wrong passphrase is what an unlock dialog is for. It reached the log as
+   * an application error, so a person trying to remember their own passphrase
+   * would fill the log with faults — and the log is not where anything near a
+   * passphrase belongs.
+   */
+  it('carries its own code, so nothing treats it as a fault', () => {
+    expect(toIpcError(new WrongPassphraseError()).code).toBe('WRONG_PASSPHRASE')
+    expect(toIpcError(new NotEncryptedError()).code).toBe('NOT_ENCRYPTED')
+  })
+
+  it('says nothing about the passphrase in the message that crosses', () => {
+    const message = toIpcError(new WrongPassphraseError()).message
+    expect(message).not.toMatch(/scrypt|aes|key|salt/i)
+  })
+
+  it('still has human copy for every code, including the new ones', () => {
+    expect(ERROR_TITLES.WRONG_PASSPHRASE).toBeTruthy()
+    expect(ERROR_TITLES.NOT_ENCRYPTED).toBeTruthy()
   })
 })

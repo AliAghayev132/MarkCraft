@@ -396,7 +396,8 @@
     "view.canvas": "Холст",
     "document.lock": "Заблокировать или разблокировать документ",
     "tools.http": "HTTP-запрос",
-    "help.guide": "Как пользоваться MarkCraft"
+    "help.guide": "Как пользоваться MarkCraft",
+    "document.toCanvas": "Разложить Как Холст"
   },
   "dialogs": {
     "goToLine": {
@@ -1547,7 +1548,15 @@
     "addText": "Писать на холсте",
     "addTextHere": "Писать здесь",
     "ownColour": "Свой цвет",
-    "writeHere": "Пишите здесь…"
+    "writeHere": "Пишите здесь…",
+    "tidy": "Выровнять по сетке",
+    "writeUp": "Записать как документ",
+    "wroteUp": "Документ записан",
+    "writeUpFailed": "Не удалось записать",
+    "fromDocument": "Разложено как холст",
+    "fromDocumentFailed": "Не удалось разложить",
+    "fromDocumentEmpty": "Нет заголовков, которые можно разложить.",
+    "fromDocumentNeedsFile": "Сначала сохраните документ — холст ляжет рядом с ним."
   },
   "lock": {
     "locked": "Заблокирован — правка выключена",

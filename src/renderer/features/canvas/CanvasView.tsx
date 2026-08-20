@@ -27,11 +27,13 @@ import {
   alignNodes,
   alignText,
   basename,
+  canvasToMarkdown,
   bringToFront,
   colorSelection,
   connect,
   distributeNodes,
   duplicateNodes,
+  gridLayout,
   groupAround,
   inPaintOrder,
   labelEdge,
@@ -58,7 +60,7 @@ import {
 import { useT } from '@i18n'
 
 // ── @services ──────────────────────────────────────────────────────────────
-import { appService, toast } from '@services'
+import { appService, fileService, toast } from '@services'
 
 // ── @store ─────────────────────────────────────────────────────────────────
 import { useAppSelector } from '@store'
@@ -808,6 +810,31 @@ export function CanvasView(): ReactElement | null {
     follow(node)
   }
 
+  /**
+   * Writes the canvas out as a document, beside the canvas itself.
+   *
+   * A new file rather than a replacement: the canvas is still the canvas, and
+   * somebody who wanted it turned into prose wanted both.
+   */
+  const writeUp = async (): Promise<void> => {
+    const target = path.replace(/.canvas$/i, '.md')
+    const markdown = canvasToMarkdown(canvas, { title: basename(path).replace(/.canvas$/i, '') })
+
+    try {
+      await fileService.write({ path: target, content: markdown, eol: 'lf' })
+      toast.success(t('canvas.wroteUp'), basename(target))
+      canvasTarget.close()
+      void openPath(target)
+    } catch (error) {
+      toast.error(t('canvas.writeUpFailed'), error instanceof Error ? error.message : String(error))
+    }
+  }
+
+  const tidy = (): void => {
+    const chosen = selection.nodes.length > 1 ? selection.nodes : canvas.nodes.map((n) => n.id)
+    edit((at) => gridLayout(at, chosen))
+  }
+
   const addCardAt = (clientX: number, clientY: number, shape?: CanvasShape): void => {
     const point = toScene(clientX, clientY)
     const bare = shape === 'plain'
@@ -850,6 +877,8 @@ export function CanvasView(): ReactElement | null {
     group: addGroup,
     restack,
     addHere: addCardAt,
+    writeUp: () => void writeUp(),
+    tidy,
     addTextHere: (x, y) => addCardAt(x, y, 'plain'),
     selectAll: () => selectNodes(canvas.nodes.map((node) => node.id)),
     fit: () => fit(canvas.nodes)

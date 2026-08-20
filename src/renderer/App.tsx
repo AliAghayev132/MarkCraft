@@ -38,7 +38,7 @@ import { ExternalChangeBanner, useAutosave } from '@features/documents'
 import { EditorPane, editorRegistry } from '@features/editor'
 import { openLanguageDialog } from '@features/editor/dialogs'
 import { startAi } from '@features/ai'
-import { openDefaultCanvas } from '@features/canvas'
+import { documentToCanvas, openDefaultCanvas } from '@features/canvas'
 import { pasteAsMarkdown } from '@features/editor/markdown'
 import { goToLine } from '@features/editor/source'
 import { MarkdownToolbar } from '@features/editor/toolbar'
@@ -141,6 +141,7 @@ export function App(): React.ReactElement {
       openBook: () => overlays.show('book'),
       openStudy: () => overlays.show('study'),
       openCanvas: () => overlays.show('canvas'),
+      documentToCanvas: () => void documentToCanvas(),
       openHttp: () => overlays.show('http'),
       openHelp: () => overlays.show('help'),
       toggleLock: () => {

@@ -376,7 +376,8 @@
     "view.canvas": "Kanvas",
     "document.lock": "Bu sənədi kilidlə və ya aç",
     "tools.http": "HTTP sorğusu",
-    "help.guide": "MarkCraft necə işlədilir"
+    "help.guide": "MarkCraft necə işlədilir",
+    "document.toCanvas": "Kanvas Kimi Düz"
   },
   "dialogs": {
     "goToLine": {
@@ -1521,7 +1522,15 @@
     "addText": "Kanvasa yaz",
     "addTextHere": "Bura yaz",
     "ownColour": "Öz rənginiz",
-    "writeHere": "Bura yazın…"
+    "writeHere": "Bura yazın…",
+    "tidy": "Tora düz",
+    "writeUp": "Sənəd kimi yaz",
+    "wroteUp": "Sənəd yazıldı",
+    "writeUpFailed": "Sənəd kimi yazmaq olmadı",
+    "fromDocument": "Kanvas kimi düzüldü",
+    "fromDocumentFailed": "Kanvas kimi düzmək olmadı",
+    "fromDocumentEmpty": "Düzüləcək başlıq yoxdur.",
+    "fromDocumentNeedsFile": "Əvvəl sənədi saxlayın — kanvas onun yanına düşür."
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

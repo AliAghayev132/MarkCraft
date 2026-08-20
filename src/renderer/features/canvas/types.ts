@@ -140,6 +140,9 @@ export interface CanvasMenuActions {
   restack: (where: 'front' | 'back') => void
   addHere: (clientX: number, clientY: number) => void
   addTextHere: (clientX: number, clientY: number) => void
+  /** The canvas, written out as a document beside it. */
+  writeUp: () => void
+  tidy: () => void
   selectAll: () => void
   fit: () => void
 }

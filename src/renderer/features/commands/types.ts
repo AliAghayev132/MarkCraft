@@ -68,6 +68,8 @@ export interface CommandContext {
   openBook: () => void
   openStudy: () => void
   openCanvas: () => void
+  /** Lays the open document out as a canvas beside it. */
+  documentToCanvas: () => void
   toggleLock: () => void
   openHttp: () => void
   openHelp: () => void

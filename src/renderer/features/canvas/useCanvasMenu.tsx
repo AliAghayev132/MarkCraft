@@ -4,7 +4,9 @@ import {
   BringToFront,
   Circle,
   Copy,
+  FileText,
   Group,
+  LayoutGrid,
   Scissors,
   SendToBack,
   Shapes,
@@ -197,6 +199,19 @@ export function useCanvasMenu(
             },
             { id: 'sep5', separator: true },
             { id: 'selectAll', label: t('canvas.selectAll'), shortcut: 'mod+a', onSelect: actions.selectAll },
+            { id: 'sep-out', separator: true },
+            {
+              id: 'tidy',
+              label: t('canvas.tidy'),
+              icon: <LayoutGrid size={14} />,
+              onSelect: actions.tidy
+            },
+            {
+              id: 'writeUp',
+              label: t('canvas.writeUp'),
+              icon: <FileText size={14} />,
+              onSelect: actions.writeUp
+            },
         { id: 'fit', label: t('canvas.fit'), onSelect: actions.fit }
       ]
 

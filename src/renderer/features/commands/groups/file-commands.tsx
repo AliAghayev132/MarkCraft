@@ -236,6 +236,18 @@ export const fileCommands: CommandGroupFactory = (context): CommandDefinition[] 
     run: () => context.openCanvas()
   },
   {
+    /*
+     * The document, laid out as a canvas beside it. The other direction lives
+     * on the canvas itself; between them the two stop being separate places to
+     * keep the same notes.
+     */
+    id: 'document.toCanvas',
+    category: 'View',
+    icon: <Shapes size={14} />,
+    enabled: hasDocument,
+    run: () => context.documentToCanvas()
+  },
+  {
     id: 'document.lock',
     category: 'File',
     icon: <Lock size={14} />,

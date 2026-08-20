@@ -376,7 +376,8 @@
     "view.canvas": "Canvas",
     "document.lock": "Lock or unlock this document",
     "tools.http": "HTTP request",
-    "help.guide": "How to use MarkCraft"
+    "help.guide": "How to use MarkCraft",
+    "document.toCanvas": "Lay Out As Canvas"
   },
   "dialogs": {
     "goToLine": {
@@ -1521,7 +1522,15 @@
     "addText": "Write on the canvas",
     "addTextHere": "Write here",
     "ownColour": "A colour of your own",
-    "writeHere": "Write here…"
+    "writeHere": "Write here…",
+    "tidy": "Tidy into a grid",
+    "writeUp": "Write up as a document",
+    "wroteUp": "Written up",
+    "writeUpFailed": "Could not write it up",
+    "fromDocument": "Laid out as a canvas",
+    "fromDocumentFailed": "Could not lay it out",
+    "fromDocumentEmpty": "There are no headings to lay out.",
+    "fromDocumentNeedsFile": "Save the document first — the canvas goes beside it."
   },
   "lock": {
     "locked": "Locked — editing is off",

@@ -1,14 +1,19 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  alignNodes,
   anchorOf,
   bestSides,
+  bringToFront,
   canvasBounds,
   CANVAS_COLOR_SLOTS,
   canvasColorCss,
   colorSelection,
   connect,
+  distributeNodes,
   duplicateNodes,
+  edgeMidpoint,
+  edgePath,
   groupAround,
   inPaintOrder,
   isCanvasColor,
@@ -21,6 +26,7 @@ import {
   removeEdge,
   removeNode,
   removeNodes,
+  sendToBack,
   resizeNode,
   serialiseCanvas,
   snap,
@@ -481,5 +487,127 @@ describe('removing and labelling', () => {
   it('round-trips a label through the file', () => {
     const labelled = labelEdge(canvas, 'e1', 'depends on')
     expect(parseCanvas(serialiseCanvas(labelled)).edges[0].label).toBe('depends on')
+  })
+})
+
+describe('arranging', () => {
+  const row = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 },
+      { id: 'b', type: 'text' as const, x: 130, y: 40, width: 100, height: 60 },
+      { id: 'c', type: 'text' as const, x: 400, y: 80, width: 100, height: 40 }
+    ],
+    edges: []
+  }
+
+  it('lines cards up on their left edges', () => {
+    const aligned = alignNodes(row, ['a', 'b', 'c'], 'left')
+    expect(aligned.nodes.map((n) => n.x)).toEqual([0, 0, 0])
+  })
+
+  it('lines them up on their right edges, which are not their positions', () => {
+    const aligned = alignNodes(row, ['a', 'b', 'c'], 'right')
+    expect(aligned.nodes.map((n) => n.x + n.width)).toEqual([500, 500, 500])
+  })
+
+  it('centres them on the selection, not on the origin', () => {
+    const aligned = alignNodes(row, ['a', 'b', 'c'], 'centre')
+    const centres = aligned.nodes.map((n) => n.x + n.width / 2)
+    expect(new Set(centres).size).toBe(1)
+    expect(centres[0]).toBe(250)
+  })
+
+  it('leaves one card alone — there is nothing to line it up with', () => {
+    expect(alignNodes(row, ['a'], 'left')).toBe(row)
+  })
+
+  it('spreads three cards to equal gaps', () => {
+    const spread = distributeNodes(row, ['a', 'b', 'c'], 'x')
+    const sorted = [...spread.nodes].sort((l, r) => l.x - r.x)
+    const gaps = [
+      sorted[1].x - (sorted[0].x + sorted[0].width),
+      sorted[2].x - (sorted[1].x + sorted[1].width)
+    ]
+    // Snapped to the grid, so equal to within one step rather than exactly.
+    expect(Math.abs(gaps[0] - gaps[1])).toBeLessThanOrEqual(20)
+  })
+
+  it('keeps the outermost two where they were', () => {
+    const spread = distributeNodes(row, ['a', 'b', 'c'], 'x')
+    expect(spread.nodes[0].x).toBe(0)
+    expect(spread.nodes[2].x).toBe(400)
+  })
+
+  it('needs three cards before spreading means anything', () => {
+    expect(distributeNodes(row, ['a', 'b'], 'x')).toBe(row)
+  })
+})
+
+describe('stacking', () => {
+  const stack = {
+    nodes: [
+      { id: 'a', type: 'text' as const, x: 0, y: 0, width: 100, height: 100 },
+      { id: 'b', type: 'text' as const, x: 10, y: 10, width: 100, height: 100 },
+      { id: 'c', type: 'text' as const, x: 20, y: 20, width: 100, height: 100 }
+    ],
+    edges: []
+  }
+
+  it('brings a card to the front by moving it last', () => {
+    // Painting order is the order in the file; there is no z-index to keep.
+    expect(bringToFront(stack, ['a']).nodes.map((n) => n.id)).toEqual(['b', 'c', 'a'])
+  })
+
+  it('sends one to the back by moving it first', () => {
+    expect(sendToBack(stack, ['c']).nodes.map((n) => n.id)).toEqual(['c', 'a', 'b'])
+  })
+
+  it('keeps the relative order of what moves together', () => {
+    expect(bringToFront(stack, ['a', 'b']).nodes.map((n) => n.id)).toEqual(['c', 'a', 'b'])
+  })
+
+  it('and the topmost card is the one a click finds', () => {
+    const raised = bringToFront(stack, ['a'])
+    expect(nodeAt(raised.nodes, 50, 50)?.id).toBe('a')
+  })
+})
+
+describe('the curve a line follows', () => {
+  it('leaves each card perpendicular to the side it starts from', () => {
+    // The first control point is directly right of a right-hand anchor, which
+    // is what stops a diagonal line from setting off across its own card.
+    const path = edgePath({ x: 100, y: 50 }, 'right', { x: 300, y: 200 }, 'left')
+    const [, c1x, c1y] = path.match(/C ([\d.-]+) ([\d.-]+),/) ?? []
+
+    expect(Number(c1x)).toBeGreaterThan(100)
+    expect(Number(c1y)).toBe(50)
+  })
+
+  it('starts and ends exactly on the anchors', () => {
+    const path = edgePath({ x: 10, y: 20 }, 'bottom', { x: 300, y: 400 }, 'top')
+    expect(path.startsWith('M 10 20')).toBe(true)
+    expect(path.endsWith('300 400')).toBe(true)
+  })
+
+  it('does not loop when two cards are almost touching', () => {
+    const path = edgePath({ x: 100, y: 50 }, 'right', { x: 110, y: 50 }, 'left')
+    const [, c1x] = path.match(/C ([\d.-]+)/) ?? []
+    // A pull larger than the gap would send the curve past its own target.
+    expect(Number(c1x)).toBeLessThan(200)
+  })
+
+  it('puts the label on the curve rather than on the straight line', () => {
+    const from = { x: 100, y: 50 }
+    const to = { x: 300, y: 50 }
+    const middle = edgeMidpoint(from, 'right', to, 'left')
+
+    expect(middle.x).toBeCloseTo(200, 0)
+    expect(middle.y).toBeCloseTo(50, 0)
+  })
+
+  it('bows the label away from a curve that turns', () => {
+    const middle = edgeMidpoint({ x: 100, y: 50 }, 'bottom', { x: 300, y: 50 }, 'bottom')
+    // Both ends leave downwards, so the middle of the curve is below them.
+    expect(middle.y).toBeGreaterThan(50)
   })
 })

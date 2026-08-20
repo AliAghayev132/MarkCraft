@@ -15,6 +15,7 @@ import { cx } from '@utils'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { renderMarkdown } from '@features/editor/markdown'
+import { FileCard, LinkCard } from './CanvasReferences'
 
 // ── types ──────────────────────────────────────────────────────────────────
 import type { CanvasCardProps } from './types'
@@ -43,7 +44,8 @@ export function CanvasCard({
   onCommitEdit,
   onCancelEdit,
   onStartLink,
-  onStartResize
+  onStartResize,
+  onOpen
 }: CanvasCardProps): ReactElement {
   const t = useT()
   const colour = canvasColorCss(node.color)
@@ -98,9 +100,9 @@ export function CanvasCard({
             {node.label ?? ''}
           </span>
         ) : node.type === 'file' ? (
-          <span className="text-xs text-ink-secondary">{node.file}</span>
+          <FileCard node={node} onOpen={onOpen} />
         ) : node.type === 'link' ? (
-          <span className="text-xs break-all text-ink-secondary">{node.url}</span>
+          <LinkCard node={node} onOpen={onOpen} />
         ) : (
           <article className="mc-document mc-canvas-card">
             {renderMarkdown(node.text ?? '', { baseDir: null, gfm: true, highlight: false })}

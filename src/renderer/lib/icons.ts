@@ -144,10 +144,18 @@ export {
   Moon,
 
   // ── Misc ─────────────────────────────────────────────────────────────────
+  AlignCenterHorizontal,
+  AlignCenterVertical,
+  AlignEndHorizontal,
+  AlignHorizontalSpaceAround,
+  AlignStartHorizontal,
+  AlignVerticalSpaceAround,
   Ban,
+  BringToFront,
   Check,
   Circle,
   Grid2x2,
+  SendToBack,
 
   // ── Locked documents ─────────────────────────────────────────────────────
   Download,

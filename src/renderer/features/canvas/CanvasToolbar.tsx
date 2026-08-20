@@ -1,5 +1,18 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Copy, Group, Tag, Trash2 } from '@icons'
+import {
+  AlignCenterHorizontal,
+  AlignCenterVertical,
+  AlignEndHorizontal,
+  AlignHorizontalSpaceAround,
+  AlignStartHorizontal,
+  AlignVerticalSpaceAround,
+  BringToFront,
+  Copy,
+  Group,
+  SendToBack,
+  Tag,
+  Trash2
+} from '@icons'
 import { useEffect, useState, type ReactElement } from '@lib/react'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -29,7 +42,10 @@ export function CanvasToolbar({
   onDuplicate,
   onDelete,
   onGroup,
-  onLabelEdge
+  onLabelEdge,
+  onAlign,
+  onDistribute,
+  onRestack
 }: CanvasToolbarProps): ReactElement | null {
   const t = useT()
 
@@ -93,8 +109,64 @@ export function CanvasToolbar({
 
         <span className="h-5 w-px bg-line-subtle" role="presentation" />
 
+        {/*
+         * Lining cards up needs two of them, and spreading them needs three —
+         * with fewer, the buttons would be there to be pressed and do nothing.
+         */}
+        {selection.nodes.length >= 2 ? (
+          <>
+            <IconButton
+              icon={<AlignStartHorizontal size={15} />}
+              label={t('canvas.alignLeft')}
+              onClick={() => onAlign('left')}
+            />
+            <IconButton
+              icon={<AlignCenterVertical size={15} />}
+              label={t('canvas.alignCentre')}
+              onClick={() => onAlign('centre')}
+            />
+            <IconButton
+              icon={<AlignEndHorizontal size={15} />}
+              label={t('canvas.alignRight')}
+              onClick={() => onAlign('right')}
+            />
+            <IconButton
+              icon={<AlignCenterHorizontal size={15} />}
+              label={t('canvas.alignMiddle')}
+              onClick={() => onAlign('middle')}
+            />
+
+            {selection.nodes.length >= 3 ? (
+              <>
+                <IconButton
+                  icon={<AlignHorizontalSpaceAround size={15} />}
+                  label={t('canvas.spreadAcross')}
+                  onClick={() => onDistribute('x')}
+                />
+                <IconButton
+                  icon={<AlignVerticalSpaceAround size={15} />}
+                  label={t('canvas.spreadDown')}
+                  onClick={() => onDistribute('y')}
+                />
+              </>
+            ) : null}
+
+            <span className="h-5 w-px bg-line-subtle" role="presentation" />
+          </>
+        ) : null}
+
         {selection.nodes.length > 0 ? (
           <>
+            <IconButton
+              icon={<BringToFront size={15} />}
+              label={t('canvas.bringToFront')}
+              onClick={() => onRestack('front')}
+            />
+            <IconButton
+              icon={<SendToBack size={15} />}
+              label={t('canvas.sendToBack')}
+              onClick={() => onRestack('back')}
+            />
             <IconButton
               icon={<Group size={15} />}
               label={t('canvas.groupSelection')}

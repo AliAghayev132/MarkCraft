@@ -2,7 +2,7 @@
 import { type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { anchorOf, bestSides, canvasColorCss } from '@shared'
+import { anchorOf, bestSides, canvasColorCss, edgeMidpoint, edgePath } from '@shared'
 
 // ── @utils ─────────────────────────────────────────────────────────────────
 import { cx } from '@utils'
@@ -17,6 +17,11 @@ import type { CanvasEdgesProps } from './types'
  * composite it as a single surface. The layer itself takes no pointer events;
  * each line opts back in through a wide transparent stroke laid under the
  * visible one, because a two-pixel line is not something anyone can click.
+ *
+ * The lines are curves. Straight ones between four fixed anchors cross their
+ * own cards as soon as two of them sit diagonally — the line leaves the
+ * right-hand side heading left — and a canvas of twenty cards becomes a
+ * cat's cradle.
  */
 export function CanvasEdges({
   canvas,
@@ -39,16 +44,16 @@ export function CanvasEdges({
          * colour it will be drawn in.
          */}
         {markers.map((colour, at) => (
-            <marker
-              key={colour}
-              id={`mc-arrow-${at}`}
-              viewBox="0 0 10 10"
-              refX={9}
-              refY={5}
-              markerWidth={5}
-              markerHeight={5}
-              orient="auto-start-reverse"
-            >
+          <marker
+            key={colour}
+            id={`mc-arrow-${at}`}
+            viewBox="0 0 10 10"
+            refX={9}
+            refY={5}
+            markerWidth={5}
+            markerHeight={5}
+            orient="auto-start-reverse"
+          >
             <path d="M 0 1 L 9 5 L 0 9 z" fill={colour} />
           </marker>
         ))}
@@ -60,8 +65,13 @@ export function CanvasEdges({
         if (!from || !to) return null
 
         const sides = bestSides(from, to)
-        const a = anchorOf(from, edge.fromSide ?? sides.from)
-        const b = anchorOf(to, edge.toSide ?? sides.to)
+        const fromSide = edge.fromSide ?? sides.from
+        const toSide = edge.toSide ?? sides.to
+        const a = anchorOf(from, fromSide)
+        const b = anchorOf(to, toSide)
+
+        const d = edgePath(a, fromSide, b, toSide)
+        const middle = edgeMidpoint(a, fromSide, b, toSide)
 
         const colour = canvasColorCss(edge.color)
         const marker = markers.indexOf(strokeOf(edge.color))
@@ -69,13 +79,11 @@ export function CanvasEdges({
         return (
           <g key={edge.id} className="pointer-events-auto">
             {/* The grab target. Invisible, and far easier to hit than the line. */}
-            <line
-              x1={a.x}
-              y1={a.y}
-              x2={b.x}
-              y2={b.y}
+            <path
+              d={d}
+              fill="none"
               stroke="transparent"
-              strokeWidth={14}
+              strokeWidth={16}
               className="cursor-pointer"
               onPointerDown={(event) => {
                 event.stopPropagation()
@@ -83,14 +91,13 @@ export function CanvasEdges({
               }}
             />
 
-            <line
-              x1={a.x}
-              y1={a.y}
-              x2={b.x}
-              y2={b.y}
+            <path
+              d={d}
+              fill="none"
               stroke={colour ?? undefined}
               markerEnd={`url(#mc-arrow-${marker})`}
               strokeWidth={chosen.has(edge.id) ? 3.5 : 2}
+              strokeLinecap="round"
               className={cx(
                 'pointer-events-none',
                 colour ? '' : 'stroke-ink-tertiary text-ink-tertiary',
@@ -100,8 +107,8 @@ export function CanvasEdges({
 
             {edge.label ? (
               <text
-                x={(a.x + b.x) / 2}
-                y={(a.y + b.y) / 2 - 6}
+                x={middle.x}
+                y={middle.y - 6}
                 textAnchor="middle"
                 className="pointer-events-none fill-ink-secondary text-[11px]"
                 // Painted behind the glyphs so a label over a line stays
@@ -120,11 +127,14 @@ export function CanvasEdges({
 
       {/* The line following the pointer, before it has landed on a card. */}
       {pending ? (
-        <line
-          x1={anchorOf(pending.from, pending.side).x}
-          y1={anchorOf(pending.from, pending.side).y}
-          x2={pending.toX}
-          y2={pending.toY}
+        <path
+          d={edgePath(
+            anchorOf(pending.from, pending.side),
+            pending.side,
+            { x: pending.toX, y: pending.toY },
+            oppositeOf(pending.side)
+          )}
+          fill="none"
           className="pointer-events-none stroke-accent"
           strokeWidth={2}
           strokeDasharray="6 4"
@@ -132,4 +142,18 @@ export function CanvasEdges({
       ) : null}
     </svg>
   )
+}
+
+/** The side a line would arrive on if it landed where the pointer is now. */
+function oppositeOf(side: 'top' | 'right' | 'bottom' | 'left'): 'top' | 'right' | 'bottom' | 'left' {
+  switch (side) {
+    case 'top':
+      return 'bottom'
+    case 'bottom':
+      return 'top'
+    case 'left':
+      return 'right'
+    default:
+      return 'left'
+  }
 }

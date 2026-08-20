@@ -503,3 +503,185 @@ export function labelEdge(canvas: CanvasData, id: string, label: string): Canvas
     })
   }
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Arranging
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+export type Alignment = 'left' | 'centre' | 'right' | 'top' | 'middle' | 'bottom'
+
+/**
+ * Lines cards up against each other.
+ *
+ * Against the selection's own bounding box rather than the grid: the user
+ * picked these cards because they belong together, and "left" means the
+ * leftmost of *them*, not column zero of an infinite canvas.
+ */
+export function alignNodes(
+  canvas: CanvasData,
+  ids: Iterable<string>,
+  how: Alignment
+): CanvasData {
+  const chosen = new Set(ids)
+  const picked = canvas.nodes.filter((node) => chosen.has(node.id))
+  if (picked.length < 2) return canvas
+
+  const box = canvasBounds(picked)
+
+  const place = (node: CanvasNode): CanvasNode => {
+    switch (how) {
+      case 'left':
+        return { ...node, x: snap(box.x) }
+      case 'right':
+        return { ...node, x: snap(box.x + box.width - node.width) }
+      case 'centre':
+        return { ...node, x: snap(box.x + (box.width - node.width) / 2) }
+      case 'top':
+        return { ...node, y: snap(box.y) }
+      case 'bottom':
+        return { ...node, y: snap(box.y + box.height - node.height) }
+      default:
+        return { ...node, y: snap(box.y + (box.height - node.height) / 2) }
+    }
+  }
+
+  return {
+    ...canvas,
+    nodes: canvas.nodes.map((node) => (chosen.has(node.id) ? place(node) : node))
+  }
+}
+
+/**
+ * Spreads cards so the gaps between them are equal.
+ *
+ * The two on the ends stay put — they define the span the rest are spread
+ * across, and moving them would make "distribute" also mean "resize", which is
+ * not what anyone presses it for.
+ */
+export function distributeNodes(
+  canvas: CanvasData,
+  ids: Iterable<string>,
+  axis: 'x' | 'y'
+): CanvasData {
+  const chosen = new Set(ids)
+  const picked = canvas.nodes
+    .filter((node) => chosen.has(node.id))
+    .sort((a, b) => a[axis] - b[axis])
+  if (picked.length < 3) return canvas
+
+  const size = axis === 'x' ? 'width' : 'height'
+  const first = picked[0]
+  const last = picked[picked.length - 1]
+
+  const span = last[axis] + last[size] - first[axis]
+  const occupied = picked.reduce((total, node) => total + node[size], 0)
+  const gap = (span - occupied) / (picked.length - 1)
+
+  const moved = new Map<string, number>()
+  let at = first[axis]
+  for (const node of picked) {
+    moved.set(node.id, snap(at))
+    at += node[size] + gap
+  }
+
+  return {
+    ...canvas,
+    nodes: canvas.nodes.map((node) =>
+      moved.has(node.id) ? { ...node, [axis]: moved.get(node.id) as number } : node
+    )
+  }
+}
+
+/**
+ * Moves cards to the end of the list, which is the front of the canvas.
+ *
+ * Painting order *is* the order in the file — there is no z-index to keep in
+ * sync, and a canvas opened elsewhere stacks the same way because the format
+ * says so.
+ */
+export function bringToFront(canvas: CanvasData, ids: Iterable<string>): CanvasData {
+  const chosen = new Set(ids)
+  const staying = canvas.nodes.filter((node) => !chosen.has(node.id))
+  const rising = canvas.nodes.filter((node) => chosen.has(node.id))
+  if (rising.length === 0) return canvas
+
+  return { ...canvas, nodes: [...staying, ...rising] }
+}
+
+export function sendToBack(canvas: CanvasData, ids: Iterable<string>): CanvasData {
+  const chosen = new Set(ids)
+  const sinking = canvas.nodes.filter((node) => chosen.has(node.id))
+  const staying = canvas.nodes.filter((node) => !chosen.has(node.id))
+  if (sinking.length === 0) return canvas
+
+  return { ...canvas, nodes: [...sinking, ...staying] }
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Drawing the lines
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * A curve from one anchor to the other, leaving each card perpendicular to the
+ * side it starts from.
+ *
+ * Straight lines between four fixed anchors cross their own cards as soon as
+ * two of them sit diagonally: the line leaves the right-hand side heading left.
+ * Pulling the control points out along each side's own direction makes the
+ * curve set off the way the anchor points, which is both correct and what
+ * every diagramming tool does.
+ */
+export function edgePath(
+  from: { x: number; y: number },
+  fromSide: Side,
+  to: { x: number; y: number },
+  toSide: Side
+): string {
+  const distance = Math.hypot(to.x - from.x, to.y - from.y)
+
+  // Enough to shape the curve, never so much that two close cards get a loop.
+  const pull = Math.max(30, Math.min(distance * 0.4, 160))
+
+  const out = offsetFor(fromSide, pull)
+  const back = offsetFor(toSide, pull)
+
+  return [
+    `M ${from.x} ${from.y}`,
+    `C ${from.x + out.x} ${from.y + out.y},`,
+    `${to.x + back.x} ${to.y + back.y},`,
+    `${to.x} ${to.y}`
+  ].join(' ')
+}
+
+function offsetFor(side: Side, pull: number): { x: number; y: number } {
+  switch (side) {
+    case 'top':
+      return { x: 0, y: -pull }
+    case 'bottom':
+      return { x: 0, y: pull }
+    case 'left':
+      return { x: -pull, y: 0 }
+    default:
+      return { x: pull, y: 0 }
+  }
+}
+
+/** The midpoint of a cubic curve — where a label sits without overlapping it. */
+export function edgeMidpoint(
+  from: { x: number; y: number },
+  fromSide: Side,
+  to: { x: number; y: number },
+  toSide: Side
+): { x: number; y: number } {
+  const distance = Math.hypot(to.x - from.x, to.y - from.y)
+  const pull = Math.max(30, Math.min(distance * 0.4, 160))
+
+  const a = offsetFor(fromSide, pull)
+  const b = offsetFor(toSide, pull)
+
+  // De Casteljau at t = 0.5 reduces to this for a cubic.
+  return {
+    x: (from.x + 3 * (from.x + a.x) + 3 * (to.x + b.x) + to.x) / 8,
+    y: (from.y + 3 * (from.y + a.y) + 3 * (to.y + b.y) + to.y) / 8
+  }
+}

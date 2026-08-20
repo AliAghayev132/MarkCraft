@@ -1,5 +1,16 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Expand, Grid2x2, Plus, Redo2, Save, Shapes, Undo2, X } from '@icons'
+import {
+  Expand,
+  Grid2x2,
+  Plus,
+  Redo2,
+  Save,
+  Shapes,
+  Undo2,
+  X,
+  ZoomIn,
+  ZoomOut
+} from '@icons'
 import {
   useCallback,
   useEffect,
@@ -11,9 +22,12 @@ import {
 
 // ── @shared ────────────────────────────────────────────────────────────────
 import {
+  alignNodes,
   basename,
+  bringToFront,
   colorSelection,
   connect,
+  distributeNodes,
   duplicateNodes,
   groupAround,
   inPaintOrder,
@@ -22,9 +36,15 @@ import {
   nextNodeId,
   nodeAt,
   nodesInside,
+  extensionOf,
+  IMAGE_EXTENSIONS,
+  joinPath,
+  relativeFrom,
   removeNodes,
   resizeNode,
+  sendToBack,
   snap,
+  type Alignment,
   type CanvasNode,
   type Side
 } from '@shared'
@@ -32,11 +52,21 @@ import {
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
 
+// ── @services ──────────────────────────────────────────────────────────────
+import { appService, toast } from '@services'
+
+// ── @store ─────────────────────────────────────────────────────────────────
+import { useAppSelector } from '@store'
+
+// ── @features ──────────────────────────────────────────────────────────────
+import { openPath } from '@features/documents'
+
 // ── @ui ────────────────────────────────────────────────────────────────────
 import { Button, IconButton, Spinner } from '@ui'
 
 // ── ./canvas ───────────────────────────────────────────────────────────────
 import { canvasTarget } from './canvas-store'
+import { CanvasMinimap } from './CanvasMinimap'
 import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
 import { CanvasToolbar } from './CanvasToolbar'
@@ -49,6 +79,9 @@ import type { CanvasGesture } from './types'
 
 /** Below this the drag was a click that wobbled, not an attempt to draw a box. */
 const MARQUEE_THRESHOLD = 4
+
+/** An image dropped on the canvas gets a card shaped to show it. */
+const IMAGE_SET = new Set<string>(IMAGE_EXTENSIONS)
 
 /**
  * The canvas surface.
@@ -78,7 +111,36 @@ export function CanvasView(): ReactElement | null {
   const [gesture, setGesture] = useState<CanvasGesture | null>(null)
   const [grid, setGrid] = useState(true)
 
+  const root = useAppSelector((state) => state.workspace.root)
+
   const close = useCallback((): void => canvasTarget.close(), [])
+
+  /**
+   * Follows a file or link card.
+   *
+   * A file opens as a document, which closes the canvas — the tab it lands in
+   * is behind it, and leaving the canvas over the top would look like nothing
+   * had happened. A link goes to the browser and the canvas stays, because
+   * nothing in the application changed.
+   */
+  const follow = useCallback(
+    (node: CanvasNode): void => {
+      if (node.type === 'link' && node.url) {
+        void appService.openExternal(node.url)
+        return
+      }
+
+      if (node.type === 'file' && node.file) {
+        if (!root) {
+          toast.warning(t('canvas.needsFolder'))
+          return
+        }
+        canvasTarget.close()
+        void openPath(joinPath(root, node.file))
+      }
+    },
+    [root, t]
+  )
 
   useEffect(() => {
     clear()
@@ -113,6 +175,29 @@ export function CanvasView(): ReactElement | null {
     })
     if (created.length > 0) selectNodes(created)
   }, [edit, selection.nodes, selectNodes])
+
+  const arrange = useCallback(
+    (how: Alignment): void => {
+      edit((at) => alignNodes(at, selection.nodes, how))
+    },
+    [edit, selection.nodes]
+  )
+
+  const spread = useCallback(
+    (axis: 'x' | 'y'): void => {
+      edit((at) => distributeNodes(at, selection.nodes, axis))
+    },
+    [edit, selection.nodes]
+  )
+
+  const restack = useCallback(
+    (where: 'front' | 'back'): void => {
+      edit((at) =>
+        where === 'front' ? bringToFront(at, selection.nodes) : sendToBack(at, selection.nodes)
+      )
+    },
+    [edit, selection.nodes]
+  )
 
   const nudge = useCallback(
     (dx: number, dy: number): void => {
@@ -382,6 +467,57 @@ export function CanvasView(): ReactElement | null {
     setEditing(card.id)
   }
 
+  /**
+   * A file dropped from the explorer becomes a card that points at it.
+   *
+   * The same drag the tree already offers for moving files, read rather than
+   * intercepted — nothing about the explorer had to change for the canvas to
+   * accept what it was already handing out. The path is stored relative to the
+   * workspace, because that is what the format carries and what keeps a canvas
+   * working when the folder moves.
+   */
+  const dropFiles = (event: React.DragEvent<HTMLDivElement>): void => {
+    event.preventDefault()
+
+    const raw = event.dataTransfer.getData('application/x-markcraft-paths')
+    if (!raw || !root) return
+
+    let paths: string[] = []
+    try {
+      paths = JSON.parse(raw) as string[]
+    } catch {
+      return
+    }
+
+    const point = toScene(event.clientX, event.clientY)
+    const created: string[] = []
+
+    edit((at) => {
+      let next = at
+      paths.forEach((absolute, index) => {
+        const relative = relativeFrom(root, absolute)
+        if (relative === null) return
+
+        const image = IMAGE_SET.has(extensionOf(relative))
+        const card: CanvasNode = {
+          id: nextNodeId(next),
+          type: 'file',
+          // Fanned out, so five files dropped together do not land in a stack.
+          x: snap(point.x - 100 + index * 30),
+          y: snap(point.y - 60 + index * 30),
+          width: image ? 240 : 200,
+          height: image ? 180 : 80,
+          file: relative
+        }
+        created.push(card.id)
+        next = { ...next, nodes: [...next.nodes, card] }
+      })
+      return next
+    })
+
+    if (created.length > 0) selectNodes(created)
+  }
+
   const addGroup = (): void => {
     const chosen = new Set(selection.nodes)
     const around = canvas.nodes.filter((node) => chosen.has(node.id) && node.type !== 'group')
@@ -411,6 +547,12 @@ export function CanvasView(): ReactElement | null {
     selectNodes([group.id])
   }
 
+  const zoomAtCentre = (factor: number): void => {
+    const box = surface.current?.getBoundingClientRect()
+    if (!box) return
+    zoomAt(box.left + box.width / 2, box.top + box.height / 2, factor)
+  }
+
   const linking = gesture?.kind === 'link' ? gesture : null
   const linkingFrom = linking ? canvas.nodes.find((node) => node.id === linking.id) : undefined
   const marquee = gesture?.kind === 'marquee' ? marqueeBox(gesture) : null
@@ -438,8 +580,32 @@ export function CanvasView(): ReactElement | null {
 
         <span className="flex flex-none items-center gap-1">
           <span className="pr-1 text-xs tabular-nums text-ink-tertiary">
-            {canvas.nodes.length} · {Math.round(view.zoom * 100)}%
+            {t('canvas.cardCount', { count: canvas.nodes.length })}
           </span>
+
+          {/*
+           * Zoomed about the middle of the window rather than the origin, so
+           * whatever is being looked at stays being looked at.
+           */}
+          <IconButton
+            icon={<ZoomOut size={15} />}
+            label={t('canvas.zoomOut')}
+            onClick={() => zoomAtCentre(1 / 1.25)}
+          />
+          <button
+            type="button"
+            aria-label={t('canvas.resetZoom')}
+            title={t('canvas.resetZoom')}
+            onClick={() => setView((at) => ({ ...at, zoom: 1 }))}
+            className="min-w-[3.25rem] rounded-md px-1 py-1 text-xs tabular-nums text-ink-tertiary hover:bg-hover focus-visible:shadow-focus focus-visible:outline-none"
+          >
+            {Math.round(view.zoom * 100)}%
+          </button>
+          <IconButton
+            icon={<ZoomIn size={15} />}
+            label={t('canvas.zoomIn')}
+            onClick={() => zoomAtCentre(1.25)}
+          />
 
           <Button size="sm" variant="secondary" icon={<Plus size={13} />} onClick={addCard}>
             {t('canvas.addCard')}
@@ -487,6 +653,12 @@ export function CanvasView(): ReactElement | null {
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onWheel={(event) => zoomAt(event.clientX, event.clientY, event.deltaY < 0 ? 1.1 : 1 / 1.1)}
+        onDragOver={(event) => {
+          if (!event.dataTransfer.types.includes('application/x-markcraft-paths')) return
+          event.preventDefault()
+          event.dataTransfer.dropEffect = 'copy'
+        }}
+        onDrop={dropFiles}
         style={
           grid
             ? {
@@ -558,6 +730,7 @@ export function CanvasView(): ReactElement | null {
                     selectNodes([node.id])
                     setGesture({ kind: 'link', id: node.id, side, toX: point.x, toY: point.y })
                   }}
+                  onOpen={follow}
                   onStartResize={(event) => {
                     selectNodes([node.id])
                     setGesture({
@@ -586,9 +759,19 @@ export function CanvasView(): ReactElement | null {
               ) : null}
             </div>
 
+            <CanvasMinimap
+              canvas={canvas}
+              view={view}
+              surface={surface}
+              onJump={(x, y) => setView((at) => ({ ...at, x, y }))}
+            />
+
             <CanvasToolbar
               selection={selection}
               canvas={canvas}
+              onAlign={arrange}
+              onDistribute={spread}
+              onRestack={restack}
               onColor={(color) =>
                 edit((at) => colorSelection(at, selection.nodes, selection.edges, color))
               }

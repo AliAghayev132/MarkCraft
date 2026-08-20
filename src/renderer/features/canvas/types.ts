@@ -1,5 +1,7 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import type { CanvasData, CanvasEdge, CanvasNode, Side } from '@shared'
+import type { RefObject } from '@lib/react'
+
+import type { Alignment, CanvasData, CanvasEdge, CanvasNode, Side } from '@shared'
 
 export interface Viewport {
   x: number
@@ -66,6 +68,8 @@ export interface CanvasCardProps {
   onCancelEdit: () => void
   onStartLink: (side: Side, event: React.PointerEvent) => void
   onStartResize: (event: React.PointerEvent) => void
+  /** A file or link card was double-clicked; the reference is followed. */
+  onOpen: (node: CanvasNode) => void
 }
 
 export interface CanvasEdgesProps {
@@ -82,6 +86,14 @@ export interface CanvasPaletteProps {
   onPick: (color: string | undefined) => void
 }
 
+export interface CanvasMinimapProps {
+  canvas: CanvasData
+  view: Viewport
+  /** Measured for the box that shows what is on screen. */
+  surface: RefObject<HTMLDivElement | null>
+  onJump: (x: number, y: number) => void
+}
+
 export interface CanvasToolbarProps {
   selection: CanvasSelection
   canvas: CanvasData
@@ -90,4 +102,7 @@ export interface CanvasToolbarProps {
   onDelete: () => void
   onGroup: () => void
   onLabelEdge: (id: string, label: string) => void
+  onAlign: (how: Alignment) => void
+  onDistribute: (axis: 'x' | 'y') => void
+  onRestack: (where: 'front' | 'back') => void
 }

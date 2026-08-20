@@ -24,10 +24,12 @@ import {
 // ── @shared ────────────────────────────────────────────────────────────────
 import {
   alignNodes,
+  alignText,
   basename,
   bringToFront,
   colorSelection,
   connect,
+  insertLink,
   distributeNodes,
   duplicateNodes,
   groupAround,
@@ -46,6 +48,7 @@ import {
   sendToBack,
   shapeNodes,
   snap,
+  toggleWrap,
   type Alignment,
   type CanvasShape,
   type CanvasNode,
@@ -78,13 +81,14 @@ import { CanvasMinimap } from './CanvasMinimap'
 import { CanvasCard } from './CanvasCard'
 import { CanvasEdges } from './CanvasEdges'
 import { CanvasToolbar } from './CanvasToolbar'
+import { CardFormatBar } from './CardFormatBar'
 import { useCanvasDocument } from './useCanvasDocument'
 import { useCanvasMenu } from './useCanvasMenu'
 import { useCanvasSelection } from './useCanvasSelection'
 import { useCanvasViewport } from './useCanvasViewport'
 
 // ── types ──────────────────────────────────────────────────────────────────
-import type { CanvasGesture, CanvasMenuActions } from './types'
+import type { CanvasGesture, CanvasMenuActions, CardDraft } from './types'
 
 /** Below this the drag was a click that wobbled, not an attempt to draw a box. */
 const MARQUEE_THRESHOLD = 4
@@ -133,6 +137,26 @@ export function CanvasView(): ReactElement | null {
     useCanvasSelection()
 
   const [editing, setEditing] = useState<string | null>(null)
+
+  /** Read from pointer handlers, for the same reason the draft is. */
+  const editingRef = useRef<string | null>(null)
+  editingRef.current = editing
+
+  /*
+   * What is being written, while it is being written.
+   *
+   * Held here rather than inside the card, because the formatting bar is docked
+   * to the surface — it has to see the text and the selection, and the card has
+   * to take back what the bar changed.
+   */
+  const [draft, setDraft] = useState<CardDraft | null>(null)
+
+  /*
+   * Read by `stopEditing`, which runs from a pointer handler — where the state
+   * of this render is already a frame behind what the field holds.
+   */
+  const draftRef = useRef<CardDraft | null>(null)
+  draftRef.current = draft
   const [gesture, setGesture] = useState<CanvasGesture | null>(null)
   const [grid, setGrid] = useState(true)
 
@@ -218,6 +242,34 @@ export function CanvasView(): ReactElement | null {
     session.announce(selection.nodes)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selection.nodes])
+
+  /**
+   * Puts what was written into the card, and closes the editor.
+   *
+   * The view does this rather than the field's own blur, because clicking away
+   * unmounts the field — and an unmounted field's blur is not a thing that can
+   * be relied on to have run first. The edit was lost every time somebody
+   * clicked back onto the canvas, which is how anyone finishes writing.
+   */
+  const stopEditing = useCallback((): void => {
+    const id = editingRef.current
+    const written = draftRef.current
+
+    setEditing(null)
+    setDraft(null)
+    if (id === null || written === null) return
+
+    edit((at) => ({
+      ...at,
+      nodes: at.nodes.map((node) => {
+        if (node.id !== id) return node
+        if (node.type === 'group') {
+          return node.label === written.text ? node : { ...node, label: written.text }
+        }
+        return node.text === written.text ? node : { ...node, text: written.text }
+      })
+    }))
+  }, [edit])
 
   const removeSelected = useCallback((): void => {
     if (selection.nodes.length === 0 && selection.edges.length === 0) return
@@ -321,9 +373,36 @@ export function CanvasView(): ReactElement | null {
     if (path === null) return
 
     const onKey = (event: KeyboardEvent): void => {
-      // A card being written in owns the keyboard. The editor stops these
-      // before they reach the window; this is the belt to that braces.
-      if (editing) return
+      /*
+       * A card being written in takes the keys that belong to writing, and
+       * gives up the ones that belong to the canvas. Formatting is handled here
+       * rather than on the field itself so every shortcut the canvas answers
+       * to is decided in one place.
+       */
+      if (editing) {
+        const writing = draftRef.current
+        if (!writing || !(event.ctrlKey || event.metaKey)) return
+
+        const format = (next: CardDraft): void => {
+          event.preventDefault()
+          setDraft(next)
+        }
+
+        switch (event.key.toLowerCase()) {
+          case 'b':
+            format(toggleWrap(writing, '**'))
+            break
+          case 'i':
+            format(toggleWrap(writing, '*'))
+            break
+          case 'k':
+            format(insertLink(writing))
+            break
+          default:
+            break
+        }
+        return
+      }
 
       const mod = event.ctrlKey || event.metaKey
 
@@ -442,7 +521,7 @@ export function CanvasView(): ReactElement | null {
     const point = toScene(event.clientX, event.clientY)
     const hit = nodeAt(canvas.nodes, point.x, point.y)
 
-    if (editing !== null && hit?.id !== editing) setEditing(null)
+    if (editing !== null && hit?.id !== editing) stopEditing()
     event.currentTarget.setPointerCapture(event.pointerId)
 
     const last = lastPressRef.current
@@ -771,6 +850,7 @@ export function CanvasView(): ReactElement | null {
     open: (node) => openNode(node),
     colour: (colour) => edit((at) => colorSelection(at, selection.nodes, selection.edges, colour)),
     shape: (shape: CanvasShape) => edit((at) => shapeNodes(at, selection.nodes, shape)),
+    align: (align, valign) => edit((at) => alignText(at, selection.nodes, align, valign)),
     copy: copySelected,
     cut: cutSelected,
     paste: pasteHere,
@@ -982,6 +1062,8 @@ export function CanvasView(): ReactElement | null {
                     selectNodes([node.id])
                     setGesture({ kind: 'link', id: node.id, side, toX: point.x, toY: point.y })
                   }}
+                  draft={editing === node.id ? draft : null}
+                  onDraft={setDraft}
                   onStartResize={(event) => {
                     selectNodes([node.id])
                     setGesture({
@@ -1027,6 +1109,17 @@ export function CanvasView(): ReactElement | null {
               surface={surface}
               onJump={(x, y) => setView((at) => ({ ...at, x, y }))}
             />
+
+            {/*
+              * Docked at the top while a card is being written in, mirroring the
+              * selection toolbar at the bottom: always in the same place, never
+              * over the thing it acts on, and never clipped by the header.
+              */}
+            {draft && editing !== null ? (
+              <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center p-3">
+                <CardFormatBar draft={draft} onApply={(next) => setDraft(next)} />
+              </div>
+            ) : null}
 
             <CanvasToolbar
               selection={selection}

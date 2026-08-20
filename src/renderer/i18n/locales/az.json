@@ -1490,7 +1490,27 @@
     "pasteHere": "Bura yapışdır",
     "selectAll": "Bütün kartları seç",
     "copied_one": "{{count}} kart köçürüldü",
-    "copied_other": "{{count}} kart köçürüldü"
+    "copied_other": "{{count}} kart köçürüldü",
+    "paragraph": "Abzas",
+    "paragraphShort": "A",
+    "textPosition": "Mətnin mövqeyi",
+    "positions": {
+      "top": {
+        "left": "Yuxarı sol",
+        "centre": "Yuxarı",
+        "right": "Yuxarı sağ"
+      },
+      "middle": {
+        "left": "Sol",
+        "centre": "Mərkəz",
+        "right": "Sağ"
+      },
+      "bottom": {
+        "left": "Aşağı sol",
+        "centre": "Aşağı",
+        "right": "Aşağı sağ"
+      }
+    }
   },
   "lock": {
     "locked": "Kilidli — redaktə bağlıdır",

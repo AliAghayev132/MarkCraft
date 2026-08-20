@@ -16,8 +16,10 @@ import { useCallback, type RefObject } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
 import {
+  CANVAS_ALIGNS,
   CANVAS_COLOR_SLOTS,
   CANVAS_SHAPES,
+  CANVAS_VALIGNS,
   canvasColorCss,
   type CanvasNode,
   type CanvasShape
@@ -81,6 +83,21 @@ export function useCanvasMenu(
         }))
       ]
 
+      /*
+       * Across and down, as one list rather than two submenus. Nine entries is
+       * a lot to name, but "centred, at the bottom" is one place a person is
+       * pointing at — and making them open two menus to say it would be
+       * pedantry about a distinction they are not making.
+       */
+      const positions: MenuItemDescriptor[] = CANVAS_VALIGNS.flatMap((valign) =>
+        CANVAS_ALIGNS.map((align) => ({
+          id: `align-${valign}-${align}`,
+          label: t(`canvas.positions.${valign}.${align}`),
+          checked: (node?.valign ?? 'top') === valign && (node?.align ?? 'left') === align,
+          onSelect: () => actions.align(align, valign)
+        }))
+      )
+
       const shapes: MenuItemDescriptor[] = CANVAS_SHAPES.map((shape) => {
         const Glyph = SHAPE_ICON[shape]
         return {
@@ -105,6 +122,7 @@ export function useCanvasMenu(
             { id: 'sep1', separator: true },
             { id: 'colour', label: t('canvas.colour'), submenu: colours },
             { id: 'shape', label: t('canvas.shape'), submenu: shapes },
+            { id: 'align', label: t('canvas.textPosition'), submenu: positions },
             { id: 'sep2', separator: true },
             {
               id: 'copy',

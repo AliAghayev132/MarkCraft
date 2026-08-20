@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest'
 
 import {
   alignNodes,
+  alignText,
+  CANVAS_ALIGNS,
+  CANVAS_VALIGNS,
   anchorOf,
   bestSides,
   bringToFront,
@@ -18,7 +21,9 @@ import {
   groupAround,
   inPaintOrder,
   isCanvasColor,
+  isCanvasAlign,
   isCanvasShape,
+  isCanvasVerticalAlign,
   labelEdge,
   moveNodes,
   MIN_NODE,
@@ -702,5 +707,58 @@ describe('shapes', () => {
     })
 
     expect(parseCanvas(json).nodes[0].shape).toBeUndefined()
+  })
+})
+
+describe('where the writing sits', () => {
+  const canvas = {
+    nodes: [{ id: 'a', type: 'text' as const, x: 0, y: 0, width: 200, height: 200 }],
+    edges: []
+  }
+
+  it('accepts the positions it can lay out', () => {
+    for (const align of CANVAS_ALIGNS) expect(isCanvasAlign(align)).toBe(true)
+    for (const valign of CANVAS_VALIGNS) expect(isCanvasVerticalAlign(valign)).toBe(true)
+  })
+
+  it('refuses anything else, which ends up in a class name', () => {
+    for (const value of ['centered', 'start', '', 4, null]) {
+      expect(isCanvasAlign(value)).toBe(false)
+      expect(isCanvasVerticalAlign(value)).toBe(false)
+    }
+  })
+
+  it('moves the writing', () => {
+    const moved = alignText(canvas, ['a'], 'centre', 'middle')
+    expect(moved.nodes[0].align).toBe('centre')
+    expect(moved.nodes[0].valign).toBe('middle')
+  })
+
+  it('stores nothing for the default, so an untouched canvas is unchanged', () => {
+    const moved = alignText(canvas, ['a'], 'centre', 'middle')
+    const back = alignText(moved, ['a'], 'left', 'top')
+
+    expect('align' in back.nodes[0]).toBe(false)
+    expect('valign' in back.nodes[0]).toBe(false)
+    expect(serialiseCanvas(back)).not.toContain('align')
+  })
+
+  it('round-trips through the file', () => {
+    const moved = alignText(canvas, ['a'], 'right', 'bottom')
+    const read = parseCanvas(serialiseCanvas(moved)).nodes[0]
+
+    expect(read.align).toBe('right')
+    expect(read.valign).toBe('bottom')
+  })
+
+  it('drops a position it cannot lay out when reading a file', () => {
+    const json = JSON.stringify({
+      nodes: [
+        { id: 'a', type: 'text', x: 0, y: 0, width: 100, height: 100, align: 'justify' }
+      ],
+      edges: []
+    })
+
+    expect(parseCanvas(json).nodes[0].align).toBeUndefined()
   })
 })

@@ -1,7 +1,17 @@
 // ── @shared ────────────────────────────────────────────────────────────────
 import type { RefObject } from '@lib/react'
 
-import type { Alignment, CanvasData, CanvasEdge, CanvasNode, CanvasShape, Side } from '@shared'
+import type {
+  Alignment,
+  CanvasAlign,
+  CanvasData,
+  CanvasEdge,
+  CanvasNode,
+  CanvasShape,
+  CanvasVerticalAlign,
+  Side,
+  TextDocument
+} from '@shared'
 
 export interface Viewport {
   x: number
@@ -69,6 +79,9 @@ export interface CanvasCardProps {
   onCancelEdit: () => void
   onStartLink: (side: Side, event: React.PointerEvent) => void
   onStartResize: (event: React.PointerEvent) => void
+  /** Non-null only for the card being written in. */
+  draft: CardDraft | null
+  onDraft: (draft: CardDraft | null) => void
 }
 
 export interface CanvasEdgesProps {
@@ -92,10 +105,23 @@ export interface CanvasPaletteProps {
  * none of them separately — and a menu missing one entry because a prop was
  * forgotten is a menu that looks complete and is not.
  */
+/** What is being written in a card, while it is being written. */
+export interface CardDraft {
+  text: string
+  from: number
+  to: number
+}
+
+export interface CardFormatBarProps {
+  draft: CardDraft
+  onApply: (next: TextDocument) => void
+}
+
 export interface CanvasMenuActions {
   open: (node: CanvasNode) => void
   colour: (colour: string | undefined) => void
   shape: (shape: CanvasShape) => void
+  align: (align: CanvasAlign | undefined, valign: CanvasVerticalAlign | undefined) => void
   copy: () => void
   cut: () => void
   paste: (clientX: number, clientY: number) => void

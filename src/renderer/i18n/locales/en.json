@@ -1490,7 +1490,27 @@
     "pasteHere": "Paste here",
     "selectAll": "Select every card",
     "copied_one": "{{count}} card copied",
-    "copied_other": "{{count}} cards copied"
+    "copied_other": "{{count}} cards copied",
+    "paragraph": "Paragraph",
+    "paragraphShort": "P",
+    "textPosition": "Text position",
+    "positions": {
+      "top": {
+        "left": "Top left",
+        "centre": "Top",
+        "right": "Top right"
+      },
+      "middle": {
+        "left": "Left",
+        "centre": "Centre",
+        "right": "Right"
+      },
+      "bottom": {
+        "left": "Bottom left",
+        "centre": "Bottom",
+        "right": "Bottom right"
+      }
+    }
   },
   "lock": {
     "locked": "Locked — editing is off",

@@ -39,6 +39,65 @@ export interface CanvasNode {
    * made here still opens elsewhere.
    */
   shape?: CanvasShape
+  /**
+   * Where the writing sits inside the card.
+   *
+   * Also outside JSON Canvas, and safe for the same reason `shape` is: a reader
+   * that has not heard of it lays the text out the way it always did. Two
+   * fields rather than nine names, because they are two independent choices —
+   * "centred across" and "at the bottom" are not one decision.
+   */
+  align?: CanvasAlign
+  valign?: CanvasVerticalAlign
+}
+
+export const CANVAS_ALIGNS = ['left', 'centre', 'right'] as const
+export const CANVAS_VALIGNS = ['top', 'middle', 'bottom'] as const
+
+export type CanvasAlign = (typeof CANVAS_ALIGNS)[number]
+export type CanvasVerticalAlign = (typeof CANVAS_VALIGNS)[number]
+
+const ALIGNS = new Set<string>(CANVAS_ALIGNS)
+const VALIGNS = new Set<string>(CANVAS_VALIGNS)
+
+export function isCanvasAlign(value: unknown): value is CanvasAlign {
+  return typeof value === 'string' && ALIGNS.has(value)
+}
+
+export function isCanvasVerticalAlign(value: unknown): value is CanvasVerticalAlign {
+  return typeof value === 'string' && VALIGNS.has(value)
+}
+
+/**
+ * Moves the writing inside some cards.
+ *
+ * The default — top left — is stored as nothing at all, so a canvas nobody has
+ * rearranged stays byte-identical to one made before this existed.
+ */
+export function alignText(
+  canvas: CanvasData,
+  ids: Iterable<string>,
+  align: CanvasAlign | undefined,
+  valign: CanvasVerticalAlign | undefined
+): CanvasData {
+  const chosen = new Set(ids)
+  if (chosen.size === 0) return canvas
+
+  return {
+    ...canvas,
+    nodes: canvas.nodes.map((node) => {
+      if (!chosen.has(node.id)) return node
+
+      const next = { ...node }
+      if (align === undefined || align === 'left') delete next.align
+      else next.align = align
+
+      if (valign === undefined || valign === 'top') delete next.valign
+      else next.valign = valign
+
+      return next
+    })
+  }
 }
 
 /**
@@ -148,7 +207,9 @@ export function parseCanvas(json: string): CanvasData {
       width: Math.max(40, node.width),
       height: Math.max(30, node.height),
       ...(isCanvasColor(node.color) ? {} : { color: undefined }),
-      ...(isCanvasShape(node.shape) ? {} : { shape: undefined })
+      ...(isCanvasShape(node.shape) ? {} : { shape: undefined }),
+      ...(isCanvasAlign(node.align) ? {} : { align: undefined }),
+      ...(isCanvasVerticalAlign(node.valign) ? {} : { valign: undefined })
     }))
 
   const ids = new Set(nodes.map((node) => node.id))
@@ -179,6 +240,8 @@ export function serialiseCanvas(canvas: CanvasData): string {
     height: Math.round(node.height),
     ...(node.color ? { color: node.color } : {}),
     ...(node.shape ? { shape: node.shape } : {}),
+    ...(node.align ? { align: node.align } : {}),
+    ...(node.valign ? { valign: node.valign } : {}),
     ...(node.text !== undefined ? { text: node.text } : {}),
     ...(node.file !== undefined ? { file: node.file } : {}),
     ...(node.url !== undefined ? { url: node.url } : {}),

@@ -1516,7 +1516,27 @@
     "copied_one": "Скопирована {{count}} карточка",
     "copied_few": "Скопированы {{count}} карточки",
     "copied_many": "Скопировано {{count}} карточек",
-    "copied_other": "Скопировано {{count}} карточек"
+    "copied_other": "Скопировано {{count}} карточек",
+    "paragraph": "Абзац",
+    "paragraphShort": "А",
+    "textPosition": "Положение текста",
+    "positions": {
+      "top": {
+        "left": "Сверху слева",
+        "centre": "Сверху",
+        "right": "Сверху справа"
+      },
+      "middle": {
+        "left": "Слева",
+        "centre": "По центру",
+        "right": "Справа"
+      },
+      "bottom": {
+        "left": "Снизу слева",
+        "centre": "Снизу",
+        "right": "Снизу справа"
+      }
+    }
   },
   "lock": {
     "locked": "Заблокирован — правка выключена",

@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { useEffect, useRef, useState, type ReactElement } from '@lib/react'
+import { useEffect, useRef, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
 import { canvasColorCss, SIDES, type Side } from '@shared'
@@ -18,7 +18,7 @@ import { renderMarkdown } from '@features/editor/markdown'
 import { FileCard, LinkCard } from './CanvasReferences'
 
 // ── types ──────────────────────────────────────────────────────────────────
-import type { CanvasCardProps } from './types'
+import type { CanvasCardProps, CardDraft } from './types'
 
 /**
  * The outlines, in a hundred-unit box stretched to the card.
@@ -37,6 +37,19 @@ const OUTLINE: Record<string, string> = {
   ellipse: 'M 50 0 A 50 50 0 1 1 49.99 0 Z',
   diamond: 'M 50 0 L 100 50 L 50 100 L 0 50 Z',
   triangle: 'M 50 0 L 100 100 L 0 100 Z'
+}
+
+/** How the writing sits across the card, and down it. */
+const ALIGNMENT: Record<string, string> = {
+  left: 'items-start text-left',
+  centre: 'items-center text-center',
+  right: 'items-end text-right'
+}
+
+const VERTICAL: Record<string, string> = {
+  top: 'justify-start',
+  middle: 'justify-center',
+  bottom: 'justify-end'
 }
 
 /** Where each anchor handle sits on the card's border. */
@@ -63,6 +76,8 @@ export function CanvasCard({
   onCancelEdit,
   onStartLink,
   onStartResize,
+  draft,
+  onDraft
 }: CanvasCardProps): ReactElement {
   const t = useT()
   const colour = canvasColorCss(node.color)
@@ -91,6 +106,15 @@ export function CanvasCard({
    */
   const shape = node.shape ?? 'rectangle'
   const clipped = shape !== 'rectangle' && shape !== 'rounded'
+
+  /*
+   * A shape that is not a rectangle has less room at its edges than in its
+   * middle, so it starts centred — otherwise the first card anyone turns into a
+   * triangle has its text hanging outside the triangle. An explicit choice
+   * still wins.
+   */
+  const align = node.align ?? (shape === 'rectangle' || shape === 'rounded' ? 'left' : 'centre')
+  const valign = node.valign ?? (clipped ? (shape === 'triangle' ? 'bottom' : 'middle') : 'top')
 
   return (
     <div
@@ -133,19 +157,25 @@ export function CanvasCard({
 
       <div
         className={cx(
-          'h-full w-full overflow-hidden p-2.5',
+          'flex h-full w-full flex-col overflow-hidden p-2.5',
           shape === 'rectangle' ? 'rounded-lg' : '',
           // A triangle's usable room is its lower middle; a diamond's is its
           // centre. Text laid out corner to corner would fall outside the shape.
-          shape === 'triangle' ? 'flex items-end justify-center px-6 pb-2' : '',
-          shape === 'diamond' ? 'flex items-center justify-center px-8' : '',
-          shape === 'ellipse' ? 'flex items-center justify-center px-5' : ''
+          shape === 'triangle' ? 'px-6 pb-2' : '',
+          shape === 'diamond' ? 'px-8' : '',
+          shape === 'ellipse' ? 'px-5' : '',
+          VERTICAL[valign],
+          ALIGNMENT[align]
         )}
       >
         {editing ? (
           <CardEditor
             value={node.type === 'group' ? (node.label ?? '') : (node.text ?? '')}
+            // A group's label is one line, and Markdown in it would not be
+            // rendered anywhere — so it gets a field and no formatting.
             single={node.type === 'group'}
+            draft={draft}
+            onDraft={onDraft}
             onCommit={onCommitEdit}
             onCancel={onCancelEdit}
           />
@@ -208,20 +238,29 @@ export function CanvasCard({
  * Escape abandons the edit and Enter commits it for a group label, because a
  * label is one line. A text card keeps Enter for what it means everywhere else
  * in the application — a new line — and commits when focus leaves.
+ *
+ * What is being written is reported upwards as it changes, because the
+ * formatting bar is docked to the surface rather than floating over the card:
+ * above a card near the top of the canvas it would sit under the window's own
+ * header, where a click reaches the header instead.
  */
 function CardEditor({
   value,
   single,
+  draft,
+  onDraft,
   onCommit,
   onCancel
 }: {
   value: string
   single: boolean
+  draft: CardDraft | null
+  onDraft: (draft: CardDraft | null) => void
   onCommit: (text: string) => void
   onCancel: () => void
 }): ReactElement {
-  const [text, setText] = useState(value)
   const field = useRef<HTMLTextAreaElement>(null)
+  const text = draft?.text ?? value
 
   useEffect(() => {
     const element = field.current
@@ -229,7 +268,33 @@ function CardEditor({
 
     element.focus()
     element.setSelectionRange(element.value.length, element.value.length)
+    onDraft({ text: value, from: value.length, to: value.length })
+
+    return () => onDraft(null)
+    // Once, when the editor opens: `onDraft` is stable and `value` is the text
+    // it opened with.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  /*
+   * The bar's operations arrive as a whole new document. The range is written
+   * after React has put the text in, or it would be set against the old value
+   * and land somewhere else.
+   */
+  useEffect(() => {
+    const element = field.current
+    if (!element || !draft || element.value !== draft.text) return
+    if (element.selectionStart === draft.from && element.selectionEnd === draft.to) return
+
+    element.focus()
+    element.setSelectionRange(draft.from, draft.to)
+  }, [draft])
+
+  const track = (): void => {
+    const element = field.current
+    if (!element) return
+    onDraft({ text: element.value, from: element.selectionStart, to: element.selectionEnd })
+  }
 
   return (
     <Textarea
@@ -238,22 +303,32 @@ function CardEditor({
       monospace
       spellCheck={false}
       className="h-full min-h-0 resize-none border-none bg-transparent p-0 shadow-none focus:shadow-none"
-      onChange={(event) => setText(event.currentTarget.value)}
+      onChange={track}
+      onSelect={track}
       onBlur={() => onCommit(text)}
       // The surface below is listening for drags and keystrokes; neither should
       // fire while a card is being written in.
       onPointerDown={(event) => event.stopPropagation()}
+      /*
+       * Deliberately not stopped here.
+       *
+       * The field used to swallow every key to keep them off the canvas, and
+       * the canvas's own listener already declines everything while a card is
+       * being written in — so all the stopping did was hide Ctrl+B from the one
+       * place that answers it. Escape and Enter are handled and prevented; the
+       * rest travel, and the canvas lets writing through.
+       */
       onKeyDown={(event) => {
-        event.stopPropagation()
-
         if (event.key === 'Escape') {
           event.preventDefault()
+          event.stopPropagation()
           onCancel()
           return
         }
 
         if (single && event.key === 'Enter') {
           event.preventDefault()
+          event.stopPropagation()
           onCommit(text)
         }
       }}

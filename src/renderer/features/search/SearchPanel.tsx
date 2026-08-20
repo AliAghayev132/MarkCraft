@@ -9,9 +9,10 @@ import {
   WholeWord,
   X
 } from '@icons'
-import { useCallback, useEffect, useRef, useState, type ReactElement } from '@lib/react'
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
+import { replacementFor } from '@shared'
 import type { WorkspaceSearchResponse } from '@shared'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
@@ -112,6 +113,18 @@ export function SearchPanel({ homePath, onRevealMatch }: SearchPanelProps): Reac
   useEffect(() => {
     void run(debouncedQuery)
   }, [debouncedQuery, run])
+
+  /*
+   * What each match will become, or null while nothing is being replaced.
+   * Built from the same code the main process will run, so the preview cannot
+   * disagree with the outcome — a preview that lies about a destructive
+   * operation is worse than no preview at all.
+   */
+  const preview = useMemo(() => {
+    if (!showReplace || query === '') return null
+    return (matched: string): string =>
+      replacementFor(matched, query, replacement, { caseSensitive, wholeWord, regex })
+  }, [showReplace, query, replacement, caseSensitive, wholeWord, regex])
 
   const onReplaceAll = async (): Promise<void> => {
     if (!root || !response || response.results.length === 0) return
@@ -336,6 +349,7 @@ export function SearchPanel({ homePath, onRevealMatch }: SearchPanelProps): Reac
             onSelect={(line) => {
               void openPath(file.path).then(() => onRevealMatch(file.path, line))
             }}
+            preview={preview}
           />
         ))}
       </div>

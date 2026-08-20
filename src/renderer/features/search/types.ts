@@ -29,4 +29,10 @@ export interface FileResultProps {
   collapsed: boolean
   onToggle: () => void
   onSelect: (line: number) => void
+  /**
+   * What a matched passage will become, or null while nothing is being
+   * replaced. A function rather than a string because a regex replacement
+   * differs from match to match.
+   */
+  preview: ((matched: string) => string) | null
 }

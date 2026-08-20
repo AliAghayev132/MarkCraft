@@ -3,6 +3,7 @@ import { promises as fs, type Dirent, type Stats } from 'node:fs'
 import path from 'node:path'
 
 // ── @shared ────────────────────────────────────────────────────────────────
+import { buildQueryRegex, replaceAll } from '@shared'
 import type {
   SearchFileResult,
   SearchMatch,
@@ -102,15 +103,6 @@ function globMatcher(patterns: string): ((relativePath: string) => boolean) | nu
   })
 
   return (relativePath: string) => regexes.some((re) => re.test(relativePath.replace(/\\/g, '/')))
-}
-
-export function buildQueryRegex(
-  query: string,
-  options: { caseSensitive: boolean; wholeWord: boolean; regex: boolean }
-): RegExp {
-  const source = options.regex ? query : query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const wrapped = options.wholeWord ? `\\b(?:${source})\\b` : source
-  return new RegExp(wrapped, options.caseSensitive ? 'gu' : 'giu')
 }
 
 function matchesInText(text: string, regex: RegExp, limit: number): SearchMatch[] {
@@ -277,18 +269,13 @@ export async function replaceInWorkspace(
   for (const target of targets) {
     try {
       const file = await readTextFile(target)
-      const regex = buildQueryRegex(request.query, request)
 
-      let count = 0
-      const next = file.content.replace(regex, (...args) => {
-        count++
-        if (!request.regex) return request.replacement
-        // Support $& and $1..$9 backreferences for regex searches.
-        const groups = args.slice(0, -2) as string[]
-        return request.replacement.replace(/\$(\d|&)/g, (_, token: string) =>
-          token === '&' ? (groups[0] ?? '') : (groups[Number(token)] ?? '')
-        )
-      })
+      const { text: next, count } = replaceAll(
+        file.content,
+        request.query,
+        request.replacement,
+        request
+      )
 
       if (count === 0 || next === file.content) continue
 

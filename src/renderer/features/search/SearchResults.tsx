@@ -8,6 +8,9 @@ import { tildify } from '@shared'
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { useT } from '@i18n'
 
+// ── @utils ─────────────────────────────────────────────────────────────────
+import { cx } from '@utils'
+
 // ── types ──────────────────────────────────────────────────────────────────
 import type { FileResultProps } from './types'
 
@@ -22,7 +25,8 @@ export const FileResult = memo(function FileResult({
   homePath,
   collapsed,
   onToggle,
-  onSelect
+  onSelect,
+  preview
 }: FileResultProps): ReactElement {
   const t = useT()
 
@@ -63,9 +67,30 @@ export const FileResult = memo(function FileResult({
 
               <span className="min-w-0 flex-1 truncate font-mono text-2xs leading-normal">
                 {match.preview.slice(0, match.previewOffset)}
-                <mark className="rounded-[2px] bg-editor-match px-px text-inherit">
+
+                {/*
+                  * While a replacement is being written, the matched words are
+                  * struck through and what they become is shown beside them.
+                  * "Replace in 40 files" is not something anybody should press
+                  * on faith.
+                  */}
+                <mark
+                  className={cx(
+                    'rounded-[2px] px-px text-inherit',
+                    preview === null ? 'bg-editor-match' : 'bg-danger-bg line-through opacity-70'
+                  )}
+                >
                   {match.preview.slice(match.previewOffset, match.previewOffset + match.length)}
                 </mark>
+
+                {preview === null ? null : (
+                  <mark className="rounded-[2px] bg-success-bg px-px text-inherit">
+                    {preview(
+                      match.preview.slice(match.previewOffset, match.previewOffset + match.length)
+                    )}
+                  </mark>
+                )}
+
                 {match.preview.slice(match.previewOffset + match.length)}
               </span>
             </button>

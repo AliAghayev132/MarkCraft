@@ -79,6 +79,9 @@ export const SETTINGS_CATALOGUE: SettingEntry[] = [
 
   // ── Icons ────────────────────────────────────────────────────────────────
   { id: 'icons.rules', section: 'icons', labelKey: 'icons.rulesTitle', keywords: 'folder colour color icon custom override rule' },
+
+  { id: 'snippets.items', section: 'snippets', labelKey: 'snippets.saved', keywords: 'snippet block reusable template boilerplate slash' },
+  { id: 'snippets.new', section: 'snippets', labelKey: 'snippets.newTitle', hintKey: 'snippets.newHint', keywords: 'snippet new create add block' },
   { id: 'icons.addRule', section: 'icons', labelKey: 'icons.addRule', hintKey: 'icons.addRuleHint', keywords: 'extension name folder colour icon' },
   { id: 'icons.custom', section: 'icons', labelKey: 'icons.customTitle', hintKey: 'icons.customHint', keywords: 'svg import custom icon pack folder' },
 

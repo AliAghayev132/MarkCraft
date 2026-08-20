@@ -5,6 +5,7 @@ import { DEFAULT_HISTORY_LIMIT } from './history'
 // ── ./types ────────────────────────────────────────────────────────────────
 import type { Eol } from './files'
 import type { IconRule } from './icons'
+import type { Snippet } from '../utils/snippets'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
@@ -245,6 +246,17 @@ export interface WritingSettings {
   focusMode: boolean
 }
 
+/**
+ * The blocks a writer saved to reuse.
+ *
+ * Kept in settings rather than in the workspace slot, for the same reason as
+ * icon rules: a snippet is something a person built for themselves and expects
+ * to find in every project, not a property of one folder.
+ */
+export interface SnippetSettings {
+  items: Snippet[]
+}
+
 export interface AppStateSettings {
   /** The last build whose release notes were shown. Empty on a first run. */
   lastSeenVersion: string
@@ -261,6 +273,7 @@ export interface Settings {
   keyboard: KeyboardSettings
   ai: AiSettings
   writing: WritingSettings
+  snippets: SnippetSettings
   app: AppStateSettings
 }
 
@@ -346,6 +359,7 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   ai: DEFAULT_AI_SETTINGS,
   writing: { dailyGoal: 0, focusMode: false },
+  snippets: { items: [] },
   app: { lastSeenVersion: '' }
 }
 

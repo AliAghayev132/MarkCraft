@@ -6,6 +6,7 @@ import {
   Keyboard,
   Languages,
   Palette,
+  Scissors,
   RotateCcw,
   Settings as SettingsIcon,
   Shapes,
@@ -30,7 +31,7 @@ import { Badge, Button, EmptyState, Modal, ModalActions, SearchInput, dialogs } 
 import { SettingsGroup } from './SettingsRow'
 import { ShortcutSettings } from './ShortcutSettings'
 import { groupHits, searchSettings } from './settings-catalogue'
-import { AboutSection, AiSection, AppearanceSection, EditorSection, FilesSection, IconsSection, LanguageSection, MarkdownSection } from './sections'
+import { AboutSection, AiSection, AppearanceSection, EditorSection, FilesSection, IconsSection, LanguageSection, MarkdownSection, SnippetsSection } from './sections'
 
 // ── @utils ─────────────────────────────────────────────────────────────────
 import { cx } from '@utils'
@@ -44,6 +45,7 @@ const SECTIONS: { id: SettingsSectionId; icon: ReactNode }[] = [
   { id: 'markdown', icon: <SettingsIcon size={15} /> },
   { id: 'files', icon: <FileCog size={15} /> },
   { id: 'icons', icon: <Shapes size={15} /> },
+  { id: 'snippets', icon: <Scissors size={15} /> },
   { id: 'language', icon: <Languages size={15} /> },
   { id: 'keyboard', icon: <Keyboard size={15} /> },
   { id: 'ai', icon: <Sparkles size={15} /> },
@@ -123,6 +125,8 @@ export function SettingsModal({ open, onClose, appInfo }: SettingsModalProps): R
         return <FilesSection matches={highlighted} />
       case 'icons':
         return <IconsSection matches={highlighted} />
+      case 'snippets':
+        return <SnippetsSection matches={highlighted} />
       case 'language':
         return <LanguageSection matches={highlighted} />
       case 'keyboard':

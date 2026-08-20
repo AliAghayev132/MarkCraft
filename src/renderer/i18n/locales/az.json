@@ -62,7 +62,8 @@
     "characters_other": "{{count}} simvol",
     "apply": "Tətbiq et",
     "undo": "Geri al",
-    "redo": "Yenidən et"
+    "redo": "Yenidən et",
+    "edit": "Düzəlt"
   },
   "time": {
     "justNow": "indicə",
@@ -380,7 +381,8 @@
     "help.guide": "MarkCraft necə işlədilir",
     "document.toCanvas": "Kanvas Kimi Düz",
     "app.quickOpen": "Fayl Aç…",
-    "view.focusMode": "Fokus Rejimi"
+    "view.focusMode": "Fokus Rejimi",
+    "edit.saveSnippet": "Seçiləni Snippet Kimi Saxla"
   },
   "dialogs": {
     "goToLine": {
@@ -524,7 +526,8 @@
       "keyboard": "Klaviatura",
       "about": "Haqqında",
       "icons": "İkonlar",
-      "ai": "AI"
+      "ai": "AI",
+      "snippets": "Snippetlər"
     },
     "editor": {
       "fontFamily": "Şrift ailəsi",
@@ -1630,5 +1633,43 @@
     "placeholder": "Fayl adı",
     "noMatch": "Uyğun fayl yoxdur.",
     "nothingOpen": "Qovluq açın və ya birini genişləndirin — faylları burada görünəcək."
+  },
+  "snippets": {
+    "description": "Bir dəfə saxladığın və “/” ilə çağırdığın bloklar. Snippet tarixi, sənədin adını və ya əlavə etdiyin anda seçili olan mətni öz içinə yaza bilər.",
+    "saved": "Snippetlərin",
+    "none": "Hələ snippet yoxdur",
+    "noneHint": "Mətni seç və “Seçiləni Snippet Kimi Saxla” əmrini işlət, ya da burada birini yarat.",
+    "newTitle": "Birini yaz",
+    "newHint": "Ad, yadda saxlaya biləcəyin bir tetik və əlavə edəcəyi Markdown ver.",
+    "new": "Yeni snippet",
+    "editTitle": "Snippet",
+    "editDescription": "Tetikini “/” işarəsindən sonra yazanda mətn, yer tutucuları doldurulmuş halda əlavə olunur.",
+    "name": "Ad",
+    "namePlaceholder": "Xəbərdarlıq bloku",
+    "trigger": "Tetik",
+    "triggerHint": "/{{trigger}} yazaraq çağırılır",
+    "body": "Nə əlavə edir",
+    "bodyPlaceholder": "> [!WARNING]\n> {{selection}}{{cursor}}",
+    "placeholders": "Yer tutucular:",
+    "placeholder": {
+      "date": "Bugünkü tarix",
+      "time": "İndiki vaxt",
+      "datetime": "İndiki tarix və vaxt",
+      "title": "Açıq sənədin adı",
+      "selection": "Seçili olan mətn",
+      "cursor": "Kursorun düşəcəyi yer"
+    },
+    "problem": {
+      "name": "Ad lazımdır.",
+      "trigger": "Tetik lazımdır.",
+      "duplicate": "Bu tetiki başqa snippet istifadə edir.",
+      "body": "Əlavə edəcək bir şey lazımdır."
+    },
+    "removeTitle": "“{{name}}” silinsin?",
+    "removeBody": "Snippet bundan sonra yazacağın sənədlərdən silinir. Artıq yazdığın sənədlərə toxunulmur.",
+    "copyOf": "{{name}} nüsxəsi",
+    "untitled": "Snippet",
+    "nothingSelected": "Əvvəlcə saxlamaq istədiyin mətni seç.",
+    "savedToast": "“{{name}}” snippet kimi saxlanıldı"
   }
 }

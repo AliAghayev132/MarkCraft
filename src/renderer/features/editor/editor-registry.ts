@@ -56,9 +56,21 @@ class EditorRegistry {
    * is exactly what this registry knows, and an emoji, a snippet and a
    * template all need the same answer.
    */
-  insertText(text: string): void {
+  insertText(text: string, cursorOffset?: number): void {
+    const caret = cursorOffset ?? text.length
+
     if (this.surface === 'rich') {
-      this.richEditor?.chain().focus().insertContent(text).run()
+      const editor = this.richEditor
+      if (!editor) return
+
+      // Where the text lands, so the caret can be moved back into it. Tiptap
+      // leaves the caret at the end, which is wrong for a snippet that says
+      // where it wants to be resumed.
+      const at = editor.state.selection.from
+      editor.chain().focus().insertContent(text).run()
+      if (cursorOffset !== undefined) {
+        editor.commands.setTextSelection(Math.min(at + caret, editor.state.doc.content.size))
+      }
       return
     }
 
@@ -68,9 +80,30 @@ class EditorRegistry {
     const { from, to } = view.state.selection.main
     view.dispatch({
       changes: { from, to, insert: text },
-      selection: { anchor: from + text.length }
+      selection: { anchor: from + caret }
     })
     view.focus()
+  }
+
+  /**
+   * What is selected on the active surface, or an empty string.
+   *
+   * Plain text in both cases: a snippet body is Markdown, and handing it a
+   * ProseMirror fragment would make it a different thing depending on which
+   * editor happened to be open.
+   */
+  selectedText(): string {
+    if (this.surface === 'rich') {
+      const editor = this.richEditor
+      if (!editor) return ''
+      const { from, to } = editor.state.selection
+      return editor.state.doc.textBetween(from, to, '\n')
+    }
+
+    const view = this.sourceView
+    if (!view) return ''
+    const { from, to } = view.state.selection.main
+    return view.state.sliceDoc(from, to)
   }
 
   focusActive(): void {

@@ -1,5 +1,5 @@
 // ── @lib ───────────────────────────────────────────────────────────────────
-import { Redo2, Replace, Search, Undo2 } from '@icons'
+import { Redo2, Replace, Scissors, Search, Undo2 } from '@icons'
 
 // ── @services ──────────────────────────────────────────────────────────────
 import { updateSettings } from '@services'
@@ -9,6 +9,7 @@ import { dispatch, getState, sidebarViewChanged } from '@store'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { applyFormat } from '@features/editor'
+import { saveSelectionAsSnippet } from '@features/snippets'
 
 // ── types ──────────────────────────────────────────────────────────────────
 import type { CommandDefinition, CommandGroupFactory } from '@features/commands'
@@ -65,5 +66,18 @@ export const editCommands: CommandGroupFactory = (context): CommandDefinition[] 
     shortcut: 'mod+g',
     enabled: hasDocument,
     run: () => context.openGoToLine()
+  },
+  {
+    /*
+     * Keeps what is selected as a reusable block, named from its first line.
+     * Bound to nothing by default: it is a deliberate act, and every free
+     * two-key combination is worth more to something done every minute.
+     */
+    id: 'edit.saveSnippet',
+    category: 'Edit',
+    icon: <Scissors size={14} />,
+    keywords: 'snippet save selection reuse block',
+    enabled: hasDocument,
+    run: () => void saveSelectionAsSnippet()
   }
 ]

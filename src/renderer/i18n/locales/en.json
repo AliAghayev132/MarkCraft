@@ -62,7 +62,8 @@
     "characters_other": "{{count}} characters",
     "apply": "Apply",
     "undo": "Undo",
-    "redo": "Redo"
+    "redo": "Redo",
+    "edit": "Edit"
   },
   "time": {
     "justNow": "just now",
@@ -380,7 +381,8 @@
     "help.guide": "How to use MarkCraft",
     "document.toCanvas": "Lay Out As Canvas",
     "app.quickOpen": "Open File…",
-    "view.focusMode": "Focus Mode"
+    "view.focusMode": "Focus Mode",
+    "edit.saveSnippet": "Save Selection as Snippet"
   },
   "dialogs": {
     "goToLine": {
@@ -524,7 +526,8 @@
       "keyboard": "Keyboard",
       "about": "About",
       "icons": "Icons",
-      "ai": "AI"
+      "ai": "AI",
+      "snippets": "Snippets"
     },
     "editor": {
       "fontFamily": "Font family",
@@ -1630,5 +1633,43 @@
     "placeholder": "File name",
     "noMatch": "No file matches that.",
     "nothingOpen": "Open a folder, or expand one, and its files appear here."
+  },
+  "snippets": {
+    "description": "Blocks you save once and reach with “/”. A snippet can fill in the date, the document’s name, or whatever you had selected when you inserted it.",
+    "saved": "Your snippets",
+    "none": "No snippets yet",
+    "noneHint": "Select some text and run “Save Selection as Snippet”, or create one here.",
+    "newTitle": "Write one",
+    "newHint": "Give it a name, a trigger you can remember, and the Markdown it should insert.",
+    "new": "New snippet",
+    "editTitle": "Snippet",
+    "editDescription": "Typing its trigger after “/” inserts the body, with any placeholders filled in.",
+    "name": "Name",
+    "namePlaceholder": "Warning callout",
+    "trigger": "Trigger",
+    "triggerHint": "Reached by typing /{{trigger}}",
+    "body": "What it inserts",
+    "bodyPlaceholder": "> [!WARNING]\n> {{selection}}{{cursor}}",
+    "placeholders": "Placeholders:",
+    "placeholder": {
+      "date": "Today’s date",
+      "time": "The time now",
+      "datetime": "The date and time now",
+      "title": "The open document’s name",
+      "selection": "Whatever was selected",
+      "cursor": "Where the cursor should land"
+    },
+    "problem": {
+      "name": "It needs a name.",
+      "trigger": "It needs a trigger.",
+      "duplicate": "Another snippet already uses that trigger.",
+      "body": "It needs something to insert."
+    },
+    "removeTitle": "Delete “{{name}}”?",
+    "removeBody": "The snippet is removed from every document you write from now on. Documents you already wrote are untouched.",
+    "copyOf": "{{name}} copy",
+    "untitled": "Snippet",
+    "nothingSelected": "Select the text you want to keep first.",
+    "savedToast": "Saved “{{name}}” as a snippet"
   }
 }

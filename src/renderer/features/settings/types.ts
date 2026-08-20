@@ -34,6 +34,7 @@ export type SettingsSectionId =
   | 'markdown'
   | 'files'
   | 'icons'
+  | 'snippets'
   | 'language'
   | 'keyboard'
   | 'ai'

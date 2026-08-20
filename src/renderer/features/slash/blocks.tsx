@@ -11,6 +11,7 @@ import {
   ListOrdered,
   Minus,
   Quote,
+  Scissors,
   Smile,
   SquareCode,
   Table2
@@ -24,6 +25,7 @@ import { applyFormat, editorRegistry } from '@features/editor'
 import { openImageDialog, openLinkDialog, openTableDialog } from '@features/editor/dialogs'
 import { insertBlock } from '@features/editor/source'
 import { emojiPicker } from '@features/emoji'
+import { insertSnippet, userSnippets } from '@features/snippets'
 
 // ── types ──────────────────────────────────────────────────────────────────
 import type { SlashBlock, SlashBlockDefinition } from './types'
@@ -71,7 +73,24 @@ function insertCallout(): void {
   if (view) insertBlock(view, '> [!NOTE]\n> ')
 }
 
-/** The blocks with labels in the active language, for matching and display. */
+/**
+ * The blocks with labels in the active language, for matching and display.
+ *
+ * The writer's own snippets come after the built-in blocks, and are matched on
+ * their trigger as well as their name — `/callout` has to reach a snippet
+ * called "Warning callout" whose trigger is `callout`, because the trigger is
+ * what the settings screen showed them.
+ */
 export function slashBlocks(): SlashBlock[] {
-  return DEFINITIONS.map((block) => ({ ...block, label: t(`slash.blocks.${block.id}`) }))
+  const built = DEFINITIONS.map((block) => ({ ...block, label: t(`slash.blocks.${block.id}`) }))
+
+  const saved = userSnippets().map((snippet) => ({
+    id: `snippet:${snippet.id}`,
+    icon: <Scissors size={15} />,
+    keywords: [snippet.trigger, 'snippet'],
+    label: snippet.name,
+    run: () => insertSnippet(snippet)
+  }))
+
+  return [...built, ...saved]
 }

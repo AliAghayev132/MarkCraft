@@ -1,5 +1,5 @@
 // ── @shared ────────────────────────────────────────────────────────────────
-import { basename, dayOf, dirname, ensureExtension, type FileStamp, MARKDOWN_EXTENSIONS } from '@shared'
+import { basename, dayOf, dirname, DOCUMENT_EXTENSIONS, ENCRYPTED_EXTENSION, ensureExtension, type FileStamp } from '@shared'
 
 // ── @i18n ──────────────────────────────────────────────────────────────────
 import { t } from '@i18n/active'
@@ -15,6 +15,7 @@ import { dialogs } from '@ui'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { computeStats } from '@features/editor/markdown'
+import { encryptForSave, isEncryptedPath } from '@features/encrypted'
 import { reportError } from './document-context'
 
 // ── types ──────────────────────────────────────────────────────────────────
@@ -46,8 +47,10 @@ export async function saveDocument(
   if (!targetPath || options.saveAs) {
     const suggestion = ensureExtension(suggestedFileName(document), '.md')
     const chosen = await dialogService.saveFile(
+      // `.hmd` is offered alongside the plain formats: choosing it in the save
+      // dialog is how a document gets locked, with no separate command to find.
       suggestion,
-      [...MARKDOWN_EXTENSIONS],
+      [...DOCUMENT_EXTENSIONS, ENCRYPTED_EXTENSION],
       targetPath ? dirname(targetPath) : null
     )
     if (!chosen) return { saved: false, path: null }
@@ -57,10 +60,23 @@ export async function saveDocument(
   const files = getState().settings.values.files
   const eol = files.defaultEol === 'auto' ? document.eol : (files.defaultEol as 'lf' | 'crlf')
 
+  /*
+   * What actually goes to disk. For a `.hmd` path that is the ciphertext, and
+   * a passphrase the user backs out of means nothing is written at all —
+   * writing the plaintext to a file named `.hmd` would be the one mistake here
+   * that cannot be taken back.
+   */
+  let payload = document.content
+  if (isEncryptedPath(targetPath)) {
+    const locked = await encryptForSave(targetPath, document.content)
+    if (locked === null) return { saved: false, path: null }
+    payload = locked
+  }
+
   try {
     const outcome = await fileService.save({
       path: targetPath,
-      content: document.content,
+      content: payload,
       eol,
       bom: document.bom,
       // A brand-new path has nothing to conflict with; an existing one must

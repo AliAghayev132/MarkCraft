@@ -85,6 +85,9 @@ export const MARKDOWN_EXTENSIONS = ['md', 'markdown', 'mdown', 'mkd', 'mdx', 'tx
 /** JSON Canvas — the open format the canvas reads and writes. */
 export const CANVAS_EXTENSION = 'canvas'
 
+/** A Markdown document encrypted with a key only its author has. */
+export const ENCRYPTED_EXTENSION = 'hmd'
+
 /**
  * What the file tree keeps when "Markdown only" is on.
  *
@@ -92,7 +95,11 @@ export const CANVAS_EXTENSION = 'canvas'
  * application opens" — and a canvas is one of those. Naming it after Markdown
  * is what hid every `.canvas` file the user made.
  */
-export const DOCUMENT_EXTENSIONS = [...MARKDOWN_EXTENSIONS, CANVAS_EXTENSION] as const
+export const DOCUMENT_EXTENSIONS = [
+  ...MARKDOWN_EXTENSIONS,
+  CANVAS_EXTENSION,
+  ENCRYPTED_EXTENSION
+] as const
 
 export const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'avif'] as const
 

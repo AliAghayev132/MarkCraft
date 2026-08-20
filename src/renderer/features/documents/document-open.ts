@@ -13,6 +13,7 @@ import { CANVAS_EXTENSION, DOCUMENT_EXTENSIONS, extensionOf } from '@shared'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { canvasTarget } from '@features/canvas'
+import { decryptForOpen, isEncryptedPath } from '@features/encrypted'
 import { defaultViewMode, readAllowingRemembered, reportError } from './document-context'
 
 /**
@@ -51,7 +52,22 @@ export async function openPath(
 
   try {
     const file = await readAllowingRemembered(path)
-    const action = fileAdopted(file, defaultViewMode())
+
+    /*
+     * A locked document is decrypted before it becomes a tab, so everything
+     * downstream — the editor, search, statistics, export — sees ordinary
+     * Markdown and none of them has to know the file was encrypted. Backing
+     * out of the passphrase dialog is a decision, not a failure: nothing
+     * opens, and nothing is said about it.
+     */
+    let opened = file
+    if (isEncryptedPath(path)) {
+      const text = await decryptForOpen(path, file.content)
+      if (text === null) return null
+      opened = { ...file, content: text }
+    }
+
+    const action = fileAdopted(opened, defaultViewMode())
     dispatch(action)
 
     void workspaceService.addRecentFile(path)

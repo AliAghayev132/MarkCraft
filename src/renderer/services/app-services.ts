@@ -118,6 +118,26 @@ export const runService = {
   }
 }
 
+/**
+ * Locking and unlocking a document.
+ *
+ * A thin pass-through on purpose. Every byte of the cryptography is in main,
+ * where Node's own implementation is and where a sandboxed page cannot reach
+ * it — the renderer's job is to collect a passphrase and hand it over, never
+ * to keep it.
+ */
+export const cryptoService = {
+  encrypt(text: string, passphrase: string, hint?: string): Promise<string> {
+    return unwrap(window.api.crypto.encrypt({ text, passphrase, hint }))
+  },
+  decrypt(json: string, passphrase: string): Promise<string> {
+    return unwrap(window.api.crypto.decrypt({ json, passphrase }))
+  },
+  generateKey(): Promise<string> {
+    return unwrap(window.api.crypto.generateKey())
+  }
+}
+
 export const streakService = {
   load(): Promise<DayRecord[]> {
     return soft(window.api.streak.load(), [])

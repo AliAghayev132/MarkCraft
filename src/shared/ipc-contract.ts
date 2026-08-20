@@ -196,6 +196,15 @@ export interface IpcApi {
   /** One block, once, because the user pressed Run. See run-service. */
   'run:code': { req: { language: string; code: string }; res: RunResult }
 
+  // ── Locking a document ───────────────────────────────────────────────────
+  /*
+   * The passphrase crosses here and is stored on neither side. It exists for
+   * the length of one call — see crypto-service.
+   */
+  'crypto:encrypt': { req: { text: string; passphrase: string; hint?: string }; res: string }
+  'crypto:decrypt': { req: { json: string; passphrase: string }; res: string }
+  'crypto:generateKey': { req: void; res: string }
+
   // ── Output ───────────────────────────────────────────────────────────────
   'export:run': { req: ExportRequest; res: ExportResult }
   'print:run': { req: PrintRequest; res: { printed: boolean } }

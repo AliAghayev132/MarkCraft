@@ -122,3 +122,49 @@ describe('lookup', () => {
     expect(unreachable, `${unreachable.length} key(s) cannot be looked up`).toEqual([])
   })
 })
+
+describe('placeholders', () => {
+  /*
+   * The syntax is `{{name}}`. A single-braced `{name}` is not a placeholder,
+   * it is literal text — and it renders as literal text, in front of the user,
+   * with no warning anywhere. That is exactly how it shipped: a selection
+   * counter that read "{count} selected" instead of "3 selected", found by
+   * driving the interface rather than by reading the file.
+   */
+  const PLACEHOLDER = /\{\{\s*(\w+)\s*\}\}/g
+  const SINGLE_BRACE = /(?<!\{)\{\s*\w+\s*\}(?!\})/
+
+  const named = (text: string): string[] =>
+    [...text.matchAll(PLACEHOLDER)].map((match) => match[1]).sort()
+
+  for (const [language, tree] of [['en', reference], ...translations] as [string, LocaleTree][]) {
+    it(`${language} has no single-braced text pretending to be a placeholder`, () => {
+      const offenders = flattenKeys(tree)
+        .filter((key) => {
+          const value = lookup(tree, key)
+          return typeof value === 'string' && SINGLE_BRACE.test(value)
+        })
+        .map((key) => `${key}: ${String(lookup(tree, key))}`)
+
+      expect(offenders).toEqual([])
+    })
+  }
+
+  for (const [language, tree] of translations) {
+    it(`${language} interpolates exactly what English does`, () => {
+      // A translation that drops a placeholder loses information; one that
+      // invents a placeholder renders the braces, because nothing will be
+      // passed for a name the call site has never heard of.
+      const mismatched = flattenKeys(reference)
+        .filter((key) => {
+          const source = lookup(reference, key)
+          const target = lookup(tree, key)
+          if (typeof source !== 'string' || typeof target !== 'string') return false
+          return named(source).join() !== named(target).join()
+        })
+        .map((key) => key)
+
+      expect(mismatched).toEqual([])
+    })
+  }
+})

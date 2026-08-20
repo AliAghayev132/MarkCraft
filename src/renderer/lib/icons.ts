@@ -149,6 +149,12 @@ export {
   Circle,
   Grid2x2,
 
+  // ── Locked documents ─────────────────────────────────────────────────────
+  Download,
+  EyeOff,
+  FileLock2,
+  Unlock,
+
   /*
    * ── Icon picker ──────────────────────────────────────────────────────────
    * Assignable to a file or folder in Settings > Icons. Kept in one block so

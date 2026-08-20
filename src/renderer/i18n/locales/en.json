@@ -1430,7 +1430,7 @@
       "5": "Cyan",
       "6": "Purple"
     },
-    "selected": "{count} selected",
+    "selected": "{{count}} selected",
     "duplicate": "Duplicate",
     "groupSelection": "Group these",
     "edgeLabel": "Line label",
@@ -1467,5 +1467,38 @@
     "contents": "Contents",
     "search": "Search the guide…",
     "noMatch": "Nothing in the guide matches."
+  },
+  "encrypted": {
+    "lockTitle": "Lock this document",
+    "lockBody": "“{{name}}” will be encrypted. Only this passphrase opens it again.",
+    "lockAction": "Lock",
+    "unlockTitle": "Locked document",
+    "unlockBody": "“{{name}}” is encrypted. Enter its passphrase to open it.",
+    "unlockAction": "Open",
+    "passphrase": "Passphrase",
+    "confirm": "Type it again",
+    "mismatch": "The two do not match.",
+    "reveal": "Show the passphrase",
+    "hide": "Hide the passphrase",
+    "hintLabel": "Hint",
+    "wrongPassphrase": "That passphrase does not open this document.",
+    "notEncrypted": "This file is not a locked document",
+    "noRecovery": "Lose the passphrase and the document is gone. There is no reset.",
+    "lengthAdvice": "Length matters more than symbols. A short sentence works well.",
+    "verdict": {
+      "weak": "Weak — short enough to be guessed.",
+      "fair": "Fair. A few more words would help.",
+      "strong": "Strong."
+    },
+    "generate": "Generate a key",
+    "saveKey": "Save the key to a file…",
+    "keySaved": "Key saved",
+    "keySaveFailed": "Could not save the key",
+    "rememberKey": "Keep this key somewhere safe",
+    "rememberKeyDetail": "It is the only way back into the document.",
+    "keyFileTitle": "MarkCraft recovery key",
+    "keyFileFor": "This key opens: {{name}}",
+    "keyFileWarning": "Keep this file away from the document it unlocks.",
+    "keyFileNoRecovery": "If both are lost, the document cannot be recovered by anyone."
   }
 }

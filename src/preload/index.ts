@@ -92,6 +92,7 @@ const api: MarkCraftApi = {
 
   links: namespace('links', ['graph']),
   http: namespace('http', ['send']),
+  crypto: namespace('crypto', ['encrypt', 'decrypt', 'generateKey']),
   run: namespace('run', ['code']),
   streak: namespace('streak', ['load', 'add', 'reset']),
   study: namespace('study', ['load', 'save', 'reset']),

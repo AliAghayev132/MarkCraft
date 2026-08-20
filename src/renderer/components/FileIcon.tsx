@@ -5,6 +5,7 @@ import {
   FileCode2,
   FileImage,
   FileJson,
+  FileLock2,
   FileText,
   FileType2,
   Folder,
@@ -14,7 +15,7 @@ import {
 import { memo, type ReactElement } from '@lib/react'
 
 // ── @shared ────────────────────────────────────────────────────────────────
-import { CANVAS_EXTENSION, type IconName } from '@shared'
+import { CANVAS_EXTENSION, ENCRYPTED_EXTENSION, type IconName } from '@shared'
 
 // ── @features ──────────────────────────────────────────────────────────────
 import { CustomSvgIcon, ICON_COMPONENTS, useIconAppearance, useIconSubject } from '@features/icons'
@@ -100,6 +101,8 @@ export const FileIcon = memo(function FileIcon({
   const [Glyph, tone] = extension
     ? extension === CANVAS_EXTENSION
       ? ([Shapes, 'text-[var(--mc-canvas-6)]'] as const)
+      : extension === ENCRYPTED_EXTENSION
+        ? ([FileLock2, 'text-warning'] as const)
       : MARKDOWN_EXTENSIONS.has(extension)
       ? ([FileType2, 'text-info'] as const)
       : IMAGE_EXTENSIONS.has(extension)

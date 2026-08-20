@@ -13,6 +13,7 @@ import { BookDialog } from '@features/book'
 import { CanvasView } from '@features/canvas'
 import { DevToolsDialog } from '@features/devtools'
 import { RecoveryPrompt } from '@features/documents'
+import { PassphraseDialog } from '@features/encrypted'
 import { InsertDialogLayer } from '@features/editor/dialogs'
 import { EmojiPicker, emojiPicker } from '@features/emoji'
 import { HistoryDialog } from '@features/history'
@@ -120,6 +121,7 @@ export function AppOverlays({
       <EmojiPicker open={emojiOpen} onClose={() => emojiPicker.close()} />
       <SlashMenu state={slashState} />
 
+      <PassphraseDialog />
       <RecoveryPrompt />
       <IconPickerLayer />
       <InsertDialogLayer />

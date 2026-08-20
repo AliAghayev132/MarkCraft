@@ -49,7 +49,8 @@ const workspace: WorkspaceState = {
       file('script.ts'),
       file('photo.png'),
       file('Makefile'),
-      file('plan.canvas')
+      file('plan.canvas'),
+      file('diary.hmd')
     ]
   },
   expanded: {},
@@ -96,6 +97,10 @@ describe('selectVisibleTree', () => {
     expect(namesOf(true)).toContain('plan.canvas')
   })
 
+  it('keeps a locked document, which is a document with a key on it', () => {
+    expect(namesOf(true)).toContain('diary.hmd')
+  })
+
   it('always keeps directories, so their contents stay reachable', () => {
     expect(namesOf(true)).toContain('docs')
   })
@@ -111,7 +116,8 @@ describe('selectVisibleTree', () => {
         'script.ts',
         'photo.png',
         'Makefile',
-        'plan.canvas'
+        'plan.canvas',
+        'diary.hmd'
       ])
     )
   })

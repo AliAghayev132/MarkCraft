@@ -19,6 +19,7 @@ import { registerRecoveryHandlers } from './recovery-ipc'
 import { registerLinksHandlers } from './links-ipc'
 import { registerSearchHandlers } from './search-ipc'
 import { registerHttpHandlers } from './http-ipc'
+import { registerCryptoHandlers } from './crypto-ipc'
 import { registerRunHandlers } from './run-ipc'
 import { registerStreakHandlers } from './streak-ipc'
 import { registerStudyHandlers } from './study-ipc'
@@ -44,6 +45,7 @@ export function registerIpcHandlers(): void {
   registerLinksHandlers()
   registerSearchHandlers()
   registerHttpHandlers()
+  registerCryptoHandlers()
   registerRunHandlers()
   registerStreakHandlers()
   registerStudyHandlers()

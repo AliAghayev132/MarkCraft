@@ -1430,7 +1430,7 @@
       "5": "Firuzəyi",
       "6": "Bənövşəyi"
     },
-    "selected": "{count} seçilib",
+    "selected": "{{count}} seçilib",
     "duplicate": "Nüsxələ",
     "groupSelection": "Bunları qruplaşdır",
     "edgeLabel": "Xətt etiketi",
@@ -1467,5 +1467,38 @@
     "contents": "Məzmun",
     "search": "Bələdçidə axtar…",
     "noMatch": "Bələdçidə uyğun gələn yoxdur."
+  },
+  "encrypted": {
+    "lockTitle": "Bu sənədi kilidlə",
+    "lockBody": "«{{name}}» şifrələnəcək. Onu yalnız bu parol açır.",
+    "lockAction": "Kilidlə",
+    "unlockTitle": "Kilidli sənəd",
+    "unlockBody": "«{{name}}» şifrələnib. Açmaq üçün parolunu daxil edin.",
+    "unlockAction": "Aç",
+    "passphrase": "Parol",
+    "confirm": "Bir daha yazın",
+    "mismatch": "İkisi uyğun gəlmir.",
+    "reveal": "Parolu göstər",
+    "hide": "Parolu gizlət",
+    "hintLabel": "İpucu",
+    "wrongPassphrase": "Bu parol həmin sənədi açmır.",
+    "notEncrypted": "Bu fayl kilidli sənəd deyil",
+    "noRecovery": "Parolu itirsəniz sənəd gedir. Bərpa yolu yoxdur.",
+    "lengthAdvice": "Uzunluq simvollardan vacibdir. Qısa bir cümlə yaxşı işləyir.",
+    "verdict": {
+      "weak": "Zəif — tapılacaq qədər qısadır.",
+      "fair": "Orta. Bir neçə söz də əlavə etsəniz yaxşı olar.",
+      "strong": "Güclü."
+    },
+    "generate": "Açar yarat",
+    "saveKey": "Açarı fayla yaz…",
+    "keySaved": "Açar yazıldı",
+    "keySaveFailed": "Açarı yazmaq olmadı",
+    "rememberKey": "Bu açarı təhlükəsiz yerdə saxlayın",
+    "rememberKeyDetail": "Sənədə qayıtmağın yeganə yolu budur.",
+    "keyFileTitle": "MarkCraft bərpa açarı",
+    "keyFileFor": "Bu açar bunu açır: {{name}}",
+    "keyFileWarning": "Bu faylı açdığı sənəddən ayrı saxlayın.",
+    "keyFileNoRecovery": "İkisi də itsə, sənədi heç kim bərpa edə bilməz."
   }
 }
